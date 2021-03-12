@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/maze-music/static/css/main.13f6ded1.chunk.css",
+    "main.js": "/maze-music/static/js/main.01101e07.chunk.js",
+    "main.js.map": "/maze-music/static/js/main.01101e07.chunk.js.map",
+    "runtime-main.js": "/maze-music/static/js/runtime-main.edf89ba6.js",
+    "runtime-main.js.map": "/maze-music/static/js/runtime-main.edf89ba6.js.map",
+    "static/js/2.7b79c31c.chunk.js": "/maze-music/static/js/2.7b79c31c.chunk.js",
+    "static/js/2.7b79c31c.chunk.js.map": "/maze-music/static/js/2.7b79c31c.chunk.js.map",
+    "index.html": "/maze-music/index.html",
+    "precache-manifest.e65ab70b7d0464e060065891bcac4f41.js": "/maze-music/precache-manifest.e65ab70b7d0464e060065891bcac4f41.js",
+    "service-worker.js": "/maze-music/service-worker.js",
+    "static/css/main.13f6ded1.chunk.css.map": "/maze-music/static/css/main.13f6ded1.chunk.css.map",
+    "static/js/2.7b79c31c.chunk.js.LICENSE.txt": "/maze-music/static/js/2.7b79c31c.chunk.js.LICENSE.txt",
+    "static/media/camera.jpg": "/maze-music/static/media/camera.e8cd03a5.jpg",
+    "static/media/glasses.jpg": "/maze-music/static/media/glasses.9d3c7f4a.jpg",
+    "static/media/guitar.jpg": "/maze-music/static/media/guitar.5d99c303.jpg",
+    "static/media/lamp.jpg": "/maze-music/static/media/lamp.fb78da23.jpg",
+    "static/media/orange.jpg": "/maze-music/static/media/orange.838c70ac.jpg",
+    "static/media/photoaparat.jpg": "/maze-music/static/media/photoaparat.72c686d4.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.edf89ba6.js",
+    "static/js/2.7b79c31c.chunk.js",
+    "static/css/main.13f6ded1.chunk.css",
+    "static/js/main.01101e07.chunk.js"
+  ]
+}

@@ -1,0 +1,25 @@
+.music__main-upload {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 25px 0px 0px 60px;
+    overflow: hidden;
+
+    &-fields {
+        width: 50%;
+        display: block;
+        position: relative;
+
+        input {
+            width: 50%;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 60px;
+            height: 25px;
+            cursor: pointer;
+        }
+    }
+}
