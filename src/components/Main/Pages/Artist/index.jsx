@@ -14,6 +14,7 @@ const Artist = ({ }) => {
     const getArtist = useCallback(async () => {
         const data = await request(`/api/data/artist/${id.slice(1)}`, 'GET');
         setArtist(data);
+        console.log(artist)
     }, [request, id]);
     
     useEffect(() => {
@@ -32,6 +33,7 @@ const Artist = ({ }) => {
         <div className="music__main-artist">
 
             <div className="music__main-artist-desk">
+                <div className="music__main-artist-desk-bg"></div>
                 <img src={artist.avatar} alt=""/>
                 
                 <h1>{artist.name}</h1>

@@ -206,7 +206,7 @@ $color: #8e8e8e;
 
   &__sidebar {
     width: 14%;
-    height: calc(100% - 50px);
+    height: 100%;
     background-color: #F4F6F8;
 
     position: relative;
@@ -282,7 +282,7 @@ $color: #8e8e8e;
         li {
           color: #fff;
           font-weight: normal;
-          border-bottom: .5px solid rgba(142, 142, 142, 0.3);
+          // border-bottom: .5px solid rgba(142, 142, 142, 0.3);
 
           &:hover {
             background: rgba(142, 142, 142, 0.1);
@@ -350,6 +350,28 @@ $color: #8e8e8e;
           } 
         }
         
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .music, .music-night {
+
+    &__main {
+      width: calc(100% - 56px);
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .music, .music-night {
+
+    &__main {
+      width: 100%;
+
+      .subtitle {
+        margin: 10px 5px;
       }
     }
   }

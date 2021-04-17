@@ -1,25 +1,36 @@
 {
-  "short_name": "Maze music",
-  "name": "Maze music",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
+  "name": "MAZE MUSIC",
+  "short_name": "MM",
+  "theme_color": "#f4f6f8",
+  "background_color": "#151515",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "portrait",
+  "start_url": ".",
+  "icons": [
+      {
+          "src": "../src/assets/icons/android-launchericon-48-48.png",
+          "sizes": "48x48",
+          "type": "image/png"
+      },
+      {
+          "src": "../src/assets/icons/chrome-extensionmanagementpage-48-48.png",
+          "sizes": "48x48",
+          "type": "image/png"
+      },
+      {
+          "src": "../src/assets/icons/chrome-favicon-16-16.png",
+          "sizes": "16x16",
+          "type": "image/png"
+      },
+      {
+          "src": "../src/assets/icons/chrome-installprocess-128-128.png",
+          "sizes": "128x128",
+          "type": "image/png"
+      },
+      {
+          "src": "../src/assets/icons/SplashScreen.scale-100.png",
+          "sizes": "100x100",
+          "type": "image/png"
+      }
+  ]
 }

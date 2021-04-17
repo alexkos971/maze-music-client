@@ -1,11 +1,11 @@
 import React, { useState,  useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { onPlay, getDuration, setDuration, setFullPlayer } from '../../redux/actions';
+import { onPlay, setDuration, setFullPlayer, setNowSong } from '../../redux/actions';
 
 import './Player.scss';
 
 
-const Player = ({ dispatch, start, full, song, duration, currentDuration,   save, onSaveSong, fullScreen, setFullScreen }) => { 
+const Player = ({ dispatch, start, full, song, duration, currentDuration,  onSaveSong, fullScreen, setFullScreen }) => { 
 
     const [stateVolume, setStateVolume] = useState(5);
 
@@ -23,7 +23,7 @@ const Player = ({ dispatch, start, full, song, duration, currentDuration,   save
     const audio = useRef('audio_tag');
 
     let onStartPlay = async () => {
-        // await dispatch(setNowSong(song))
+        await dispatch(setNowSong(song))
 
         if (start) {
             audio.current.play();
@@ -40,7 +40,7 @@ const Player = ({ dispatch, start, full, song, duration, currentDuration,   save
     
     
     const handleProgress = e => { 
-        let compute = (e.target.value * duration) / 100;
+        let compute = (e.target.value * audio.current.duration) / 100;
         // setCurrent(compute); 
         dispatch(setDuration(compute))
         audio.current.currentTime = compute;
@@ -61,8 +61,7 @@ const Player = ({ dispatch, start, full, song, duration, currentDuration,   save
                 src={song && song.src} 
                 ref={audio} 
                 type="audio/mpeg" 
-                onTimeUpdate={(e) => dispatch(setDuration(e.target.currentTime))} 
-                onCanPlay={(e) => dispatch(getDuration(e.target.duration))} >
+                onTimeUpdate={(e) => dispatch(setDuration(e.target.currentTime))} >
             </audio>
 
             {/* <div className="music__player-artist">
@@ -75,15 +74,22 @@ const Player = ({ dispatch, start, full, song, duration, currentDuration,   save
                 <i className="fas fa-backward" id="play_prev" onClick={() => console.log(song)}></i>
 
                 <i className={`fas fa-${start ? "pause" : "play"}-circle play_btn`} 
-                    onClick={() => dispatch(onPlay(song, start))}>
+                    onClick={() => dispatch(onPlay(song))}>
                 </i>
                 
                 <i className="fas fa-forward" id="play_next" onClick={() => console.log(song)}></i>
             </div>
 
-            <i className={`fas fa-chevron-${!full ? "up" : "down"}`} onClick={() => {
-                song.hasOwnProperty("src") && dispatch(setFullPlayer(!full))
-            }}></i>
+            <div className="music__player-song-desk">
+                <span className="music__player-song-desk-name">{song.name}</span>
+                <span className="music__player-song-desk-artist">{song.artist_name}</span>
+            </div>
+
+            <span className="music__player-toFull">
+                <i className={`fas fa-chevron-${!full ? "up" : "down"}`} onClick={() => {
+                    song.hasOwnProperty("src") && dispatch(setFullPlayer(!full))
+                }}></i>
+            </span>
 
             <div className="music__player-timeline">
                 <span id="music-time_now">{ currentDuration }</span>
@@ -92,11 +98,11 @@ const Player = ({ dispatch, start, full, song, duration, currentDuration,   save
                     type="range" 
                     name="progressBar" 
                     id="music-range" 
-                    value={duration ? ((audio.current.duration * 100) / duration) : 0}
+                    value={song.duration ? ((audio.current.currentTime * 100) / audio.current.duration) : 0}
                     onChange={handleProgress} />
 
-                <span id="music-time_total">{duration}</span>
-            </div>
+                <span id="music-time_total">{song.duration}</span>
+            </div>  
 
             <div className="music__player-bar">
 
@@ -111,11 +117,11 @@ const Player = ({ dispatch, start, full, song, duration, currentDuration,   save
                         onChange={(e) => setStateVolume(e.target.value / 10)} />
                 </span>
                 
-                <span onClick={() => onSaveSong(save, song.id, song)}>
-                    <i className={`fa${save ? "s" : "r"} fa-heart`}></i>
+                <span onClick={() => onSaveSong(song)}>
+                    <i className={`fa${song.saved ? "s" : "r"} fa-heart`}></i>
                 </span>
 
-                <span onClick={() => setFullScreen(!fullScreen)}>
+                <span onClick={() => setFullScreen(!fullScreen)}  className="music__player-full">
                     {/* <img src={repeatIcon} alt="repeat all" id="repeat_all"/> */}
                     <i className={`fas fa-${!fullScreen ? "expand" : "compress"}`}></i>
                 </span>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getRecomendSongs, onPlay, saveSong } from '../../../../redux/actions';
+import { getRecomendSongs, onPlay, itemDuration } from '../../../../redux/actions';
 
 import Slider from 'react-slick';
 
@@ -11,7 +11,7 @@ import { useHttp } from '../../../../hooks/http.hook';
 import './For.scss';
 import { leftIcon, rightIcon, downloadIcon } from '../../images';
 
-const For = ({ dispatch, start, songs, song, server_url, duration, save, onSaveSong, onSavePlaylist  }) => {
+const For = ({ dispatch, start, songs, song, onSaveSong, onSavePlaylist, save, duration  }) => {
     
     const [artists, setArtists] = useState([]);
     const { loading, request } = useHttp();
@@ -22,7 +22,7 @@ const For = ({ dispatch, start, songs, song, server_url, duration, save, onSaveS
             dispatch(getRecomendSongs(await request(`/api/songs/recomendation`, 'GET')))
         }
         catch (e) {}
-    } ,[request]);
+    } ,[request, dispatch]);
 
     useEffect(() => {
         getSongs();
@@ -117,16 +117,18 @@ const For = ({ dispatch, start, songs, song, server_url, duration, save, onSaveS
                         songs.map((item, index) => {
                             
                             return (
-                                <li key={item._id} id={(song && song._id === item._id) ? "now_play" : ''}>
+                                <li key={index} id={(song && song._id === item._id) ? "now_play" : ''}>
                                     <i className={`fas fa-${(start && song._id === item._id)  ? "pause" : "play"}-circle play_btn`} 
                                         onClick={() => {
-                                            dispatch(onPlay(item, start));
+                                            dispatch(onPlay(item));
                                         }}>
                                     </i>
 
                                     <span className="music__main-songs-list_name">
                                         <Link to={`Artist:${item.artist_id}`} className="music__main-songs-list-link">
-                                            {item.artist_name}
+                                            <span className="music__main-songs-list_artist-name">
+                                                {item.artist_name}
+                                            </span>
                                             <span> - </span>
                                         </Link>
                                         {item.name}
@@ -140,12 +142,15 @@ const For = ({ dispatch, start, songs, song, server_url, duration, save, onSaveS
                                         </a>
 
                                         <span className="music__main-songs-list_right-save"
-                                            onClick={() => dispatch(saveSong(item))}>
-                                            <i className={`fas fa-heart`}></i>
+                                            onClick={() => {
+                                                onSaveSong(item)
+                                                dispatch(getRecomendSongs(songs))
+                                            }}>
+                                            <i className={`fa${item.saved ? 's' : 'r'} fa-heart`}></i>
                                         </span>
                                         
                                         <span className="music__main-songs-list_right-time_now">
-                                            { item.dur}
+                                            { item.duration}
                                         </span>
                                     </div>
 
@@ -166,7 +171,7 @@ const mapStateToProps = state => {
         duration: state.getDuration.itemDuration,
         songs: state.songs.recomendSongs,
         song: state.onPlay.song,
-        server_url: state.changeDir.server_url
+        save: state.songs.save
     }
 }
 

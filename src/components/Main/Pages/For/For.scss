@@ -18,7 +18,7 @@
     padding: 10px 0px 0px 60px;
     overflow: hidden;
 
-    &-slider {
+    &-slider    {
         position: relative;
 
         &-item {
@@ -132,4 +132,36 @@
         background-color: #2BA6A2;
     }
     
+}
+
+@media screen and (max-width: 1200px) {
+    .music__main-for {
+        padding: 0px 10px;
+
+        &-slider {
+
+            &-item {
+
+                &_artist {
+                    font-size: 15px;
+                }
+
+                &_desk {
+                    font-size: 10px;
+                }
+            }
+        }
+
+        .slick-slider {
+            width: 133%;
+        }
+
+        .slick-dots {
+            left: -13%;
+        }
+
+        .slick-arrow {
+            display: none !important;
+        }
+    }
 }

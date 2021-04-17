@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { Route, Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ import { changeAuth } from '../redux/actions';
 
 import { ReactComponent as Logo } from '../assets/img/Logo.svg';
 
-const AuthPage = ({ dispatch, authType }) => {
+const AuthPage = ({ dispatch, authType, directory }) => {
 
     const [form, setForm] = useState({
         name: '', email: '', password: ''
@@ -21,7 +21,7 @@ const AuthPage = ({ dispatch, authType }) => {
     const [ load, setLoad ] = useState(false);
 
     const auth = useContext(Context);
-    const { loading, request, error } = useHttp();
+    const { loading, request } = useHttp();
     const message = useMessage();
 
     const changeHandler = (event) => {
@@ -34,7 +34,7 @@ const AuthPage = ({ dispatch, authType }) => {
             if (data) {
                 auth.login(data.token, data.userId, data.name, data.email);
                 message(data.message)
-                history.push('/auth')
+                history.push('/auth/login')
             }
         }
         catch (e) {
@@ -47,6 +47,7 @@ const AuthPage = ({ dispatch, authType }) => {
             const data = await request('/api/auth/login', 'POST', {...form});
             if (data) {
                 auth.login(data.token, data.userId, data.name, data.email);
+                history.push(directory)
             }
             
         }
@@ -97,7 +98,7 @@ const AuthPage = ({ dispatch, authType }) => {
 
             <div className="music__auth-form">
 
-            <Route path="/auth">
+            <Route path="/auth/login">
                 <h1>Login</h1>
                 
                 <form>
@@ -117,12 +118,13 @@ const AuthPage = ({ dispatch, authType }) => {
 
                     <div className="music__auth-form-btns">
                         <button onClick={loginHandler} disabled={loading}>Login</button>
-                        <Link to="/register" id="btn_nonreg">Register</Link>
+                        <Link to="/auth/register" id="btn_nonreg">Register</Link>
                     </div>
                 </form> 
             </Route>
 
-            <Route path="/register">
+            <Route path="/auth/register">
+                {/* <Redirect to="/register"/> */}
                 <h1>Register</h1>
 
                 <form>
@@ -149,12 +151,12 @@ const AuthPage = ({ dispatch, authType }) => {
 
                     <div className="music__auth-form-btns">
                     <button onClick={registerHandler} disabled={loading}>Register</button>
-                        <Link to="/auth" id="btn_nonreg">Login</Link>
+                        <Link to="/auth/login" id="btn_nonreg">Login</Link>
                     </div>
                 </form>
             </Route>
 
-            <Route path="/recovery">
+            <Route path="/auth/recovery">
                 <h1>Recovery password</h1>
 
                 {!authType ? 
@@ -188,7 +190,7 @@ const AuthPage = ({ dispatch, authType }) => {
                 }
             </Route>
 
-            <Link to="/recovery">
+            <Link to="/auth/recovery">
                 <span className="music__auth-form-forgot">Forgot password ?</span>
             </Link>
             
@@ -200,7 +202,8 @@ const AuthPage = ({ dispatch, authType }) => {
 
 const mapStateToProps = (state) => {
     return {
-        authType: state.changeDir.auth
+        authType: state.changeDir.auth,
+        directory: state.changeDir.dir
     }
 }
 

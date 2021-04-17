@@ -1,22 +1,36 @@
 import React, { useState, useContext } from 'react';
 import './Upload.scss';
 import { connect } from 'react-redux';
-import { setNowSong } from '../../../../redux/actions';
+import { setNowSong, itemDuration } from '../../../../redux/actions';
 
 import { useHttp } from '../../../../hooks/http.hook';
 import { useMessage } from '../../../../hooks/message.hook';
 import { Context } from '../../../../context';
+import { useAuth } from '../../../../hooks/auth.hook';
 
-const Upload = ({ dispatch, song }) => {
+const Upload = ({ dispatch, song, duration }) => {
     
     const { loading, request } = useHttp();
     const message = useMessage();
-    const { token } = useContext(Context);
-
+    const { token } = useAuth();
     const [form, setForm] = useState({})
+
+    let audio = new Audio();
 
     const changeHandler = (event) => {
         setForm({ ...form, [event.target.name]: event.target.value });
+
+        if (form.src) {
+            audio.src = form.src;
+            
+            audio.onloadeddata = async () => {
+                await dispatch(itemDuration(audio.duration));
+                
+                if (duration) {
+                    setForm({ ...form, duration: duration })
+                }
+            }
+        }
     }
     
     const uploadHandler = async () => {
@@ -25,12 +39,14 @@ const Upload = ({ dispatch, song }) => {
                 message('Некоторые поля не заполненны');
                 // return;
             }
+            if (!form.duration) {
+                message('Произошла ошибка, не удалось установить длительность трека');
+            }
             let data = await request('api/songs/upload', 'POST', {...form}, {
                 Authorization: `Bearer ${token}`
             });
 
             if (data) {
-                // console.log(data);
                 dispatch(setNowSong(data.track))
                 message(data.message)
             }
@@ -53,13 +69,12 @@ const Upload = ({ dispatch, song }) => {
 
                     {/* <input type="text" name="artist_id" required onChange={changeHandler} placeholder="track author link"/> */}
                     <input type="text" name="album_id" onChange={changeHandler}  placeholder="track album link"/>
-                    {/* http://localhost:3000/Artist:601d32d4f439591a2cfb26f8 */}
                 
                     <input type="text" name="src" required onChange={changeHandler} placeholder="track link"/>
 
                     <input type="text" name="lyrics" onChange={changeHandler} placeholder="track lyrics"/>
 
-                    <input type="file" name="cover" onChange={changeHandler} placeholder="track cover"/>
+                    <input type="text" name="cover" onChange={changeHandler} placeholder="track cover"/>
                 </form>
 
                 <button type="submit" onClick={uploadHandler} disabled={loading}>Upload</button>
@@ -70,7 +85,8 @@ const Upload = ({ dispatch, song }) => {
 
 const mapStateToProps = (state) => {
     return {
-        song: state.onPlay.song
+        song: state.onPlay.song,
+        duration: state.getDuration.itemDuration
     }
 }
 

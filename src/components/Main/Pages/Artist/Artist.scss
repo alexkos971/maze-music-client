@@ -16,13 +16,24 @@ $color: #8e8e8e;
         top: 25px;
         overflow: hidden;
         left: -60px;
+
+        &-bg {
+            position: absolute;
+            width: 60%;
+            height: 300%;
+            top: -150%;
+            left: -20%;
+            transform: rotate(15deg);
+            background-color: #736349;
+        }
         
         img {
             opacity: .8;
-            filter: brightness(.5);
-            width: 100%;
+            filter: brightness(0.5);
+            width: 70%;
+            left: 30%;
             position: absolute;
-            top: -50%;
+            top: -20%;
             z-index: -1;
         }
 

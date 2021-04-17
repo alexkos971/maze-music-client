@@ -8,34 +8,24 @@ let timeTemplate = s => {
 }
 
 
-let setDuration = (item) => {
-    audio.src = item;
-
-    audio.onloadeddata = () => {
-        // console.log(audio.duration)
-        // return setTimeout(() => {
-            return timeTemplate(audio.duration)
-        // }, 200)
-    }
-}
-
 let initialState = {
     currentDuration: '0:00',
-    duration: 0,
+    // duration: 0,
     itemDuration: '0:00'
 }
 
 export const durReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case SONG_DURATION:
-            return {...state, duration: timeTemplate(action.payload)}
+        // case SONG_DURATION:
+        //     return {...state, duration: timeTemplate(action.payload)}
         
+        // set every second of track
         case SET_SONG_DURATION:
             return {...state, currentDuration: timeTemplate(action.payload)}
 
         case ITEM_DURATION:
-            return {...state, itemDuration: setDuration(action.item)}
+            return {...state, itemDuration: timeTemplate(action.payload)}
             
         default: return state;
     }

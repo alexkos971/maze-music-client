@@ -6,12 +6,13 @@ import {
     SET_SONG_DURATION, 
     ITEM_DURATION, 
     FETCH_RECOMEND_SONGS, 
-    NOW_SONG, SAVE_SONG, 
-    GET_PROFILE,
+    NOW_SONG, 
+    SAVE_SONG, 
+    SET_PROFILE,
     SET_FULLPLAYER,
     SET_NIGHT,
     SET_HEADER ,
-    FETCH_MY_SONGS
+    FETCH_MY_SAVED_SONGS
 } from './types';
 
 export const changeDir = (newDir) => {
@@ -48,25 +49,19 @@ export const setHeader = (state) => {
     }
 }
 
-export const onPlay = (item, start) => {
+export const onPlay = (item) => {
     return async dispatch => {
         await dispatch(setNowSong(item))
         
         return dispatch({
             type: PLAY_SONG,
-            song: item,
-            start: start
+            song: item
         })
     }
 }
 
-export const getDuration = (src) => {
-    return {
-        type: SONG_DURATION,
-        payload: src
-    }
-}
 
+// set every second of track
 export const setDuration = (dur) => {
     return {
         type: SET_SONG_DURATION,
@@ -77,7 +72,7 @@ export const setDuration = (dur) => {
 export const itemDuration = (dur) => {
     return {
         type: ITEM_DURATION,
-        item: dur
+        payload: dur
     }
 }
 
@@ -89,15 +84,18 @@ export const setNowSong = (song) => {
 }
 
 export const saveSong = (item) => {
-    return {
-        type: SAVE_SONG,
-        payload: item
-    }
+    // return async (dispatch, getState) => {
+
+        return {
+            type: SAVE_SONG,
+            payload: item
+        }
+    // }
 }
 
-export const getProfile = (data) => {
+export const setProfile = (data) => {
     return {
-        type: GET_PROFILE,
+        type: SET_PROFILE,
         payload: data
     }
 }
@@ -105,26 +103,20 @@ export const getProfile = (data) => {
 export const getRecomendSongs = (data) => {
     return async (dispatch, getState) => {
 
-        let result = data.map(item => {
-        
-            dispatch(itemDuration(item.src))   
-
-            item.dur = getState().getDuration.itemDuration;
-            return item;
-        });
-
         // await dispatch({type: NOW_SONG, payload: result[0] })
 
         return dispatch({
             type: FETCH_RECOMEND_SONGS,
-            payload: result
+            payload: data,
+            saved: getState().profile.profile.saved_songs
         })
     }
 }
 
-export const getMySongs = (data) => {
+export const setSavedSongs = (data) => {
     return async (dispatch, getState) => {
 
+        if (!data) return [];
         let result = data.map(item => {
         
             dispatch(itemDuration(item.src))   
@@ -136,8 +128,8 @@ export const getMySongs = (data) => {
         // await dispatch({type: NOW_SONG, payload: result[0] })
 
         return dispatch({
-            type: FETCH_MY_SONGS,
-            payload: result
+            type: FETCH_MY_SAVED_SONGS,
+            payload: result,
         })
     }
 }

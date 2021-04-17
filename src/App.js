@@ -1,9 +1,9 @@
-import React, { useState, useContext, useCallback } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 import 'materialize-css';
 import { connect } from 'react-redux';
-import { onPlay, setHeader } from './redux/actions';
+import { onPlay, setProfile } from './redux/actions';
 
 import './index.scss';
 import { useAuth } from './hooks/auth.hook';
@@ -15,38 +15,81 @@ import Main from './components/Main';
 import Player from './components/Player';
 import AuthPage from './components/AuthPage';
 
-function App({ dispatch, start, songs, song, dir, night }) {
+function App({ dispatch, start, songs, saved_songs, song, dir, night, profile }) {
 
-  const {request, loading} = useHttp();
-  const { token, login, logout } = useAuth();
-  const isAuthenticated = !!token;
+  const { request, loading } = useHttp();
+  const { login, logout, token } = useAuth();
 
   let { sidebar } = useContext(Context);
   
   const [prevSong, setPrevSong] = useState({});
   const [nextSong, setNextSong] = useState({});
-
-  const [save, setSave] = useState({});
   const [fullScreen, setFullScreen] = useState(false);
 
 
-
-  const onSaveSong = useCallback(async (id) => {
+  const getProfile = useCallback(async () => {
     try {
-      setSave(!save);
-      const data = await request(`/api/songs/save/${id}`, 'POST', null, {
+      dispatch(setProfile(await request('/api/data/profile', 'GET', null, {
         Authorization: `Bearer ${token}`
-      });
-      console.log('exist', data);
-    }
+      })));
+    }  
     catch (e) {
-      console.log(e);
+      console.log("Не удалось загрузить профиль")
     }
-  }, [ request, token, save])
+  }, [token])
+
+  useEffect(() => {
+    if (token) {
+      getProfile();
+    }
+  }, [token, getProfile, dispatch]);
+
+
+  const onSaveSong = async (item) => {
+    // try {
+      // if (item.save) {
+      saved_songs.map((elem, index) => {
+        if (item._id === elem._id) {
+          saved_songs.splice(index, 1)
+        }
+        else {
+          saved_songs.push(item)
+        }
+      })
+        // dispatch(getRecomendSongs(songs))
+      // }
+
+
+      // if (item.saved) {
+      //   const removeSong = await request(`/api/songs/delete/${item._id}`, 'POST', null, {
+      //     Authorization: `Bearer ${token}`
+      //   });
+      //   if (removeSong.message == "deleted") {
+
+      //     return item.saved = false
+      //   }
+      //   else {
+      //     const saveSong = await request(`/api/songs/save/${item._id}`, 'POST', null, {
+      //       Authorization: `Bearer ${token}` 
+      //     });
+
+      //     if (saveSong.message == "saved") {
+      //       return item.saved = true
+      //     }
+      //   }
+      // }
+    // catch (e) {
+    //   console.log(e);
+    // }
+  }
+
+
 
   const onSavePlaylist = (save, props) => {
     console.log(save, props);
   }
+
+
 
   document.addEventListener('keydown', e => {
     switch (e.code) {
@@ -58,7 +101,6 @@ function App({ dispatch, start, songs, song, dir, night }) {
       //   return;
     }
   });
-
 
   
   // Clicks out of element for close
@@ -75,64 +117,66 @@ function App({ dispatch, start, songs, song, dir, night }) {
   
   
   
-  if (loading) {
+  if (!profile) {
     return (
       <h1 className="load_title">Loading...</h1>
     );
   } 
-
-  return (
-
-    <Context.Provider value={{
-      isAuthenticated, token, login, logout, sidebar
-    }}>
-    
-      {!isAuthenticated ?
-
-        // <Route path="/auth">
-          // <Redirect to={`/auth`}/>
-          <AuthPage/>:
-
   
-      <div className={ !night ? "music-night" : "music"}>
-        <Redirect to={`/${dir}`}/>
+  return (
+    <Context.Provider value={{
+      login, logout, sidebar
+    }}>
 
-        {sidebar ? (<Sidebar/>) : (<h1 className="load_title">Loading...</h1>)}
+    {!token ? 
+      <>
+        <Redirect to="/auth/login" />
+        
+        <Route path="/auth" >
+          <AuthPage/>
+        </Route>
+      </> :
+      
+      <>
+       <Redirect to={`/${dir}`}/>
+      
+        <div className={ !night ? "music-night" : "music"}>
 
-        {songs ? 
-        (<Main 
-          setPrevSong={setPrevSong}
-          setNextSong={setNextSong}W
-
-          save={save}
-          onSaveSong={onSaveSong} 
-          onSavePlaylist={onSavePlaylist}
-
-          isAuthenticated={isAuthenticated} />
-        ) : (<h1 className="load_title">Loading...</h1>)}
-
-        <Player
+          {sidebar ? (<Sidebar/>) : (<h1 className="load_title">Loading...</h1>)}
+          {profile ? 
+          (<Main 
+            setPrevSong={setPrevSong}
+            setNextSong={setNextSong}W
+            
+            onSaveSong={onSaveSong} 
+            onSavePlaylist={onSavePlaylist} />
+            ) : (<h1 className="load_title">Loading...</h1>)}
+        
+        {song &&
+          <Player
           prevSong={prevSong}
           nextSong={nextSong}
-          save={save}
           onSaveSong={onSaveSong} 
           fullScreen={fullScreen}
           setFullScreen={setFullScreen}/>
-      </div>
-      }
+        }
+        </div>
+        </>
+    }
     </Context.Provider>
-  );
+    );
 }
 
 const mapStateToProps = (state) => {
   return {
+    profile: state.profile.profile,
     start: state.onPlay.start,
     songs: state.songs.recomendSongs,
+    saved_songs: state.profile.profile.saved_songs,
     song: state.onPlay.song,
     dir: state.changeDir.dir,
     night: state.interface.night,
-    header: state.interface.header,
-    // profile: state.profile.profile
+    header: state.interface.header
   }
 }
 

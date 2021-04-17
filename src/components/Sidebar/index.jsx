@@ -7,6 +7,7 @@ import { Context } from '../../context';
 import './Sidebar.scss';
 import { NavLink} from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/img/Logo.svg';
+import { ReactComponent as LogoTablet } from '../../assets/img/Logo_tablet.svg';
 
 const Sidebar = ({ directory, dispatch }) => {
     let { sidebar } = useContext(Context);
@@ -15,9 +16,9 @@ const Sidebar = ({ directory, dispatch }) => {
         <div className="music__sidebar">
             
             <div className="music__sidebar-logo">
-                <Logo />
-                {/* <h2>MAZE MUSIC</h2> */}
-                {/* <p>{this.value}</p> */}
+                <Logo className="music__sidebar-logo-main" alt="erte"/>
+
+                <LogoTablet className="music__sidebar-logo-tablet" alt="erte"/>
             </div>
                 {/* <h4 className="music__sidebar-title">Library</h4> */}
                 
@@ -32,8 +33,10 @@ const Sidebar = ({ directory, dispatch }) => {
                             className={item.name === directory ? "active" : ""}>
                             
                             <NavLink to={item.name}>
-                                <i className={`fas fa-${item.icon}`}></i>
-                                <span>{item.name}</span>
+                                <span className="music__sidebar-item-icon">
+                                    <i className={`fas fa-${item.icon}`}></i>
+                                </span>
+                                <span className="music__sidebar-item-text">{item.name}</span>
                             </NavLink>
                         </li>);
                 })}   

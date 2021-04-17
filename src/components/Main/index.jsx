@@ -1,10 +1,9 @@
-import React, { useContext, useCallback, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './Main.scss';
 import { Context } from '../../context';
-import { useHttp } from '../../hooks/http.hook';
 
 // Redux
 import { setNight, setHeader, getProfile, changeDir } from '../../redux/actions'
@@ -21,28 +20,10 @@ import Profile from './Profile';
 import Settings from './Settings';
 // import Artist from './Pages/Artist';
 
-const Main = ({ dispatch, directory, save, onSaveSong, onSavePlaylist, night, header, isAuthenticated, profile }) => {
+const Main = ({ dispatch, directory, onSaveSong, onSavePlaylist, night, header, profile }) => {
     
     let { logout, token } = useContext(Context);
-    const { request } = useHttp();
-    
 
-    const getProfileData = useCallback(async () => {
-        try {
-            let me = await request('/api/data/profile', 'GET', null, {
-                Authorization: `Bearer ${token}`
-            });
-            
-            if (me) {
-                dispatch(getProfile(me));
-            }
-        }
-        catch (e) { console.log(e) }
-      }, [profile])
-    
-      useEffect(() => {
-        getProfileData();
-      }, [])
 
     return (
         <div className="music__main">
@@ -100,7 +81,7 @@ const Main = ({ dispatch, directory, save, onSaveSong, onSavePlaylist, night, he
             {/* {!isAuthenticated && <Redirect to="/auth" />} */}
             
             <Route path="/" exact>
-                { isAuthenticated ? 
+                { token ? 
                 <Redirect to={`/${directory}`} />
                 : 
                 <Redirect to="/auth" />
@@ -114,7 +95,6 @@ const Main = ({ dispatch, directory, save, onSaveSong, onSavePlaylist, night, he
 
             <Route path={"/For you"} exact>
                 <For
-                    save={save}
                     onSavePlaylist={onSavePlaylist}
                     onSaveSong={onSaveSong} />
             </Route>

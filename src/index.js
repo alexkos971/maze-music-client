@@ -10,6 +10,7 @@ import { rootReducer } from './redux/rootReducer';
 import './index.scss';
 import App from './App';
 
+
 const store = createStore(rootReducer, 
   compose(
     applyMiddleware(thunk),

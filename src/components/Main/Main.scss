@@ -309,6 +309,14 @@
                 }
             }
 
+            &_artist-name {
+                font-weight: bold;
+
+                &:hover {
+                    font-weight: normal;
+                }
+            }
+
             &-link {
                 color: #000;
                 cursor: pointer;
@@ -331,8 +339,9 @@
                 align-items: center;
                 display: flex;
                 transition: .2s all ease;
-                border-bottom: .5px solid #e8e8e8; 
-                font-weight: bold;
+                // border-bottom: .5px solid #e8e8e8; 
+                border-radius: 7px;
+                font-weight: normal;
                 cursor: pointer;
                 box-sizing: border-box;
                 font-size: 14px;
@@ -387,3 +396,42 @@
         }
     }
 }   
+
+
+@media screen and (max-width: 1200px) {
+    .music__main {
+
+        &-header {
+            padding: 5px 15px;
+        }
+
+        &-songs {
+            width: calc(100% - 80px);
+        
+            &-nav {
+                width: 90%;
+
+                &-bar {
+                    width: 20%;
+                }
+            }
+        }
+
+        &-full {
+            // width: calc(100% - 56px);
+            left: 56px;
+        }
+        &-full-active {
+            // width: calc(100% - 56px);
+            left: 56px;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .music__main {
+        &-songs {
+            width: 100%;
+        }
+    }
+}

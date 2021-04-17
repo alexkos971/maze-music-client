@@ -1,8 +1,8 @@
-import React, {useState, useContext} from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import './Settings.scss'
 
-import { getProfile } from '../../../redux/actions';
+import { setProfile } from '../../../redux/actions';
 
 import { useMessage } from '../../../hooks/message.hook'
 import { useHttp } from '../../../hooks/http.hook';
@@ -10,9 +10,8 @@ import { Context } from '../../../context';
 
 const Settings = ({ dispatch, profile }) => {
     
-    const [form, setForm] = useState()
     const message = useMessage();
-    const { loading, request } = useHttp();
+    const { request } = useHttp();
     const { token } = useContext(Context);
 
     const changeAvatar = async () => {
@@ -29,7 +28,7 @@ const Settings = ({ dispatch, profile }) => {
 
             if (avatar) {
                 message(avatar.message);
-                dispatch(getProfile({...profile, avatar: avatar.avatar }))
+                dispatch(setProfile({...profile, avatar: avatar.avatar }))
             }
         }
         catch (e) {
@@ -51,7 +50,7 @@ const Settings = ({ dispatch, profile }) => {
 
             if (newName) {
                 message(newName.message);
-                dispatch(getProfile({...profile, name: newName.name}))
+                dispatch(setProfile({...profile, name: newName.name}))
             }
         }
         catch (e) {
