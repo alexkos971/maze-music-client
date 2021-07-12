@@ -21,7 +21,6 @@ const Sidebar = ({ dispatch, path }) => {
 
                 <LogoTablet className="music__sidebar-logo-tablet" alt="erte"/>
             </div>
-                {/* <h4 className="music__sidebar-title">Library</h4> */}
                 
             <ul>
                 {sidebar && sidebar.map(item => {
