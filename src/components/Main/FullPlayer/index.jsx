@@ -17,7 +17,7 @@ const FullPlayer = ({ dispatch, full, song }) => {
                 <h1>{song.name}</h1>
 
                 <span>Artist:  
-                    <Link to={`/Artist:${song.artist_id}`} onClick={() => dispatch(setFullPlayer(false))}>
+                    <Link to={`/Artist/${song.artist_id}`} onClick={() => dispatch(setFullPlayer(false))}>
                         <span> {song.artist_name}</span>
                     </Link>
                 </span>

@@ -1,4 +1,4 @@
-import { SET_FULLPLAYER, SET_NIGHT, SET_HEADER, CHANGE_DIR } from './types';
+import { SET_FULLPLAYER, SET_NIGHT, SET_HEADER, CHANGE_DIR, CHANGE_AUTH } from './types';
 
 let initialState = {
     fullPlayer: false,
@@ -22,6 +22,10 @@ export const interfaceReducer = (state = initialState, action) => {
 
         case CHANGE_DIR:
             return {...state, path: action.payload}
+
+        case CHANGE_AUTH:
+            return {...state, auth: action.payload};
+
         default: return state;
     }
 }

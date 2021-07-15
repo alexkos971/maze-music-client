@@ -10,7 +10,7 @@ import { useMessage } from "../../../hooks/message.hook";
 import "./Profile.scss"
 
 import SongsTemp from "../SongsTemp"
-
+import Preloader from "../../Preloader"
 
 const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night }) => {
     const { loading, request } = useHttp();
@@ -127,7 +127,8 @@ const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night })
 
     if (loading && profile) {
         return (
-            <h1 className="load_title">Loading...</h1>
+            // <h1 className="load_title">Loading...</h1>
+            <Preloader/>
         );
     }
 

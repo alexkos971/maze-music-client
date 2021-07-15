@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import config from "../../../../assets/config.json";
 
 import SongsTemp from "../../SongsTemp"
-import CardsTemp from "../../CardsTemp"
+import CardsTemp from "../../CardsTemp";
+import Preloader from "../../../Preloader";
 import './Artist.scss';
 
 import { useHttp } from '../../../../hooks/http.hook';
@@ -24,9 +25,12 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
                 let url = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${data.name}&api_key=${config.lastfm_key}&format=json`
                 
                 const info = await request(url, 'GET')
-        
-                if (info.artist !== undefined) {
-                    setArtist({...data, info: info.artist.bio.content, info_large: (info.artist.bio.content).substring(0, 300) + '...'});
+                if (!info.error) {
+                    setArtist({...data, 
+                        info: info.artist.bio.content, 
+                        tags: info.artist.tags.tag,
+                        info_large: (info.artist.bio.content).substring(0, 300) + '...'
+                    });
                     return;
                 }
                 else {
@@ -50,7 +54,8 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
 
     if (loading) {
         return (
-            <h1 className="load_title">Loading...</h1>
+            // <h1 className="load_title">Loading...</h1>
+            <Preloader/>
         );
     }
 
@@ -65,9 +70,15 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
                     <span className="music__main-artist-header-desc-about">{artist.info_large}</span>
 
                     <div className="music__main-artist-header-desc-info">
-                            <Link className="music__main-artist-header-desc-info-genre" to={`/Genre/Pop`}>
-                                Pop music
-                            </Link>
+                        {
+                            // console.log(artist)
+                            artist.tags && 
+                            artist.tags.map((item, index) => 
+                                <Link className="music__main-artist-header-desc-info-genre" to={`/Genre/${item.name}`} key={index}>
+                                    {item.name}
+                                </Link>
+                            )
+                        }
 
                             <span className="middot">&middot;</span>
 
@@ -98,15 +109,15 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
                 </div>
             </div>
             
-            {/* <div className="music__main-artist-albums">
+             <div className="music__main-artist-albums">
             { recomendArtists.length && 
                 <div>
                     <h2 className="subtitle">Artists for you</h2>
 
-                    <CardsTemp items={recomendArtists} to="Artist"/>
+                    <CardsTemp items={recomendArtists} to="Artists"/>
                 </div>
             }
-            </div> */}
+            </div> 
 
                 { recomendSongs.length &&
                     <div className="music__main-artist-songs">

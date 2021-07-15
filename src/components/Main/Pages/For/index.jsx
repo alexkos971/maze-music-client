@@ -5,6 +5,7 @@ import { getRecomendSongs, getRecomendArtists } from '../../../../redux/actions'
 
 import SongsTemp from "../../SongsTemp";
 import CardsTemp from "../../CardsTemp";
+import Preloader from "../../../Preloader"
 
 import { useHttp } from '../../../../hooks/http.hook';
 
@@ -35,6 +36,7 @@ const For = ({ dispatch, recomendSongs, recomendArtists,savedSongs }) => {
     
     useEffect(() => {
         getSongs(recomendSongs);
+        // return () => dispatch(getRecomendSongs([]))
     }, [dispatch, getSongs, recomendSongs]);
     
 
@@ -60,6 +62,8 @@ const For = ({ dispatch, recomendSongs, recomendArtists,savedSongs }) => {
 
     useEffect(() => {
         getArtists(recomendArtists);
+
+        // return () => dispatch(getRecomendArtists([]))
     }, [dispatch, recomendArtists, getArtists]);
 
 
@@ -67,7 +71,8 @@ const For = ({ dispatch, recomendSongs, recomendArtists,savedSongs }) => {
 
     if (loading) {
         return (
-            <h1 className="load_title">Loading...</h1>
+            // <h1 className="load_title">Loading...</h1>
+            <Preloader/>
         );
     }
 

@@ -19,9 +19,8 @@ import Songs from './Pages/Songs';
 import Upload from './Pages/Upload';
 import Profile from './Profile';
 import Settings from './Settings';
-// import Artist from './Pages/Artist';
-
-const Main = ({ dispatch, onSavePlaylist, night, header, profile, path }) => {
+import image  from '../../assets/img/Avatar.svg';
+const Main = ({ dispatch, onSavePlaylist, night, header, profile, path,  }) => {
     
     let { logout, token } = useContext(Context);
     const directory = useLocation()
@@ -56,7 +55,7 @@ const Main = ({ dispatch, onSavePlaylist, night, header, profile, path }) => {
 
                     <Link to={"/Profile"} onClick={() => dispatch(changeDir("Profile"))}>
                         <div className="music__main-header-head-avatar">
-                            <img src={profile.avatar} alt="avatar"/>
+                            <img src={profile.avatar || image} alt="avatar"/>
                         </div>
                     </Link>
 
@@ -81,10 +80,10 @@ const Main = ({ dispatch, onSavePlaylist, night, header, profile, path }) => {
             
             <Route path="/" exact>
                 { token ? 
-                <Redirect to={`/${directory}`} />
-                : 
-                <Redirect to="/auth" />
-            }
+                    <Redirect to={`/${path}`} />
+                    : 
+                    <Redirect to="/auth" />
+                }
             </Route>
 
 

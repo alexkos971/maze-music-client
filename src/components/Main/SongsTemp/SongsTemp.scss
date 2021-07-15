@@ -130,7 +130,7 @@
             }
             &:hover {
                 color: $color;
-                background: #F4F6F8;
+                background-color: #F4F6F8;
             }
 
             &:hover::before {
@@ -180,12 +180,16 @@
 
         &.night {
 
-            .music__temp-songs-list {
+            .music__main-temp-songs-list {
 
                 li {
                     
-                    &::before {
-                        color: $color;
+                    &:before {
+                        color: $color !important;
+                    }
+
+                    &:hover {
+                        background-color: #292929 !important;
                     }
                 }
 
@@ -194,6 +198,10 @@
                 }
 
                 &_name {
+                    color: $color !important;
+                }
+
+                &-link {
                     color: $color;
                 }
 

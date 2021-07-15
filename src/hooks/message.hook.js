@@ -7,7 +7,8 @@ export const useMessage = () => {
 
     return useCallback(text => {
         if (text) {
-            setMessage(text);
+            // setMessage(text);
+            alert(text)
             // console.log(message)
             setIsVisible(true);
             

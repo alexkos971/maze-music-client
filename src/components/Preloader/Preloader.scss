@@ -1,0 +1,350 @@
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg) scale(.5);
+    width: 100px;
+    height: 100px;
+    transform-origin: center;
+    /*animation: rotate 8s infinite;*/
+
+    span {
+        position: absolute;
+        width: 50px;
+        height: 50px; 
+        background-color: #ff0000;/*red*/
+        animation: rotate .5s infinite ease-in;
+        transform: translate(0%, 0%); 
+    }
+
+    &.first {
+        top: 0;
+        left: 0;
+        background-color: #393E46;/*dark*/
+        animation: first 7s linear infinite;
+    }
+
+    &.second {
+        top: 0;
+        left: 50px;
+        background-color: #00ADB5;/*blue*/
+        animation: second 7s linear infinite;
+    }
+
+    &.thirth {
+        top: 50px;
+        left: 0;
+        background-color: #AAD8D3;/*light green*/
+        animation: thirth 7s linear infinite;
+    }
+
+    &.fourth {
+        top: 50px;
+        left: 50px;
+        background-color: #8E8E8E;/*white*/ 
+        animation: fourth 7s linear infinite;
+    }
+}
+
+
+@keyframes  first {
+
+    0% {
+        transform: translate(0%, 0%);
+    }
+    10% {
+        transform: translate(-50%, -50%); 
+    }
+    15% {
+        transform: translate(-50%, 100%);
+        transform: rotate(90deg);
+    }
+    20% {
+        transform: translate(0%, 100%);
+    }
+
+
+    25% {
+        transform: translate(0%, 100%);
+    }
+
+
+    35% {
+        transform: translate(-50%, 150%);
+    }
+    40% {
+        transform: translate(100%, 150%);
+        transform: rotate(90deg);
+    }
+    45% {
+        transform: translate(100%, 100%);
+    }
+
+    
+    50% {
+        transform: translate(100%, 100%);
+    }
+
+
+    60% {
+        transform: translate(150%, 150%);
+    }
+    65% {
+        transform: translate(150%, 0%);
+        transform: rotate(90deg);
+    }
+    70% {
+        transform: translate(100%, 0%);
+    }
+
+
+    75% {
+        transform: translate(100%, 0%);
+    }
+
+    
+    85% {
+        transform: translate(150%, -50%);
+    } 
+    90% {
+        transform: translate(0%, -50%);
+        transform: rotate(90deg);
+    }
+    95% {
+        transform: translate(0%, 0%);
+    }
+
+
+    100% {
+        transform: translate(0%, 0%);
+    }
+}
+
+
+@keyframes  second {
+    0% {
+        transform: translate(0%, 0%); 
+    }
+
+    10% {
+        transform: translate(50%, -50%);
+    }
+    15% {
+        transform: translate(-100%, -50%);
+        transform: rotate(90deg);
+    }
+    20% {
+        transform: translate(-100%, 0%);
+    }
+
+
+    25% {
+        transform: translate(-100%, 0%);
+    }
+
+    35% {
+        transform: translate(-150%, -50%);
+    }
+    40% {
+        transform: translate(-150%, 100%);
+        transform: rotate(90deg);
+    }
+    45% {
+        transform: translate(-100%, 100%);
+    }
+
+
+    50% {
+        transform: translate(-100%, 100%);
+    }
+
+
+    60% {
+        transform: translate(-150%, 150%);
+    }
+    65% {
+        transform: translate(0%, 150%);
+        transform: rotate(90deg);
+    }
+    70% {
+        transform: translate(0%, 100%);
+    }
+
+    75% {
+        transform: translate(0%, 100%);
+    }
+
+    85% {
+        transform: translate(50%, 150%);
+    }
+    90% {
+        transform: translate(50%, 0%);
+        transform: rotate(90deg);
+    }
+    95% {
+        transform: translate(0%, 0%);
+    }
+    
+}
+
+@keyframes  thirth
+{
+    0% {
+        transform: translate(0%, 0%);
+    }
+    10% {
+        transform: translate(-50%, 50%);
+    }
+    15% {
+        transform: translate(100%, 50%);
+        transform: rotate(90deg);
+    }
+    20% {
+        transform: translate(100%, 0%);
+    }
+
+    25% {
+        transform: translate(100%, 0%);
+    }
+
+
+    35% {
+        transform: translate(150%, 50%);
+    }
+    40% {
+        transform: translate(150%, -100%);
+        transform: rotate(90deg);
+    }
+    45% {
+        transform: translate(100%, -100%);
+    }
+
+
+    50% {
+        transform: translate(100%, -100%);
+    }
+
+
+    60% {
+        transform: translate(150%, -150%);
+    }
+    65% {
+        transform: translate(0%, -150%);
+        transform: rotate(90deg);
+    }
+    70% {
+        transform: translate(0%, -100%);
+    }
+
+
+    75% {
+        transform: translate(0%, -100%);
+    }
+
+
+    85% {
+        transform: translate(-50%, -150%);
+    }
+    90% {
+        transform: translate(-50%, 0%);
+        transform: rotate(90deg);
+    }
+    95% {
+        transform: translate(0%, 0%);
+    }
+
+    100% {
+        transform: translate(0%, 0%);
+    }
+}
+
+@keyframes  fourth {
+    0% {
+        transform: translate(0%, 0%);
+    }
+
+
+    10% {
+        transform: translate(50%, 50%);
+    }
+    15% {
+        transform: translate(50%, -100%);
+        transform: rotate(90deg);
+    }
+    20% {
+        transform: translate(0%, -100%);
+    }
+
+
+    25% {
+        transform: translate(0%, -100%);
+    }
+
+
+    35% {
+        transform: translate(50%, -150%);
+    }
+    40% {
+        transform: translate(-100%, -150%);
+        transform: rotate(90deg);
+    }
+    45% {
+        transform: translate(-100%, -100%);
+    }
+
+    50% {
+        transform: translate(-100%, -100%);
+    }
+
+    60% {
+        transform: translate(-150%, -150%);
+    }
+    65% {
+        transform: translate(-150%, 0%);
+        transform: rotate(90deg);
+    }
+    70% {
+        transform: translate(-100%, 00%);
+    }
+
+    75% {
+        transform: translate(-100%, 0%);
+    }
+
+    85% {
+        transform: translate(-150%, 50%);
+    }
+    90% {
+        transform: translate(0%, 50%);
+        transform: rotate(90deg);
+    }
+    95% {
+        transform: translate(0%, 0%);
+    }
+
+    100% {
+        transform: translate(0%, 0%);
+    }
+}
+
+@keyframes rotate 
+{
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(45deg);
+    }
+    50% {
+        transform: rotate(90deg);
+    }
+    75% {
+        transform: rotate(135deg);
+    }
+    90% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}

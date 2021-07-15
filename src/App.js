@@ -82,7 +82,7 @@ function App({ dispatch, start, song, night, profile }) {
   if (!profile) {
     return (
       <h1 className="load_title">Loading...</h1>
-    );
+    )
   } 
   
   return (

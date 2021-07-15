@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./SongsTemp.scss";
 import {  connect } from "react-redux";
-import { onPlay, getMySongs } from "../../../redux/actions";
+import { onPlay, getMySongs, getRecomendSongs } from "../../../redux/actions";
 
 
 import { useHttp } from "../../../hooks/http.hook";
@@ -11,7 +11,7 @@ import { useAuth } from "../../../hooks/auth.hook";
 import { useMessage } from "../../../hooks/message.hook";
 import { downloadIcon } from '../images';
 
-const SongsTemp = ({ dispatch, songs, song, start, my, night }) => {
+const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, song, start, my, night }) => {
 
     const { loading, request, error } = useHttp();
     const { token } = useAuth();
@@ -32,11 +32,15 @@ const SongsTemp = ({ dispatch, songs, song, start, my, night }) => {
             }
             
             if (data) {
-                const newSongs = songs.filter(item => {
+                const newSongs = mySongs.filter(item => {
                     return item._id !== id;
                 })
-                message(data.message)
+                const newRecomendSongs = recomendSongs.filter(item => {
+                    return item._id !== id;
+                })
                 await dispatch(getMySongs(newSongs))
+                await dispatch(getRecomendSongs(newRecomendSongs))
+                message(data.message)
                 // console.log(data)
             }
         }
@@ -66,7 +70,7 @@ const SongsTemp = ({ dispatch, songs, song, start, my, night }) => {
                         </div>
 
                         <span className="music__main-temp-songs-list_name">
-                            <Link to={`Artist:${item.artist_id}`} className="music__main-temp-songs-list-link">
+                            <Link to={`/Artist/${item.artist_id}`} className="music__main-temp-songs-list-link">
                                 <span className="music__main-temp-songs-list_artist-name">
                                     {item.artist_name}
                                 </span>
@@ -113,7 +117,9 @@ const mapStateToProps = (state) => {
     return {
         song: state.onPlay.song,
         start: state.onPlay.start,
-        night: state.interface.night
+        night: state.interface.night,
+        mySongs: state.songs.mySongs,
+        recomendSongs: state.songs.recomendSongs
     }
 }
 

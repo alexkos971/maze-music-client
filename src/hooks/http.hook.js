@@ -9,7 +9,7 @@ export const useHttp = () => {
         try {
             if (body) {
                 body = JSON.stringify(body);
-                headers['Content-Type'] = 'application/json'
+                headers['Content-Type'] = 'application/json';
             }
 
             const response = await fetch(url, {
@@ -20,7 +20,6 @@ export const useHttp = () => {
 
             if (!response.ok) {
                 return (data.message || 'Что-то пошло не так');
-                // throw new Error(data.message || 'Что-то пошло не так');
             }
             
             setLoading(false);
