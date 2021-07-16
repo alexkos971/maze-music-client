@@ -1,50 +1,67 @@
-import React, { useState,  useEffect, useRef, useCallback } from 'react';
+import React, { useState,  useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { setDuration, itemDuration, setFullPlayer, setStart } from '../../redux/actions';
+import { setDuration, itemDuration, setInputDuration, setFullPlayer, setStart } from '../../redux/actions';
 
 import './Player.scss';
 
+let audio;
 
-const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullScreen, setFullScreen }) => { 
-
+const Player = ({ dispatch, start, full, song, songFrom, currentDuration, inputDuration, fullScreen, setFullScreen }) => { 
     const [stateVolume, setStateVolume] = useState(5);
-    const [inputDuration, setInputDuration] = useState(0)
 
-    // Play Audio
-    const audio = useRef('audio_tag');
+    const setAudio = () => {
+        if (song) {
+            audio.src = song.src;
+            audio.volume = stateVolume / 100;
+
+            audio.ontimeupdate = () => {
+                dispatch(setInputDuration((audio.currentTime * audio.duration) / 100))
+                dispatch(setDuration((audio.currentTime)));
+            }
+
+            audio.onended = () => {
+                dispatch(setInputDuration(0))
+                onStartPlay()
+            }
+        }    
+    }
 
 
-    useEffect(() => {
-        audio.current.volume = stateVolume / 100;
-    }, [stateVolume]);
-
-
-    let onStartPlay = useCallback(async () => {
+    let onStartPlay = useCallback(() => {
         if (start) {
-            await dispatch(itemDuration(audio.current.duration))
-            audio.current.play();
+            // dispatch(itemDuration(audio.duration))
+            audio.play();
         }
         else {
-            audio.current.pause();
+            audio.pause();  
         }
 
-    }, [dispatch, start])
+    }, [start])
+
 
     useEffect(() => {
-        onStartPlay();
-    }, [start, onStartPlay, dispatch])
+        if (!audio) {
+            audio = new Audio()
+        }
+        else {
+            setAudio();
+            onStartPlay()
+        }
+    }, [song])
 
 
-    const updateAudio = (e) => {
-        dispatch(setDuration(e.target.currentTime));
-        setInputDuration((audio.current.currentTime * 100) / audio.current.duration)
-    }
-    
-    
+
+    useEffect(() => {
+        onStartPlay()
+    }, [start, dispatch, onStartPlay])
+
+
     const handleProgress = e => { 
-        let compute = (e.target.value * audio.current.duration) / 100;
-        dispatch(setDuration(compute))
-        audio.current.currentTime = compute;
+        if (song.src) {
+            let compute = (e.target.value * audio.duration) / 100;
+            dispatch(setDuration(compute))
+            audio.currentTime = compute;
+        }
     }
 
     const mouseWheel = elem => {
@@ -55,22 +72,18 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullSc
             setStateVolume(elem.deltaY/stateVolume* 100)
     }
 
-    const onEnd = () => {
-        // dispatch(switchSong("next", songFrom))
-        onStartPlay()
+    const repeatTrack = () => {
+        dispatch(setInputDuration(0))
+        // dispatch(setDuration(0))
+        audio.currentTime = 0;
+
+        if (start) {
+            audio.play();
+        }
     }
 
     return (
         <div className="music__player">
-
-            <audio 
-                src={song && song.src} 
-                ref={audio} 
-                type="audio/mpeg" 
-                onTimeUpdate={(e) => updateAudio(e)}
-                onEnded={onEnd} >
-            </audio>
-
             {/* <div className="music__player-artist">
                 <div className="music__player-artist-wrap">
                     <img src={song.cover} alt=""/>
@@ -81,7 +94,7 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullSc
                 <i className="fas fa-backward" id="play_prev" onClick={() => console.log(song)}></i>
 
                 <i className={`fas fa-${start ? "pause" : "play"}-circle play_btn`} 
-                    onClick={() => dispatch(setStart(!start))}>
+                    onClick={() => song.src && dispatch(setStart(!start))}>
                 </i>
                 
                 <i className="fas fa-forward" id="play_next" onClick={() => console.log(song)}></i>
@@ -106,7 +119,8 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullSc
                     name="progressBar" 
                     id="music-range" 
                     disabled={!song && true}
-                    value={inputDuration}
+                    // value={inputDuration}
+                    defaultValue={inputDuration}
                     onChange={handleProgress} />
 
                 <span id="music-time_total">{song && song.duration}</span>
@@ -134,10 +148,7 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullSc
                     <i className={`fas fa-${!fullScreen ? "expand" : "compress"}`}></i>
                 </span>
 
-                <span onClick={() => {
-                    audio.current.currentTime = 0;
-                    audio.current.play();
-                }}>
+                <span onClick={repeatTrack}>
                     <i className="fas fa-redo-alt"></i>
                 </span>
             </div>
@@ -151,7 +162,8 @@ const mapStateToProps = (state) => {
         song: state.onPlay.song,
         songFrom: state.onPlay.songFrom,
         currentDuration: state.onPlay.currentDuration,
-        full: state.interface.fullPlayer
+        full: state.interface.fullPlayer,
+        inputDuration: state.onPlay.inputDuration
     }
 }
 

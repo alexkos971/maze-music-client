@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import { itemDuration, getMySongs, getRecomendSongs } from '../../../../redux/actions';
+import { itemDuration, getMySongs } from '../../../../redux/actions';
 
 import { useHttp } from '../../../../hooks/http.hook';
 import { useMessage } from '../../../../hooks/message.hook';
@@ -13,7 +13,7 @@ import './Upload.scss';
 
 const Upload = ({ dispatch, duration, mySongs, path }) => {
     
-    const { loading, request } = useHttp();
+    const { request } = useHttp();
     const message = useMessage();
     const { token } = useAuth();
     const [form, setForm] = useState({})
@@ -41,7 +41,7 @@ const Upload = ({ dispatch, duration, mySongs, path }) => {
                 setForm({ ...form, duration: duration });
             }
             else {
-                message('Произошла ошибка, не удалось установить длительность трека');
+                message('Произошла ошибка, не удалось установить длительность трека \n Заново вставьте ссылку');
                 setLoad(false)
                 return;
             }

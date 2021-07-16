@@ -1,4 +1,4 @@
-import { PLAY_SONG, NOW_SONG, SWITCH_SONG, SET_SONG_DURATION, ITEM_DURATION, SET_START } from './types';
+import { PLAY_SONG, NOW_SONG, SWITCH_SONG, SET_SONG_DURATION, ITEM_DURATION, INPUT_DURATION, SET_START } from './types';
 
 
 // Template of song time
@@ -25,6 +25,7 @@ let initialState = {
     songFrom: [],
     currentDuration: '0:00',
     itemDuration: '0:00',
+    inputDuration: 0
 }
 
 const switchSong = (to, list) => {
@@ -47,14 +48,18 @@ export const playReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case PLAY_SONG:
-            if (state.start) {
-                return {...state, start: false };
+
+            if (action.song._id === state.song._id) {
+                return {...state, start: !state.start}
             }
-            else {
-                return {...state, start: true }
+            else {            
+                return {...state, 
+                    song: action.song, 
+                    start: true, 
+                    songFrom: action.list,
+                    inputDuration:0 };
             }
-            
-        
+                 
         case NOW_SONG:
             return { ...state, song: action.payload }
         
@@ -63,6 +68,9 @@ export const playReducer = (state = initialState, action) => {
             
         case SET_SONG_DURATION:
             return {...state, currentDuration: timeTemplate(action.payload)}
+
+        case INPUT_DURATION:
+            return {...state, inputDuration: action.dur}
     
         case ITEM_DURATION:
             return {...state, itemDuration: timeTemplate(action.payload)}

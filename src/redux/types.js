@@ -8,7 +8,7 @@ export const SET_FULLPLAYER = 'SET_FULLPLAYER';
 export const SET_NIGHT = 'SET_NIGHT';
 export const SET_HEADER = 'SET_HEADER';
 
-export const SONG_DURATION = 'SONG_DURATION';
+export const INPUT_DURATION = 'INPUT_DURATION';
 export const ITEM_DURATION = 'ITEM_DURATION';
 export const SET_SONG_DURATION = 'SET_SONG_DURATION';
 export const SET_START = 'SET_START';

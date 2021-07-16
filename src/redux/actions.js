@@ -3,6 +3,7 @@ import {
     CHANGE_AUTH, 
     PLAY_SONG, 
     SET_START, 
+    INPUT_DURATION,
     SET_SONG_DURATION, 
     ITEM_DURATION, 
     FETCH_RECOMEND_SONGS, 
@@ -53,27 +54,39 @@ export const setHeader = (state) => {
 }
 
 export const onPlay = (item, list) => {
-    return async( dispatch, getState)  => {
+    // return async( dispatch, getState)  => {
         
-        if (getState().onPlay.song._id === item._id) {   
-            return dispatch({
-                type: PLAY_SONG,
-                song: item,
-                list: list
-            })
-        }
-        else {
-            await dispatch(setNowSong(item));
-            await dispatch({
-                type: PLAY_SONG,
-                song: item,
-                list: list
-            })
-            dispatch({
-                type: SET_START,
-                payload: true
-            });
-        }
+    //     if (getState().onPlay.song._id === item._id) {   
+    //         return dispatch({
+    //             type: PLAY_SONG,
+    //             song: item,
+    //             list: list
+    //         })
+    //         dispatch({
+    //             type: SET_START,
+    //             payload: false
+    //         });
+    //     }
+    //     else {
+    //         await dispatch(setInputDuration(0));
+
+    //         await dispatch(setNowSong(item));
+
+    //         await dispatch({
+    //             type: PLAY_SONG,
+    //             song: item,
+    //             list: list
+    //         })
+    //         dispatch({
+    //             type: SET_START,
+    //             payload: true
+    //         });
+    //     }
+    // }
+    return {
+        type: PLAY_SONG,
+        song: item,
+        list: list
     }
 }
 
@@ -104,6 +117,13 @@ export const setDuration = (dur) => {
 export const itemDuration = (dur) => {
     return {
         type: ITEM_DURATION,
+        payload: dur
+    }
+}
+
+export const setInputDuration = (dur) => {
+    return {
+        type: INPUT_DURATION,
         payload: dur
     }
 }
