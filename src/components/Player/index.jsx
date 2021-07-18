@@ -1,32 +1,36 @@
 import React, { useState,  useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { setDuration, itemDuration, setInputDuration, setFullPlayer, setStart } from '../../redux/actions';
+import { setDuration, setFullPlayer, setStart, } from '../../redux/actions';
 
 import './Player.scss';
 
 let audio;
 
-const Player = ({ dispatch, start, full, song, songFrom, currentDuration, inputDuration, fullScreen, setFullScreen }) => { 
-    const [stateVolume, setStateVolume] = useState(5);
+const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullScreen, setFullScreen }) => { 
+    const [stateVolume, setStateVolume] = useState(50);
+    const [inputDuration, setInputDuration] = useState(0);
 
     const setAudio = () => {
         if (song) {
             audio.src = song.src;
-            audio.volume = stateVolume / 100;
+            audio.volume = stateVolume / 100; 
 
             audio.ontimeupdate = () => {
-                dispatch(setInputDuration((audio.currentTime * audio.duration) / 100))
+                setInputDuration((audio.currentTime * 100) / audio.duration)
                 dispatch(setDuration((audio.currentTime)));
             }
 
             audio.onended = () => {
-                dispatch(setInputDuration(0))
+                setInputDuration(0)
                 onStartPlay()
             }
         }    
     }
-
-
+    
+    useEffect(() => {
+        setInputDuration(0)
+    }, [song])
+    
     let onStartPlay = useCallback(() => {
         if (start) {
             // dispatch(itemDuration(audio.duration))
@@ -37,7 +41,7 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, inputD
         }
 
     }, [start])
-
+    
 
     useEffect(() => {
         if (!audio) {
@@ -48,35 +52,43 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, inputD
             onStartPlay()
         }
     }, [song])
-
-
+    
+    
 
     useEffect(() => {
         onStartPlay()
     }, [start, dispatch, onStartPlay])
 
-
+    
     const handleProgress = e => { 
         if (song.src) {
             let compute = (e.target.value * audio.duration) / 100;
             dispatch(setDuration(compute))
+            setInputDuration(e.target.value)
+            // dispatch(setInputDuration(compute))
             audio.currentTime = compute;
         }
     }
 
+
+    useEffect(() => {
+        audio.volume = stateVolume / 100
+    }, [stateVolume]);
+    
+    
+    
     const mouseWheel = elem => {
         // console.log(elem.deltaY);
         if (elem.deltaY > 9.8 * 100 || elem.deltaY < 0.2 * 100) {
             return false;
         }
             setStateVolume(elem.deltaY/stateVolume* 100)
-    }
-
-    const repeatTrack = () => {
-        dispatch(setInputDuration(0))
-        // dispatch(setDuration(0))
-        audio.currentTime = 0;
-
+        }
+        
+        const repeatTrack = () => {
+            setInputDuration(0)
+            audio.currentTime = 0;
+            
         if (start) {
             audio.play();
         }
@@ -86,7 +98,7 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, inputD
         <div className="music__player">
             {/* <div className="music__player-artist">
                 <div className="music__player-artist-wrap">
-                    <img src={song.cover} alt=""/>
+                <img src={song.cover} alt=""/>
                 </div>
             </div> */}
 
@@ -119,8 +131,8 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, inputD
                     name="progressBar" 
                     id="music-range" 
                     disabled={!song && true}
-                    // value={inputDuration}
-                    defaultValue={inputDuration}
+                    value={inputDuration}
+                    // defaultValue={dur}
                     onChange={handleProgress} />
 
                 <span id="music-time_total">{song && song.duration}</span>
@@ -129,14 +141,14 @@ const Player = ({ dispatch, start, full, song, songFrom, currentDuration, inputD
             <div className="music__player-bar">
 
                 <span className="music__player-volume">
-                    <i className={`fas fa-volume-${(stateVolume > 0) ? `up` : `off`}`} onClick={() => (stateVolume === 0) ? setStateVolume(5) : setStateVolume(0)}></i>
+                    <i className={`fas fa-volume-${(stateVolume > 0) ? `up` : `off`}`} onClick={() => (stateVolume === 0) ? setStateVolume(50) : setStateVolume(0)}></i>
                     
                     <input 
                         type="range" 
-                        value={Math.round(stateVolume * 10)} 
+                        value={stateVolume} 
                         className="music__player-volume-range" 
                         onWheel={e => mouseWheel(e)}
-                        onChange={(e) => setStateVolume(e.target.value / 10)} />
+                        onChange={(e) => setStateVolume(e.target.value)} />
                 </span>
                 
                 <span onClick={() => alert("saved")}>
@@ -162,8 +174,7 @@ const mapStateToProps = (state) => {
         song: state.onPlay.song,
         songFrom: state.onPlay.songFrom,
         currentDuration: state.onPlay.currentDuration,
-        full: state.interface.fullPlayer,
-        inputDuration: state.onPlay.inputDuration
+        full: state.interface.fullPlayer
     }
 }
 

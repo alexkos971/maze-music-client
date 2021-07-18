@@ -3,7 +3,6 @@ import {
     CHANGE_AUTH, 
     PLAY_SONG, 
     SET_START, 
-    INPUT_DURATION,
     SET_SONG_DURATION, 
     ITEM_DURATION, 
     FETCH_RECOMEND_SONGS, 
@@ -117,13 +116,6 @@ export const setDuration = (dur) => {
 export const itemDuration = (dur) => {
     return {
         type: ITEM_DURATION,
-        payload: dur
-    }
-}
-
-export const setInputDuration = (dur) => {
-    return {
-        type: INPUT_DURATION,
         payload: dur
     }
 }

@@ -11,48 +11,55 @@ import Preloader from "../../../Preloader";
 import './Upload.scss';
 
 
-const Upload = ({ dispatch, duration, mySongs, path }) => {
+const Upload = ({ dispatch, duration, mySongs }) => {
     
     const { request } = useHttp();
     const message = useMessage();
     const { token } = useAuth();
-    const [form, setForm] = useState({})
     const history = useHistory()
     const [load, setLoad] = useState(false);
 
-    const btnDisable = (form.name && form.src && form.cover)
+    const [form, setForm] = useState({})
 
-    let audio = new Audio();
+    const btnDisable = (form.name && form.track)
+
+    // let audio = new Audio();
 
     const changeHandler = (event) => {
         setForm({ ...form, [event.target.name]: event.target.value });
+    }
 
-        if (form.src && !form.duration) {
-            setDurationOfTrack()
+    const setFile = (e) => {
+        if (!e.target.length) {
+            setForm({...form, [e.target.name]: e.target.files[0]})        
         }
     }
 
-    const setDurationOfTrack = async () => {
-        audio.src = await form.src;
-        audio.onloadeddata = async () => {
-            await dispatch(itemDuration(audio.duration));
+    // const setDurationOfTrack = async (e) => {
+    //     const url = URL.createObjectURL(e.target.files[0]);
+
+    //     audio.onload = async () => {
+    //         console.log(url)
+    //         audio.src = await url;
+    //         await dispatch(itemDuration(audio.duration));
             
-            if (duration && duration !== '0:00') {
-                setForm({ ...form, duration: duration });
-            }
-            else {
-                message('Произошла ошибка, не удалось установить длительность трека \n Заново вставьте ссылку');
-                setLoad(false)
-                return;
-            }
-        }
-    }
+    //         if (duration && duration !== '0:00') {
+    //             setForm({ ...form, duration: duration });
+    //         }
+    //         else {
+    //             message('Произошла ошибка, не удалось установить длительность трека \n Заново вставьте ссылку');
+    //             setLoad(false)
+    //             return;
+    //         }
+    //     }
+    // }
     
     const uploadHandler = async () => {
         try {
             setLoad(true);
-
-            let data = await request('api/songs/upload', 'POST', {...form}, {
+            console.log(form)
+            let data = await request('api/upload/track', 'POST', {...form}, {
+                'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${token}`
             });
             
@@ -88,12 +95,12 @@ const Upload = ({ dispatch, duration, mySongs, path }) => {
                         <input type="text" name="album_id" onChange={changeHandler}  placeholder="track album link"/>
                         
                         <p className="music-form-required">Required field</p>
-                        <input type="text" name="src" required onChange={changeHandler} placeholder="track link"/>
+                        <input type="file" name="track" accept="audio/wav, audio/mp3" required onChange={setFile} placeholder="track file"/>
                         
                         <input type="text" name="lyrics" onChange={changeHandler} placeholder="track lyrics"/>
                         
                         <p className="music-form-required">Required field</p>
-                        <input type="text" name="cover" onChange={changeHandler} placeholder="track cover"/>
+                        <input type="file" name="cover" accept="image/jpeg, image/png" onChange={setFile} placeholder="track cover"/>
 
                         <div  className="music-form-btns">
                             <button type="submit" onClick={uploadHandler} disabled={!btnDisable}>Upload</button> 
