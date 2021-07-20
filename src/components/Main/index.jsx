@@ -38,7 +38,7 @@ const Main = ({ dispatch, onSavePlaylist, night, header, profile, path,  }) => {
 
 
                 <div className="music__main-header-head">
-                    <ul className={`music__main-header-head-navbar${directory.pathname === "/Profile" && night ? " dark" : ""}`}>
+                    <ul className={`music__main-header-head-navbar${directory.pathname === "/Upload" || directory.pathname === "/Profile" && night ? " dark" : ""}`}>
                         <li>
                             <Link to={"/Settings"} onClick={() => dispatch(changeDir("Settings"))}>
                                 <span><i className="fas fa-sliders-h"></i></span>

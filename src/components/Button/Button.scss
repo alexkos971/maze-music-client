@@ -1,0 +1,25 @@
+.music-button {
+	cursor: pointer;
+	display: initial;
+	background-color: #F4F6F8;
+	color: #404040;
+    padding: 9px 18px;
+    border-radius: 5px;
+    // margin-right: 10px;
+    font-size: 14px;
+    margin-right: 20px;
+    
+    &.active {
+    	background-color: #393E46;
+    	color: #F4F6F8;
+    }
+
+    &.message {
+    	color: #F4F6F8;
+    	background-color: #393E46;
+    }
+
+    // & ~ & {
+    // 	margin-left: 20px;
+    // }
+}

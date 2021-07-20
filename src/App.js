@@ -17,7 +17,7 @@ import Main from './components/Main';
 import Player from './components/Player';
 import AuthPage from './components/AuthPage';
 
-function App({ dispatch, start, song, night, profile }) {
+function App({ dispatch, start, song, night, profile, path }) {
 
   const { request } = useHttp();
   const { login, logout, token } = useAuth();
@@ -102,7 +102,7 @@ function App({ dispatch, start, song, night, profile }) {
       </> :
       
       <>
-       <Redirect to={`/For you`}/>
+       <Redirect to={`/${path}`}/>
       
         <div className={ !night ? "music-night" : "music"}>
 
@@ -131,7 +131,8 @@ const mapStateToProps = (state) => {
     saved_songs: state.profile.profile.saved_songs,
     song: state.onPlay.song,
     night: state.interface.night,
-    header: state.interface.header
+    header: state.interface.header,
+    path: state.interface.path
   }
 }
 

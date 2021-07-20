@@ -1,126 +1,90 @@
-import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
-import { connect } from 'react-redux';
-import { itemDuration, getMySongs } from '../../../../redux/actions';
+import React, { useState, createContext, useEffect } from 'react';
 
-import { useHttp } from '../../../../hooks/http.hook';
-import { useMessage } from '../../../../hooks/message.hook';
-import { useAuth } from '../../../../hooks/auth.hook';
+import ChooseLength from "./steps/ChooseLength";
+import ChooseGenre from "./steps/ChooseGenre";
+import ChooseName from "./steps/ChooseName";
+import ChooseTrackFile from "./steps/ChooseTrackFile";
+import ChooseCoverFile from "./steps/ChooseCoverFile";
+import FinalStep from "./steps/FinalStep"
 
 import Preloader from "../../../Preloader";
 import './Upload.scss';
 
 
-const Upload = ({ dispatch, duration, mySongs }) => {
-    
-    const { request } = useHttp();
-    const message = useMessage();
-    const { token } = useAuth();
-    const history = useHistory()
+const steps = [ChooseLength,  ChooseGenre, ChooseName, ChooseTrackFile, ChooseCoverFile, FinalStep];
+const scrollSteps = ['Type', 'Genre', "Name", "Upload files"]
+export const MainContext = createContext();
+
+const Upload = () => {
+
     const [load, setLoad] = useState(false);
 
+    const [animateLoading, setAnimateLoading] = useState(true);
     const [form, setForm] = useState({})
+    const [btnDisabled, setBtnDisabled ] = useState(true);
 
-    const btnDisable = (form.name && form.track)
-
-    // let audio = new Audio();
-
-    const changeHandler = (event) => {
-        setForm({ ...form, [event.target.name]: event.target.value });
-    }
-
-    const setFile = (e) => {
-        if (!e.target.length) {
-            setForm({...form, [e.target.name]: e.target.files[0]})        
-        }
-    }
-
-    // const setDurationOfTrack = async (e) => {
-    //     const url = URL.createObjectURL(e.target.files[0]);
-
-    //     audio.onload = async () => {
-    //         console.log(url)
-    //         audio.src = await url;
-    //         await dispatch(itemDuration(audio.duration));
-            
-    //         if (duration && duration !== '0:00') {
-    //             setForm({ ...form, duration: duration });
-    //         }
-    //         else {
-    //             message('Произошла ошибка, не удалось установить длительность трека \n Заново вставьте ссылку');
-    //             setLoad(false)
-    //             return;
-    //         }
-    //     }
-    // }
     
-    const uploadHandler = async () => {
-        try {
-            setLoad(true);
-            console.log(form)
-            let data = await request('api/upload/track', 'POST', {...form}, {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${token}`
-            });
-            
-            if (data.track) {
-                await dispatch(getMySongs([...mySongs, data.track]))
-                // message(data.message)
-                history.push('/Profile')
-                // console.log(songs);
-            }
-            setLoad(false);
-        }
-        catch (e) {
-            message(e.message);
-        }
+    const [step, setStep] = useState(0);
+    const Step = steps[step];
+
+    const nextStep = () => {
+        setStep(step + 1);
+    }
+
+    const prevStep = () => {
+        setStep(step - 1);
+    }
+
+    useEffect(() => {
+        setAnimateLoading(true)
+        setTimeout(() => setAnimateLoading(false), 2000);
+    }, [step])
+
+
+    if (load) {
+        return (
+            <Preloader/>
+        )
     }
 
     return (
-        <div className="music__main-upload">
-            <h2 className="subtitle">Upload  track</h2>
+        <MainContext.Provider value={{ setLoad, setForm, form, setBtnDisabled }}>         
+            <div className="music__main-upload">
+                <div className={`music__main-upload-bg`}></div>
 
-            {!load ? (
+                {!animateLoading && (
+                    <>
+                        
+                        <div className="music__main-upload-container">
+                    
+                            <h2 className="subtitle">Step {step + 1}</h2>
+        
+                            <Step/>
 
+                            <div className="music__main-upload-container-btns">
+                                {step > 0 && <button onClick={prevStep}>Back</button>}
+                                {(step + 1 !== steps.length) && <button onClick={nextStep} disabled={btnDisabled}>Next</button>}
+                            </div>
 
-                <div className="music__main-upload-fields">
-                    <p>Fill the fields</p>
-                                        
-                    <div className="music-form">
-                            
-                        <p className="music-form-required">Required field</p>
-                        <input type="text" name="name" required={true} onChange={changeHandler} placeholder="name of track"/>
-                        
-                        {/* <input type="text" name="artist_id" required onChange={changeHandler} placeholder="track author link"/> */}
-                        <input type="text" name="album_id" onChange={changeHandler}  placeholder="track album link"/>
-                        
-                        <p className="music-form-required">Required field</p>
-                        <input type="file" name="track" accept="audio/wav, audio/mp3" required onChange={setFile} placeholder="track file"/>
-                        
-                        <input type="text" name="lyrics" onChange={changeHandler} placeholder="track lyrics"/>
-                        
-                        <p className="music-form-required">Required field</p>
-                        <input type="file" name="cover" accept="image/jpeg, image/png" onChange={setFile} placeholder="track cover"/>
+                        </div>
 
-                        <div  className="music-form-btns">
-                            <button type="submit" onClick={uploadHandler} disabled={!btnDisable}>Upload</button> 
-                        </div>   
-                    </div>
-                        
-                </div>
-                ) : (
-                <Preloader/>
-            )}
-        </div>
+                        <div className="music__main-upload-scroll">
+                            {
+                                scrollSteps.map((item, index) => 
+                                <div key={item} className="music__main-upload-scroll-wrap">   
+                                    <div className={`music__main-upload-scroll-wrap-circle ${(index <= step) && "active"}`} onClick={() => index <= step && setStep(index)}></div>
+                                    <span>{item}</span>
+                                    {(index + 1 !== scrollSteps.length) && <div className="music__main-upload-scroll-wrap-line"></div>}
+                                </div>
+                                )
+                            }
+                        </div>
+                    </>
+                )}
+
+            </div>
+        </MainContext.Provider>
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        duration: state.onPlay.itemDuration,
-        mySongs: state.songs.mySongs,
-        path: state.interface.path
-    }
-}
-
-export default connect(mapStateToProps)(Upload);
+export default Upload;
