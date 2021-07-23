@@ -8,6 +8,7 @@ import { useAuth } from "../../../hooks/auth.hook";
 import { useMessage } from "../../../hooks/message.hook";
 
 import "./Profile.scss"
+import image  from '../../../assets/img/Avatar.svg';
 
 import SongsTemp from "../SongsTemp";
 import CardsTemp from "../CardsTemp";
@@ -17,8 +18,6 @@ import Button from "../../Button";
 const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start, night }) => {
     const { loading, request } = useHttp();
     const { token } = useAuth();
-
-    const [checked, setChecked] = useState(false)
 
     const frequent = {
         artists: [
@@ -117,7 +116,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
             }
         }
         catch (e) { console.error(e) }
-    }, [request, dispatch, token, mySongs ]);
+    }, [request, dispatch, token ]);
     
     useEffect(() => {
         if (token) {
@@ -142,7 +141,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                     <div className="music__main-profile-header-wrap-avatar">
 
                         <div className="music__main-profile-header-wrap-avatar-img">
-                            <img src={profile.avatar} alt=""/>
+                            <img src={profile.avatar || image} alt=""/>
                             
                             <div className="music__main-profile-header-wrap-avatar-img-change">
                                 <span onClick={changeAvatar}>Change</span>
@@ -159,7 +158,11 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                                 <i className="fas fa-pencil-alt" onClick={changeName}></i>
                             </span>
                         </div>
-                        <span>listener</span>
+
+                        <div className="music__main-profile-header-wrap-nick-info">    
+                            {profile.email && <span>@{profile.email}</span>}
+                            <p>listener</p>
+                        </div>
                     </div>
                 </div>
             

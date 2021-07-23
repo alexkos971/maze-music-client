@@ -105,6 +105,14 @@
                             cursor: pointer;
                         }
                     }
+
+                    &-info {
+                        display: block;
+
+                        p {
+                            margin: 0 !important;
+                        }
+                    }
                     span {
                         font-size: 20px;
                         position: relative;

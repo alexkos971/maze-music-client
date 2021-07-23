@@ -17,6 +17,33 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
     const {request, loading} = useHttp();
 
 
+    // Get list of songs of atrist
+    // const getSongs = useCallback(async (list) => {
+    //     try {
+    //         if (!list.length) {
+
+    //             let data = await request(`/api/songs/mySongs`, 'GET', null, {
+    //                 Authorization: `Bearer ${ token }`
+    //             });
+    //                 if (data && data.length > 0) {
+    //                     dispatch(getMySongs(data))
+    //                 }
+    //                 else if (data.message === '404 not found') {
+    //                     dispatch(getMySongs([]));
+    //                 }
+    //             }
+    //             else {
+    //             dispatch(getMySongs(list))
+    //         }
+    //     }
+    //     catch (e) { console.error(e) }
+    // }, [request, dispatch, token ]);
+    
+    // useEffect(() => {
+    //     if (token) {
+    //         getSongs(mySongs);
+    //     }
+    // }, [dispatch, token, getSongs, mySongs])
     
     const getArtist = useCallback(async () => {
         try {
@@ -109,7 +136,7 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
                 </div>
             </div>
             
-             <div className="music__main-artist-albums">
+            <div className="music__main-artist-albums">
             { recomendArtists.length && 
                 <div>
                     <h2 className="subtitle">Artists for you</h2>
@@ -119,12 +146,13 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
             }
             </div> 
 
-                { recomendSongs.length &&
-                    <div className="music__main-artist-songs">
-                        <h2 className="subtitle">Most popular songs</h2>
-                        <SongsTemp songs={recomendSongs}/>
-                    </div>
+            <div className="music__main-artist-songs">
+                <h2 className="subtitle">Most popular songs</h2>
+                { (artist && artist.songs) ?
+                    <SongsTemp songs={artist.songs}/>:
+                    <h2 className="music__main-subtitle">This artists no have songs</h2>
                 }
+            </div>
         </div>
     );
 }

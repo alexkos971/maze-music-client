@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Button.scss";
 
 
 const Button = ({ text, color, type, сondition, active, list, mr }) => {
 	const [open, setOpen] = useState(false);
-	const [current, setCurrent] = useState(list && list[0] || null)
+	const [current, setCurrent] = useState(list && list[0] || null);
+	const [visible, setVisible] = useState(false);
+
+	useEffect(() => {
+		setVisible(true)
+		setTimeout(() => {
+			setVisible(false)
+		}, 3000)
+	}, [visible])
+
+
 
 	if (type === 'button') {
 		return (
@@ -16,9 +26,11 @@ const Button = ({ text, color, type, сondition, active, list, mr }) => {
 	}
 
 	else if (type === 'message') {
-		return (
-			<div className="music-button message">{text}</div>
-		)
+		if (visible) {
+			return (
+				<div className="music-button message">{text}</div>
+				)
+			}
 	}
 
 	else if (type === 'select') {
@@ -36,7 +48,7 @@ const Button = ({ text, color, type, сondition, active, list, mr }) => {
 								<li onClick={() => {
 									setCurrent(item)
 									setOpen(false)
-								}}>{item}</li>
+								}} key={index}>{item}</li>
 							)
 						}
 					</ul>

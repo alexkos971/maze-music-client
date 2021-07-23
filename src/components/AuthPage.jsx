@@ -7,6 +7,7 @@ import { useMessage } from '../hooks/message.hook';
 import { Context } from '../context';
 import { changeAuth } from '../redux/actions';
 import Preloader from "./Preloader"
+import Button from "./Button";
 import { ReactComponent as Logo } from '../assets/img/Logo.svg';
 
 
@@ -22,8 +23,9 @@ const AuthPage = ({ dispatch, authType, path }) => {
     const [load, setLoad] = useState(false);
 
     const auth = useContext(Context);
-    const { loading, request, error } = useHttp();
+    const { loading, request } = useHttp();
     const message = useMessage();
+    const [error, setError] = useState(false)
 
     const changeHandler = (event) => {
         setForm({...form, [event.target.name]: event.target.value });
@@ -64,8 +66,7 @@ const AuthPage = ({ dispatch, authType, path }) => {
                 history.push(path);
             }
             else {
-                console.log(error)
-                alert('Неверный логин или пароль');
+                setError(data.message)
             } 
         }
         catch (e) {
@@ -102,7 +103,7 @@ const AuthPage = ({ dispatch, authType, path }) => {
     }, 2200);
 
     return (
-        <div className="music__auth">
+       !load ? ( <div className="music__auth">
             {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/> */}
             {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>   */}
 
@@ -115,12 +116,14 @@ const AuthPage = ({ dispatch, authType, path }) => {
 
         
 
-            !load ? (<div className="music__auth-box">
+            <div className="music__auth-box">
             
                         <Route path="/auth/login">
                             <h1>Login</h1>
                             
-                            <div className="music-form">
+                           {error ? 
+                            (<Button type="message" text={error}/>) :
+                             (<div className="music-form">
                                 <input 
                                     type="text" 
                                     placeholder="example@gmail.com"
@@ -140,6 +143,8 @@ const AuthPage = ({ dispatch, authType, path }) => {
                                     <Link to="/auth/register" id="btn_nonreg">Register</Link>
                                 </div>
                             </div> 
+                            )
+                         }
                         </Route>
             
                         <Route path="/auth/register">
@@ -214,12 +219,12 @@ const AuthPage = ({ dispatch, authType, path }) => {
                             <span className="music-form-forgot">Forgot password ?</span>
                         </Link>
                         
-                        </div>)
-                        :
-                        (<Preloader/>)
+                        </div>
             
         }
-        </div>
+        </div>)
+                        :
+                        (<Preloader/>)
     );
 }
 

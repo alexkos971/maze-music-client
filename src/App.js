@@ -16,6 +16,7 @@ import Sidebar from './components/Sidebar';
 import Main from './components/Main';
 import Player from './components/Player';
 import AuthPage from './components/AuthPage';
+import Preloader from "./components/Preloader"
 
 function App({ dispatch, start, song, night, profile, path }) {
 
@@ -29,12 +30,15 @@ function App({ dispatch, start, song, night, profile, path }) {
 
   const getProfile = useCallback(async () => {
     try {
-      dispatch(setProfile(await request('/api/users/profile', 'GET', null, {
+      let data = await request('/api/users/profile', 'GET', null, {
         Authorization: `Bearer ${token}`
-      })));
+      })
+      if (data) {
+        dispatch(setProfile(data));
+      }
     }  
     catch (e) {
-      console.log("Не удалось загрузить профиль")
+      console.log("Не удалось загрузить профиль", e)
     }
   }, [token, dispatch, request])
 
@@ -81,7 +85,7 @@ function App({ dispatch, start, song, night, profile, path }) {
   
   if (!profile) {
     return (
-      <h1 className="load_title">Loading...</h1>
+      <Preloader/>
     )
   } 
   
