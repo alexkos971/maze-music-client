@@ -4,7 +4,7 @@ let initialState = {
     fullPlayer: false,
     night: JSON.parse(localStorage.getItem('userNight')),
     header: false,
-    path: 'Upload',
+    path: 'Profile',
     auth: false
 }
 

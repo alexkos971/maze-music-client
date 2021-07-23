@@ -20,7 +20,7 @@ import Upload from './Pages/Upload';
 import Profile from './Profile';
 import Settings from './Settings';
 import image  from '../../assets/img/Avatar.svg';
-const Main = ({ dispatch, onSavePlaylist, night, header, profile, path,  }) => {
+const Main = ({ dispatch, onSavePlaylist, night, header, profile, path  }) => {
     
     let { logout, token } = useContext(Context);
     const directory = useLocation()

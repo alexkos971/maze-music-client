@@ -5,6 +5,7 @@ function noop() {}
 export let Context = React.createContext({
     isAuthenticated: false,
     token: false,
+    server: "https://maze-music-server.herokuapp.com/",
     sidebar: [
       {
         "name": "For you",

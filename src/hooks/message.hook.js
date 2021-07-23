@@ -7,9 +7,7 @@ export const useMessage = () => {
 
     return useCallback(text => {
         if (text) {
-            // setMessage(text);
             alert(text)
-            // console.log(message)
             setIsVisible(true);
             
             setTimeout(() => {
@@ -17,7 +15,6 @@ export const useMessage = () => {
                 setMessage(null)
             }, 3000);
         }
-        console.log(message);
         return { isVisible, message, setMessage }
     }, [message, isVisible])
 }

@@ -37,6 +37,8 @@ const CardsTemp = ({dispatch, items, to, start }) => {
             <img src={rightIcon} alt="right-con"/>
         </div>
     )
+
+
      // For slider
      const settings = {
         dots: true,
@@ -62,7 +64,7 @@ const CardsTemp = ({dispatch, items, to, start }) => {
                                 </i>
                             </div>*/}
                             
-                            <Link to={"/Artist/" + item._id} onClick={() => dispatch(changeDir('Artist'))}>
+                            <Link to={"/Artist/" + item._id}>
                                 <img src={item.avatar} alt="" className="slider_img" />
                                 <h2 className="music__main-slider-item_artist">{item.name}</h2>
 
@@ -93,18 +95,17 @@ const CardsTemp = ({dispatch, items, to, start }) => {
                                 </div>
 
                                 <Link to={to + "/" + item._id}>
-                                    <img src={item.avatar} alt="" className="slider_img" />
+                                    <img src={item.cover} alt="" className="slider_img" />
                                     <h2 className="music__main-slider-item_artist">{item.name}</h2>
 
                                     <div className="music__main-slider-item_desk">
-                                        <span>{item.listeners} listeners | </span>
-                                        <span>{item.tracks.length} tracks</span> 
-                                    </div>    
+                                        <span>{item.listenings} listeners | </span>
+                                        <span>{item.album.length} tracks</span> 
+                                    </div>   
                                 </Link>        
                             </div> 
                         );
-                        })
-                    }
+                    })}
                 </Slider>
             </div>
         )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setFullPlayer } from '../../../redux/actions';
 
@@ -7,6 +7,7 @@ import '../Main.scss';
 
 
 const FullPlayer = ({ dispatch, full, song }) => {
+    const history = useHistory()
     
     return (
         <div className={full ? "music__main-full-active" : "music__main-full"}>
@@ -23,6 +24,21 @@ const FullPlayer = ({ dispatch, full, song }) => {
                 </span>
 
                 {song.album_name &&  <span>Album: <span>{song.album_name}</span></span>}
+
+                {song.genre && 
+                    <span>Genre: 
+                    {
+                        song.genre.map(item => (
+                            <Link to={`/Genre/${item}`} key={item} onClick={() => {
+                                dispatch(setFullPlayer(false))
+                                history.push('/Search')
+                            }}>
+                                <span>{item}</span>
+                            </Link>
+                        ))
+                    }
+                    </span>
+                }
             </div>
 
             <div className="music__main-full-cover">

@@ -1,18 +1,28 @@
-import React, { useState, useContext, useEffect } from "react";
-import { MainContext } from "../index.jsx"
+import React, { useState, useContext } from "react";
+import { MainContext } from "../index.jsx";
 import "../Upload.scss";
 
+import ChooseName from "./ChooseName";
+
 const ChooseLength = () => {
-	const { setBtnDisabled, setForm, form } = useContext(MainContext);
+	const { setBtnDisabled, setForm, form, setSteps, steps } = useContext(MainContext);
 	const [open, setOpen] = useState(false);
 
 	const list = ["Single track", 'Album', "EP"]
-	const [active, setActive] = useState(form.type || list[0])
+	const [active, setActive] = useState((form && form.type) || list[0]);
 
+	const handleLength = (item) => {
 
-	// useEffect(() => {
-		// setBtnDisabled(true);
-	// }, [])
+		if (item == list[0]) {
+			const newSteps = steps.filter(i => i !== ChooseName)
+			console.log(newSteps)
+			setSteps(newSteps)
+		}
+		setActive(item)
+		setOpen(false);
+		setForm({ ...form, type: item })
+		setBtnDisabled(false)
+	}
 
 	return (
 		<div className="music__main-upload-container-length">
@@ -31,12 +41,7 @@ const ChooseLength = () => {
 					<ul>
 						{
 							list.map(item => 
-								<li key={item} onClick={() => {
-									setActive(item)
-									setOpen(false);
-									setForm({ ...form, type: item })
-									setBtnDisabled(false)
-								}}>{item}</li>
+								<li key={item} onClick={() => handleLength(item)}>{item}</li>
 							)
 						}
 					</ul>

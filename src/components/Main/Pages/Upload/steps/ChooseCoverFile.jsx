@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, createRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {MainContext} from "../index.jsx";
 import DragAndDrop from "../../../../DragAndDrop";
 
@@ -10,7 +10,6 @@ const ChooseCoverFile = () => {
         setBtnDisabled(true)
         if (file) {
             setForm({ ...form, cover: file })
-            console.log(file)
             setBtnDisabled(false);
         }
     }, [file])

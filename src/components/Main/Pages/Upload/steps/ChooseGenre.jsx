@@ -45,7 +45,7 @@ const ChooseGenre = () => {
 				{
 					genres.map(item => 
 						<div key={item} className={"music__main-upload-container-genres-wrap-button"} onClick={() => checkBtn(item)} >
-							<Button type="select" text={item} active={selected.includes(item)}/>
+							<Button type="button" text={item} active={selected.includes(item)}/>
 						</div>
 					)
 				}

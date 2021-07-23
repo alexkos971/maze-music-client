@@ -4,6 +4,12 @@
     width: 100%;
     padding-bottom: 50px;
 
+    &-empty {
+        font-size: 20px;
+        position: relative;
+        left: 20px;
+    }
+
     &-header {
         width: 100%;
         height: 250px;
@@ -156,66 +162,6 @@
                 span {
                     font-size: 20px;
                 }
-
-                &-select {
-                    select {
-                        background: #393E46;
-                        color: #fff;
-                        padding: 8px 10px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        border: none;
-
-                        &::-ms-expand {
-                            display: none;
-                        }
-                        
-                        option {
-                            outline: none;
-                            cursor: pointer;
-                        }
-                    }
-                }
-
-                &-checkbox {
-                    align-items: center;
-                    width: 50px;
-                    height: 25px;
-                    overflow: hidden;
-                    // display: block;
-                    // position: relative;
-
-                    input {
-                        display: none;   
-                    }
-
-                    label {
-                        width: 100%;
-                        height: 100%;
-                        background-color: #393E46;
-                        border-radius: 25px;
-                        display: block;
-                        cursor: pointer;
-                    }
-
-                    &-check {
-                        width: 19px;
-                        height: 19px;
-                        border-radius: 50%;
-                        background-color: #8E8E8E;
-                        top: 3px;
-                        left: 3px;
-                        display: block;
-                        position: relative;
-                        transition: .1s;
-                        
-                        &.checked {
-                            left: 28px;
-                            background-color: #00ADB5;
-                            transition: .1s;
-                        }
-                    }
-                }
             }
         }
     }
@@ -224,6 +170,12 @@
         width: 60%;
         margin-top: 30px;
         margin-left: 60px;
+    }
+
+    &-albums {
+        width: 60%;
+        margin-top: 30px;
+        margin-left: 60px;  
     }
 
     &.night {

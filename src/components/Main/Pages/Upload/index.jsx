@@ -10,20 +10,27 @@ import FinalStep from "./steps/FinalStep"
 import Preloader from "../../../Preloader";
 import './Upload.scss';
 
-
-const steps = [ChooseLength,  ChooseGenre, ChooseName, ChooseTrackFile, ChooseCoverFile, FinalStep];
-const scrollSteps = ['Type', 'Genre', "Name", "Upload files"]
 export const MainContext = createContext();
 
 const Upload = () => {
 
     const [load, setLoad] = useState(false);
 
-    const [animateLoading, setAnimateLoading] = useState(true);
-    const [form, setForm] = useState({})
+    const [animateLoading, setAnimateLoading] = useState(false);
+    const [form, setForm] = useState()
     const [btnDisabled, setBtnDisabled ] = useState(true);
 
+    const [scrollSteps, setScrollsteps] = useState(['Type', 'Genre', "name", "Upload files", "Upload Cover"])
     
+    const [steps, setSteps] = useState([
+        ChooseLength,  
+        ChooseGenre,  
+        ChooseName,
+        ChooseTrackFile, 
+        ChooseCoverFile, 
+        FinalStep
+    ]);
+
     const [step, setStep] = useState(0);
     const Step = steps[step];
 
@@ -42,13 +49,13 @@ const Upload = () => {
 
 
     if (load) {
-        return (
+        return ( 
             <Preloader/>
         )
     }
 
     return (
-        <MainContext.Provider value={{ setLoad, setForm, form, setBtnDisabled }}>         
+        <MainContext.Provider value={{ setLoad, setForm, form, setBtnDisabled, setSteps, steps }}>         
             <div className="music__main-upload">
                 <div className={`music__main-upload-bg`}></div>
 
@@ -73,7 +80,7 @@ const Upload = () => {
                                 scrollSteps.map((item, index) => 
                                 <div key={item} className="music__main-upload-scroll-wrap">   
                                     <div className={`music__main-upload-scroll-wrap-circle ${(index <= step) && "active"}`} onClick={() => index <= step && setStep(index)}></div>
-                                    <span>{item}</span>
+                                 <span>{item}</span>
                                     {(index + 1 !== scrollSteps.length) && <div className="music__main-upload-scroll-wrap-line"></div>}
                                 </div>
                                 )

@@ -9,10 +9,12 @@ import { useMessage } from "../../../hooks/message.hook";
 
 import "./Profile.scss"
 
-import SongsTemp from "../SongsTemp"
-import Preloader from "../../Preloader"
+import SongsTemp from "../SongsTemp";
+import CardsTemp from "../CardsTemp";
+import Preloader from "../../Preloader";
+import Button from "../../Button";
 
-const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night }) => {
+const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start, night }) => {
     const { loading, request } = useHttp();
     const { token } = useAuth();
 
@@ -103,20 +105,19 @@ const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night })
                 let data = await request(`/api/songs/mySongs`, 'GET', null, {
                     Authorization: `Bearer ${ token }`
                 });
-                    if (data) {
+                    if (data && data.length > 0) {
                         dispatch(getMySongs(data))
                     }
-                    else {
-                        getSongs(mySongs)
-                        return <h1>Loading...</h1>
+                    else if (data.message === '404 not found') {
+                        dispatch(getMySongs([]));
                     }
                 }
                 else {
-                    dispatch(getMySongs(list))
+                dispatch(getMySongs(list))
             }
         }
         catch (e) { console.error(e) }
-    } ,[request, dispatch, token, mySongs]);
+    }, [request, dispatch, token, mySongs ]);
     
     useEffect(() => {
         if (token) {
@@ -130,7 +131,7 @@ const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night })
             // <h1 className="load_title">Loading...</h1>
             <Preloader/>
         );
-    }
+    } 
 
     return (
         <div className={`music__main-profile ${!night ? "night" : ""}`}>
@@ -170,7 +171,7 @@ const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night })
                         {
                             frequent.artists.map((item, index) => {
                                 return (
-                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`Artist:${item.link}`} key={index}>
+                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`Artist/${item.link}`} key={index}>
                                         {item.name}
                                     </Link>
                                 )
@@ -184,7 +185,7 @@ const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night })
                         {
                             frequent.genres.map((item, index) => {
                                 return (
-                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`Genre:${item.link}`} key={index}>
+                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`Genre/${item.link}`} key={index}>
                                         {item.name}
                                     </Link>
                                 )
@@ -202,53 +203,48 @@ const Profile = ({ dispatch, profile, mySongs, savedSongs, song, start, night })
                     <li className="music__main-profile-settings-list-item">
                         <span>Language:</span>
 
-                        <div className="music__main-profile-settings-list-item-select">
-                            
-                            <select name="language" id="language">
-                                <option value="en">English</option>
-                                <option value="ru">Русский</option>
-                            </select>
+                        <div className="music__main-profile-settings-list-item-select">           
+                            <Button type="select" list={['English', 'Russian', 'Germany']}/>
                         </div>
                     </li>
                     <li className="music__main-profile-settings-list-item">
                         <span>Quality of audio:</span>
 
                         <div className="music__main-profile-settings-list-item-select">
-                            
-                            <select name="quality" id="language">
-                                <option value="en">Hight</option>
-                                <option value="ru">Middle</option>
-                            </select>
+                            <Button type="select" list={['High', 'Middle']}/>
                         </div>
                     </li>
                     <li className="music__main-profile-settings-list-item">
                         <span>Files on device:</span>
 
-                        <div className="music__main-profile-settings-list-item-checkbox">
-                            <input type="checkbox" id="files" />
-                            <label htmlFor="files" onClick={() => setChecked(!checked)}>
-                                <div className={`music__main-profile-settings-list-item-checkbox-check ${checked ? "checked" : ""}`}></div>
-                            </label>
-
-                        </div>
+                        <Button type="button" text="C:/Users/Alex/AppData/Roaming/maze-music/data" active mr />
                     </li>
                     <li className="music__main-profile-settings-list-item">
                         <span>Notifications:</span>
 
                         <div className="music__main-profile-settings-list-item-checkbox">
-                            <input type="checkbox" id="files" />
-                            <label htmlFor="files" onClick={() => setChecked(!checked)}>
-                                <div className={`music__main-profile-settings-list-item-checkbox-check ${checked ? "checked" : ""}`}></div>
-                            </label>
-
+                            <Button type={'checkbox'}/>
                         </div>
                     </li>
                 </ul>
             </div>
-
+            
             <div className="music__main-profile-songs">
                 <h2 className="subtitle">Songs</h2>
-                <SongsTemp songs={mySongs} my={true} />
+                {mySongs.length > 0 ?
+                    <SongsTemp songs={mySongs} my={true} />
+                    :
+                    <span className="music__main-profile-empty">You have no songs</span>
+                }
+            </div>
+
+            <div className="music__main-profile-albums">
+                <h2 className="subtitle">Albums</h2>
+                {myAlbums.length > 0 ?
+                    <CardsTemp songs={myAlbums} />
+                    :
+                    <span className="music__main-profile-empty">You have no albums</span>
+                }
             </div>
         </div>
     );
@@ -258,6 +254,7 @@ const mapStateToProps = (state) => {
     return {
         profile: state.profile.profile,
         mySongs: state.songs.mySongs,
+        myAlbums: state.albums.myAlbums,
         savedSongs: state.profile.profile.saved_songs,
         start: state.onPlay.start,
         song: state.onPlay.song,

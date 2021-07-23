@@ -11,7 +11,7 @@ import { useAuth } from "../../../hooks/auth.hook";
 import { useMessage } from "../../../hooks/message.hook";
 import { downloadIcon } from '../images';
 
-const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, song, start, my, night }) => {
+const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, profile, song, start, my, night, type, setSongs }) => {
 
     const { loading, request, error } = useHttp();
     const { token } = useAuth();
@@ -41,13 +41,49 @@ const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, song, start, my, n
                 await dispatch(getMySongs(newSongs))
                 await dispatch(getRecomendSongs(newRecomendSongs))
                 message(data.message)
-                // console.log(data)
             }
         }
         else {
             return;
         }
     }
+
+    if (type && type === 'Album') {
+        return (
+            <ol className={`music__main-temp-songs-list${!night ? " night" : ""}`}>
+                {
+                    songs.map((item, index) => 
+                        <li key={index}>
+                            <span className="music__main-temp-songs-list_name">
+                                <span className="music__main-temp-songs-list-link">
+                                    <span className="music__main-temp-songs-list_artist-name">
+                                        {profile.name}
+                                    </span>
+                                    <span> - </span>
+                                </span>
+                                {item.name.substring(0, item.name.length - 4)}
+                            </span>
+
+                            <span className="music__main-temp-songs-list-album">{type}</span>
+
+                            <div className="music__main-temp-songs-list_right">
+                                <span className="music__main-temp-songs-list_right-trash" 
+                                onClick={() => {
+                                    const newAlbums = songs.filter((el, ind) => ind !== index);
+                                    setSongs(newAlbums)
+                                }}>
+                                    <i className="fas fa-trash-alt"></i>
+                                </span>
+                                <span className="music__main-temp-songs-list_right-time_now">0:00 </span>
+                            </div>
+
+                        </li>
+                    )
+                }
+            </ol>
+        )
+    }
+
 
     return (
         <ol className={`music__main-temp-songs-list${!night ? " night" : ""}`}>
@@ -79,7 +115,7 @@ const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, song, start, my, n
                             {item.name}
                         </span>
 
-                        <span className="music__main-temp-songs-list-album">{songs.album ? songs.album : "single"}</span>
+                        <span className="music__main-temp-songs-list-album">{item.type ? item.type : "single"}</span>
 
                         <div className="music__main-temp-songs-list_right">
 
@@ -119,7 +155,8 @@ const mapStateToProps = (state) => {
         start: state.onPlay.start,
         night: state.interface.night,
         mySongs: state.songs.mySongs,
-        recomendSongs: state.songs.recomendSongs
+        recomendSongs: state.songs.recomendSongs,
+        profile: state.profile.profile
     }
 }
 

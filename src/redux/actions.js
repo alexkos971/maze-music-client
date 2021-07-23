@@ -8,6 +8,7 @@ import {
     FETCH_RECOMEND_SONGS, 
     FETCH_RECOMEND_ARTISTS,
     FETCH_MY_SONGS,
+    FETCH_MY_ALBUMS,
     NOW_SONG, 
     SAVE_SONG, 
     SET_PROFILE,
@@ -53,35 +54,6 @@ export const setHeader = (state) => {
 }
 
 export const onPlay = (item, list) => {
-    // return async( dispatch, getState)  => {
-        
-    //     if (getState().onPlay.song._id === item._id) {   
-    //         return dispatch({
-    //             type: PLAY_SONG,
-    //             song: item,
-    //             list: list
-    //         })
-    //         dispatch({
-    //             type: SET_START,
-    //             payload: false
-    //         });
-    //     }
-    //     else {
-    //         await dispatch(setInputDuration(0));
-
-    //         await dispatch(setNowSong(item));
-
-    //         await dispatch({
-    //             type: PLAY_SONG,
-    //             song: item,
-    //             list: list
-    //         })
-    //         dispatch({
-    //             type: SET_START,
-    //             payload: true
-    //         });
-    //     }
-    // }
     return {
         type: PLAY_SONG,
         song: item,
@@ -147,6 +119,13 @@ export const setProfile = (data) => {
 export const getMySongs = (data) => {
     return {
         type: FETCH_MY_SONGS,
+        payload: data
+    }
+}
+
+export const getMyAlbums = (data) => {
+    return {
+        type: FETCH_MY_ALBUMS,
         payload: data
     }
 }
