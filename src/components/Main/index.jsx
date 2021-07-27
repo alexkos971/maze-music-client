@@ -7,11 +7,12 @@ import { Context } from '../../context';
 import { useMessage } from "../../hooks/message.hook";
 
 // Redux
-import { setNight, setHeader, changeDir } from '../../redux/actions'
+import { setNight, setHeader, changeDir, setProfile } from '../../redux/actions'
 
 // Selectors
 import FullPlayer from '../Main/FullPlayer';
 import Albums from './Pages/Albums';
+import Album from "./Pages/Album";
 import For from './Pages/For';
 import Artist from './Pages/Artist';
 import Playlists from './Pages/Playlists';
@@ -20,6 +21,8 @@ import Upload from './Pages/Upload';
 import Profile from './Profile';
 import Settings from './Settings';
 import image  from '../../assets/img/Avatar.svg';
+import ChangeAvatar from "./Profile/ChangeAvatar";
+
 const Main = ({ dispatch, onSavePlaylist, night, header, profile, path  }) => {
     
     let { logout, token } = useContext(Context);
@@ -67,7 +70,10 @@ const Main = ({ dispatch, onSavePlaylist, night, header, profile, path  }) => {
                 </div>
                 
                 <div className={`music__main-header-menu${header ? '-active' : ""}`}>
-                    <Link to="/auth" onClick={() => logout()}>
+                    <Link to="/auth" onClick={() => {
+                        logout()
+                        dispatch(setProfile({profile: null}))
+                    }}>
                         <span><i className="fas fa-user-circle"></i></span>
                         <span>Logout</span>
                     </Link>
@@ -94,7 +100,9 @@ const Main = ({ dispatch, onSavePlaylist, night, header, profile, path  }) => {
                     onSavePlaylist={onSavePlaylist}/>
             </Route>
 
+            <Route path={'/ChangeAvatar'} exact component={ChangeAvatar}/>
             <Route path={"/Artist/:id"} exact component={Artist}/>
+            <Route path={'/Albums/:id'} exact component={Album} />
             <Route path={"/Albums"} exact component={Albums}/>
             <Route path={"/Songs"} exact component={Songs}/>
             <Route path={"/Upload"} component={Upload}/>

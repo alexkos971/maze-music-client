@@ -7,16 +7,22 @@
 
     &:after {
         content: '';
-        padding-top: 70%;
+        padding-top: 60%;
     } 
 }
 
 .music__main-slider  {
+    position: relative;
+
+    // &.artist {
+    // width: 180%;
+        
+    // }
 
     &-view {
         position: absolute;
         right: 120px;
-        top: 10px;
+        top: -40px;
         color: #2BA6A2;
         font-weight: 500;
         font-size: 16px;
@@ -50,7 +56,7 @@
         }
 
         img {
-            width: 110%;
+            width: 120%;
             position: absolute;
             top: 0;
             z-index: -1;
@@ -60,6 +66,7 @@
 
         &_artist {
             position: relative;
+            display: flex;
             top: 60%;
             font-weight: lighter;
             color: #fff;
@@ -78,8 +85,25 @@
             text-align: center;
 
         }
+
+        &-hover {
+            display: none;
+        }
     }
 }
+
+.slick-slide {
+    width: 80% !important;
+}
+
+.slick-track {
+    min-width: 912px;
+    flex-wrap: nowrap;
+    display: flex;
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+}
+
 
 
 .slider_wrap {

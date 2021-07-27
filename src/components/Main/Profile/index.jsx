@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getMySongs, setProfile } from '../../../redux/actions';
+import { setMySongs, setProfile, changeDir } from '../../../redux/actions';
 
 import { useHttp } from '../../../hooks/http.hook';
 import { useAuth } from "../../../hooks/auth.hook";
@@ -52,28 +52,6 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
 
     const message = useMessage();
 
-    const changeAvatar = async () => {
-        let link = prompt('Paste the link of new avatar');
-        
-        if (!link) {
-            return alert('Поле пустое !!!');
-        }
-
-        try {
-            const avatar = await request('/api/changes/avatar', 'POST', { avatar: link }, {
-                Authorization: `Bearer ${token}`
-            })
-
-            if (avatar) {
-                message(avatar.message);
-                dispatch(setProfile({...profile, avatar: avatar.avatar }))
-            }
-        }
-        catch (e) {
-            message(e.message)
-        }
-    }
-
     const changeName = async () => {
         let name = prompt('Paste the new name', profile.name);
         
@@ -96,34 +74,6 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
         }
     }
 
-     // Get list of songs
-     const getSongs = useCallback(async (list) => {
-        try {
-            if (!list.length) {
-
-                let data = await request(`/api/songs/mySongs`, 'GET', null, {
-                    Authorization: `Bearer ${ token }`
-                });
-                    if (data && data.length > 0) {
-                        dispatch(getMySongs(data))
-                    }
-                    else if (data.message === '404 not found') {
-                        dispatch(getMySongs([]));
-                    }
-                }
-                else {
-                dispatch(getMySongs(list))
-            }
-        }
-        catch (e) { console.error(e) }
-    }, [request, dispatch, token ]);
-    
-    useEffect(() => {
-        if (token) {
-            getSongs(mySongs);
-        }
-    }, [dispatch, token, getSongs, mySongs])
-
 
     if (loading && profile) {
         return (
@@ -143,8 +93,10 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                         <div className="music__main-profile-header-wrap-avatar-img">
                             <img src={profile.avatar || image} alt=""/>
                             
-                            <div className="music__main-profile-header-wrap-avatar-img-change">
-                                <span onClick={changeAvatar}>Change</span>
+                            <div className="music__main-profile-header-wrap-avatar-img-change" onClick={() => dispatch(changeDir('Change Avatar'))}>
+                                <Link to="/ChangeAvatar">
+                                    <span>Change</span>
+                                </Link>
                             </div>
                         
                         </div>
@@ -234,7 +186,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
             
             <div className="music__main-profile-songs">
                 <h2 className="subtitle">Songs</h2>
-                {mySongs.length > 0 ?
+                {mySongs && mySongs.length > 0 ?
                     <SongsTemp songs={mySongs} my={true} />
                     :
                     <span className="music__main-profile-empty">You have no songs</span>
@@ -243,8 +195,8 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
 
             <div className="music__main-profile-albums">
                 <h2 className="subtitle">Albums</h2>
-                {myAlbums.length > 0 ?
-                    <CardsTemp songs={myAlbums} />
+                {myAlbums && myAlbums.length > 0 ?
+                    <CardsTemp items={myAlbums} to="Albums" my={true}/>
                     :
                     <span className="music__main-profile-empty">You have no albums</span>
                 }
@@ -256,8 +208,8 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
 const mapStateToProps = (state) => {
     return {
         profile: state.profile.profile,
-        mySongs: state.songs.mySongs,
-        myAlbums: state.albums.myAlbums,
+        mySongs: state.profile.profile.songs,
+        myAlbums: state.profile.profile.albums,
         savedSongs: state.profile.profile.saved_songs,
         start: state.onPlay.start,
         song: state.onPlay.song,

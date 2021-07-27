@@ -10,60 +10,32 @@ import './Artist.scss';
 
 import { useHttp } from '../../../../hooks/http.hook';
 
-const Artist = ({ recomendArtists, recomendSongs }) => {
+const Artist = ({ recomendArtists }) => {
     
     const [artist, setArtist] = useState({});
     let id = useParams().id;
-    const {request, loading} = useHttp();
-
-
-    // Get list of songs of atrist
-    // const getSongs = useCallback(async (list) => {
-    //     try {
-    //         if (!list.length) {
-
-    //             let data = await request(`/api/songs/mySongs`, 'GET', null, {
-    //                 Authorization: `Bearer ${ token }`
-    //             });
-    //                 if (data && data.length > 0) {
-    //                     dispatch(getMySongs(data))
-    //                 }
-    //                 else if (data.message === '404 not found') {
-    //                     dispatch(getMySongs([]));
-    //                 }
-    //             }
-    //             else {
-    //             dispatch(getMySongs(list))
-    //         }
-    //     }
-    //     catch (e) { console.error(e) }
-    // }, [request, dispatch, token ]);
-    
-    // useEffect(() => {
-    //     if (token) {
-    //         getSongs(mySongs);
-    //     }
-    // }, [dispatch, token, getSongs, mySongs])
+    const { request, loading } = useHttp();
     
     const getArtist = useCallback(async () => {
         try {
             const data = await request(`/api/users/artist/${id}`, 'GET');
             if (data) {
-                let url = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${data.name}&api_key=${config.lastfm_key}&format=json`
+                // console.log(data.songs)
+                // let url = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${data.name}&api_key=${config.lastfm_key}&format=json`
                 
-                const info = await request(url, 'GET')
-                if (!info.error) {
-                    setArtist({...data, 
-                        info: info.artist.bio.content, 
-                        tags: info.artist.tags.tag,
-                        info_large: (info.artist.bio.content).substring(0, 300) + '...'
-                    });
-                    return;
-                }
-                else {
+                // const info = await request(url, 'GET')
+                // if (!info.error) {
+                    // setArtist({...data, 
+                        // info: info.artist.bio.content, 
+                        // tags: info.artist.tags.tag,
+                        // info_large: (info.artist.bio.content).substring(0, 300) + '...'
+                    // });
+                    // return;
+                // }
+                // else {
                     setArtist({...data, info: 'There is no information about this artist', info_large: 'There is no information about this artist'});
                     return;
-                }
+                // }
             }
             else {
                 return <h1>Not found...</h1>    
@@ -159,8 +131,7 @@ const Artist = ({ recomendArtists, recomendSongs }) => {
 
 const mapStateToProps = (state) => {
     return {
-        recomendArtists: state.artists.recomendArtists,
-        recomendSongs: state.songs.recomendSongs
+        recomendArtists: state.artists.recomendArtists
     }
 }
 

@@ -177,42 +177,46 @@
                 margin-left: 15px;
             }
         }
-
-        &.night {
-
-            .music__main-temp-songs-list {
-
-                li {
-                    
-                    &:before {
-                        color: $color !important;
-                    }
-
-                    &:hover {
-                        background-color: #292929 !important;
-                    }
-                }
-
-                &_artist-name {
-                    color: $color;
-                }
-
-                &_name {
-                    color: $color !important;
-                }
-
-                &-link {
-                    color: $color;
-                }
-
-                &-right {
-                    &-trash {
-                        color: $color;    
-                    }
-                }
-            }
-    
-        }
     }
 
 }
+
+.music-night {
+    $color: #8e8e8e;
+    
+    .music__main-temp-songs-list {
+
+        li {
+            
+            &:before {
+                color: $color !important;
+            }
+
+            &:hover {
+                background-color: #292929 !important;
+            }
+        }
+
+        &_artist-name {
+            color: $color;
+        }
+
+        &-album {
+            color: #8e8e8e;
+        }
+
+        &_name {
+            color: $color !important;
+        }
+
+        &-link {
+            color: $color;
+        }
+
+        &-right {
+            &-trash {
+                color: $color;    
+            }
+        }
+    }
+} 

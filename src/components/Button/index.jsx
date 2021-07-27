@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Button.scss";
 
 
-const Button = ({ text, color, type, сondition, active, list, mr }) => {
+const Button = ({ text, color, type, active, list, mr }) => {
 	const [open, setOpen] = useState(false);
 	const [current, setCurrent] = useState(list && list[0] || null);
 	const [visible, setVisible] = useState(false);

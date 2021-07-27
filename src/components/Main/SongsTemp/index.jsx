@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./SongsTemp.scss";
 import {  connect } from "react-redux";
-import { onPlay, getMySongs, getRecomendSongs } from "../../../redux/actions";
+import { onPlay, setMySongs, getRecomendSongs, saveSong, setProfile } from "../../../redux/actions";
 
 
 import { useHttp } from "../../../hooks/http.hook";
@@ -11,11 +11,24 @@ import { useAuth } from "../../../hooks/auth.hook";
 import { useMessage } from "../../../hooks/message.hook";
 import { downloadIcon } from '../images';
 
-const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, profile, song, start, my, night, type, setSongs }) => {
+const SongsTemp = ({ 
+    dispatch, 
+    mySongs, 
+    savedSongs, 
+    recomendSongs, 
+    profile, 
+    song, 
+    start, 
+    my, 
+    night, 
+    type, 
+    setAlbum, 
+    songs }) => {
 
     const { loading, request, error } = useHttp();
     const { token } = useAuth();
     const message = useMessage();
+    // const [saved, setSaved] = useState(false);
 
     const deleteSong = async (id) => {  
         let qustion = window.confirm("Вы точно хотите удалить этот трек ?");
@@ -25,7 +38,6 @@ const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, profile, song, sta
             let data = await request(`/api/songs/delete/${id}`, 'DELETE', null, {
                 Authorization: `Bearer ${token}`
             })
-            
             
             if (error) {
                 alert(error)
@@ -38,13 +50,24 @@ const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, profile, song, sta
                 const newRecomendSongs = recomendSongs.filter(item => {
                     return item._id !== id;
                 })
-                await dispatch(getMySongs(newSongs))
+                await dispatch(setProfile({...profile, songs: newSongs}))
                 await dispatch(getRecomendSongs(newRecomendSongs))
                 message(data.message)
             }
         }
         else {
             return;
+        }
+    }
+
+    const onSaveSong = async (item) => {
+        item.saved = !item.saved;
+        // dispatch(saveSong(item))
+        const check = await profile.saved_songs.some(el => el._id === item._id);
+        if (!check) {
+            const newSaved = profile.saved_songs.push(item)
+            await dispatch(getRecomendSongs(recomendSongs, newSaved));
+            await dispatch(setProfile({...profile, saved_songs: newSaved}));
         }
     }
 
@@ -70,7 +93,7 @@ const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, profile, song, sta
                                 <span className="music__main-temp-songs-list_right-trash" 
                                 onClick={() => {
                                     const newAlbums = songs.filter((el, ind) => ind !== index);
-                                    setSongs(newAlbums)
+                                    setAlbum(newAlbums)
                                 }}>
                                     <i className="fas fa-trash-alt"></i>
                                 </span>
@@ -83,7 +106,6 @@ const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, profile, song, sta
             </ol>
         )
     }
-
 
     return (
         <ol className={`music__main-temp-songs-list${!night ? " night" : ""}`}>
@@ -132,7 +154,7 @@ const SongsTemp = ({ dispatch, songs, mySongs, recomendSongs, profile, song, sta
                             </a>
 
                             <span className="music__main-temp-songs-list_right-save"
-                                onClick={() => alert("saved")}>
+                                onClick={() => onSaveSong(item)}>
                                 <i className={`fa${item.saved ? 's' : 'r'} fa-heart`}></i>
                             </span>
                             
@@ -154,7 +176,8 @@ const mapStateToProps = (state) => {
         song: state.onPlay.song,
         start: state.onPlay.start,
         night: state.interface.night,
-        mySongs: state.songs.mySongs,
+        mySongs: state.profile.profile.songs,
+        savedSongs: state.profile.profile.saved_songs,
         recomendSongs: state.songs.recomendSongs,
         profile: state.profile.profile
     }

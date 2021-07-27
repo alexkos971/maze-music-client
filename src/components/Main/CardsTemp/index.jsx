@@ -42,7 +42,7 @@ const CardsTemp = ({dispatch, items, to, start }) => {
      // For slider
      const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         prevArrow: <SlickArrowLeft/>,
         nextArrow: <SlickArrowRight/>,
@@ -81,14 +81,14 @@ const CardsTemp = ({dispatch, items, to, start }) => {
     }
     else if (to === "Albums") {
         return (
-            <div className="music__main-slider">
-
+            <div className="music__main-slider artist">
+          
                 <span className="music__main-slider-view">View all</span>
                 
                  <Slider {...settings}>
                     {items.map(item => {
                         return (
-                            <div className="music__main-slider-item" key={item.name}>
+                            <div className="music__main-slider-item" key={item.name}  onClick={() => dispatch(changeDir("Album"))}>
                                 <div className="music__main-slider-item-hover">
                                     <i className={`fas fa-${start ? "pause" : "play"}-circle play_btn`}>
                                     </i>
@@ -100,7 +100,7 @@ const CardsTemp = ({dispatch, items, to, start }) => {
 
                                     <div className="music__main-slider-item_desk">
                                         <span>{item.listenings} listeners | </span>
-                                        <span>{item.album.length} tracks</span> 
+                                        <span>{item.songs.length} tracks</span> 
                                     </div>   
                                 </Link>        
                             </div> 

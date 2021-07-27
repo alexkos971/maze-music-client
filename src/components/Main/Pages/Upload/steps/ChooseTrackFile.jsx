@@ -50,7 +50,7 @@ const ChooseTrackFile = ({ name }) => {
 
             {album && album.length > 0 &&
                 <div>
-                    <SongsTemp songs={album} type="Album" setSongs={setAlbum}/>
+                    <SongsTemp songs={album} type="Album" setAlbum={setAlbum}/>
                 </div>
             }
 		</div>

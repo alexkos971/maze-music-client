@@ -20,7 +20,7 @@ const Upload = () => {
     const [form, setForm] = useState()
     const [btnDisabled, setBtnDisabled ] = useState(true);
 
-    const [scrollSteps, setScrollsteps] = useState(['Type', 'Genre', "name", "Upload files", "Upload Cover"])
+    const [scrollSteps, setScrollSteps] = useState(['Type', 'Genre', "Upload files", "Upload Cover", 'Final']);
     
     const [steps, setSteps] = useState([
         ChooseLength,  
@@ -55,7 +55,7 @@ const Upload = () => {
     }
 
     return (
-        <MainContext.Provider value={{ setLoad, setForm, form, setBtnDisabled, setSteps, steps }}>         
+        <MainContext.Provider value={{ setLoad, setForm, form, setBtnDisabled, setSteps, steps, scrollSteps, setScrollSteps }}>         
             <div className="music__main-upload">
                 <div className={`music__main-upload-bg`}></div>
 
@@ -75,7 +75,9 @@ const Upload = () => {
 
                         </div>
 
-                        <div className="music__main-upload-scroll">
+                    </>
+                )}
+                        <div className={`music__main-upload-scroll ${(step === 3 && form.type !== "Single track" && !animateLoading ) ? 'relative' : ''}`}>
                             {
                                 scrollSteps.map((item, index) => 
                                 <div key={item} className="music__main-upload-scroll-wrap">   
@@ -86,8 +88,6 @@ const Upload = () => {
                                 )
                             }
                         </div>
-                    </>
-                )}
 
             </div>
         </MainContext.Provider>

@@ -7,7 +7,7 @@ import {
     ITEM_DURATION, 
     FETCH_RECOMEND_SONGS, 
     FETCH_RECOMEND_ARTISTS,
-    FETCH_MY_SONGS,
+    SET_MY_SONGS,
     FETCH_MY_ALBUMS,
     NOW_SONG, 
     SAVE_SONG, 
@@ -116,9 +116,9 @@ export const setProfile = (data) => {
     }
 }
 
-export const getMySongs = (data) => {
+export const setMySongs = (data) => {
     return {
-        type: FETCH_MY_SONGS,
+        type: SET_MY_SONGS,
         payload: data
     }
 }
@@ -130,11 +130,8 @@ export const getMyAlbums = (data) => {
     }
 }
 
-export const getRecomendSongs = (data) => {
+export const getRecomendSongs = (data, saved) => {
     return async (dispatch, getState) => {
-
-        // await dispatch({type: NOW_SONG, payload: result[0] })
-
         return dispatch({
             type: FETCH_RECOMEND_SONGS,
             payload: data,
@@ -151,22 +148,8 @@ export const getRecomendArtists = (data) => {
 }
 
 export const setSavedSongs = (data) => {
-    return async (dispatch, getState) => {
-
-        if (!data) return [];
-        let result = data.map(item => {
-        
-            dispatch(itemDuration(item.src))   
-
-            item.dur = getState().getDuration.itemDuration;
-            return item;
-        });
-
-        // await dispatch({type: NOW_SONG, payload: result[0] })
-
-        return dispatch({
-            type: FETCH_MY_SAVED_SONGS,
-            payload: result,
-        })
+    return {
+        type: FETCH_MY_SAVED_SONGS,
+        payload: data,
     }
 }

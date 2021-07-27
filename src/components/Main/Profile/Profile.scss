@@ -137,7 +137,7 @@
 
                 &-item {
                     background: #393E46;
-                    padding: 8px 10px;
+                    padding: 5px 8px;
                     border-radius: 5px;
                     margin-right: 10px;
                     font-size: 14px;
@@ -178,12 +178,27 @@
         width: 60%;
         margin-top: 30px;
         margin-left: 60px;
+        position: relative;
+    }
+
+    &-change-avatar {
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        position: relative;
+        top: 20%;
+
+        &-btn {
+            position: relative;
+            text-align: center;
+        }
     }
 
     &-albums {
-        width: 60%;
-        margin-top: 30px;
-        margin-left: 60px;  
+        width: 100%;
+        position: relative;
+        margin-top: 40px;
+        margin-left: 60px;
     }
 
     &.night {

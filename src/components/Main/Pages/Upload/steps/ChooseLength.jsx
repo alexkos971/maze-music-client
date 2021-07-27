@@ -5,7 +5,7 @@ import "../Upload.scss";
 import ChooseName from "./ChooseName";
 
 const ChooseLength = () => {
-	const { setBtnDisabled, setForm, form, setSteps, steps } = useContext(MainContext);
+	const { setBtnDisabled, setForm, form, setSteps, steps, setScrollSteps, scrollSteps } = useContext(MainContext);
 	const [open, setOpen] = useState(false);
 
 	const list = ["Single track", 'Album', "EP"]
@@ -14,10 +14,16 @@ const ChooseLength = () => {
 	const handleLength = (item) => {
 
 		if (item == list[0]) {
-			const newSteps = steps.filter(i => i !== ChooseName)
-			console.log(newSteps)
+			const newSteps = steps.filter(i => i !== ChooseName);
 			setSteps(newSteps)
+
+			setScrollSteps(scrollSteps.filter(i => i !== 'Name'));
 		}
+		if (!scrollSteps.includes('Name')) {
+			scrollSteps.splice(2, 0, 'Name');
+			setScrollSteps(scrollSteps)
+		}
+
 		setActive(item)
 		setOpen(false);
 		setForm({ ...form, type: item })

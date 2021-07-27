@@ -11,7 +11,7 @@ import { useHttp } from '../../../../hooks/http.hook';
 
 import './For.scss';
 
-const For = ({ dispatch, recomendSongs, recomendArtists,savedSongs }) => {
+const For = ({ dispatch, recomendSongs, recomendArtists, savedSongs, profile }) => {
     
     const { loading, request } = useHttp();
 
@@ -20,23 +20,23 @@ const For = ({ dispatch, recomendSongs, recomendArtists,savedSongs }) => {
         try {
             if (!list.length) {
                 let data = await request(`/api/songs/recomendation`, 'GET');
-                    if (data && savedSongs) {
-                        dispatch(getRecomendSongs(data))
-                    }
-                    else {
-                        return <h1>Loading...</h1>
-                    }
+
+                if (data && savedSongs) {
+                    dispatch(getRecomendSongs(data, profile.saved_songs))
                 }
-                else {
-                    dispatch(getRecomendSongs(list))
+            }
+            else {
+                dispatch(getRecomendSongs(list, profile.saved_songs))
             }
         }
         catch (e) { console.error(e) }
     } ,[request, dispatch, savedSongs]);
     
     useEffect(() => {
-        getSongs(recomendSongs);
-        // return () => dispatch(getRecomendSongs([]))
+        if (profile) {
+            getSongs(recomendSongs);
+
+        }
     }, [dispatch, getSongs, recomendSongs]);
     
 
@@ -126,7 +126,8 @@ const mapStateToProps = state => {
         recomendArtists: state.artists.recomendArtists,
         savedSongs: state.profile.profile.saved_songs,
         song: state.onPlay.song,
-        save: state.songs.save
+        save: state.songs.save,
+        profile: state.profile.profile
     }
 }
 
