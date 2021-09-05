@@ -13,9 +13,9 @@ import Message from "./hooks/Message";
 import { Context } from './context';
 
 import Sidebar from './components/Sidebar';
-import Main from './components/Main';
+import Main from './pages';
 import Player from './components/Player';
-import AuthPage from './components/AuthPage';
+import AuthPage from './pages/AuthPage';
 import Preloader from "./components/Preloader"
 
 function App({ dispatch, start, song, night, profile, path }) {

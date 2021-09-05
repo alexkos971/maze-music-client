@@ -1,5 +1,4 @@
 import React, { useState, createRef, useEffect }  from "react";
-import "./DragAndDrop.scss";
 
 const DragAndDrop = ({ description, field, file, setFile, type }) => {
 	const [draged, setDraged] = useState(false);

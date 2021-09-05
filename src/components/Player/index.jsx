@@ -2,8 +2,6 @@ import React, { useState,  useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { setDuration, setFullPlayer, setStart, } from '../../redux/actions';
 
-import './Player.scss';
-
 let audio;
 
 const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullScreen, setFullScreen}) => { 

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./Button.scss";
-
 
 const Button = ({ text, color, type, active, list, mr }) => {
 	const [open, setOpen] = useState(false);

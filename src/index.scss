@@ -1,4 +1,6 @@
-@import "./__spacing";
+@import "./styles/__spacing";
+@import "./styles/__colors";
+@import "./styles/__app";
 
 body {
   margin: 0;
@@ -24,15 +26,14 @@ a {
 }
 
 // Variables
-$color: #8e8e8e;
-// $playerW: 50px;/*70*/
+$color: $gray-font;
 
 .load_title {
   position: absolute;
   top: 35%;
   left: calc(60% - 60px);
   transform: translate(-50%, -50%);
-  color: #8e8e8e;
+  color: $gray-font;
   font-size: 45px;
 }
 
@@ -82,7 +83,7 @@ $color: #8e8e8e;
         background-color: #fff !important;
         // border: .1px solid #000;
         &::placeholder {
-          color: #8E8E8E;
+          color: $gray-font;
         }
       
       }
@@ -90,7 +91,7 @@ $color: #8e8e8e;
       &-required {
         margin: 0;
         font-size: 12px;
-        color: #f23f3f;
+        color: $red;
       }
 
       &-forgot {
@@ -111,13 +112,13 @@ $color: #8e8e8e;
         #btn_nonreg {
           background: none;
           font-size: 15px;
-          color: #2BA6A2;
+          color: $green;
         }
         
         button {
           border: none;
           padding: 8px 20px;
-          color: #696969;
+          color: $gray-btn;
           font-size: 15px;
           border-radius: 3px;
           margin-right: 20px;
@@ -235,7 +236,7 @@ $color: #8e8e8e;
   }
 
   &__sidebar {
-    width: 14%;
+    width: 16%;
     height: 100%;
     background-color: #F4F6F8;
 
@@ -255,14 +256,13 @@ $color: #8e8e8e;
     z-index: 100;
     display: flex;
     position: absolute;
-    background-color: #0f1626;
+    background-color: $blue-bcg;
   }
 
   &__main {
     position: relative;
     width: 86%;
     overflow: auto;
-    padding: 25px 0px 20px 60px;
     background-color: #fff;
 
     li {
@@ -284,7 +284,7 @@ $color: #8e8e8e;
   .music {
 
     &__main {
-      background-color: #151515;
+      background-color: $black-bcg;
 
       h1, h2, h3, h4, h5, h6 {
         color: $color;
@@ -292,7 +292,7 @@ $color: #8e8e8e;
 
       .slick {
         &-dots li button::before {
-          color: #8e8e8e;
+          color: $gray-font;
         }
         &-active button::before {
           color: #fff !important;
@@ -304,7 +304,7 @@ $color: #8e8e8e;
       }
 
       &-header-list-active {
-        background-color: #292929;
+        background-color: $gray-bcg;
 
         a {
           color: #fff;
@@ -316,7 +316,7 @@ $color: #8e8e8e;
 
         &:before {
           content: "";
-          background-color: #292929;
+          background-color: $gray-bcg;
         }
       }
 
@@ -339,7 +339,7 @@ $color: #8e8e8e;
     }
 
     &__sidebar {
-      background-color: #292929;
+      background-color: $gray-bcg;
 
       li {
         &:hover {

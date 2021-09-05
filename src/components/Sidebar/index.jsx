@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { changeDir } from "../../redux/actions"
  
 import { Context } from '../../context';
-import './Sidebar.scss';
 import { NavLink} from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/img/Logo.svg';
 import { ReactComponent as LogoTablet } from '../../assets/img/Logo_tablet.svg';
