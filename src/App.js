@@ -34,7 +34,7 @@ function App({ dispatch, start, song, night, profile, path }) {
         Authorization: `Bearer ${token}`
       })
       if (data) {
-        dispatch(setProfile(data));
+        dispatch(setProfile({...data, description_large: data.description.substr(0, 130) + '...'}));
       }
     }  
     catch (e) {
@@ -129,10 +129,10 @@ function App({ dispatch, start, song, night, profile, path }) {
 
 const mapStateToProps = (state) => {
   return {
-    profile: state.profile.profile,
+    profile: state.profile,
     start: state.onPlay.start,
     songs: state.songs.recomendSongs,
-    saved_songs: state.profile.profile.saved_songs,
+    saved_songs: state.profile.saved_songs,
     song: state.onPlay.song,
     night: state.interface.night,
     header: state.interface.header,

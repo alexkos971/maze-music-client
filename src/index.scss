@@ -162,7 +162,7 @@ $color: #8e8e8e;
       transform: translate(-50%);
       display: flex;
       align-items: center;
-      animation: 2s slide ease-out;
+      animation: 2s slideLogo ease-out;
       
       svg {
         width: 100%;
@@ -171,7 +171,7 @@ $color: #8e8e8e;
         display: block;
       }
     
-      @keyframes slide {
+      @keyframes slideLogo {
         0% {
           top: 40%;
           // position: absolute;
@@ -192,7 +192,7 @@ $color: #8e8e8e;
     &_bg {
       width: 200%;
       height: 100%;
-      animation: 2s bg ease-out;
+      animation: 2s bg_auth ease-out;
       position: absolute;
       transform: rotate(-10deg);
       transform-origin: center;
@@ -211,13 +211,27 @@ $color: #8e8e8e;
         top: -300%;
       }
       85% {
+        top: -100%;
+      }
+      100% {
+        top: -100%;
+      }
+    }
+
+  @keyframes bg_auth {
+    0% {
+      top: -300%;
+      }
+      60% {
+        top: -300%;
+      }
+      85% {
         top: -40%;
       }
       100% {
         top: -40%;
       }
     }
-
   }
 
   &__sidebar {

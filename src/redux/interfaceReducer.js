@@ -4,8 +4,9 @@ let initialState = {
     fullPlayer: false,
     night: JSON.parse(localStorage.getItem('userNight')),
     header: false,
-    path: 'For you',
-    auth: false
+    path: 'Profile',
+    auth: false,
+    serverUrl: 'http:/localhost:5050/'
 }
 
 export const interfaceReducer = (state = initialState, action) => {

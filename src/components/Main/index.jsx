@@ -20,6 +20,8 @@ import Songs from './Pages/Songs';
 import Upload from './Pages/Upload';
 import Profile from './Profile';
 import Settings from './Settings';
+import Search from "./Pages/Search";
+
 import image  from '../../assets/img/Avatar.svg';
 import ChangeAvatar from "./Profile/ChangeAvatar";
 
@@ -41,7 +43,7 @@ const Main = ({ dispatch, onSavePlaylist, night, header, profile, path  }) => {
 
 
                 <div className="music__main-header-head">
-                    <ul className={`music__main-header-head-navbar${directory.pathname === "/Upload" || directory.pathname === "/Profile" && night ? " dark" : ""}`}>
+                    <ul className={`music__main-header-head-navbar${directory.pathname === ("/Upload" || "/Profile" || '/Search') || night ? " dark" : ""}`}>
                         <li>
                             <Link to={"/Settings"} onClick={() => dispatch(changeDir("Settings"))}>
                                 <span><i className="fas fa-sliders-h"></i></span>
@@ -100,12 +102,13 @@ const Main = ({ dispatch, onSavePlaylist, night, header, profile, path  }) => {
                     onSavePlaylist={onSavePlaylist}/>
             </Route>
 
-            <Route path={'/ChangeAvatar'} exact component={ChangeAvatar}/>
-            <Route path={"/Artist/:id"} exact component={Artist}/>
-            <Route path={'/Albums/:id'} exact component={Album} />
+            <Route path={'/Change Avatar'} exact component={ChangeAvatar}/>
+            <Route path={"/Artist/:id"} component={Artist}/>
+            <Route path={"/Album/:id"} component={Album} />
             <Route path={"/Albums"} exact component={Albums}/>
             <Route path={"/Songs"} exact component={Songs}/>
             <Route path={"/Upload"} component={Upload}/>
+            <Route path="/Search" exact component={Search}/>
             <Route path={"/Profile"} exact component={Profile}/>
             <Route path="/Settings" component={Settings}/>
         </div>
@@ -119,7 +122,7 @@ const mapStateToProps = (state) => {
         song: state.songs.song,
         night: state.interface.night,
         header: state.interface.header,
-        profile: state.profile.profile,
+        profile: state.profile,
         path: state.interface.path
     }
 }

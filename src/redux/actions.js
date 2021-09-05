@@ -15,8 +15,9 @@ import {
     SET_FULLPLAYER,
     SET_NIGHT,
     SET_HEADER ,
-    FETCH_MY_SAVED_SONGS,
-    SWITCH_SONG
+    SET_SAVED_SONGS,
+    SWITCH_SONG,
+    SET_NOW_ALBUM
 } from './types';
 
 export const changeDir = (newDir) => {
@@ -99,14 +100,18 @@ export const setNowSong = (song) => {
     }
 }
 
-export const saveSong = (item) => {
-    // return async (dispatch, getState) => {
+export const setNowAlbum = (data) => {
+    return {
+        type: SET_NOW_ALBUM,
+        payload: data
+    }
+}
 
-        return {
-            type: SAVE_SONG,
-            payload: item
-        }
-    // }
+export const saveSong = (item) => {
+    return {
+        type: SAVE_SONG,
+        payload: item
+    }
 }
 
 export const setProfile = (data) => {
@@ -130,14 +135,11 @@ export const getMyAlbums = (data) => {
     }
 }
 
-export const getRecomendSongs = (data, saved) => {
-    return async (dispatch, getState) => {
-        return dispatch({
+export const getRecomendSongs = (data) => {
+        return {
             type: FETCH_RECOMEND_SONGS,
-            payload: data,
-            saved: await getState().profile.profile.saved_songs
-        })
-    }
+            payload: data
+        }
 }
 
 export const getRecomendArtists = (data) => {
@@ -149,7 +151,7 @@ export const getRecomendArtists = (data) => {
 
 export const setSavedSongs = (data) => {
     return {
-        type: FETCH_MY_SAVED_SONGS,
+        type: SET_SAVED_SONGS,
         payload: data,
     }
 }

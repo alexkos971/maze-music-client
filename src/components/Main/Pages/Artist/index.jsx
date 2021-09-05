@@ -20,22 +20,8 @@ const Artist = ({ recomendArtists }) => {
         try {
             const data = await request(`/api/users/artist/${id}`, 'GET');
             if (data) {
-                // console.log(data.songs)
-                // let url = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${data.name}&api_key=${config.lastfm_key}&format=json`
-                
-                // const info = await request(url, 'GET')
-                // if (!info.error) {
-                    // setArtist({...data, 
-                        // info: info.artist.bio.content, 
-                        // tags: info.artist.tags.tag,
-                        // info_large: (info.artist.bio.content).substring(0, 300) + '...'
-                    // });
-                    // return;
-                // }
-                // else {
-                    setArtist({...data, info: 'There is no information about this artist', info_large: 'There is no information about this artist'});
-                    return;
-                // }
+                setArtist({...data, description_large: data.description.substr(0, 30) + '...'});
+                return;
             }
             else {
                 return <h1>Not found...</h1>    
@@ -66,7 +52,7 @@ const Artist = ({ recomendArtists }) => {
                 <div className="music__main-artist-header-desc">
 
                     <h1 className="music__main-artist-header-desc-name">{artist.name}</h1>
-                    <span className="music__main-artist-header-desc-about">{artist.info_large}</span>
+                    <span className="music__main-artist-header-desc-about">{artist.description}</span>
 
                     <div className="music__main-artist-header-desc-info">
                         {

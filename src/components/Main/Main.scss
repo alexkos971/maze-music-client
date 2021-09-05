@@ -5,6 +5,20 @@
 
     $color: #8e8e8e;
 
+
+    &-bg {
+        width: 200%;
+        height: 160%;
+        animation: 2s bg ease-out;
+        position: absolute;
+        transform: rotate(-10deg);
+        transform-origin: center;
+        top: -100%;
+        left: -50%;
+        background-color: #AAD8D3;
+        // display: none;
+        z-index: 0;
+    }
     
     &-header {
         display: flex;
@@ -159,29 +173,30 @@
         margin: 0 auto;
         padding-top: 10%;
 
-        .music__main-full {
+        // .music__main-full {
 
-            &-info {
-                display: block;
-                width: 30%;
-                margin-bottom: 20px;
-                margin: 0 auto;
-                white-space: nowrap;
-            }
+        //     &-info {
+        //         display: block;
+        //         width: 30%;
+        //         margin-bottom: 20px;
+        //         margin: 0 auto;
+        //         white-space: nowrap;
 
-            &-cover {
-                display: block;
-                margin: 0 auto;
-                position: relative;
-                margin-top: 20px;
-            }
-        }
+
+        //     }
+
+        //     &-cover {
+        //         display: block;
+        //         margin: 0 auto;
+        //         position: relative;
+        //         margin-top: 20px;
+        //     }
+        // }
     }
 
     &-full {
         position: fixed;
         bottom: -100%;
-        left: 14%;
         width: 86%;
         height: calc(100% - 75px);
         color: #bfbfbf;
@@ -190,22 +205,14 @@
         transition: .2s all ease-in;
         padding: 15px 60px 10px 60px;
 
-        &-active {
-            position: fixed;
+        &.active {
             bottom: 50px;
-            width: 86%;
-            left: 14%;
-            z-index: 100;
-            height: calc(100% - 75px);
-            color: #bfbfbf;
             background-color: #18274a;/*#0f1626;*/
-            transition: .2s all ease-in;
-            padding: 15px 60px 10px 60px;
         }
 
         &-info {
             font-size: 13px;
-            display: block;
+            display: flex;
 
             span {
                 margin-right: 20px;
@@ -215,16 +222,13 @@
                 margin-bottom: 15px;
                 font-size: 30px;
             }
-
-            // span {}
-            // text-transform: uppercase;
         }    
 
         &-cover {
             width: 30%;
             overflow: hidden;
             position: relative;
-            margin-top: 30px;
+            margin-top: 60px;
             box-shadow: 0px 0px 27px 6px rgba(0,0,0,0.75);
             // box-shadow: 15px 15px 20px -4px rgba(0,0,0,0.75);
 

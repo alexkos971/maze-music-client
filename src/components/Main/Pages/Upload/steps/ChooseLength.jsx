@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { MainContext } from "../index.jsx";
 import "../Upload.scss";
 
@@ -13,26 +13,40 @@ const ChooseLength = () => {
 
 	const handleLength = (item) => {
 
-		if (item == list[0]) {
-			const newSteps = steps.filter(i => i !== ChooseName);
-			setSteps(newSteps)
+		if (item === list[0]) {
 
+			if (steps.includes(ChooseName)) {
+				const newSteps = steps.filter(i => i !== ChooseName);
+				setSteps(newSteps)
+			}
 			setScrollSteps(scrollSteps.filter(i => i !== 'Name'));
 		}
-		if (!scrollSteps.includes('Name')) {
-			scrollSteps.splice(2, 0, 'Name');
-			setScrollSteps(scrollSteps)
+		else {
+			if (!steps.includes(ChooseName)) {
+				steps.splice(2, 0, ChooseName)
+				setSteps(steps);
+			}
+
+			if (!scrollSteps.includes('Name')) {
+				scrollSteps.splice(2, 0, 'Name');
+				setScrollSteps(scrollSteps)
+			}
 		}
 
 		setActive(item)
 		setOpen(false);
 		setForm({ ...form, type: item })
-		setBtnDisabled(false)
 	}
+
+	useEffect(() => {
+		if (active) {
+			setBtnDisabled(false)
+		}
+	}, [handleLength])
 
 	return (
 		<div className="music__main-upload-container-length">
-			<p className="music__main-upload-container-subtitle">Please select the type of uploaded content, single track, Album or EP.</p>
+			<p className="music__main-upload-container-subtitle">Please select the type of uploaded content, single track, album or EP.</p>
 
 			<div  className="music__main-upload-container-length-dropdown">	
 				<div className="music__main-upload-container-length-dropdown-input" onClick={() => setOpen(!open)}>

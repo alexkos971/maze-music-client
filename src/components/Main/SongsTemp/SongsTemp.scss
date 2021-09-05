@@ -154,14 +154,12 @@
 
             &-trash {
                 font-size: 18px;
+                color: #8e8e8e;
             }
 
-            &-download img {
-                width: 17px;
-                height: 17px;
-                position: relative;
-                transform: translate(0%, 15%);
-                align-self: center;
+            &-download {
+                color: #8e8e8e;
+                font-size: 18px;
                 margin-left: 15px;
             }
 
@@ -175,6 +173,10 @@
                 font-weight: 100;
                 color: #8e8e8e;
                 margin-left: 15px;
+            }
+
+            i:hover {
+                color: #d1d1d1;
             }
         }
     }

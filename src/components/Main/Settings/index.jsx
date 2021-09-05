@@ -88,7 +88,7 @@ const Settings = ({ dispatch, profile }) => {
 
 const mapStateToProps = (state) => {
     return {
-        profile: state.profile.profile
+        profile: state.profile
     }
 }
 

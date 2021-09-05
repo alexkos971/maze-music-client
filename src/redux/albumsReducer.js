@@ -1,13 +1,15 @@
-import {FETCH_MY_ALBUMS} from "./types";
+import { SET_NOW_ALBUM} from "./types";
 
 let initialState = {
-	myAlbums: []
+	myAlbums: [],
+	album: {}
 }
 
 export const albumsReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case FETCH_MY_ALBUMS:
-			return { ...state, myAlbums: action.payload }
+		
+		case SET_NOW_ALBUM:
+			return { ...state, album: action.payload }
 
 		default: return state;
 	}

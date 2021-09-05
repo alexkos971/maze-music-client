@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setMySongs, setProfile, changeDir } from '../../../redux/actions';
+import {  setProfile, changeDir } from '../../../redux/actions';
 
 import { useHttp } from '../../../hooks/http.hook';
 import { useAuth } from "../../../hooks/auth.hook";
@@ -67,6 +67,28 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
             if (newName) {
                 message(newName.message);
                 dispatch(setProfile({...profile, name: newName.name}))
+            }
+        }
+        catch (e) {
+            message(e.message)
+        }
+    }
+
+    const changeDesc = async () => {
+        let desc = prompt('Paste the new name');
+
+        if (!desc) {
+            return alert('Поле пустое !!!');
+        }
+
+        try {
+            const newDesc = await request('/api/changes/description', 'POST', { description: desc }, {
+                Authorization: `Bearer ${token}`
+            })
+
+            if (newDesc) {
+                dispatch(setProfile({...profile, description: newDesc.description, description_large: newDesc.description.substr(0, 130) + '...'}))
+                message(newDesc.message);
             }
         }
         catch (e) {
@@ -147,6 +169,16 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                             })
                         } 
                     </div>
+
+                    <div className="music__main-profile-header-frequents-frequent-desc">
+                        <span className="music__main-profile-header-frequents-frequent-desc-title">Description:</span>
+                        <span className="music__main-profile-header-frequents-frequent-desc-text">{profile.description_large}</span>
+                        
+                        <span className="music__main-profile-header-frequents-frequent-desc-icon">
+                            <i className="fas fa-pencil-alt" onClick={changeDesc}></i>
+                        </span>
+                        
+                    </div>
                 </div>
             }
             </div>
@@ -196,7 +228,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
             <div className="music__main-profile-albums">
                 <h2 className="subtitle">Albums</h2>
                 {myAlbums && myAlbums.length > 0 ?
-                    <CardsTemp items={myAlbums} to="Albums" my={true}/>
+                    <CardsTemp items={myAlbums} to="Albums" my/>
                     :
                     <span className="music__main-profile-empty">You have no albums</span>
                 }
@@ -207,10 +239,10 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
 
 const mapStateToProps = (state) => {
     return {
-        profile: state.profile.profile,
-        mySongs: state.profile.profile.songs,
-        myAlbums: state.profile.profile.albums,
-        savedSongs: state.profile.profile.saved_songs,
+        profile: state.profile,
+        mySongs: state.profile.songs,
+        myAlbums: state.profile.albums,
+        savedSongs: state.profile.saved_songs,
         start: state.onPlay.start,
         song: state.onPlay.song,
         night: state.interface.night

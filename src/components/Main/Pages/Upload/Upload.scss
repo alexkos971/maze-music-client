@@ -12,26 +12,14 @@
         overflow: hidden;
     }
 
-    &-bg {
-        width: 200%;
-        height: 100%;
-        animation: 2s bg ease-out;
-        position: absolute;
-        transform: rotate(-10deg);
-        transform-origin: center;
-        top: -40%;
-        left: -50%;
-        background-color: #AAD8D3;
-        // display: none;
-        z-index: 0;
-    }
-
     &-scroll {
         position: absolute;
         left: 50%;
         bottom: 5%;
         margin-top: 5%;
         width: 80%;
+        opacity: 1;
+        animation: scrollMove 2s ease;
         transform: translate(-50%, 0%);
         display: flex;
         // align-items: center;
@@ -324,7 +312,24 @@
                 opacity: 1;
             }
         }
+
+    @keyframes scrollMove {
+        0% {
+            opacity: 0;
+            bottom: -5%;
+        }
+        80% {
+            opacity: 0;
+            bottom: -5%;
+        }
+        100% {
+            opacity: 1;
+            bottom: 5%;
+        }
+    }
 }
+
+
 
 
 .music-night {
@@ -345,5 +350,11 @@
                 color: #8e8e8e;
             }
         }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .music__main-upload-scroll {
+        transform: translate(-50%, 0%) scale(0.8);
     }
 }

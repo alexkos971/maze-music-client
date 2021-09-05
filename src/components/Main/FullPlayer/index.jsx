@@ -3,6 +3,8 @@ import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setFullPlayer } from '../../../redux/actions';
 
+import Button from "../../Button";
+
 import '../Main.scss';
 
 
@@ -10,50 +12,61 @@ const FullPlayer = ({ dispatch, full, song }) => {
     const history = useHistory()
     
     return (
-        <div className={full ? "music__main-full-active" : "music__main-full"}>
+        <div className={`music__main-full ${full ?  'active' : ''}`}>
 
         {song && 
-        <div>
-            <div className="music__main-full-info">
+            <>
                 <h1>{song.name}</h1>
 
-                <span>Artist:  
-                    <Link to={`/Artist/${song.artist_id}`} onClick={() => dispatch(setFullPlayer(false))}>
-                        <span> {song.artist_name}</span>
-                    </Link>
-                </span>
-
-                {song.album_name &&  <span>Album: <span>{song.album_name}</span></span>}
-
-                {song.genre && 
-                    <span>Genre: 
-                    {
-                        song.genre.map(item => (
-                            <Link to={`/Genre/${item}`} key={item} onClick={() => {
-                                dispatch(setFullPlayer(false))
-                                history.push('/Search')
-                            }}>
-                                <span>{item}</span>
-                            </Link>
-                        ))
-                    }
+                <div className="music__main-full-info">
+    
+                    <span>Artist:  
+                        <Link to={`/Artist/${song.artist_id}`} onClick={() => dispatch(setFullPlayer(false))}>
+                            <span> {song.artist_name}</span>
+                        </Link>
                     </span>
-                }
-            </div>
-
-            <div className="music__main-full-cover">
-                <div className="music__main-full-cover-container">
-                    <img src={song.cover} alt=""/>
+    
+                    {song.album_name && <span>Album: 
+                        <Link to={`/Album/${song.album_id}`} onClick={() => dispatch(setFullPlayer(false))}>
+                            <span>{song.album_name}</span>
+                        </Link>
+                        </span>
+                    }
+    
+                    {song.genre && 
+                        <div className="music__main-full-info-genres">
+                            <span>Genre:</span> 
+                            {
+                                song.genre.map(item => (
+                                    <Link to={`/Genre/${item}`} key={item} onClick={() => {
+                                        dispatch(setFullPlayer(false))
+                                        history.push('/Search')
+                                    }} className="music__main-full-info-genres-item">
+                                        <Button text={item} type="button"/>
+                                    </Link>
+                                ))
+                            }
+                        </div>
+                    }
                 </div>
-            </div>
-
-            <div className="music__main-full-lyrics">
-                <h3>Lyrics:</h3>
-            
-                <span>{song.lyrics}</span>
-                 
-            </div>
-        </div>}
+    
+                <div className="music__main-full-cover">
+                    <div className="music__main-full-cover-container">
+                        <img src={song.cover} alt=""/>
+                    </div>
+                </div>
+    
+                { song.lyrics && 
+                    <div className="music__main-full-lyrics">
+                        <h3>Lyrics:</h3>
+                    
+                        <span>{song.lyrics}</span>
+                         
+                    </div>
+                }
+    
+            </>
+        }
         </div>
     )
 }

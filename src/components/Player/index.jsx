@@ -6,7 +6,7 @@ import './Player.scss';
 
 let audio;
 
-const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullScreen, setFullScreen }) => { 
+const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullScreen, setFullScreen}) => { 
     const [stateVolume, setStateVolume] = useState(50);
     const [inputDuration, setInputDuration] = useState(0);
 

@@ -21,23 +21,23 @@ const For = ({ dispatch, recomendSongs, recomendArtists, savedSongs, profile }) 
             if (!list.length) {
                 let data = await request(`/api/songs/recomendation`, 'GET');
 
-                if (data && savedSongs) {
-                    dispatch(getRecomendSongs(data, profile.saved_songs))
+                if (data) {
+                    dispatch(getRecomendSongs(data))
                 }
             }
             else {
-                dispatch(getRecomendSongs(list, profile.saved_songs))
+                dispatch(getRecomendSongs(list))
             }
         }
         catch (e) { console.error(e) }
-    } ,[request, dispatch, savedSongs]);
+    }, [request, dispatch]);
     
     useEffect(() => {
         if (profile) {
             getSongs(recomendSongs);
 
         }
-    }, [dispatch, getSongs, recomendSongs]);
+    }, [dispatch, recomendSongs]);
     
 
     
@@ -124,10 +124,10 @@ const mapStateToProps = state => {
         start: state.onPlay.start,
         recomendSongs: state.songs.recomendSongs,
         recomendArtists: state.artists.recomendArtists,
-        savedSongs: state.profile.profile.saved_songs,
+        savedSongs: state.profile.saved_songs,
         song: state.onPlay.song,
         save: state.songs.save,
-        profile: state.profile.profile
+        profile: state.profile
     }
 }
 

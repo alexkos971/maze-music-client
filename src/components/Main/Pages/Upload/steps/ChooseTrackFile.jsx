@@ -59,7 +59,7 @@ const ChooseTrackFile = ({ name }) => {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.profile.profile.name
+        name: state.profile.name
     }
 }
 

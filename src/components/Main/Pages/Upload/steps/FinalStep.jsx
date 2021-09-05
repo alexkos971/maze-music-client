@@ -8,7 +8,7 @@ import  Button from "../../../../Button";
 
 import { useMessage } from '../../../../../hooks/message.hook';
 
-const FinalStep = ({ path, dispatch, mySongs, myAlbums, profile }) => {
+const FinalStep = ({ path, dispatch, mySongs, profile }) => {
 	const { form, setLoad, load } = useContext(MainContext);
 
     const message = useMessage();
@@ -25,10 +25,16 @@ const FinalStep = ({ path, dispatch, mySongs, myAlbums, profile }) => {
                         formData.append('track', form[key][index])
                     })
                 }
+                if (key === 'genre') {
+                    form[key].forEach((item, index) => {
+                        formData.append('genre', form[key][index])
+                    })
+                }
                 else {
                     formData.append(key, form[key])
                 }
             }
+            console.log(formData, form);
 
             switch (form.type) {
                 case 'Single track':
@@ -53,7 +59,8 @@ const FinalStep = ({ path, dispatch, mySongs, myAlbums, profile }) => {
                 return Axios.post('/api/upload/album', formData)
                     .then(async (data) => {
                         if (data.album) {
-                            await dispatch(getMyAlbums([...myAlbums, data.album]));
+                            let albums = profile.albums.push(data.album)
+                            return dispatch(setProfile({...profile, albums: albums}));
                         }
                         else {
                             message(data.message);
@@ -88,7 +95,6 @@ const mapStateToProps = (state) => {
     return {
         mySongs: state.songs.mySongs,
         profile: state.profile.profile,
-        myAlbums: state.albums.myAlbums,
         path: state.interface.path
     }
 }

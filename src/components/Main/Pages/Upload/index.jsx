@@ -57,7 +57,7 @@ const Upload = () => {
     return (
         <MainContext.Provider value={{ setLoad, setForm, form, setBtnDisabled, setSteps, steps, scrollSteps, setScrollSteps }}>         
             <div className="music__main-upload">
-                <div className={`music__main-upload-bg`}></div>
+                <div className={`music__main-bg`}></div>
 
                 {!animateLoading && (
                     <>

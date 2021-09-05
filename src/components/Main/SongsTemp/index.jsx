@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./SongsTemp.scss";
 import {  connect } from "react-redux";
-import { onPlay, setMySongs, getRecomendSongs, saveSong, setProfile } from "../../../redux/actions";
+import { onPlay, setMySongs, getRecomendSongs, setSavedSongs, setProfile } from "../../../redux/actions";
 
 
 import { useHttp } from "../../../hooks/http.hook";
 import { useAuth } from "../../../hooks/auth.hook";
 import { useMessage } from "../../../hooks/message.hook";
 import { downloadIcon } from '../images';
+import Preloader from "../../Preloader";
 
 const SongsTemp = ({ 
     dispatch, 
@@ -28,7 +29,38 @@ const SongsTemp = ({
     const { loading, request, error } = useHttp();
     const { token } = useAuth();
     const message = useMessage();
-    // const [saved, setSaved] = useState(false);
+
+    const [songsArray, setSongsArray] = useState(null);
+
+
+    const checkSaved = async (list) => {
+        if (savedSongs.length > 0) {
+            list.forEach(async item => {
+                savedSongs.forEach(elem => {
+                    if (item._id === elem._id) {
+                        item.saved = true;
+                    }
+                    else {
+                        item.saved = false;
+                    }
+                })
+            })
+        }
+        else {
+            list.forEach(item => {
+                item.saved = false;
+            });
+        }
+
+        setSongsArray(list);
+    }
+
+    useEffect(() => {
+        if (songs.length && savedSongs && !songsArray) {
+            checkSaved(songs)
+        }
+    }, [songs, savedSongs, songsArray])
+
 
     const deleteSong = async (id) => {  
         let qustion = window.confirm("Вы точно хотите удалить этот трек ?");
@@ -46,13 +78,9 @@ const SongsTemp = ({
             if (data) {
                 const newSongs = mySongs.filter(item => {
                     return item._id !== id;
-                })
-                const newRecomendSongs = recomendSongs.filter(item => {
-                    return item._id !== id;
-                })
-                await dispatch(setProfile({...profile, songs: newSongs}))
-                await dispatch(getRecomendSongs(newRecomendSongs))
+                });
                 message(data.message)
+                return dispatch(setProfile({...profile, songs: newSongs}));
             }
         }
         else {
@@ -60,15 +88,46 @@ const SongsTemp = ({
         }
     }
 
-    const onSaveSong = async (item) => {
-        item.saved = !item.saved;
-        // dispatch(saveSong(item))
-        const check = await profile.saved_songs.some(el => el._id === item._id);
-        if (!check) {
-            const newSaved = profile.saved_songs.push(item)
-            await dispatch(getRecomendSongs(recomendSongs, newSaved));
-            await dispatch(setProfile({...profile, saved_songs: newSaved}));
+
+    const onSaveSong = async (item, index) => {
+
+        setSongsArray(prev => {
+            let newArr = [...prev];
+            newArr[index] = {...item, saved: !item.saved};
+            return newArr;
+        })
+        
+        // console.log('changed songsArray = ', songsArray)
+
+        if (savedSongs && savedSongs.length > 0) {
+            const check = await savedSongs.some(el => el._id === item._id);
+                if (!check) {
+                    dispatch(setSavedSongs([...savedSongs, item]));
+                }
+                else {
+                    const newSongs = await savedSongs.filter(el => el._id != item._id);
+                    dispatch(setSavedSongs(newSongs));
+                }
         }
+        else {
+            dispatch(setSavedSongs([...savedSongs, item]));
+        }
+
+
+
+        // const data = await request(`/api/songs/save/${item._id}`, 'PUT', null, {
+        //     Authorization: `Bearer ${token}`
+        // });
+        // if (data) {
+        //     console.log(data)
+        // }
+
+    }
+
+    if (!songsArray) {
+        return (
+            <Preloader/>
+        )
     }
 
     if (type && type === 'Album') {
@@ -110,10 +169,10 @@ const SongsTemp = ({
     return (
         <ol className={`music__main-temp-songs-list${!night ? " night" : ""}`}>
             
-            <span className="music__main-temp-songs-view">View all</span>
+{/*            <span className="music__main-temp-songs-view">View all</span>*/}
         
             {!loading &&
-                songs.map((item, index) => {
+                songsArray.map((item, index) => {
                 
                 return (
                     <li key={index} id={(song && song._id === item._id) ? "now_play" : ''}>
@@ -149,13 +208,14 @@ const SongsTemp = ({
 
                             <a href={item.src} download>
                                 <span className="music__main-temp-songs-list_right-download">
-                                    <img src={downloadIcon} alt=""/>
+                                    <i className="fas fa-arrow-circle-down"></i>
                                 </span>
                             </a>
 
                             <span className="music__main-temp-songs-list_right-save"
-                                onClick={() => onSaveSong(item)}>
-                                <i className={`fa${item.saved ? 's' : 'r'} fa-heart`}></i>
+                                onClick={() => onSaveSong(item, index)}>
+                                
+                                <i className={`fa${type == 'Saved' ? 's' :  (item.saved ? 's' : 'r')} fa-heart`}></i>
                             </span>
                             
                             <span className="music__main-temp-songs-list_right-time_now">
@@ -176,10 +236,10 @@ const mapStateToProps = (state) => {
         song: state.onPlay.song,
         start: state.onPlay.start,
         night: state.interface.night,
-        mySongs: state.profile.profile.songs,
-        savedSongs: state.profile.profile.saved_songs,
+        mySongs: state.profile.songs,
+        savedSongs: state.profile.saved_songs,
         recomendSongs: state.songs.recomendSongs,
-        profile: state.profile.profile
+        profile: state.profile
     }
 }
 

@@ -2,22 +2,19 @@
     width: 100%;
 }
 
-.slick-slide div{
-    width: 95%;
+.slick-slide div {
+    // width: 96%;
+    // left: 2%;
 
     &:after {
+        // margin-right: 20px;
         content: '';
         padding-top: 60%;
     } 
 }
 
-.music__main-slider  {
+.music__main-slider {
     position: relative;
-
-    // &.artist {
-    // width: 180%;
-        
-    // }
 
     &-view {
         position: absolute;
@@ -30,60 +27,115 @@
     }
 
     &-item {
-        width: 100% !important;
+        width: 95% !important;
         overflow: hidden;
         position: relative;
         margin-right: 15px;
         cursor: pointer;
         border-radius: 8px;
-        transition: .2s;
+        transition: .2s all;
 
         &:hover {
-            -webkit-filter: brightness(.5);
-            -moz-filter: brightness(.5);
+            .music__main-slider-item-wrap {
+                -webkit-filter: brightness(.5) !important;
+                -moz-filter: brightness(.5) !important;
+            }
+
+            .music__main-slider-item-hover {        
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                opacity: 1;
+                transform: translate(-50%, -50%);
+                align-items: center;
+                z-index: 2;
+                display: flex !important;
+                animation: slide .2s linear;
+
+                span {
+                    transition: .1s all;
+                }
+
+                span:hover {
+                    transform: scale(1.2);
+                }
+
+                &-play {
+                    font-size: 55px;
+                    color: #2BA6A2;
+                    position: relative;
+                    margin: 0 50px;
+                }
+
+                &-trash {
+                    font-size: 20px;
+                    color: #fff;
+                }
+            }
+            @keyframes slide {
+                from {
+                    top: 70%;
+                    opacity: 0;
+                }
+                to {
+                    top: 50%;
+                    opacity: 1;
+                }
+            }
         }
 
-        &:after {
-            content: "";
-            padding-top: 60%;/*65% ?*/
-            display: block;
-        }
+        &-wrap {
+            transition: .2s all;
 
-        a {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-        }
-
-        img {
-            width: 120%;
-            position: absolute;
-            top: 0;
-            z-index: -1;
-            filter: brightness(.6);
-            left: -5%;
-        }
-
-        &_artist {
-            position: relative;
-            display: flex;
-            top: 60%;
-            font-weight: lighter;
-            color: #fff;
-            font-size: 22px;
-            display: block;
-            margin: 0 auto;
-            text-align: center;
-        }       
+            &:after {
+                content: "";
+                // padding-top: 60%;/*65% ?*/
+                display: block;
+            }
+    
+            a {
+                width: 100%;
+                // height: 100%;
+                position: absolute;
+            }
+    
+            img {
+                width: 120%;
+                position: absolute;
+                top: 0;
+                z-index: -1;
+                filter: brightness(.6);
+                left: -5%;
+            }
         
-        &_desk {
-            position: relative;
-            top: 65%;
-            font-size: 12px;
-            display: block;
-            margin: 0 auto;
-            text-align: center;
+            &-text {
+                position: absolute;
+                top: 65%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
 
+            &_artist {
+                position: relative;
+                display: flex;
+                top: 60%;
+                font-weight: lighter;
+                color: #fff;
+                font-size: 22px;
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+            }       
+            
+            &_desk {
+                position: relative;
+                top: 65%;
+                font-size: 12px;
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+    
+            }
         }
 
         &-hover {

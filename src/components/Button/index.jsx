@@ -7,20 +7,12 @@ const Button = ({ text, color, type, active, list, mr }) => {
 	const [current, setCurrent] = useState(list && list[0] || null);
 	const [visible, setVisible] = useState(false);
 
-	useEffect(() => {
-		setVisible(true)
-		setTimeout(() => {
-			setVisible(false)
-		}, 3000)
-	}, [visible])
-
-
 
 	if (type === 'button') {
 		return (
 			<div
 				className={`music-button ${mr && 'mr'} ${active && 'active'}`}>
-			{text}
+				{text}
 			</div>
 		)
 	}

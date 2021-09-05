@@ -6,15 +6,19 @@ const ChooseName = () => {
 	const [name, setName] = useState(form.name || null)
 
     useEffect(() => {
-        setBtnDisabled(true)
-        if (!name) {
+        
+        if (name && name.length > 0) {
             setBtnDisabled(false)
+            setForm({ ...form, name: name })
+        }
+        
+        else {
+            setBtnDisabled(true)
         }
     }, [name])
 
     const changeHandler = (event) => {
-        // setName(event.target.value)
-        setForm({ ...form, name: event.target.value })
+        setName(event.target.value)
     }
 
 

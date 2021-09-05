@@ -1,65 +1,64 @@
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { onPlay, saveSong, setSavedSongs } from '../../../../redux/actions'
+// import { onPlay, saveSong, setSavedSongs } from '../../../../redux/actions';
 import { connect } from 'react-redux';
 
-import { useHttp } from '../../../../hooks/http.hook';
-import { useAuth } from "../../../../hooks/auth.hook";
-import { downloadIcon } from '../../images';
+// import { useHttp } from '../../../../hooks/http.hook';
+// import { useAuth } from "../../../../hooks/auth.hook";
 import './Songs.scss';
 
+import Preloader from "../../../Preloader";
 import SongsTemp from "../../SongsTemp";
 
 const Songs = ({  dispatch, savedSongs, song, start }) => {
     
-    const { loading, request } = useHttp();
-    const { token } = useAuth()
+    // const { loading, request } = useHttp();
+    // const { token } = useAuth()
 
-    const getSavedSongs = useCallback(async () => {
-        try {
-            if (token) {
+    // const saveSong = useCallback(async () => {
+    //     try {
+    //         if (token) {
                 
-                const data = await request('/api/songs/saved', "GET", null, {
-                    Authorization: `Bearer ${token}`
-                });
+    //             const data = await request(`/api/songs/save/${id}`, "POST", null, {
+    //                 Authorization: `Bearer ${token}`
+    //             });
 
-                if (data) {
-                    dispatch(setSavedSongs(data))
-                }
-            }
-        }
-        catch (e) {
-            console.log(e)
-        }
-    }, [request, dispatch, savedSongs, token])
+    //             if (data) {
+    //                 dispatch(setSavedSongs(data))
+    //             }
+    //         }
+    //     }
+    //     catch (e) {
+    //         console.log(e)
+    //     }
+    // }, [ savedSongs, token])
 
-    useEffect(() => {
-        getSavedSongs()
-    }, [request, dispatch, savedSongs, token])
- 
+    // useEffect(() => {
+    //     saveSong()
+    // }, [dispatch, token, savedSongs])
+
+    if (!savedSongs) {
+        return (
+            <Preloader/>
+        )
+    }
 
     return (
-        <div className="music__main-songsList">
-            <h2 className="subtitle">My songs</h2>
-
-        {loading ? <h1 className="load_title">Loading...</h1> :
-                
-            <ol className="music__main-songs-list songs-list">
+        <div className="music__main-saved-songs">
+            <h2 className="subtitle">Saved songs</h2>
                 {savedSongs && savedSongs.length > 0 ?
-                    <SongsTemp songs={savedSongs}/>
+                    <SongsTemp songs={savedSongs} type="Saved"/>
                     :
                     <h2>You dont have saved songs</h2>
                 }
-            </ol>
-        }
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        savedSongs: state.songs.savedSongs,
+        savedSongs: state.profile.saved_songs,
         song: state.onPlay.song,
         start: state.onPlay.start
     }

@@ -12,8 +12,6 @@ import Button from "../../Button";
 import "./Profile.scss"
 
 const ChangeAvatar = ({ dispatch, profile }) => {
-
-	const { token } = useAuth()
 	const message = useMessage();
 	const [file, setFile] = useState(null);
 	const [load, setLoad] = useState(false)
@@ -61,7 +59,7 @@ const ChangeAvatar = ({ dispatch, profile }) => {
 
 const mapStateToProps = state => {
 	return {
-		profile: state.profile.profile
+		profile: state.profile
 	}
 }
 
