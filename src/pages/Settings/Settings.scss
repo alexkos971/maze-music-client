@@ -1,0 +1,50 @@
+.music__main-settings {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 25px 0px 0px 60px;
+    overflow: hidden;
+
+    i {
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+    &-wrap {
+        width: 100%;
+        position: relative;
+
+        &-avatar {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            border-radius: 50%;
+            display: block;
+
+            &-img {
+                width: 100px;
+                height: 100px;
+                position: relative;
+                border-radius: 50%;
+                display: block;
+                overflow: hidden;
+                
+                img {
+                    height: 120%;
+                    position: relative;
+                    left: -10%;
+                    top: -5%;
+                }
+            }
+    
+            i {
+                position: absolute;
+                right: 5%;
+                bottom: 5%;
+                color: #000;
+                font-size: 18px;
+            }
+        }
+
+    }
+}
