@@ -20,8 +20,9 @@ import Search from "./Search";
 import ChangeAvatar from "./Profile/ChangeAvatar";
 
 import Header from "../components/Header";
+import Alert from "../components/Alert";
 
-const Main = ({ onSavePlaylist, path  }) => {
+const Main = ({ onSavePlaylist, path, alert  }) => {
     
     let { logout, token } = useContext(Context);
     const message = useMessage();
@@ -57,6 +58,8 @@ const Main = ({ onSavePlaylist, path  }) => {
             <Route path="/search" exact component={Search}/>
             <Route path={"/profile"} exact component={Profile}/>
             <Route path="/settings" component={Settings}/>
+
+            {alert.length ? <Alert items={alert}/> : null}
         </div>
     );
 }
@@ -66,7 +69,8 @@ const mapStateToProps = (state) => {
     return {
         start: state.onPlay.start,
         song: state.songs.song,
-        path: state.interface.path
+        path: state.interface.path,
+        alert: state.interface.alert
     }
 }
 

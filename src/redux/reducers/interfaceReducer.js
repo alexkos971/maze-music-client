@@ -1,4 +1,13 @@
-import { SET_FULLPLAYER, SET_NIGHT, SET_HEADER, CHANGE_DIR, CHANGE_AUTH } from '../types/interfaceTypes';
+import { 
+    SET_FULLPLAYER, 
+    SET_NIGHT, 
+    SET_HEADER, 
+    CHANGE_DIR, 
+    CHANGE_AUTH, 
+    SHOW_ALERT, 
+    HIDE_ALERT,
+    LOADING
+} from '../types/interfaceTypes';
 
 let initialState = {
     fullPlayer: false,
@@ -8,8 +17,10 @@ let initialState = {
         name: 'For you',
         path: '/for-you'
     },
+    loading: false,
     auth: false,
-    serverUrl: 'http:/localhost:5050/'
+    serverUrl: 'http:/localhost:5050/',
+    alert: []
 }
 
 export const interfaceReducer = (state = initialState, action) => {
@@ -30,6 +41,15 @@ export const interfaceReducer = (state = initialState, action) => {
         case CHANGE_AUTH:
             return {...state, auth: action.payload};
 
+        case SHOW_ALERT:
+            return { ...state, alert: [...state.alert, action.payload] }
+        
+        case HIDE_ALERT:
+            return { ...state, alert: action.payload }
+
+        case LOADING:
+            return { ...state, loading: action.payload }
+        
         default: return state;
     }
 }

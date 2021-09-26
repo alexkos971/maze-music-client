@@ -1,4 +1,13 @@
-import { SET_PROFILE, SET_MY_SONGS, SET_SAVED_SONGS, FETCH_MY_ALBUMS, SAVE_SONG, CHANGE_PROFILE_DESCRIPTION, CHANGE_PROFILE_NAME } from '../types/profileTypes'
+import { 
+    SET_PROFILE, 
+    SET_MY_SONGS, 
+    SET_SAVED_SONGS, 
+    FETCH_MY_ALBUMS, 
+    SAVE_SONG, 
+    CHANGE_PROFILE_DESCRIPTION, 
+    CHANGE_PROFILE_NAME,
+    LOG_IN 
+} from '../types/profileTypes'
 
 let initialState = {
     // _id: null
@@ -7,10 +16,10 @@ let initialState = {
 export const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_PROFILE:
-            return  action.payload;
+            return {...action.payload};
 
         case SET_MY_SONGS:
-            return {...state, state: action.payload }
+            return {...state, songs: action.payload }
 
         case FETCH_MY_ALBUMS:
             return { ...state, albums: action.payload }
@@ -26,6 +35,10 @@ export const profileReducer = (state = initialState, action) => {
          
         case CHANGE_PROFILE_NAME:
             return { ...state, name: action.payload }    
+
+        case LOG_IN:
+            return { ...state, auth: action.payload }    
+        
         default: return state;
     }
 }

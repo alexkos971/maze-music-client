@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import config from "../../config/default.json";
 
 import SongsTemp from "../../components/SongsTemp"
 import CardsTemp from "../../components/CardsTemp";
@@ -38,7 +37,6 @@ const Artist = ({ recomendArtists }) => {
 
     if (loading) {
         return (
-            // <h1 className="load_title">Loading...</h1>
             <Preloader/>
         );
     }

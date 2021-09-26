@@ -7,3 +7,7 @@ export const SAVE_SONG = 'SAVE_SONG';
 
 export const CHANGE_PROFILE_DESCRIPTION = 'CHANGE_PROFILE_DESCRIPTION';
 export const CHANGE_PROFILE_NAME = 'CHANGE_PROFILE_NAME';
+
+export const LOG_IN = 'LOG_IN';
+export const REGISTER = 'REGISTER';
+

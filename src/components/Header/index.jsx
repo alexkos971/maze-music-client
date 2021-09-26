@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { changeDir, setNight, setHeader  } from "../../redux/actions/interfaceActions";
+import { changeDir, setNight, setHeader, showAlert  } from "../../redux/actions/interfaceActions";
 import { setProfile } from "../../redux/actions/profileActions";
 
 import image  from '../../assets/img/Avatar.svg';
@@ -24,7 +24,7 @@ const Header = ({ dispatch, header, profile, night, path, logout, message }) => 
                     <span><i className={`fas fa-${!night ? "sun" : "moon"}`}></i></span>
                 </li>
 
-                <li onClick={() => message("Уведомления включены")}>
+                <li onClick={() => dispatch(showAlert({ type: 'success', text: 'Уведомления включены' }))}>
                     <span><i className={`fas fa-bell`}></i></span>
                 </li>
             </ul>
