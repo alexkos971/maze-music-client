@@ -1,6 +1,7 @@
 import React, { useState,  useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { setDuration, setFullPlayer, setStart, } from '../../redux/actions';
+import { setDuration, setStart } from '../../redux/actions/playActions';
+import { setFullPlayer } from '../../redux/actions/interfaceActions';
 
 let audio;
 

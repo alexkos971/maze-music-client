@@ -1,4 +1,4 @@
-import { FETCH_RECOMEND_ARTISTS } from './types';
+import { FETCH_RECOMEND_ARTISTS } from '../types/artistsTypes';
 
 let initialState = {
     recomendArtists: [],

@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 
 import { connect } from 'react-redux';
-import { getRecomendSongs, getRecomendArtists } from '../../redux/actions';
+import { getRecomendArtists } from '../../redux/actions/artistsActions';
+import { getRecomendSongs } from '../../redux/actions/songsActions';
 
 import SongsTemp from "../../components/SongsTemp";
 import CardsTemp from "../../components/CardsTemp";
@@ -13,63 +14,18 @@ const For = ({ dispatch, recomendSongs, recomendArtists, savedSongs, profile }) 
     
     const { loading, request } = useHttp();
 
-    // // Get list of songs
-    const getSongs = useCallback(async (list) => {
-        try {
-            if (!list.length) {
-                let data = await request(`/api/songs/recomendation`, 'GET');
 
-                if (data) {
-                    dispatch(getRecomendSongs(data))
-                }
-            }
-            else {
-                dispatch(getRecomendSongs(list))
-            }
-        }
-        catch (e) { console.error(e) }
-    }, [request, dispatch]);
-    
     useEffect(() => {
-        if (profile) {
-            getSongs(recomendSongs);
-
-        }
+        dispatch(getRecomendSongs())
     }, [dispatch, recomendSongs]);
-    
-
-    
-    const getArtists = useCallback(async (list) => {
-        try {
-            if (!list.length) {
-                const data = await request('/api/users/artists', 'GET');
-                
-                if (data) {
-                    dispatch(getRecomendArtists(data))
-                }
-                else {
-                    return <h1>Loading...</h1>
-                }
-            }
-            else {
-                dispatch(getRecomendArtists(list))
-            }
-        }
-        catch (e) { console.error(e) }
-    } , [request, dispatch]);
 
     useEffect(() => {
-        getArtists(recomendArtists);
-
-        // return () => dispatch(getRecomendArtists([]))
-    }, [dispatch, recomendArtists, getArtists]);
-
-
-
+        dispatch(getRecomendArtists())
+    }, [dispatch, recomendArtists]);
+    
 
     if (loading) {
         return (
-            // <h1 className="load_title">Loading...</h1>
             <Preloader/>
         );
     }
@@ -77,12 +33,13 @@ const For = ({ dispatch, recomendSongs, recomendArtists, savedSongs, profile }) 
     return (
         <div className="music__main-for">
             
-            { recomendArtists.length && 
+            { recomendArtists.length ? 
                 <div className="music__main-artist-artists">
                     <h2 className="subtitle">Artists for you</h2>
                     
                     <CardsTemp items={recomendArtists} to="Artists" />
                 </div>
+                : null
             }
 
             <div className="music__main-songs">

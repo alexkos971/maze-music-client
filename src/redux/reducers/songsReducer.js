@@ -1,4 +1,4 @@
-import { FETCH_RECOMEND_SONGS } from './types';
+import { FETCH_RECOMEND_SONGS } from '../types/songsTypes';
 
 let initialState = {
     recomendSongs: [],

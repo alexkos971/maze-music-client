@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap');
-
 $color: #8e8e8e;
 $height: 40px;
 
@@ -22,7 +20,6 @@ $height: 40px;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 15%;
-      // border-bottom: 1px solid #8e8e8e;
       
       svg {
         width: 100%;
@@ -40,9 +37,8 @@ $height: 40px;
     }
   
     ul {
-      line-height: 40px;/* 33px */
-      // font-size: 1px;
-  
+      line-height: 40px;
+
       li {
         width: 90%;
         left: 5%;
@@ -54,8 +50,7 @@ $height: 40px;
         padding: 0px 15px;
         border-radius: 5px;
         margin-bottom: 12px;
-        // padding: 0px 0px 0px 10px;
-
+      
         a {
           list-style: none;
           color: $color;
@@ -68,15 +63,13 @@ $height: 40px;
 
         &.active {
           color: #4a4a4a;
-          // transition: .1s all ease-in;
           width: 90%;
           left: 5%;
           position: relative;
           align-items: center;
           cursor: pointer;
           z-index: 2;
-          // padding: 0px 0px 0px 10px;
-
+      
           a {
             color: #4a4a4a;
             display: contents;
@@ -87,7 +80,6 @@ $height: 40px;
             width: 2px;
             height: 70%;
             top: 15%;
-            // border: 1px solid #4a4a4a;
             background-color: #4a4a4a;
             position: absolute;
             left: calc(105% + 11px);
@@ -134,13 +126,11 @@ $height: 40px;
         left: 7%;
         margin-top: 15px;
         overflow: hidden;
-        // display: block;
         position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 15%;
-        // border-bottom: 1px solid #8e8e8e;
       
         svg {
           width: 100%;
@@ -153,8 +143,6 @@ $height: 40px;
     }
 
     ul li {
-      // width: 90%;
-      // left: 5%;
       position: relative;
       align-items: center;
       cursor: pointer;
@@ -170,7 +158,6 @@ $height: 40px;
           width: 2px;
           height: 70%;
           top: 15%;
-          // border: 1px solid #4a4a4a;
           background-color: #4a4a4a;
           position: absolute;
           left: calc(100% + 5px);
@@ -184,10 +171,6 @@ $height: 40px;
         i {
           left: -2px;
         }
-      }
-
-      &-text {
-        display: none;
       }
     }
   }

@@ -1,6 +1,7 @@
 import React, { useState, createRef, useEffect }  from "react";
+import { connect } from "react-redux";
 
-const DragAndDrop = ({ description, field, file, setFile, type }) => {
+const DragAndDrop = ({ description, field, file, setFile, type, night }) => {
 	const [draged, setDraged] = useState(false);
 	const fileRef = createRef()	
 	const [fileName, setFileName] = useState(null)
@@ -51,7 +52,7 @@ const DragAndDrop = ({ description, field, file, setFile, type }) => {
 	}
 
 	return (
-        <label htmlFor="track" className={`music__main-drag ${draged ? 'active' : ''}`} ref={fileRef}>     
+        <label htmlFor="track" className={`music__main-drag ${draged ? 'active' : ''} ${!night ? 'night': ''}`} ref={fileRef}>     
 		<input id='track' type="file" name="track" accept={type} required placeholder="track file" onChange={setFileHandler}/>
             <span>
                 <i className={`fas fa-folder${draged ? '-open': ''}`}></i>
@@ -64,4 +65,10 @@ const DragAndDrop = ({ description, field, file, setFile, type }) => {
 	)
 }
 
-export default DragAndDrop;
+const mapStateToProps = state => {
+	return {
+		night: state.interface.night
+	}
+}
+
+export default connect(mapStateToProps)(DragAndDrop);

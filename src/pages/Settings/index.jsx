@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setProfile } from '../../redux/actions';
+import { setProfile } from '../../redux/actions/profileActions';
 
 import { useMessage } from '../../hooks/message.hook'
 import { useHttp } from '../../hooks/http.hook';

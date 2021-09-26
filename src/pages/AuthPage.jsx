@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
 import { Context } from '../context';
-import { changeAuth } from '../redux/actions';
+import { changeAuth } from '../redux/actions/interfaceActions';
+
 import Preloader from "../components/Preloader"
 import Button from "../components/Button";
 import { ReactComponent as Logo } from '../assets/img/Logo.svg';

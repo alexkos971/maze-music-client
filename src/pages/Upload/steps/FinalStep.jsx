@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import {MainContext} from "../index.jsx";
-import { getMyAlbums, setProfile } from '../../../redux/actions';
+
+import { getMyAlbums, setProfile } from '../../../redux/actions/profileActions';
+
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import Axios from "../../../core/axios";

@@ -263,6 +263,15 @@
                             background-color: #EEEEEE;
                             color: #393E46;
                         }
+
+                        &-desc {
+                            &-title {
+                                color: $gray-font-light;
+                            }
+                            &-text {
+                                color: $gray-font;
+                            }
+                        }
                     }
                 }
             }

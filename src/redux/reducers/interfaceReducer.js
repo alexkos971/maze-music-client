@@ -1,10 +1,13 @@
-import { SET_FULLPLAYER, SET_NIGHT, SET_HEADER, CHANGE_DIR, CHANGE_AUTH } from './types';
+import { SET_FULLPLAYER, SET_NIGHT, SET_HEADER, CHANGE_DIR, CHANGE_AUTH } from '../types/interfaceTypes';
 
 let initialState = {
     fullPlayer: false,
     night: JSON.parse(localStorage.getItem('userNight')),
     header: false,
-    path: 'Profile',
+    path: {
+        name: 'For you',
+        path: '/for-you'
+    },
     auth: false,
     serverUrl: 'http:/localhost:5050/'
 }

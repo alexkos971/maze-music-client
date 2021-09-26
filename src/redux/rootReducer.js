@@ -1,10 +1,11 @@
 import { combineReducers} from 'redux';
-import { playReducer } from './playReducer';
-import { songsReducer } from './songsReducer';
-import { artistsReducer } from './artistsReducer';
-import { profileReducer } from './profileReducer';
-import { interfaceReducer } from './interfaceReducer';
-import { albumsReducer } from "./albumsReducer";
+
+import { songsReducer } from "./reducers/songsReducer";
+import { albumsReducer } from "./reducers/albumsReducer";
+import { profileReducer } from "./reducers/profileReducer";
+import { artistsReducer } from "./reducers/artistsReducer";
+import { playReducer } from "./reducers/playReducer";
+import { interfaceReducer } from "./reducers/interfaceReducer";
 
 export const rootReducer = combineReducers({
     onPlay: playReducer,

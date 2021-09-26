@@ -1,4 +1,5 @@
 import React, { useState, createContext, useEffect } from 'react';
+import { connect } from "react-redux";
 
 import ChooseLength from "./steps/ChooseLength";
 import ChooseGenre from "./steps/ChooseGenre";
@@ -8,6 +9,7 @@ import ChooseCoverFile from "./steps/ChooseCoverFile";
 import FinalStep from "./steps/FinalStep"
 
 import Preloader from "../../components/Preloader";
+import MainBcg from "../../components/MainBcg.jsx";
 
 export const MainContext = createContext();
 
@@ -56,7 +58,7 @@ const Upload = () => {
     return (
         <MainContext.Provider value={{ setLoad, setForm, form, setBtnDisabled, setSteps, steps, scrollSteps, setScrollSteps }}>         
             <div className="music__main-upload">
-                <div className={`music__main-bg`}></div>
+                <MainBcg/>
 
                 {!animateLoading && (
                     <>

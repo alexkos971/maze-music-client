@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import Axios from "../../core/axios";
 
-import { changeDir, setNowAlbum, setProfile, getMyAlbums } from "../../redux/actions";
+import { changeDir } from "../../redux/actions/interfaceActions";
+import { getMyAlbums } from "../../redux/actions/profileActions";
+import { setNowAlbum } from "../../redux/actions/albumsActions";
+
 import { useMessage } from "../../hooks/message.hook";
 
 import { leftIcon, rightIcon } from '../images';
 
-const CardsTemp = ({dispatch, items, to, start, my, profile, myAlbums }) => {
+const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
     const message = useMessage();
 
 
@@ -82,8 +85,8 @@ const CardsTemp = ({dispatch, items, to, start, my, profile, myAlbums }) => {
                 <span className="music__main-slider-view">View all</span>
                  <Slider {...settings}>
                     {items.map((item, index) => 
-                        <div className="music__main-slider-item" key={index}>
-                            <Link to={"/Artist/" + item._id}>
+                        <div className="music__main-slider-item" key={index} onClick={() => dispatch(changeDir({name: 'Artist', path: '/artist'}))}>
+                            <Link to={"/artist/" + item._id}>
                                 <div className="music__main-slider-item-wrap">
                                         <img src={item.avatar} alt="" className="slider_img" />
 

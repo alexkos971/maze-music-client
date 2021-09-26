@@ -1,4 +1,4 @@
-import { SET_NOW_ALBUM} from "./types";
+import { SET_NOW_ALBUM} from "../types/albumsTypes";
 
 let initialState = {
 	myAlbums: [],

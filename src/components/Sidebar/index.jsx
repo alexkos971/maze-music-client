@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import { changeDir } from "../../redux/actions"
+import { changeDir } from "../../redux/actions/interfaceActions"
  
 import { Context } from '../../context';
 import { NavLink} from 'react-router-dom';
@@ -10,7 +10,6 @@ import { ReactComponent as LogoTablet } from '../../assets/img/Logo_tablet.svg';
 
 const Sidebar = ({ dispatch, path }) => {
     let { sidebar } = useContext(Context);
-    let directory = useLocation();
  
     return (
         <div className="music__sidebar">
@@ -22,16 +21,17 @@ const Sidebar = ({ dispatch, path }) => {
             </div>
                 
             <ul>
-                {sidebar && sidebar.map(item => {
+                {
+                sidebar.map(item => {
                     return (
                         <li 
                             key={item.id}
-                            className={'/' + item.name === directory.pathname ? "active" : ""}>
+                            className={item.path === path.path ? "active" : ""}>
                             
                             <NavLink 
-                                to={`/${item.name}`} 
+                                to={`${item.path}`} 
                                 onClick={() => {
-                                    dispatch(changeDir(item.name))
+                                    dispatch(changeDir({name: item.name, path: item.path}))
                                 }}>
                                 <span className="music__sidebar-item-icon">
                                     <i className={`fas fa-${item.icon}`}></i>
@@ -41,17 +41,6 @@ const Sidebar = ({ dispatch, path }) => {
                         </li>);
                 })}   
             </ul>
-            
-
-      
-            {/* {data.footer.map(item => {
-                return (
-                    <div className="music__sidebar-footer" key={item}>
-                        <h5>Current version {item.v}</h5>
-                        <span>Update {item.update}</span>
-                    </div>
-                );
-            })}   */}
         </div>
     );
 }

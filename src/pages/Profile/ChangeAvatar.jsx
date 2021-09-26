@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { setProfile } from "../../redux/actions"
+import { setProfile } from "../../redux/actions/profileActions"
 
 import Axios from "../../core/axios"
 

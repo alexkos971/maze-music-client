@@ -81,7 +81,7 @@ $color: $gray-font;
         font-size: 15px;
         border-radius: 5px;
         background-color: #fff !important;
-        // border: .1px solid #000;
+
         &::placeholder {
           color: $gray-font;
         }
@@ -263,6 +263,7 @@ $color: $gray-font;
     position: relative;
     width: 86%;
     overflow: auto;
+    overflow-x: hidden;
     background-color: #fff;
 
     li {
@@ -287,6 +288,10 @@ $color: $gray-font;
       background-color: $black-bcg;
 
       h1, h2, h3, h4, h5, h6 {
+        color: $color;
+      }
+
+      i {
         color: $color;
       }
 

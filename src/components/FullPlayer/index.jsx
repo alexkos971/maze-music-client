@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { setFullPlayer } from '../../redux/actions';
+import { setFullPlayer } from '../../redux/actions/interfaceActions';
 
 import Button from "../Button";
 
@@ -19,13 +19,13 @@ const FullPlayer = ({ dispatch, full, song }) => {
                 <div className="music__main-full-info">
     
                     <span>Artist:  
-                        <Link to={`/Artist/${song.artist_id}`} onClick={() => dispatch(setFullPlayer(false))}>
+                        <Link to={`/artist/${song.artist_id}`} onClick={() => dispatch(setFullPlayer(false))}>
                             <span> {song.artist_name}</span>
                         </Link>
                     </span>
     
                     {song.album_name && <span>Album: 
-                        <Link to={`/Album/${song.album_id}`} onClick={() => dispatch(setFullPlayer(false))}>
+                        <Link to={`/album/${song.album_id}`} onClick={() => dispatch(setFullPlayer(false))}>
                             <span>{song.album_name}</span>
                         </Link>
                         </span>
@@ -36,7 +36,7 @@ const FullPlayer = ({ dispatch, full, song }) => {
                             <span>Genre:</span> 
                             {
                                 song.genre.map(item => (
-                                    <Link to={`/Genre/${item}`} key={item} onClick={() => {
+                                    <Link to={`/genre/${item}`} key={item} onClick={() => {
                                         dispatch(setFullPlayer(false))
                                         history.push('/Search')
                                     }} className="music__main-full-info-genres-item">

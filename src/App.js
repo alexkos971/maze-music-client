@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-import 'materialize-css';
 import { connect } from 'react-redux';
-import { onPlay, setProfile } from './redux/actions';
+
+import { onPlay } from './redux/actions/playActions';
+import { setProfile } from './redux/actions/profileActions';
 
 import './index.scss';
 import { useAuth } from './hooks/auth.hook';
-import { useHttp } from './hooks/http.hook';
 import { useMessage } from './hooks/message.hook';
 import Message from "./hooks/Message";
 import { Context } from './context';
@@ -18,35 +18,19 @@ import Player from './components/Player';
 import AuthPage from './pages/AuthPage';
 import Preloader from "./components/Preloader"
 
-function App({ dispatch, start, song, night, profile, path }) {
+function App({ dispatch, start, song, night, profile }) {
 
-  const { request } = useHttp();
   const { login, logout, token } = useAuth();
   const { message, isVisible } = useMessage();
   let { sidebar } = useContext(Context);
     
   const [fullScreen, setFullScreen] = useState(false);
 
-
-  const getProfile = useCallback(async () => {
-    try {
-      let data = await request('/api/users/profile', 'GET', null, {
-        Authorization: `Bearer ${token}`
-      })
-      if (data) {
-        dispatch(setProfile({...data, description_large: data.description.substr(0, 130) + '...'}));
-      }
-    }  
-    catch (e) {
-      console.log("Не удалось загрузить профиль", e)
-    }
-  }, [token, dispatch, request])
-
   useEffect(() => {
     if (token) {
-      getProfile();
+      dispatch(setProfile());
     }
-  }, [token, getProfile, dispatch]);
+  }, [token, dispatch]);
 
 
   const onSavePlaylist = (save, props) => {
@@ -106,7 +90,7 @@ function App({ dispatch, start, song, night, profile, path }) {
       </> :
       
       <>
-       <Redirect to={`/${path}`}/>
+       <Redirect to={`/for-you`}/>
       
         <div className={ !night ? "music-night" : "music"}>
 
@@ -118,8 +102,8 @@ function App({ dispatch, start, song, night, profile, path }) {
         
       
           <Player
-          fullScreen={fullScreen}
-          setFullScreen={setFullScreen}/>
+            fullScreen={fullScreen}
+            setFullScreen={setFullScreen}/>
         </div>
         </>
     }

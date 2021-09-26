@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {  setProfile, changeDir } from '../../redux/actions';
+import { changeDir } from '../../redux/actions/interfaceActions';
+import { changeProfileDescription, changeProfileName} from '../../redux/actions/profileActions';
 
 import { useHttp } from '../../hooks/http.hook';
 import { useAuth } from "../../hooks/auth.hook";
@@ -49,56 +50,9 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
         ]
     }
 
-    const message = useMessage();
-
-    const changeName = async () => {
-        let name = prompt('Paste the new name', profile.name);
-        
-        if (!name) {
-            return alert('Поле пустое !!!');
-        }
-
-        try {
-            const newName = await request('/api/changes/name', 'POST', { name: name }, {
-                Authorization: `Bearer ${token}`
-            })
-
-            if (newName) {
-                message(newName.message);
-                dispatch(setProfile({...profile, name: newName.name}))
-            }
-        }
-        catch (e) {
-            message(e.message)
-        }
-    }
-
-    const changeDesc = async () => {
-        let desc = prompt('Paste the new name');
-
-        if (!desc) {
-            return alert('Поле пустое !!!');
-        }
-
-        try {
-            const newDesc = await request('/api/changes/description', 'POST', { description: desc }, {
-                Authorization: `Bearer ${token}`
-            })
-
-            if (newDesc) {
-                dispatch(setProfile({...profile, description: newDesc.description, description_large: newDesc.description.substr(0, 130) + '...'}))
-                message(newDesc.message);
-            }
-        }
-        catch (e) {
-            message(e.message)
-        }
-    }
-
 
     if (loading && profile) {
         return (
-            // <h1 className="load_title">Loading...</h1>
             <Preloader/>
         );
     } 
@@ -114,8 +68,8 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                         <div className="music__main-profile-header-wrap-avatar-img">
                             <img src={profile.avatar || image} alt=""/>
                             
-                            <div className="music__main-profile-header-wrap-avatar-img-change" onClick={() => dispatch(changeDir('Change Avatar'))}>
-                                <Link to="/ChangeAvatar">
+                            <div className="music__main-profile-header-wrap-avatar-img-change" onClick={() => dispatch(changeDir('change-avatar'))}>
+                                <Link to="/change-avatar">
                                     <span>Change</span>
                                 </Link>
                             </div>
@@ -127,8 +81,8 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                         <div className="music__main-profile-header-wrap-nick-name">
                             <h1>{profile.name}</h1>
 
-                            <span>
-                                <i className="fas fa-pencil-alt" onClick={changeName}></i>
+                            <span  onClick={() => dispatch(changeProfileName())}>
+                                <i className="fas fa-pencil-alt"></i>
                             </span>
                         </div>
 
@@ -147,7 +101,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                         {
                             frequent.artists.map((item, index) => {
                                 return (
-                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`Artist/${item.link}`} key={index}>
+                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`/artist/${item.link}`} key={index}>
                                         {item.name}
                                     </Link>
                                 )
@@ -161,7 +115,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                         {
                             frequent.genres.map((item, index) => {
                                 return (
-                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`Genre/${item.link}`} key={index}>
+                                    <Link className="music__main-profile-header-frequents-frequent-item" to={`/genre/${item.link}`} key={index}>
                                         {item.name}
                                     </Link>
                                 )
@@ -171,10 +125,10 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
 
                     <div className="music__main-profile-header-frequents-frequent-desc">
                         <span className="music__main-profile-header-frequents-frequent-desc-title">Description:</span>
-                        <span className="music__main-profile-header-frequents-frequent-desc-text">{profile.description_large}</span>
+                        <span className="music__main-profile-header-frequents-frequent-desc-text">{profile.description.length < 30 ? profile.description :  profile.description_large}</span>
                         
                         <span className="music__main-profile-header-frequents-frequent-desc-icon">
-                            <i className="fas fa-pencil-alt" onClick={changeDesc}></i>
+                            <i className="fas fa-pencil-alt" onClick={() => dispatch(changeProfileDescription())}></i>
                         </span>
                         
                     </div>

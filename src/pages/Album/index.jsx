@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
-import { setNowAlbum } from "../../redux/actions";
+import { setNowAlbum } from "../../redux/actions/albumsActions";
 
 import SongsTemp from "../../components/SongsTemp"; 
 import Preloader from "../../components/Preloader";

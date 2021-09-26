@@ -4,12 +4,19 @@
     height: 220px;
     border-radius: 20px;
     position: relative;
-    // border: 1px dashed #393E46;
     background-color: #F4F6F8;
     margin: 0 auto;
     margin-bottom: 80px;
     cursor: pointer;
     box-sizing: border-box;
+
+    &.night {
+        background-color: $gray-bcg;
+
+        span i {
+            color: $gray-400;
+        }
+    }
 
     input {
     	display: none;

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {  connect } from "react-redux";
-import { onPlay, setMySongs, getRecomendSongs, setSavedSongs, setProfile } from "../../redux/actions";
+
+import { setSavedSongs, setProfile } from "../../redux/actions/profileActions";
+import { onPlay } from "../../redux/actions/playActions";
 
 
 import { useHttp } from "../../hooks/http.hook";
 import { useAuth } from "../../hooks/auth.hook";
 import { useMessage } from "../../hooks/message.hook";
-import { downloadIcon } from '../images';
 import Preloader from "../Preloader";
 
 const SongsTemp = ({ 
     dispatch, 
     mySongs, 
-    savedSongs, 
-    recomendSongs, 
+    savedSongs,  
     profile, 
     song, 
     start, 
@@ -166,14 +166,12 @@ const SongsTemp = ({
 
     return (
         <ol className={`music__main-temp-songs-list${!night ? " night" : ""}`}>
-            
-{/*            <span className="music__main-temp-songs-view">View all</span>*/}
         
             {!loading &&
                 songsArray.map((item, index) => {
                 
                 return (
-                    <li key={index} id={(song && song._id === item._id) ? "now_play" : ''}>
+                    <li key={index} className={(song && song._id === item._id) ? "now_play" : ''}>
                         <i className={`fas fa-${(start && song && song._id === item._id)  ? "pause" : "play"}-circle play_btn`} 
                             onClick={() => { 
                                 dispatch(onPlay(item, songs));
@@ -204,11 +202,9 @@ const SongsTemp = ({
                                 </span>
                             }
 
-                            <a href={item.src} download>
-                                <span className="music__main-temp-songs-list_right-download">
-                                    <i className="fas fa-arrow-circle-down"></i>
-                                </span>
-                            </a>
+                            <span className="music__main-temp-songs-list_right-download">
+                                <i className="fas fa-arrow-circle-down"></i>
+                            </span>
 
                             <span className="music__main-temp-songs-list_right-save"
                                 onClick={() => onSaveSong(item, index)}>

@@ -1,5 +1,4 @@
 .music__main-temp-songs {
-    $color: #8e8e8e;
     position: relative;
     margin-top: 30px;
     padding: 0;
@@ -18,7 +17,7 @@
             justify-content: space-between;
 
             span {
-                color: #8e8e8e;
+                color: $gray-font;
                 cursor: pointer;
                 font-size: 18px;
 
@@ -33,7 +32,7 @@
         position: absolute;
         right: 0px;
         top: 10px;
-        color: #2BA6A2;
+        color: $green;
         font-weight: 500;
         font-size: 16px;
         cursor: pointer;
@@ -47,8 +46,8 @@
         margin: 0;
         counter-reset: item;
 
-        #now_play {
-            color: #2BA6A2;
+        .now_play {
+            color: $green;
 
             &:active .play_btn {
                 font-size: 32px;
@@ -60,14 +59,13 @@
 
             .play_btn {
                 opacity: 1;
-                color: #2BA6A2;
+                color: $green;
                 margin-right: 11.5px;
                 transform-origin: center;
             }
         }
 
         &-avatar {
-            // height: 90%;
             height: 35px;
             width: 35px;
             border-radius: 2px;
@@ -106,16 +104,14 @@
             position: relative;
             right: 10px;
             font-size: 30px;
-            color: $color;
+            color: $gray-font;
         }
 
         li {
-            // width: 100%;
             position: relative;
             align-items: center;
             display: flex;
             transition: .2s all ease;
-            // border-bottom: .5px solid #e8e8e8; 
             border-radius: 7px;
             font-weight: normal;
             cursor: pointer;
@@ -125,12 +121,12 @@
 
             &:hover .play_btn {
                 opacity: 1;
-                color: #2BA6A2;
+                color: $green;
                 margin-right: 11.5px;
             }
             &:hover {
-                color: $color;
-                background-color: #F4F6F8;
+                color: $gray-font;
+                background-color: $gray-200;
             }
 
             &:hover::before {
@@ -152,72 +148,64 @@
             justify-content: space-between;
             align-items: center;
 
-            &-trash {
-                font-size: 18px;
-                color: #8e8e8e;
-            }
-
-            &-download {
-                color: #8e8e8e;
-                font-size: 18px;
+            span {
                 margin-left: 15px;
-            }
-
-            &-save {
                 font-size: 18px;
-                color: $color;
-                margin-left: 15px;
+                color: $gray-font;
+                
+                &:hover {
+                    color: $gray-font-light;
+                    
+                    i {
+                        color: $gray-font-light;
+                    }
+                }
             }
 
             &-time_now {
                 font-weight: 100;
-                color: #8e8e8e;
-                margin-left: 15px;
+                color: $gray-font;
             }
 
-            i:hover {
-                color: #d1d1d1;
-            }
         }
     }
 
 }
 
 .music-night {
-    $color: #8e8e8e;
     
     .music__main-temp-songs-list {
 
         li {
             
             &:before {
-                color: $color !important;
+                color: $gray-font !important;
             }
 
             &:hover {
-                background-color: #292929 !important;
+                background-color: $gray-bcg !important;
             }
         }
 
         &_artist-name {
-            color: $color;
+            color: $gray-font;
         }
 
         &-album {
-            color: #8e8e8e;
+            color: $gray-font;
         }
 
         &_name {
-            color: $color !important;
+            color: $gray-font !important;
         }
 
         &-link {
-            color: $color;
+            color: $gray-font;
         }
 
         &-right {
             &-trash {
-                color: $color;    
+                color: $gray-font;    
             }
         }
     }
