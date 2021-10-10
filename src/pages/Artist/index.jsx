@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { connect } from "react-redux";
 
@@ -6,32 +6,13 @@ import SongsTemp from "../../components/SongsTemp"
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader";
 
-import { useHttp } from '../../hooks/http.hook';
+import { getArtist } from '../../redux/actions/artistsActions';
 
-const Artist = ({ recomendArtists }) => {
-    
-    const [artist, setArtist] = useState({});
+const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
     let id = useParams().id;
-    const { request, loading } = useHttp();
-    
-    const getArtist = useCallback(async () => {
-        try {
-            const data = await request(`/api/users/artist/${id}`, 'GET');
-            if (data) {
-                setArtist({...data, description_large: data.description.substr(0, 30) + '...'});
-                return;
-            }
-            else {
-                return <h1>Not found...</h1>    
-            }
-        }
-        catch (e) {
-            console.log(e)
-        }
-    }, [request, id]);
-    
+
     useEffect(() => {
-        getArtist();
+        dispatch(getArtist(id));
     }, [getArtist])
     
 
@@ -114,7 +95,9 @@ const Artist = ({ recomendArtists }) => {
 
 const mapStateToProps = (state) => {
     return {
-        recomendArtists: state.artists.recomendArtists
+        artist: state.artists.artist,
+        recomendArtists: state.artists.recomendArtists,
+        loading: state.interface.loading
     }
 }
 

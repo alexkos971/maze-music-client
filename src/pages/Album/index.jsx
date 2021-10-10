@@ -1,34 +1,18 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useHttp } from "../../hooks/http.hook";
 import { setNowAlbum } from "../../redux/actions/albumsActions";
 
 import SongsTemp from "../../components/SongsTemp"; 
 import Preloader from "../../components/Preloader";
 
-const Album = ({ dispatch, album }) => {
-    // const [album, setAlbum] = useState(null);
+const Album = ({ dispatch, album, loading }) => {
 
     let id = useParams().id;
-    const { request, loading } = useHttp();
-
-    const getAlbum = useCallback(async () => {
-        try { 
-            const data = await request(`/api/albums/album/${id}`, 'GET');
-            if (data) {
-                console.log(album, data)
-                dispatch(setNowAlbum({ ...album, songs: data }))
-            }
-        }
-        catch (e) {
-            console.log(e)
-        }
-    }, [request, id])
 
     useEffect(() => {
-        getAlbum();
-    }, [getAlbum])
+        dispatch(setNowAlbum(id));
+    }, [])
 
 
     if (loading && !album) {
@@ -50,7 +34,8 @@ const Album = ({ dispatch, album }) => {
 
 const mapStateToProps = (state) => {
     return {
-        album: state.albums.album
+        album: state.albums.album,
+        loading: state.interface.loading
     }
 }
 

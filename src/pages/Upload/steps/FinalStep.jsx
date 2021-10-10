@@ -7,13 +7,10 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import Axios from "../../../core/axios";
 import  Button from "../../../components/Button";
+import { showAlert } from "../../../redux/actions/interfaceActions";
 
-import { useMessage } from '../../../hooks/message.hook';
-
-const FinalStep = ({ path, dispatch, mySongs, profile }) => {
+const FinalStep = ({ dispatch, profile }) => {
 	const { form, setLoad, load } = useContext(MainContext);
-
-    const message = useMessage();
     const history = useHistory()
 
     const uploadHandler = async () => {
@@ -36,7 +33,6 @@ const FinalStep = ({ path, dispatch, mySongs, profile }) => {
                     formData.append(key, form[key])
                 }
             }
-            console.log(formData, form);
 
             switch (form.type) {
                 case 'Single track':
@@ -48,7 +44,7 @@ const FinalStep = ({ path, dispatch, mySongs, profile }) => {
                             await dispatch(setProfile({...profile, songs: songs}));
                         }
                         else {
-                            message(data.message);
+                            dispatch(showAlert({type: 'error', text: data.message}))
                         }    
                     })
                     .then(() => {
@@ -65,7 +61,7 @@ const FinalStep = ({ path, dispatch, mySongs, profile }) => {
                             return dispatch(setProfile({...profile, albums: albums}));
                         }
                         else {
-                            message(data.message);
+                            dispatch(showAlert({type: 'error', text: data.message}))
                         }    
                     })
                     .then(() => {
@@ -77,7 +73,7 @@ const FinalStep = ({ path, dispatch, mySongs, profile }) => {
 
         }
         catch (e) {
-            message(e.message);
+            dispatch(showAlert({type: 'error', text: e.message}))
         }
     }
 

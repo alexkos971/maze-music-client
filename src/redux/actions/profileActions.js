@@ -6,21 +6,22 @@ import {
     SAVE_SONG, 
     CHANGE_PROFILE_DESCRIPTION, 
     CHANGE_PROFILE_NAME,
-
+    
     LOG_IN,
-    REGISTER
-} from '../types/profileTypes'
+    LOG_OUT,
+    REGISTER,
+    RECOVERY_PASS
+} from '../types/profileTypes';
 
 import { LOADING, SHOW_ALERT } from '../types/interfaceTypes';
 
 import axios from "../../core/axios";
-import { combineReducers } from 'redux';
 
 export const setProfile = () => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get('/api/users/profile')
-
+            
             if (data) {
                 return dispatch({
                     type: SET_PROFILE,
@@ -37,18 +38,35 @@ export const setProfile = () => {
 export const changeProfileDescription = (data) => {
     return async (dispatch) => {
         let desc = prompt('Paste the new description');
-
+        
         if (!desc) {
             return alert('Поле пустое !!!');
         }
-
+        
         try {
             const newDesc = await axios.post('/api/changes/description', { description: desc })
-
+            
             if (newDesc) {
                 dispatch({
                     type: CHANGE_PROFILE_DESCRIPTION,
                     payload: newDesc.data
+                })
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'success',
+                        text: 'Описание изменено'
+                    }
+                })
+            }
+            else {
+
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'error',
+                        text: 'Ошибка !'
+                    }
                 })
             }
         }
@@ -61,18 +79,33 @@ export const changeProfileDescription = (data) => {
 export const changeProfileName = (data) => {
     return async (dispatch) => {
         let name = prompt('Paste the new name');
-
+        
         if (!name) {
-            return alert('Поле пустое !!!');
+            dispatch({
+                type: SHOW_ALERT,
+                payload: {
+                    type: 'warning',
+                    text: 'Поле пустое !'
+                }
+            })
+            return;
         }
-
+        
         try {
             const { data } = await axios.post('/api/changes/name', { name });
-
+            
             if (data) {
                 dispatch({
                     type: CHANGE_PROFILE_NAME,
                     payload: data.name
+                })
+                
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'success',
+                        text: 'Имя обновлено'
+                    }
                 })
             }
         }
@@ -110,6 +143,8 @@ export const saveSong = (item) => {
     }
 }
 
+
+// Auth actions
 export const login = (form) => {
     return async (dispatch, getState) => {
         try {
@@ -117,44 +152,143 @@ export const login = (form) => {
                 type: LOADING,
                 payload: true
             })
+            
+            const {data} = await axios.post('/api/auth/login', form);
+            
+            if (data.isSuccess) {
+                localStorage.setItem('userData', JSON.stringify(data.token));
+                
+                await dispatch(setProfile());
 
-            return await axios.post('/api/auth/login', form)
-                .then((res) => {
-                    if (res.statusText == 'OK') {
-
-                        dispatch({
-                            type: SHOW_ALERT,
-                            payload: {
-                                type: 'success',
-                                text: res.data.message
-                            }
-                        })
-                    
-                        dispatch({
-                            type: LOG_IN,
-                            payload: res.data
-                        })
-
-                        return res.data;
+                dispatch({
+                    type: LOG_IN,
+                    payload: { isSuccess: true, token: data.token }
+                }) 
+                
+                
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'success',
+                        text: data.message
                     }
                 })
-                .catch((res) => {
-                    console.log(res)
-                    dispatch({
-                        type: SHOW_ALERT,
-                        payload: {
-                            type: 'error',
-                            text: res.message
-                        }
-                    })
-
-                    dispatch({
-                        type: LOADING,
-                        payload: false
-                    })
-
-                    return res;
+            }    
+            else {
+                dispatch({
+                    type: LOG_IN,
+                    payload: {isSuccess: false}
                 })
+                
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'error',
+                        text: data.message                        
+                    }
+                })
+            }
+            
+            return dispatch({
+                type: LOADING,
+                payload: false
+            })
+            
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const logout = () => {
+    return async (dispatch, getState) => {
+        await localStorage.removeItem('userData');
+        
+        let name = getState().profile.name;
+        dispatch({
+            type: LOG_OUT
+        })
+        
+        dispatch({
+            type: SHOW_ALERT,
+            payload: {
+                type: 'success',
+                text: `Вы вышли из аккаунта ${name}`
+            }
+        })
+    }
+}
+
+export const register = (form) => {
+    return async (dispatch, getState) => {
+        
+        try {
+            dispatch({
+                type: LOADING,
+                payload: true
+            })
+            
+            const { data } = axios.post('/api/auth/register', form)
+            
+            if (data.isSuccess) {
+                
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'success',
+                        text: data.message
+                    }
+                })
+                
+                dispatch({
+                    type: REGISTER,
+                    payload: data
+                })
+                
+                return data;
+            }
+            else {
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'error',
+                        text: data.message
+                    }
+                })
+            }
+            dispatch({
+                type: LOADING,
+                payload: true
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+}
+
+export const recoveryPass = (email) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: LOADING, payload: true})
+            const {data} = await axios.post('/api/auth/checkEmail', { email })
+            
+            if (data.isSuccess) {
+                dispatch({
+                    type: RECOVERY_PASS,
+                    payload: data.pass
+                })
+                dispatch({
+                    type: SHOW_ALERT,
+                    payload: {
+                        type: 'success',
+                        text: 'Пароль обновлен'
+                    }
+                })
+            }
+
+            dispatch({type: LOADING, payload: true})
         }
         catch (e) {
             console.log(e)

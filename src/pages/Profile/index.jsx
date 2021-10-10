@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 import { changeDir } from '../../redux/actions/interfaceActions';
 import { changeProfileDescription, changeProfileName} from '../../redux/actions/profileActions';
 
-import { useHttp } from '../../hooks/http.hook';
-import { useAuth } from "../../hooks/auth.hook";
-import { useMessage } from "../../hooks/message.hook";
-
 import image  from '../../assets/img/Avatar.svg';
 
 import SongsTemp from "../../components/SongsTemp";
@@ -15,10 +11,7 @@ import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader";
 import Button from "../../components/Button";
 
-const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start, night }) => {
-    const { loading, request } = useHttp();
-    const { token } = useAuth();
-
+const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start, night, loading }) => {
     const frequent = {
         artists: [
             { 
@@ -198,7 +191,8 @@ const mapStateToProps = (state) => {
         savedSongs: state.profile.saved_songs,
         start: state.onPlay.start,
         song: state.onPlay.song,
-        night: state.interface.night
+        night: state.interface.night,
+        loading: state.interface.loading
     }
 }
 

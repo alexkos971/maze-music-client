@@ -1,64 +1,35 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect, Route, useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import { onPlay } from './redux/actions/playActions';
 import { setProfile } from './redux/actions/profileActions';
 
 import './index.scss';
-import { useAuth } from './hooks/auth.hook';
-import { useMessage } from './hooks/message.hook';
-import Message from "./hooks/Message";
-import { Context } from './context';
 
 import Sidebar from './components/Sidebar';
 import Main from './pages';
 import Player from './components/Player';
 import AuthPage from './pages/AuthPage';
 import Preloader from "./components/Preloader"
+import { userToken } from "../src/config/constants";
 
-function App({ dispatch, start, song, night, profile }) {
+function App({ dispatch, song, night, profile, defaultPath }) {
 
-  const { login, logout, token } = useAuth();
-  const { message, isVisible } = useMessage();
-  let { sidebar } = useContext(Context);
-    
   const [fullScreen, setFullScreen] = useState(false);
+  const token = userToken();
 
   useEffect(() => {
-    if (token) {
+    if (token && !profile.name) {
       dispatch(setProfile());
     }
-  }, [token, dispatch]);
-
-
-  const onSavePlaylist = (save, props) => {
-    console.log(save, props);
-  }
-
-
-  let allowed = true;
-  document.addEventListener('keydown', e => {
-
-    if (e.repeat !== undefined) {
-      allowed = !e.repeat;
-    }
-    if (!allowed) {
-      allowed = false;
-
-      if (e.code === 'Space') {
-        dispatch(onPlay(song, start))
-    }
-    }
-  });
-  
-  // Clicks out of element for close
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('.music__main-header-head') !== null) {
-      // dispatch(setHeader(false));
-    }
-  });
+      // if (!token) {
+      //   history.push('/auth')
+      // }
+      // else {
+      //   history.push('for-you');
+      // }
+  }, [token, profile, dispatch]);
 
   // Save last song before close window
   window.addEventListener('beforeunload', () => {
@@ -66,61 +37,42 @@ function App({ dispatch, start, song, night, profile }) {
   });
   
   
-  
-  if (!profile) {
-    return (
-      <Preloader/>
-    )
-  } 
-  
   return (
-    <Context.Provider value={{
-      login, logout, sidebar
-    }}>
+    <>
+      {!token ?
+        <>
+          <Redirect to="/auth/login" />      
 
-    {isVisible && <Message text={ message } />}
-
-    {!token ? 
-      <>
-        <Redirect to="/auth/login" />
-        
-        <Route path="/auth" >
-          <AuthPage/>
-        </Route>
-      </> :
-      
-      <>
-       <Redirect to={`/for-you`}/>
-      
-        <div className={ !night ? "music-night" : "music"}>
-
-          {sidebar ? (<Sidebar/>) : (<h1 className="load_title">Loading...</h1>)}
-          {profile ? 
-          (<Main 
-            onSavePlaylist={onSavePlaylist} />
-            ) : (<h1 className="load_title">Loading...</h1>)}
-        
-      
-          <Player
-            fullScreen={fullScreen}
-            setFullScreen={setFullScreen}/>
-        </div>
+          <Route path="/auth" >
+            <AuthPage/>
+          </Route>
         </>
-    }
-    </Context.Provider>
+        :
+        <>
+          <Redirect to={defaultPath.src}/>
+          <div className={ !night ? "music-night" : "music"}>
+            <Sidebar/>
+            
+            { profile.name ? 
+              <Main />
+              : 
+              <Preloader/>
+            }
+        
+            <Player {...{setFullScreen, fullScreen}} />
+          </div>
+        </>
+      }
+      </>
     );
-}
-
+  }
+  
 const mapStateToProps = (state) => {
   return {
     profile: state.profile,
-    start: state.onPlay.start,
-    songs: state.songs.recomendSongs,
-    saved_songs: state.profile.saved_songs,
     song: state.onPlay.song,
     night: state.interface.night,
-    header: state.interface.header,
-    path: state.interface.path
+    defaultPath: state.interface.defaultPath
   }
 }
 

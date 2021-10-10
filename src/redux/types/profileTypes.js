@@ -9,5 +9,7 @@ export const CHANGE_PROFILE_DESCRIPTION = 'CHANGE_PROFILE_DESCRIPTION';
 export const CHANGE_PROFILE_NAME = 'CHANGE_PROFILE_NAME';
 
 export const LOG_IN = 'LOG_IN';
+export const LOG_OUT = 'LOG_OUT';
 export const REGISTER = 'REGISTER';
+export const RECOVERY_PASS = 'RECOVERY_PASS';
 

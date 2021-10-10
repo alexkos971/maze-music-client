@@ -1,11 +1,10 @@
 import Axios from "axios";
 import { apiUrl, userToken } from "../config/constants";
 
-
 const instance = Axios.create({
 	baseURL: apiUrl,
 	headers: {
-		Authorization: `Bearer ${userToken.token}`,
+		Authorization: `Bearer ${userToken()}`,
 		withCredentials: true,
 		AcccessCrossOrigin: '*'
 	}
@@ -13,7 +12,7 @@ const instance = Axios.create({
 
 instance.interceptors.request.use((config) => {
 	if (typeof window !== 'undefined') {
-		config.headers.Authorization = `Bearer ${userToken.token}`
+		config.headers.Authorization = `Bearer ${userToken()}`
 	}
 	return config;
 })

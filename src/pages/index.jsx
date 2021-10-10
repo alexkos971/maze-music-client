@@ -1,9 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect,  } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import { Context } from '../context';
-import { useMessage } from "../hooks/message.hook";
 
 // Selectors
 import FullPlayer from '../components/FullPlayer';
@@ -22,26 +19,16 @@ import ChangeAvatar from "./Profile/ChangeAvatar";
 import Header from "../components/Header";
 import Alert from "../components/Alert";
 
-const Main = ({ onSavePlaylist, path, alert  }) => {
-    
-    let { logout, token } = useContext(Context);
-    const message = useMessage();
+import { userToken } from "../config/constants";
 
+const Main = ({ onSavePlaylist, defaultPath, alert  }) => {
+    const token = userToken()
 
     return (
         <div className="music__main">
             <FullPlayer />
 
-            <Header logout={logout} message={message} />
-            
-            <Route path="/" exact>
-                { token ? 
-                    <Redirect to={path.path} />
-                    : 
-                    <Redirect to="/auth" />
-                }
-            </Route>
-
+            <Header />
 
             <Route path={"/playlists"} exact component={Playlists}/>
 
@@ -49,13 +36,19 @@ const Main = ({ onSavePlaylist, path, alert  }) => {
                 <For onSavePlaylist={onSavePlaylist}/>
             </Route>
 
+            <Route path="/">
+            {
+                token ? <Redirect to={defaultPath.src}/> : <Redirect to='/auth/login' />
+            }
+            </Route>
+            
             <Route path={'/change-avatar'} exact component={ChangeAvatar}/>
             <Route path={"/artist/:id"} component={Artist}/>
             <Route path={"/album/:id"} component={Album} />
             <Route path={"/albums"} exact component={Albums}/>
             <Route path={"/songs"} exact component={Songs}/>
             <Route path={"/upload"} component={Upload}/>
-            <Route path="/search" exact component={Search}/>
+            <Route path={"/search"} exact component={Search}/>
             <Route path={"/profile"} exact component={Profile}/>
             <Route path="/settings" component={Settings}/>
 
@@ -69,7 +62,7 @@ const mapStateToProps = (state) => {
     return {
         start: state.onPlay.start,
         song: state.songs.song,
-        path: state.interface.path,
+        defaultPath: state.interface.defaultPath,
         alert: state.interface.alert
     }
 }

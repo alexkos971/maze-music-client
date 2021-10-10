@@ -4,14 +4,12 @@ import { setProfile } from "../../redux/actions/profileActions"
 
 import Axios from "../../core/axios"
 
-import { useAuth } from "../../hooks/auth.hook";
-import { useMessage } from "../../hooks/message.hook";
+import { showAlert } from "../../redux/actions/interfaceActions";
 
 import DragAndDrop from "../../components/DragAndDrop";
 import Button from "../../components/Button";
 
 const ChangeAvatar = ({ dispatch, profile }) => {
-	const message = useMessage();
 	const [file, setFile] = useState(null);
 	const [load, setLoad] = useState(false)
 
@@ -28,7 +26,7 @@ const ChangeAvatar = ({ dispatch, profile }) => {
             return Axios.post('/api/upload/avatar', formData)
             	.then(async data => {
             		if (data.avatar) {
-            			message(data.message);	
+						showAlert({type: 'success', text: data.message})
 		            	await dispatch(setProfile({...profile, avatar: data.avatar }))
 		            	setLoad(false)
             		}
@@ -37,7 +35,7 @@ const ChangeAvatar = ({ dispatch, profile }) => {
         	
         }
         catch (e) {
-            message(e.message)
+			showAlert({type: 'error', text: e.message})
         }
     }
 

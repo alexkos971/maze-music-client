@@ -3,14 +3,12 @@ import {MainContext} from "../index.jsx";
 import DragAndDrop from "../../../components/DragAndDrop";
 import SongsTemp from "../../../components/SongsTemp";
 import { connect } from "react-redux";
+import { showAlert } from "../../../redux/actions/interfaceActions";
 
-import { useMessage } from "../../../hooks/message.hook";
-
-const ChooseTrackFile = ({ name }) => {
+const ChooseTrackFile = ({ dispatch, name }) => {
 	const { form, setForm, setBtnDisabled } = useContext(MainContext);
     const [file, setFile] = useState(form.track || null);
     const [album, setAlbum] = useState(form.album || [])
-    const message = useMessage();
 
     useEffect(() => {
         setBtnDisabled(true)
@@ -18,7 +16,9 @@ const ChooseTrackFile = ({ name }) => {
         if (file) {
             if (form.type === 'Album') {
                 const check = album.some(i => i.name === file.name);
-                if (check) message('Вы уже добавили этот трек');
+                if (check) {
+                    dispatch(showAlert({type: 'error', text: 'Вы уже добавили этот трек !'}))
+                }
                 else {
                     setAlbum([...album, file])
                 }

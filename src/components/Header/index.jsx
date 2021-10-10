@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { changeDir, setNight, setHeader, showAlert  } from "../../redux/actions/interfaceActions";
-import { setProfile } from "../../redux/actions/profileActions";
+import {logout } from "../../redux/actions/profileActions";
 
 import image  from '../../assets/img/Avatar.svg';
 
-const Header = ({ dispatch, header, profile, night, path, logout, message }) => (
+const Header = ({ dispatch, header, profile, night, path }) => {
+    return (
 
     <div className="music__main-header">
                 
@@ -15,10 +16,10 @@ const Header = ({ dispatch, header, profile, night, path, logout, message }) => 
 
         <div className="music__main-header-head">
             <ul className={`music__main-header-head-navbar${night ? " dark" : ""}`}>
-                <li>
-                    <Link to={"/settings"} onClick={() => dispatch(changeDir({name: "Settings", path: '/settings'}))}>
+                <li onClick={() => dispatch(showAlert({ type: 'warning', text: 'Вы переходите в настройки !' }))}>
+                    {/* <Link to={"/settings"} onClick={() => dispatch(changeDir({name: "Settings", path: '/settings'}))}> */}
                         <span><i className="fas fa-sliders-h"></i></span>
-                    </Link>
+                    {/* </Link> */}
                 </li>
                 <li onClick={() => dispatch(setNight())}>
                     <span><i className={`fas fa-${!night ? "sun" : "moon"}`}></i></span>
@@ -43,17 +44,18 @@ const Header = ({ dispatch, header, profile, night, path, logout, message }) => 
         </div>
     
         <div className={`music__main-header-menu${header ? '-active' : ""}`}>
-            <Link to="/auth" onClick={() => {
-                logout()
-                dispatch(setProfile({profile: null}))
-            }}>
+            <Link to="/auth" onClick={async () => {
+                    dispatch(logout())
+                }}>
                 <span><i className="fas fa-user-circle"></i></span>
                 <span>Logout</span>
             </Link>
         </div>
 
     </div>
-)
+    )
+}
+
 
 const mapStateToProps = state => ({
     header: state.interface.header,

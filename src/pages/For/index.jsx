@@ -8,12 +8,7 @@ import SongsTemp from "../../components/SongsTemp";
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader"
 
-import { useHttp } from '../../hooks/http.hook';
-
-const For = ({ dispatch, recomendSongs, recomendArtists, savedSongs, profile }) => {
-    
-    const { loading, request } = useHttp();
-
+const For = ({ dispatch, loading, recomendSongs, recomendArtists }) => {
 
     useEffect(() => {
         dispatch(getRecomendSongs())
@@ -76,6 +71,7 @@ const For = ({ dispatch, recomendSongs, recomendArtists, savedSongs, profile }) 
 
 const mapStateToProps = state => {
     return {
+        loading: state.interface.loading,
         start: state.onPlay.start,
         recomendSongs: state.songs.recomendSongs,
         recomendArtists: state.artists.recomendArtists,

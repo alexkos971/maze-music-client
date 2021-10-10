@@ -8,13 +8,11 @@ import { changeDir } from "../../redux/actions/interfaceActions";
 import { getMyAlbums } from "../../redux/actions/profileActions";
 import { setNowAlbum } from "../../redux/actions/albumsActions";
 
-import { useMessage } from "../../hooks/message.hook";
+import { showAlert } from "../../redux/actions/interfaceActions";
 
 import { leftIcon, rightIcon } from '../images';
 
 const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
-    const message = useMessage();
-
 
     const deleteAlbum = async album => {
         let question = window.confirm(`Are you sure delete album [${album.name}] ?`)
@@ -26,7 +24,7 @@ const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
             await Axios.delete(`/api/albums/delete/${album._id}`)
                 .then(async data => {
                     if (data.statusText == 'OK') {
-                        message(data.message)
+                        dispatch(showAlert({type: 'success', text: data.message}));
                         const newAlbums = await myAlbums.filter(el => el !== album._id);
                         dispatch(getMyAlbums(newAlbums))
                     }

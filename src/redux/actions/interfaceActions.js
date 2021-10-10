@@ -42,40 +42,28 @@ export const setHeader = (state) => {
     }
 }
 
-export const showAlert = (state) => {
-   return async (dispatch, getState) => {
-
-        dispatch({
-            type: SHOW_ALERT,
-            payload: state
-        })
-
-        // return setTimeout(() => {
-        //     return dispatch({
-        //         type: HIDE_ALERT
-        //     })
-        // }, 4000)
-    }
-}
-
 export const hideAlert = (index) => {
-    return async (dispatch, getState) => {
+    return (dispatch, getState) => {
         let alerts = getState().interface.alert;
 
-        if (index) {
-            return dispatch({
-                type: HIDE_ALERT,
-                payload: alerts.filter((el, i) => index !== i)
-            })
-        }
-        else {
-            return dispatch({
-                type: HIDE_ALERT,
-                payload: alerts.filter((el, i) => i !== alerts.length - 1)
-            })
-        }
+        return dispatch({
+            type: HIDE_ALERT,
+            payload: alerts.filter((el, i) => i !== index)
+        })
     }
 }
+
+
+export const showAlert = (alert) => {
+   return async (dispatch) => {
+    
+        dispatch({
+            type: SHOW_ALERT,
+            payload: alert
+        })
+    }
+}
+
 
 export const loading = (state) => {
     return {

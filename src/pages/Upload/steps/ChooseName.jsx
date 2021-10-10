@@ -3,7 +3,7 @@ import {MainContext} from "../index.jsx"
 
 const ChooseName = () => {
 	const { form, setForm, setBtnDisabled } = useContext(MainContext);
-	const [name, setName] = useState(form.name || null)
+	const [name, setName] = useState(form.name || '')
 
     useEffect(() => {
         

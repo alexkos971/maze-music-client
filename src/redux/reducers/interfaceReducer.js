@@ -17,9 +17,12 @@ let initialState = {
         name: 'For you',
         path: '/for-you'
     },
+    defaultPath: {
+        src: '/for-you',
+        name: 'For you'
+    },
     loading: false,
-    auth: false,
-    serverUrl: 'http:/localhost:5050/',
+    authType: false,
     alert: []
 }
 

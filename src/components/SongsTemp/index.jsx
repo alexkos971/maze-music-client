@@ -2,31 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {  connect } from "react-redux";
 
-import { setSavedSongs, setProfile } from "../../redux/actions/profileActions";
+import { setSavedSongs } from "../../redux/actions/profileActions";
+import { deleteSong } from "../../redux/actions/songsActions";
 import { onPlay } from "../../redux/actions/playActions";
-
-
-import { useHttp } from "../../hooks/http.hook";
-import { useAuth } from "../../hooks/auth.hook";
-import { useMessage } from "../../hooks/message.hook";
 import Preloader from "../Preloader";
 
 const SongsTemp = ({ 
-    dispatch, 
-    mySongs, 
+    dispatch,
     savedSongs,  
     profile, 
     song, 
     start, 
     my, 
     night, 
+    loading,
     type, 
     setAlbum, 
     songs }) => {
-
-    const { loading, request, error } = useHttp();
-    const { token } = useAuth();
-    const message = useMessage();
 
     const [songsArray, setSongsArray] = useState(null);
 
@@ -60,32 +52,6 @@ const SongsTemp = ({
     }, [songs, savedSongs, songsArray])
 
 
-    const deleteSong = async (id) => {  
-        let qustion = window.confirm("Вы точно хотите удалить этот трек ?");
-        
-        if (qustion) {
-
-            let data = await request(`/api/songs/delete/${id}`, 'DELETE', null, {
-                Authorization: `Bearer ${token}`
-            })
-            
-            if (error) {
-                alert(error)
-            }
-            
-            if (data) {
-                const newSongs = mySongs.filter(item => {
-                    return item._id !== id;
-                });
-                message(data.message)
-                return dispatch(setProfile({...profile, songs: newSongs}));
-            }
-        }
-        else {
-            return;
-        }
-    }
-
 
     const onSaveSong = async (item, index) => {
 
@@ -110,15 +76,6 @@ const SongsTemp = ({
         else {
             dispatch(setSavedSongs([...savedSongs, item]));
         }
-
-
-
-        // const data = await request(`/api/songs/save/${item._id}`, 'PUT', null, {
-        //     Authorization: `Bearer ${token}`
-        // });
-        // if (data) {
-        //     console.log(data)
-        // }
 
     }
 
@@ -197,7 +154,7 @@ const SongsTemp = ({
                         <div className="music__main-temp-songs-list_right">
 
                             {my &&
-                                <span className="music__main-temp-songs-list_right-trash" onClick={() => deleteSong(item._id)}>
+                                <span className="music__main-temp-songs-list_right-trash" onClick={() => dispatch(deleteSong(item._id))}>
                                     <i className="fas fa-trash-alt"></i>
                                 </span>
                             }
@@ -230,6 +187,7 @@ const mapStateToProps = (state) => {
         song: state.onPlay.song,
         start: state.onPlay.start,
         night: state.interface.night,
+        loading: state.interface.loading,
         mySongs: state.profile.songs,
         savedSongs: state.profile.saved_songs,
         recomendSongs: state.songs.recomendSongs,

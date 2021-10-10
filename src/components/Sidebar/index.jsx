@@ -1,15 +1,55 @@
-import React, { useContext } from 'react';
-import { useLocation } from "react-router-dom";
+import React from 'react';
 import { connect } from "react-redux";
 import { changeDir } from "../../redux/actions/interfaceActions"
  
-import { Context } from '../../context';
 import { NavLink} from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/img/Logo.svg';
 import { ReactComponent as LogoTablet } from '../../assets/img/Logo_tablet.svg';
 
 const Sidebar = ({ dispatch, path }) => {
-    let { sidebar } = useContext(Context);
+    let sidebar = [
+        {
+          "name": "For you",
+          "path": "/for-you",
+          "icon": "heartbeat",
+          "id": 1
+        },
+        {
+          "name": "Artists",
+          "path": "/artist",
+          "icon": "users",
+          "id": 2
+        },
+        {
+          "name": "Albums",
+          "path": "/albums",
+          "icon": "compact-disc",
+          "id": 3
+        },
+        {
+          "name": "Songs",
+          "path": "/songs",
+          "icon": "music",
+          "id": 4
+        },
+        {
+          "name": "Playlists",
+          "path": "/playlists",
+          "icon": "stream",
+          "id": 5
+        },
+        {
+          "name": "Search",
+          "path": "/search",
+          "icon": "search",
+          "id": 6
+        },
+        {
+          "name": "Upload",
+          "path": "/upload",
+          "icon": "cloud-upload-alt",
+          "id": 7
+        }];
  
     return (
         <div className="music__sidebar">
