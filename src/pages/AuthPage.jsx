@@ -60,20 +60,10 @@ const AuthPage = ({ dispatch, authType, auth,  defaultPath, alert, loading }) =>
     
     const recoveryHandler = async () => {
         try {
-            // if (!authType) {
-                let recoveryTry = await dispatch(recoveryPass(form.email))
-                if (recoveryTry.isSuccess) {
-                    dispatch(changeAuth(true));
-                }
-                
-            // }
-            // else {
-                
-            //     const pass = await request('/api/auth/recovery', 'POST', { password: form.password});
-            //     if (pass) {
-            //         history.push('/auth')
-            //     }
-            // }
+            let recoveryTry = await dispatch(recoveryPass(form.email))
+            if (recoveryTry.isSuccess) {
+                dispatch(changeAuth(true));
+            }
         }
         catch (e) {
             dispatch(showAlert({type: 'error', text: e.message}))
@@ -95,9 +85,9 @@ const AuthPage = ({ dispatch, authType, auth,  defaultPath, alert, loading }) =>
     return (
         !loading ? ( 
             
-        <div className="music__auth">
+            <div className="music__auth">
             <div className={`music__auth-logo`}>
-                <Logo />
+            <Logo />
             </div>
             
             <div className="music__auth_bg"></div>
@@ -111,60 +101,60 @@ const AuthPage = ({ dispatch, authType, auth,  defaultPath, alert, loading }) =>
                 {error ? 
                     (<Button type="message" text={error}/>) :
                     (<div className="music-form">
-                        <input 
-                            type="text" 
-                            placeholder="example@gmail.com"
-                            id="email"
-                            name="email"
-                            onChange={changeHandler}/>
+                    <input 
+                    type="text" 
+                    placeholder="example@gmail.com"
+                    id="email"
+                    name="email"
+                    onChange={changeHandler}/>
                     
-                        <input 
-                            type={"password"}
-                            placeholder="11111111"
-                            id="password"
-                            name="password"
-                            onChange={changeHandler}/>
+                    <input 
+                    type={"password"}
+                    placeholder="11111111"
+                    id="password"
+                    name="password"
+                    onChange={changeHandler}/>
                     
-                        <div className="music-form-btns">
-                            <button onClick={loginHandler} disabled={!btnDisable}>Login</button>
-                            <Link to="/auth/register" id="btn_nonreg">Register</Link>
-                        </div>
+                    <div className="music-form-btns">
+                        <Button onClick={loginHandler} disabled={!btnDisable} type="button" text="Login"/>
+                        <Link to="/auth/register" id="btn_nonreg">Register</Link>
+                    </div>
                     </div> 
                     )
                 }
                 </Route>
                 
                 <Route path="/auth/register">
-                    <h1>Register</h1>
-                    
-                    <div className="music-form">
-                        <input 
-                            type="text" 
-                            placeholder="Your_Name"
-                            id="name"
-                            name="name"
-                            onChange={changeHandler}/>
-                            
-                            <input 
-                                type="text" 
-                                placeholder="example@gmail.com"
-                                id="email"
-                                name="email"
-                                onChange={changeHandler}/>
-                            
-                            <input 
-                                type={"password"}
-                                placeholder="11111111"
-                                id="password"
-                                name="password"
-                                onChange={changeHandler}/>
-                            
-                        <div className="music-form-btns">
-                            
-                            <button onClick={registerHandler} disabled={loading}>Register</button> 
-                            <Link to="/auth/login" id="btn_nonreg">Login</Link>
-                        </div>
-                    </div>
+                <h1>Register</h1>
+                
+                <div className="music-form">
+                <input 
+                type="text" 
+                placeholder="Your_Name"
+                id="name"
+                name="name"
+                onChange={changeHandler}/>
+                
+                <input 
+                type="text" 
+                placeholder="example@gmail.com"
+                id="email"
+                name="email"
+                onChange={changeHandler}/>
+                
+                <input 
+                type={"password"}
+                placeholder="11111111"
+                id="password"
+                name="password"
+                onChange={changeHandler}/>
+                
+                <div className="music-form-btns">
+                
+                <button onClick={registerHandler} disabled={loading}>Register</button> 
+                <Link to="/auth/login" id="btn_nonreg">Login</Link>
+                </div>
+                </div>
                 </Route>
                 
                 <Route path="/auth/recovery">
@@ -172,55 +162,55 @@ const AuthPage = ({ dispatch, authType, auth,  defaultPath, alert, loading }) =>
                 
                 {!authType ? 
                     <div className="music-form">
-                        <input 
-                            type="text" 
-                            placeholder="example@gmail.com"
-                            id="email"
-                            name="email"
-                            ref={ref}
-                            onChange={changeHandler}/>
-                        
-                        <div className="music-form-btns">
-                            <button onClick={recoveryHandler} disabled={loading}>Send</button>
-                        </div>
+                    <input 
+                    type="text" 
+                    placeholder="example@gmail.com"
+                    id="email"
+                    name="email"
+                    ref={ref}
+                    onChange={changeHandler}/>
+                    
+                    <div className="music-form-btns">
+                    <button onClick={recoveryHandler} disabled={loading}>Send</button>
+                    </div>
                     </div>
                     : 
                     
                     <div className="music__auth-box">
-                        <input 
-                            type="text" 
-                            placeholder="password"
-                            id="password"
-                            name="password"
-                            onChange={changeHandler}/>
-                        
-                        <div className="music-form-btns">
-                            <button onClick={recoveryHandler} disabled={loading}>Send</button>
-                        </div>
+                    <input 
+                    type="text" 
+                    placeholder="password"
+                    id="password"
+                    name="password"
+                    onChange={changeHandler}/>
+                    
+                    <div className="music-form-btns">
+                    <button onClick={recoveryHandler} disabled={loading}>Send</button>
+                    </div>
                     </div>
                 }
                 
                 </Route>
                 
-                    <Link to="/auth/recovery">
-                        <span className="music-form-forgot">Forgot password ?</span>
-                    </Link>
+                <Link to="/auth/recovery">
+                <span className="music-form-forgot">Forgot password ?</span>
+                </Link>
                 </div>        
             }
             {alert.length ? <Alert items={alert}/> : null}
             
-        </div>)
-        :
+            </div>)
+            :
             (<Preloader/>)
-        );
-    }
+            );
+        }
         
-const mapStateToProps = (state) => ({
-    authType: state.interface.authType,
-    defaultPath: state.interface.defaultPath,
-    alert: state.interface.alert,
-    loading: state.interface.loading,
-    auth: state.profile.auth
-})
+        const mapStateToProps = (state) => ({
+            authType: state.interface.authType,
+            defaultPath: state.interface.defaultPath,
+            alert: state.interface.alert,
+            loading: state.interface.loading,
+            auth: state.profile.auth
+        })
         
-export default connect(mapStateToProps)(AuthPage);
+        export default connect(mapStateToProps)(AuthPage);

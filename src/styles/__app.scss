@@ -12,11 +12,13 @@
 @import "../pages/Upload/Upload.scss";
 
 // components
+@import "../components/Header/Header.scss";
 @import "../components/Sidebar/Sidebar.scss";
 @import "../components/Button/Button.scss";
 @import "../components/CardsTemp/CardsTemp.scss";
 @import "../components/DragAndDrop/DragAndDrop.scss";
 @import "../components/Player/Player.scss";
+@import "../components/FullPlayer/FullPlayer.scss";
 @import "../components/Preloader/Preloader.scss";
 @import "../components/SongsTemp/SongsTemp.scss";
 @import "../components/Alert/Alert.scss";

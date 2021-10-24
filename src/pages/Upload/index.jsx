@@ -1,6 +1,4 @@
 import React, { useState, createContext, useEffect } from 'react';
-import { connect } from "react-redux";
-
 import ChooseLength from "./steps/ChooseLength";
 import ChooseGenre from "./steps/ChooseGenre";
 import ChooseName from "./steps/ChooseName";
@@ -10,6 +8,7 @@ import FinalStep from "./steps/FinalStep"
 
 import Preloader from "../../components/Preloader";
 import MainBcg from "../../components/MainBcg.jsx";
+import Button from "../../components/Button";
 
 export const MainContext = createContext();
 
@@ -18,7 +17,7 @@ const Upload = () => {
     const [load, setLoad] = useState(false);
 
     const [animateLoading, setAnimateLoading] = useState(false);
-    const [form, setForm] = useState()
+    const [form, setForm] = useState({});
     const [btnDisabled, setBtnDisabled ] = useState(true);
 
     const [scrollSteps, setScrollSteps] = useState(['Type', 'Genre', "Upload files", "Upload Cover", 'Final']);
@@ -70,8 +69,8 @@ const Upload = () => {
                             <Step/>
 
                             <div className="music__main-upload-container-btns">
-                                {step > 0 && <button onClick={prevStep}>Back</button>}
-                                {(step + 1 !== steps.length) && <button onClick={nextStep} disabled={btnDisabled}>Next</button>}
+                                {step > 0 && <Button text="Back" type="button" onClick={prevStep} />}
+                                {(step + 1 !== steps.length) && <Button text="Next" type="button" onClick={nextStep} disabled={btnDisabled}/>}
                             </div>
 
                         </div>

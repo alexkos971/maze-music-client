@@ -1,8 +1,9 @@
 .music__main {
     position: relative;
+    width: 100%;
+    overflow-x: hidden;
     padding: 0px 0px 50px 0px;
     background-color: #fff;
-
     $color: #8e8e8e;
 
 
@@ -22,145 +23,6 @@
             background-color: $black-bcg-light;
         }
     }
-    
-    &-header {
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-        width: 100%;
-        top: 15px;
-        padding: 0px 60px;
-        box-sizing: border-box;
-        align-items: center;
-        z-index: 1;
-        
-        &-dir {
-            color: $green;
-            font-weight: 700;
-            font-size: 16px;
-            position: relative;
-        }
-
-
-        &-head {
-            position: relative;
-            top: 0;
-            right: 0px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            cursor: pointer;
-            
-            $height: 10px;
-
-            &-navbar {
-                display: flex;
-                position: relative;
-                margin-right: 35px;
-    
-                li {
-                    color: $color;
-                    cursor: pointer;
-                    font-size: 20px;
-                    margin-left: 2px;
-    
-                    &:active {
-                        color: #000;
-                    } 
-    
-                    span {
-                        margin-right: 10px;
-
-                        i {
-                            font-size: 20px;
-                            color: #C4C4C4
-                        }
-                    }
-                }     
-                
-                &.dark {
-
-                    li span i {
-                        color: #393E46;
-
-                    }
-                }
-            }   
-
-            &-avatar {
-                width: 40px;
-                height: 40px;
-                overflow: hidden;
-                display: block;
-                border-radius: 50%;
-                margin-right: 15px;
-
-                img {
-                    height: 110%;
-                    position: relative;
-                    top: -5%;
-                    left: -5%;
-                }
-            }
-
-            
-            h3 {
-                margin: 0;
-                font-family: "Roboto", "Manrope";
-                font-size: 16px;
-                color: #393E46;
-            }
-
-            
-            i {
-                transition: .1s all ease;
-                color: #393E46;
-            }
-            
-
-            span {
-                color: $color;
-                position: relative;
-                margin-left: 10px;
-                font-size: 13px;
-            }
-
-            &-wrap {
-                width: $height;
-                height: $height;
-                overflow: hidden;
-                border-radius: 50%;
-                box-sizing: border-box;
-                img {
-                    height: 100%;
-                    position: relative;
-                    display: block;
-                    right: 25%;
-                }
-            }
-        }
-
-        &-menu {
-            display: none;
-
-            &-active {
-                display: block;
-                position: absolute;
-                right: 60px;
-                transform: translateX(13%);
-                // margin-right: 35px;
-                margin-top: 50px;
-                z-index: 1000;
-                padding: 10px 10px 0px;
-                background-color: #F4F6F8;
-                // border: 1px solid $color;
-                border-radius: 5px; 
-                line-height: 30px;
-            }
-        }
-
-    }
 
 
     .full__view {
@@ -169,89 +31,28 @@
         padding-top: 10%;
     }
 
-    &-full {
-        position: fixed;
-        bottom: -100%;
-        width: 86%;
-        height: calc(100% - 75px);
-        color: #bfbfbf;
-        z-index: 100;
-        background-color: #0f1626;
-        transition: .2s all ease-in;
-        padding: 15px 60px 10px 60px;
-
-        &.active {
-            bottom: 50px;
-            background-color: $blue-bcg-200;
-        }
-
-        &-info {
-            font-size: 13px;
-            display: flex;
-
-            span {
-                margin-right: 20px;
-            }
-
-            h1 {
-                margin-bottom: 15px;
-                font-size: 30px;
-            }
-        }    
-
-        &-cover {
-            width: 30%;
-            overflow: hidden;
-            position: relative;
-            margin-top: 60px;
-            box-shadow: 0px 0px 27px 6px rgba(0,0,0,0.75);
-            // box-shadow: 15px 15px 20px -4px rgba(0,0,0,0.75);
-
-            &:after {
-                content: "";
-                padding-top: 100%;
-                display: block;
-            }
-
-            &-container {
-                position: absolute;
-                width: 100%;
-                transform: translate(-50%, -50%);
-                top: 50%;
-                left: 50%;
-            }
-            img {
-                width: 110%;
-                left: -5%;
-                position: relative;
-                height: auto;
-            }
-        }
-
-        &-lyrics {
-            width: 40%;
-            position: absolute;
-            top: 60px;
-            right: 18%;
-
-            span {
-                color: #9b9b9b;
-                font-size: 15px;
-                font-family: 'Roboto', sans-serif;
-            }
-        }
-    }
-
     &-songs {
         width: calc(100% - 120px);
         height: 100%;
         margin-top: 30px;
         position: relative;
 
+        @include media-breakpoint-down(lg) {
+            width: calc(100% - 80px);
+        }
+
         &-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            @include media-breakpoint-down(lg) {
+                width: 90%;
+            }
+
+            @include media-breakpoint-down(xs) {
+                width: 100%;
+            }
 
             &-bar {
                 width: 10%;
@@ -259,47 +60,12 @@
                 justify-content: space-between;
                 color: #393E46;
                 font-size: 18px;
+
+                @include media-breakpoint-down(lg) {
+                    width: 20%;
+                }
             }
         }
     }
     
 }   
-
-
-@media screen and (max-width: 1200px) {
-    .music__main {
-
-        &-header {
-            padding: 5px 15px;
-        }
-
-        &-songs {
-            width: calc(100% - 80px);
-        
-            &-nav {
-                width: 90%;
-
-                &-bar {
-                    width: 20%;
-                }
-            }
-        }
-
-        &-full {
-            // width: calc(100% - 56px);
-            left: 56px;
-        }
-        &-full-active {
-            // width: calc(100% - 56px);
-            left: 56px;
-        }
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .music__main {
-        &-songs {
-            width: 100%;
-        }
-    }
-}

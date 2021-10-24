@@ -23,7 +23,7 @@
             opacity: 0;
         }
         span {
-            color: $black-100;
+            color: $black-bcg-light;
             font-size: 16px;
             font-family: 'Manrope';
             font-weight: 600;
@@ -32,7 +32,7 @@
         
         i {
             cursor: pointer;
-            color: $black-100 !important;
+            color: $black-bcg-light !important;
             transition: .1s;
 
             &:hover {

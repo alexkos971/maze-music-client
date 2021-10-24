@@ -1,0 +1,169 @@
+.music__main-header {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    top: 15px;
+    padding: 0px 60px;
+    box-sizing: border-box;
+    align-items: center;
+    z-index: 1;
+
+    @include media-breakpoint-down(lg) {
+        padding: 5px 15px;
+    }
+    
+    &-dir {
+        color: $green;
+        font-weight: 700;
+        font-size: 16px;
+        position: relative;
+    }
+
+
+    &-head {
+        position: relative;
+        top: 0;
+        right: 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        cursor: pointer;
+        
+        $height: 10px;
+
+        &-navbar {
+            display: flex;
+            position: relative;
+            margin-right: 35px;
+
+            li {
+                color: $color;
+                cursor: pointer;
+                font-size: 20px;
+                margin-left: 2px;
+                transition: .2s;
+
+                &:hover {
+                    span i {
+                        color: $gray-200;
+                    }
+                }
+
+                &:active {
+                    color: #000;
+                } 
+
+                span {
+                    margin-right: 10px;
+
+                    i {
+                        font-size: 20px;
+                        color: $gray-300;
+                    }
+                }
+            }     
+            
+            &.dark {
+
+                li span i {
+                    color: #393E46;
+
+                }
+            }
+        }
+        
+        &-profile {
+            transition: .2s;
+
+            .fas {
+                text-indent: 0px;
+            }
+
+            &.active {
+                transform: rotate(180deg);
+            }
+        }
+
+        &-avatar {
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            display: block;
+            border-radius: 50%;
+            margin-right: 15px;
+
+            img {
+                height: 110%;
+                position: relative;
+                top: -5%;
+                left: -5%;
+            }
+        }
+
+        
+        h3 {
+            margin: 0;
+            font-family: "Roboto", "Manrope";
+            font-size: 16px;
+            color: #393E46;
+        }
+
+        
+        i {
+            transition: .1s all ease;
+            color: #393E46;
+        }
+        
+
+        span {
+            color: $color;
+            position: relative;
+            margin-left: 10px;
+            font-size: 13px;
+        }
+
+        &-wrap {
+            width: $height;
+            height: $height;
+            overflow: hidden;
+            border-radius: 50%;
+            box-sizing: border-box;
+            img {
+                height: 100%;
+                position: relative;
+                display: block;
+                right: 25%;
+            }
+        }
+    }
+
+    &-menu {
+        display: none;
+        position: absolute;
+        right: 60px;
+        transition: 1s;
+        top: 80px;
+
+        &.active {
+            display: block;
+            transform: translateX(13%);
+            top: 50px;
+            z-index: 1000;
+            padding: 5px 10px;
+            background-color: #F4F6F8;
+            border-radius: 5px; 
+            line-height: 30px;
+        }
+
+        &-text {
+            color: $gray-300;
+            margin-left: 12px;
+            
+            &:hover {
+                color: $gray-400;
+            }
+        }
+    }
+}

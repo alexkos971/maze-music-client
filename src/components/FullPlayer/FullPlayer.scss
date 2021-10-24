@@ -1,0 +1,73 @@
+.music__main-full {
+    position: fixed;
+    bottom: -100%;
+    width: 100%;
+    height: calc(100% - 75px);
+    color: #bfbfbf;
+    z-index: 100;
+    background-color: #0f1626;
+    transition: .2s all ease-in;
+    padding: 15px 60px 10px 60px;
+
+    &.active {
+        bottom: 50px;
+        background-color: $blue-bcg-200;
+    }
+
+    &-info {
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+
+        span {
+            margin-right: 20px;
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
+    }    
+
+    &-cover {
+        width: 30%;
+        overflow: hidden;
+        position: relative;
+        margin-top: 60px;
+        box-shadow: 0px 0px 27px 6px rgba(0,0,0,0.75);
+        // box-shadow: 15px 15px 20px -4px rgba(0,0,0,0.75);
+
+        &:after {
+            content: "";
+            padding-top: 100%;
+            display: block;
+        }
+
+        &-container {
+            position: absolute;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+        img {
+            width: 110%;
+            left: -5%;
+            position: relative;
+            height: auto;
+        }
+    }
+
+    &-lyrics {
+        width: 40%;
+        position: absolute;
+        top: 60px;
+        right: 18%;
+
+        span {
+            color: #9b9b9b;
+            font-size: 15px;
+            font-family: 'Roboto', sans-serif;
+        }
+    }
+}

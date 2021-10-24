@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import Button from "../../../components/Button";
 import { MainContext } from "../index.jsx";
 
 import ChooseName from "./ChooseName";
@@ -8,7 +9,7 @@ const ChooseLength = () => {
 	const [open, setOpen] = useState(false);
 
 	const list = ["Single track", 'Album', "EP"]
-	const [active, setActive] = useState((form && form.type) || list[0]);
+	const [active, setActive] = useState((form?.type) ?? list[0]);
 
 	const handleLength = (item) => {
 
@@ -36,11 +37,9 @@ const ChooseLength = () => {
 		setOpen(false);
 		setForm({ ...form, type: item })
 	}
-
+	
 	useEffect(() => {
-		if (active) {
-			setBtnDisabled(false)
-		}
+		setBtnDisabled(false);
 	}, [handleLength])
 
 	return (
@@ -51,11 +50,11 @@ const ChooseLength = () => {
 				<div className="music__main-upload-container-length-dropdown-input" onClick={() => setOpen(!open)}>
 					<span className="music__main-upload-container-length-dropdown-input-value">{active}</span>
 	
-					<span className="music__main-upload-container-length-dropdown-input-carret">
-						<i className={`fas fa-chevron-${open ? "up" : "down"}`}></i>
+					<span className={`music__main-upload-container-length-dropdown-input-carret${open ? ' active': ''}`}>
+						<i className={`fas fa-chevron-down`}></i>
 					</span>	
 				</div>
-	
+
 				<div className={`music__main-upload-container-length-dropdown-list ${open ? 'visible': ""}`}>
 					<ul>
 						{

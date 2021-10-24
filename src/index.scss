@@ -1,4 +1,5 @@
 @import "./styles/__spacing";
+@import "./styles/__helpers";
 @import "./styles/__colors";
 @import "./styles/__app";
 
@@ -25,6 +26,21 @@ a {
   color: #fff;
 }
 
+li {
+  color: #000;
+}
+
+.subtitle {
+  margin: 10px 0px;
+  font-weight: bold;
+  width: 50%;
+  font-size: 1.6em;
+  margin-bottom: 20px;
+
+  @include media-breakpoint-down(xs) {
+    margin: 10px 5px;
+  }
+}
 
 .load_title {
   position: absolute;
@@ -49,7 +65,6 @@ a {
   bottom: 0;
   overflow: hidden;
   display: flex;
-  justify-content: space-between;
   
     &-form {
 
@@ -112,26 +127,6 @@ a {
           font-size: 15px;
           color: $green;
         }
-        
-        button {
-          border: none;
-          padding: 8px 20px;
-          color: $gray-btn;
-          font-size: 15px;
-          border-radius: 3px;
-          margin-right: 20px;
-          font-family: 'Roboto', sans-serif;
-          background-color: #D1D1D1;
-          cursor: pointer;
-
-          &:disabled {
-            cursor: not-allowed;
-            color: #bababa;
-            background-color: #e8e8e8;
-          }
-          
-        }
-
       }
     }
 
@@ -173,7 +168,6 @@ a {
       @keyframes slideLogo {
         0% {
           top: 40%;
-          // position: absolute;
           opacity: 0;
         }
         90% {
@@ -198,7 +192,6 @@ a {
       top: -40%;
       left: -50%;
       background-color: #F4F6F8;
-      // display: none;
       z-index: -1;
     }
 
@@ -232,50 +225,6 @@ a {
       }
     }
   }
-
-  &__sidebar {
-    width: 16%;
-    height: 100%;
-    background-color: #F4F6F8;
-
-    position: relative;
-    display: block;
-    padding: 20px 13px;
-    box-sizing: border-box;
-    color: #8e8e8e;
-    z-index: 100;
-  }
-
-  &__player {
-    height: 50px;
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    z-index: 100;
-    display: flex;
-    position: absolute;
-    background-color: $blue-bcg;
-  }
-
-  &__main {
-    position: relative;
-    width: 86%;
-    overflow: auto;
-    overflow-x: hidden;
-    background-color: #fff;
-
-    li {
-      color: #000;
-    }
-
-    .subtitle {
-      margin: 10px 0px;
-      font-weight: bold;
-      width: 50%;
-      font-size: 1.6em;
-      margin-bottom: 20px;
-    }
-  }
 }
 
 .music-night {
@@ -306,22 +255,7 @@ a {
         color: #fff;
       }
 
-      &-header-list-active {
-        background-color: $gray-bcg;
 
-        a {
-          color: #fff;
-
-          &:active {
-            color: #000;
-          }
-        }
-
-        &:before {
-          content: "";
-          background-color: $gray-bcg;
-        }
-      }
 
       &-artists {
         
@@ -338,55 +272,6 @@ a {
         span:hover {
           color: #fff;
         }
-      }
-    }
-
-    &__sidebar {
-      background-color: $gray-bcg;
-
-      li {
-        &:hover {
-          background: rgba(142, 142, 142, 0.1)
-        }
-      
-        &.active {
-          color: #fff;
-          position: relative;
-          font-weight: lighter;
-          display: block;
-
-          &::before { 
-            background-color: #fff;
-          }
-
-          a {
-            color: #fff;
-            display: contents;
-          } 
-        }
-        
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  .music, .music-night {
-
-    &__main {
-      width: calc(100% - 56px);
-    }
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .music, .music-night {
-
-    &__main {
-      width: 100%;
-
-      .subtitle {
-        margin: 10px 5px;
       }
     }
   }

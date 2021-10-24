@@ -101,23 +101,6 @@
             margin: 50px auto;
             align-items: center;
 
-            button {
-                border: none;
-                padding: 8px 20px;
-                color: #000;
-                font-size: 15px;
-                border-radius: 3px;
-                margin-right: 20px;
-                font-family: 'Roboto', sans-serif;
-                background-color: #c4c4c4;
-                cursor: pointer;
-    
-                &:disabled {
-                    cursor: not-allowed;
-                    color: #bababa;
-                    background-color: lighter(#c4c4c4, 50%);
-                }
-            } 
          }            
         
 
@@ -150,20 +133,17 @@
                     background-color: #F4F6F8 !important;
 
                     &-carret {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
                         padding: 10px;
                         cursor: pointer;
-                        animation: .5s spin;
-                    }
+                        transition: .2s;
+                        transform-origin: center;
 
-                    &keyframes spin {
-                        from {
-                            transform: rotate(0deg);
+                        .fas {
+                            text-indent: 0px;
                         }
-                        to {
-                            transform: rotate(90deg);
+                        
+                        &.active {
+                            transform: rotate(180deg);
                         }
                     }
                 }
@@ -274,10 +254,6 @@
             margin: 0 auto;
             width: 45%;
             text-align: center;
-
-            button {
-                
-            }
         }
 
         &-fields {
@@ -288,18 +264,6 @@
     
             .music-form-btns {
                 justify-content: center !important;
-            }
-    
-            input {
-                // width: 50%;
-                // height: 20px;
-                // margin-bottom: 10px;
-            }
-    
-            button {
-                // width: 60px;
-                // height: 25px;
-                // cursor: pointer;
             }
         }
     }

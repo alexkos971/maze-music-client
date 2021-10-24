@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { changeDir, setNight, setHeader, showAlert  } from "../../redux/actions/interfaceActions";
@@ -12,7 +13,6 @@ const Header = ({ dispatch, header, profile, night, path }) => {
     <div className="music__main-header">
                 
         <span className={`music__main-header-dir`}>{path.name}</span>
-
 
         <div className="music__main-header-head">
             <ul className={`music__main-header-head-navbar${night ? " dark" : ""}`}>
@@ -38,17 +38,17 @@ const Header = ({ dispatch, header, profile, night, path }) => {
 
             <h3>{profile.name}</h3>
 
-            <span onClick={() => dispatch(setHeader(!header))}>
-                <i className={`fas fa-chevron-${!header ? "down" : "up"}`}></i>
+            <span onClick={() => dispatch(setHeader(!header))} class={`music__main-header-head-profile${header ? " active" : ""}`}>
+                <i className={`fas fa-chevron-down`}></i>
             </span>
         </div>
     
-        <div className={`music__main-header-menu${header ? '-active' : ""}`}>
+        <div className={`music__main-header-menu${header ? ' active' : ""}`}>
             <Link to="/auth" onClick={async () => {
                     dispatch(logout())
                 }}>
-                <span><i className="fas fa-user-circle"></i></span>
-                <span>Logout</span>
+                <i className="fas fa-user-circle"></i>
+                <span className="music__main-header-menu-text">Logout</span>
             </Link>
         </div>
 

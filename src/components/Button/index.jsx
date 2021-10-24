@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const Button = ({ text, color, type, active, list, mr }) => {
+const Button = ({ onClick, disabled, text, color, type, active, list, mr }) => {
 	const [open, setOpen] = useState(false);
 	const [current, setCurrent] = useState(list && list[0] || null);
 	const [visible, setVisible] = useState(false);
@@ -8,10 +8,10 @@ const Button = ({ text, color, type, active, list, mr }) => {
 
 	if (type === 'button') {
 		return (
-			<div
-				className={`music-button ${mr && 'mr'} ${active && 'active'}`}>
+			<button {...{ onClick, disabled }}
+				className={`music-button${active ? ' active': ''}`}>
 				{text}
-			</div>
+			</button>
 		)
 	}
 

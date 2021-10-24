@@ -138,11 +138,16 @@
                 }
 
                 &-item {
-                    background: #393E46;
+                    background: $black-bcg-light;
                     padding: 5px 8px;
                     border-radius: 5px;
                     margin-right: 10px;
                     font-size: 14px;
+                    transition: .2s;
+
+                    &:hover {
+                        background-color: $black-bcg-light;
+                    }
                 }
 
                 &-desc {
@@ -189,7 +194,6 @@
                 width: 100%;
                 align-items: center;
                 justify-content: space-between;
-                // border-bottom: 1px solid #393E46;
 
                 span {
                     font-size: 20px;
@@ -260,8 +264,12 @@
                         }
 
                         &-item {
-                            background-color: #EEEEEE;
+                            background-color: $gray-font-light;
                             color: #393E46;
+
+                            &:hover {
+                                background-color: $gray-300;
+                            }
                         }
 
                         &-desc {

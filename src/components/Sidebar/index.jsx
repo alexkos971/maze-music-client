@@ -73,9 +73,8 @@ const Sidebar = ({ dispatch, path }) => {
                                 onClick={() => {
                                     dispatch(changeDir({name: item.name, path: item.path}))
                                 }}>
-                                <span className="music__sidebar-item-icon">
-                                    <i className={`fas fa-${item.icon}`}></i>
-                                </span>
+                                <i className={`fas fa-${item.icon} music__sidebar-item-icon`}></i>
+                                
                                 <span className="music__sidebar-item-text">{item.name}</span>
                             </NavLink>
                         </li>);
