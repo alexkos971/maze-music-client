@@ -1,2 +1,3 @@
 export const FETCH_RECOMEND_SONGS = 'FETCH_RECOMEND_SONGS';
 export const DELETE_SONG = 'DELETE_SONG';
+export const UPLOAD_SONG = 'UPLOAD_SONG';

@@ -7,6 +7,7 @@ import {
     
     CHANGE_PROFILE_DESCRIPTION, 
     CHANGE_PROFILE_NAME,
+    CHANGE_PROFILE_AVATAR,
 
     REGISTER,
     LOG_IN, 
@@ -14,7 +15,8 @@ import {
     RECOVERY_PASS 
 } from '../types/profileTypes'
 
-import { DELETE_SONG } from "../types/songsTypes";
+import { DELETE_SONG, UPLOAD_SONG } from "../types/songsTypes";
+import { DELETE_ALBUM, UPLOAD_ALBUM } from "../types/albumsTypes";
 
 let initialState = {
     // _id: null
@@ -38,16 +40,29 @@ export const profileReducer = (state = initialState, action) => {
             return { ...state, saved_songs: [...state.saved_songs, action.payload] }
         
         case DELETE_SONG:
-            return {...state}
+            return {...state, songs: state.songs.filter(el => el._id !== action.payload)}
+            
+        case UPLOAD_SONG: 
+            return {...state, songs: [...state.songs, action.payload]}
+
+
+
+        case DELETE_ALBUM:
+            return {...state, albums: state.albums.filter(el => el._id !== action.payload)}
+
+        case UPLOAD_ALBUM:
+            return {...state, albums: [...state.albums, action.payload]}
 
 
         case CHANGE_PROFILE_DESCRIPTION:
             return { ...state, description: action.payload.description, description_large: action.payload.description_large }
          
         case CHANGE_PROFILE_NAME:
-            return { ...state, name: action.payload }    
+            return { ...state, name: action.payload.name, avatarNick: action.payload.avatarNick }    
 
-        
+        case CHANGE_PROFILE_AVATAR:
+            return {...state, avatar: action.payload}
+
         case LOG_IN:
             return { ...state, auth: action.payload }    
 

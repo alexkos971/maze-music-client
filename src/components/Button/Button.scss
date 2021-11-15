@@ -7,7 +7,7 @@
     border-radius: 5px;
     outline: none;
     font-size: 14px;
-    margin-right: 20px;
+    // margin-right: 20px;
     white-space: nowrap;
     border: none;
     transition: .2s;
@@ -15,7 +15,7 @@
     &:hover {
         opacity: 0.9;
     }
-
+    
     &:disabled {
         cursor: not-allowed;
         color: #bababa;
@@ -94,6 +94,15 @@
         display: block;
         cursor: pointer;
         
+        &.checked {
+            animation: radioBtn .2s;
+            
+            .music-button-checkbox-check {
+                left: 28px;
+                background-color: #00ADB5;
+            }
+        }
+        
         &-check {
             width: 18px;
             height: 18px;
@@ -103,13 +112,19 @@
             left: 3px;
             display: block;
             position: relative;
-            transition: .1s;
-            
-            &.checked {
-                left: 28px;
-                background-color: #00ADB5;
-                transition: .1s;
-            }
+            transition: .1s;    
         }
+    }
+}
+
+@keyframes radioBtn {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
     }
 }

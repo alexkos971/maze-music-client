@@ -8,11 +8,11 @@ import SongsTemp from "../../components/SongsTemp";
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader"
 
-const For = ({ dispatch, loading, recomendSongs, recomendArtists }) => {
+const For = ({ dispatch, loading, recomendSongs, recomendArtists, profile }) => {
 
     useEffect(() => {
         dispatch(getRecomendSongs())
-    }, [dispatch, recomendSongs]);
+    }, [dispatch, recomendSongs, profile.songs]);
 
     useEffect(() => {
         dispatch(getRecomendArtists())

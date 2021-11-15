@@ -1,5 +1,5 @@
 import { PLAY_SONG, NOW_SONG, SWITCH_SONG, SET_SONG_DURATION, ITEM_DURATION, SET_START } from '../types/playTypes';
-
+import { apiUrl } from '../../config/constants';
 
 // Template of song time
 let timeTemplate = s => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setFullPlayer } from '../../redux/actions/interfaceActions';
+import { apiUrl } from '../../config/constants'
 
 import Button from "../Button";
 
@@ -26,7 +27,7 @@ const FullPlayer = ({ dispatch, full, song }) => {
     
                     {song.album_name && <span>Album: 
                         <Link to={`/album/${song.album_id}`} onClick={() => dispatch(setFullPlayer(false))}>
-                            <span>{song.album_name}</span>
+                            <span> {song.album_name}</span>
                         </Link>
                         </span>
                     }
@@ -40,7 +41,7 @@ const FullPlayer = ({ dispatch, full, song }) => {
                                         dispatch(setFullPlayer(false))
                                         history.push('/Search')
                                     }} className="music__main-full-info-genres-item">
-                                        <Button text={item} type="button"/>
+                                        <Button text={item} subClass="mr-20" type="button"/>
                                     </Link>
                                 ))
                             }
@@ -50,7 +51,7 @@ const FullPlayer = ({ dispatch, full, song }) => {
     
                 <div className="music__main-full-cover">
                     <div className="music__main-full-cover-container">
-                        <img src={song.cover} alt=""/>
+                        <img src={apiUrl + song.cover} alt=""/>
                     </div>
                 </div>
     

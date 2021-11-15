@@ -32,12 +32,14 @@ const ChooseTrackFile = ({ dispatch, name }) => {
     }, [file])
 
     useEffect(() => {
-        setForm({...form, album: album})
-        if (album.length > 4) {
-            setBtnDisabled(false);
-        }
-        else {
-            setBtnDisabled(true)
+        if (form.type !== 'Single track') {
+            setForm({...form, album: album})
+            if (album.length > 4) {
+                setBtnDisabled(false);
+            }
+            else {
+                setBtnDisabled(true)
+            }
         }
     }, [album])
 
@@ -48,10 +50,11 @@ const ChooseTrackFile = ({ dispatch, name }) => {
             
             <DragAndDrop description='File should be a wave/mp3' type="audio/wav, audio/mp3" field='track' file={file} setFile={setFile}/>
 
-            {album && album.length > 0 &&
-                <div>
+            {form.type !== 'Single track' && album.length 
+                ? <div>
                     <SongsTemp songs={album} type="Album" setAlbum={setAlbum}/>
                 </div>
+                : null
             }
 		</div>
 	)	

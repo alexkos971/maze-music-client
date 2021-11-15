@@ -1,7 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react';
 import ChooseLength from "./steps/ChooseLength";
 import ChooseGenre from "./steps/ChooseGenre";
-import ChooseName from "./steps/ChooseName";
 import ChooseTrackFile from "./steps/ChooseTrackFile";
 import ChooseCoverFile from "./steps/ChooseCoverFile";
 import FinalStep from "./steps/FinalStep"
@@ -17,23 +16,23 @@ const Upload = () => {
     const [load, setLoad] = useState(false);
 
     const [animateLoading, setAnimateLoading] = useState(false);
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({type: 'Single track'});
     const [btnDisabled, setBtnDisabled ] = useState(true);
 
     const [scrollSteps, setScrollSteps] = useState(['Type', 'Genre', "Upload files", "Upload Cover", 'Final']);
     
     const [steps, setSteps] = useState([
         ChooseLength,  
-        ChooseGenre,  
-        ChooseName,
+        ChooseGenre,
         ChooseTrackFile, 
         ChooseCoverFile, 
         FinalStep
     ]);
 
+    
     const [step, setStep] = useState(0);
     const Step = steps[step];
-
+    
     const nextStep = () => {
         setStep(step + 1);
     }

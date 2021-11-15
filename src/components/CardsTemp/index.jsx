@@ -2,40 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import Axios from "../../core/axios";
 
+import { apiUrl } from '../../config/constants'
 import { changeDir } from "../../redux/actions/interfaceActions";
-import { getMyAlbums } from "../../redux/actions/profileActions";
-import { setNowAlbum } from "../../redux/actions/albumsActions";
-
-import { showAlert } from "../../redux/actions/interfaceActions";
+import { setNowAlbum, deleteAlbum } from "../../redux/actions/albumsActions";
 
 import { leftIcon, rightIcon } from '../images';
 
 const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
-
-    const deleteAlbum = async album => {
-        let question = window.confirm(`Are you sure delete album [${album.name}] ?`)
-
-        
-        if (question) {
-            try {
-
-            await Axios.delete(`/api/albums/delete/${album._id}`)
-                .then(async data => {
-                    if (data.statusText == 'OK') {
-                        dispatch(showAlert({type: 'success', text: data.message}));
-                        const newAlbums = await myAlbums.filter(el => el !== album._id);
-                        dispatch(getMyAlbums(newAlbums))
-                    }
-                })
-            }
-            catch (e) {
-                console.log(e)
-            }
-        }
-    }
-
 
     const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
         <div
@@ -86,7 +60,7 @@ const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
                         <div className="music__main-slider-item" key={index} onClick={() => dispatch(changeDir({name: 'Artist', path: '/artist'}))}>
                             <Link to={"/artist/" + item._id}>
                                 <div className="music__main-slider-item-wrap">
-                                        <img src={item.avatar} alt="" className="slider_img" />
+                                        <img src={apiUrl +item.avatar} alt="" className="slider_img" />
 
                                     <div className="music__main-slider-item-wrap-text">        
                                         <h2 className="music__main-slider-item-wrap_artist">{item.name}</h2>
@@ -116,7 +90,6 @@ const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
                                 key={item.name}  
                                 onClick={() => {
                                 dispatch(setNowAlbum(item))}
-                                // dispatch(changeDir("Album"))}
                             }>
 
                                 <div className={`music__main-slider-item-hover jc-c`}>
@@ -124,23 +97,23 @@ const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
                                         <i className={`fas fa-${start ? "pause" : "play"}-circle play_btn`}></i>
                                     </span>
     
-                                    {my && <span className="music__main-slider-item-hover-trash" onClick={() => deleteAlbum(item)}>
+                                    {my && <span className="music__main-slider-item-hover-trash" onClick={() => dispatch(deleteAlbum(item._id, item.name))}>
                                         <i className="fas fa-trash-alt"></i>
                                     </span>}
                                 </div>
     
-                            <Link to={"/Album/" + item._id}>
+                            <Link to={"/album/" + item._id}>
                                 <div className="music__main-slider-item-wrap">
-                                        <img src={item.cover} alt="" className="music__main-slider-item-wrap-img slider_img" />
+                                    <img src={apiUrl + item.cover} alt="" className="music__main-slider-item-wrap-img slider_img"/>
 
-                                        <div className="music__main-slider-item-wrap-text">
-                                            <h2 className="music__main-slider-item-wrap_artist">{item.name}</h2>
-    
-                                            <div className="music__main-slider-item-wrap_desk">
-                                                <span>{item.listenings} listeners | </span>
-                                                <span>{item.songs.length} tracks</span> 
-                                            </div>   
-                                        </div>
+                                    <div className="music__main-slider-item-wrap-text">
+                                        <h2 className="music__main-slider-item-wrap_artist">{item.name}</h2>
+
+                                        <div className="music__main-slider-item-wrap_desk">
+                                            <span>{item.listenings} listeners | </span>
+                                            <span>{item.songs.length} tracks</span> 
+                                        </div>   
+                                    </div>
                                 </div>
                             </Link>        
                         </div> 

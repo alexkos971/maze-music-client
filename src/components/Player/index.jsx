@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import { setDuration, setStart } from '../../redux/actions/playActions';
 import { setFullPlayer } from '../../redux/actions/interfaceActions';
 
+import { apiUrl } from '../../config/constants'
+
 let audio;
 
-const Player = ({ dispatch, start, full, song, songFrom, currentDuration, fullScreen, setFullScreen}) => { 
+const Player = ({ dispatch, start, full, song, currentDuration, fullScreen, setFullScreen}) => { 
     const [stateVolume, setStateVolume] = useState(50);
     const [inputDuration, setInputDuration] = useState(0);
 
     const setAudio = () => {
         if (song) {
-            audio.src = song.src;
+            audio.src = apiUrl + song.src;
             audio.volume = stateVolume / 100; 
 
             audio.ontimeupdate = () => {

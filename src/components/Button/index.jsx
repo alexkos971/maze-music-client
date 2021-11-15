@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Button = ({ onClick, disabled, text, color, type, active, list, mr }) => {
+const Button = ({ onClick, disabled, text, color, type, active, list, subClass = "" }) => {
 	const [open, setOpen] = useState(false);
 	const [current, setCurrent] = useState(list && list[0] || null);
 	const [visible, setVisible] = useState(false);
@@ -9,7 +9,7 @@ const Button = ({ onClick, disabled, text, color, type, active, list, mr }) => {
 	if (type === 'button') {
 		return (
 			<button {...{ onClick, disabled }}
-				className={`music-button${active ? ' active': ''}`}>
+				className={`music-button${active ? ' active': ''} ${subClass}`}>
 				{text}
 			</button>
 		)
@@ -49,10 +49,10 @@ const Button = ({ onClick, disabled, text, color, type, active, list, mr }) => {
 
 	else if (type === 'checkbox') {
 		return (
-			<div className="music-button-checkbox " onClick={() => {
+			<div className={`music-button-checkbox ${open ? "checked" : ""}`} onClick={() => {
 					setOpen(!open);
 				}}>
-				<div className={`music-button-checkbox-check ${open ? "checked" : ""}`}></div>
+				<div className={`music-button-checkbox-check`}></div>
 			</div>
 		)
 	}

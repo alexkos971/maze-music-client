@@ -4,8 +4,10 @@ import {
     SET_SAVED_SONGS, 
     FETCH_MY_ALBUMS, 
     SAVE_SONG, 
+
     CHANGE_PROFILE_DESCRIPTION, 
     CHANGE_PROFILE_NAME,
+    CHANGE_PROFILE_AVATAR,
     
     LOG_IN,
     LOG_OUT,
@@ -16,6 +18,7 @@ import {
 import { LOADING, SHOW_ALERT } from '../types/interfaceTypes';
 
 import axios from "../../core/axios";
+import { showAlert, loading } from './interfaceActions';
 
 export const setProfile = () => {
     return async (dispatch) => {
@@ -23,9 +26,11 @@ export const setProfile = () => {
             const { data } = await axios.get('/api/users/profile')
             
             if (data) {
+                let avatarNick = data.name.split(" ").reduce((item, acc) => item[0] + acc[0])
+
                 return dispatch({
                     type: SET_PROFILE,
-                    payload: data
+                    payload: {...data, avatarNick}
                 })
             }
         }
@@ -95,9 +100,11 @@ export const changeProfileName = (data) => {
             const { data } = await axios.post('/api/changes/name', { name });
             
             if (data) {
+                let avatarNick = data.name.split(" ").reduce((item, acc) => item[0] + acc[0])
+                
                 dispatch({
                     type: CHANGE_PROFILE_NAME,
-                    payload: data.name
+                    payload: { name: data.name, avatarNick}
                 })
                 
                 dispatch({
@@ -111,6 +118,51 @@ export const changeProfileName = (data) => {
         }
         catch (e) {
             console.log(e)
+        }
+    }
+}
+
+export const changeProfileAvatar = (file, history) => {
+    return async (dispatch) => {
+        if (!file) {
+            dispatch(showAlert({
+                type: 'error',
+                text: 'Поле пустое !'
+            }));
+            return;
+        }
+        else {
+            try {
+                dispatch(loading(true));
+               
+                const formData = new FormData();
+                formData.append('avatar', file)
+                
+                const {data} = await axios.post('/api/upload/avatar', formData);
+
+                if (data.isSuccess) {
+                    dispatch({
+                        type: CHANGE_PROFILE_AVATAR,
+                        payload: data.avatar
+                    });
+                    dispatch(showAlert({
+                        type: 'success',
+                        text: data.message
+                    }));
+                    history.push('/profile')
+                }
+                else {
+                    dispatch(showAlert({
+                        type: 'error',
+                        text: data.message
+                    }));
+                }
+
+                dispatch(loading(false));
+            }
+            catch(e) {
+                console.log(e)
+            }
         }
     }
 }

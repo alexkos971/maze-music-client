@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { changeDir, setNight, setHeader, showAlert  } from "../../redux/actions/interfaceActions";
-import {logout } from "../../redux/actions/profileActions";
-
+import { changeDir, setNight, showAlert  } from "../../redux/actions/interfaceActions";
 import image  from '../../assets/img/Avatar.svg';
+import { apiUrl } from "../../config/constants";
 
-const Header = ({ dispatch, header, profile, night, path }) => {
+const Header = ({ dispatch, profile, night, path }) => {
+    
+    const avatarRef = useRef(null)
+    
+    useEffect(() => {
+        if (avatarRef) {
+            avatarRef.current.setAttribute('data-nick', profile.avatarNick)
+        }
+    }, [profile.name])
+    
     return (
-
     <div className="music__main-header">
                 
         <span className={`music__main-header-dir`}>{path.name}</span>
@@ -31,27 +38,13 @@ const Header = ({ dispatch, header, profile, night, path }) => {
             </ul>
 
             <Link to={"/profile"} onClick={() => dispatch(changeDir({name: "Profile", path: '/profile'}))}>
-                <div className="music__main-header-head-avatar">
-                    <img src={profile.avatar || image} alt="avatar"/>
+                <div className="music__main-header-head-avatar" ref={avatarRef}>
+                    <img src={apiUrl + profile.avatar || image} alt=""/>
                 </div>
             </Link>
-
             <h3>{profile.name}</h3>
 
-            <span onClick={() => dispatch(setHeader(!header))} class={`music__main-header-head-profile${header ? " active" : ""}`}>
-                <i className={`fas fa-chevron-down`}></i>
-            </span>
         </div>
-    
-        <div className={`music__main-header-menu${header ? ' active' : ""}`}>
-            <Link to="/auth" onClick={async () => {
-                    dispatch(logout())
-                }}>
-                <i className="fas fa-user-circle"></i>
-                <span className="music__main-header-menu-text">Logout</span>
-            </Link>
-        </div>
-
     </div>
     )
 }

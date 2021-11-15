@@ -1,54 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from "react-redux";
-import { setProfile } from "../../redux/actions/profileActions"
-
-import Axios from "../../core/axios"
-
-import { showAlert } from "../../redux/actions/interfaceActions";
+import { changeProfileAvatar } from "../../redux/actions/profileActions"
 
 import DragAndDrop from "../../components/DragAndDrop";
 import Button from "../../components/Button";
 
-const ChangeAvatar = ({ dispatch, profile }) => {
+const ChangeAvatar = ({ dispatch }) => {
 	const [file, setFile] = useState(null);
-	const [load, setLoad] = useState(false)
-
-    const changeAvatar = async () => {
-    
-    	if (!file) {
-    	    return alert('Поле пустое !!!');
-    	}
-        try {
-        	setLoad(true)
-        	const formData = new FormData();
-        	formData.append('avatar', file)
-
-            return Axios.post('/api/upload/avatar', formData)
-            	.then(async data => {
-            		if (data.avatar) {
-						showAlert({type: 'success', text: data.message})
-		            	await dispatch(setProfile({...profile, avatar: data.avatar }))
-		            	setLoad(false)
-            		}
-            	});
-
-        	
-        }
-        catch (e) {
-			showAlert({type: 'error', text: e.message})
-        }
-    }
-
-    useEffect(() => {
-
-    }, [file])
+	const history = useHistory()
 
 	return (
 		<div className="music__main-profile-change-avatar">
 			<DragAndDrop description='File should be a jpeg/png' type="image/jpeg, image/png" field='cover' file={file} setFile={setFile}/>
 
-			<div onClick={changeAvatar} className="music__main-profile-change-avatar-btn">
-				<Button text="Upload" type="button" active={load}/>				
+			<div onClick={() => dispatch(changeProfileAvatar(file, history))} className="music__main-profile-change-avatar-btn">
+				<Button text="Upload" type="button" active={file?.length}/>				
 			</div>
 		</div>
 	)

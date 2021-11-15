@@ -11,7 +11,8 @@ const Album = ({ dispatch, album, loading }) => {
     let id = useParams().id;
 
     useEffect(() => {
-        dispatch(setNowAlbum(id));
+        console.log(id)
+        dispatch(setNowAlbum(String(id)));
     }, [])
 
 
@@ -25,8 +26,8 @@ const Album = ({ dispatch, album, loading }) => {
         <div className="music__main-album">
             <h2 className="subtitle">Album: {album.name}</h2>
 
-            {album.songs[0].name && 
-                <SongsTemp songs={album.songs} type=""/>
+            {album.songs &&  
+                <SongsTemp songs={album.songs} type="Album"/>
             }
         </div>
     )
@@ -34,7 +35,8 @@ const Album = ({ dispatch, album, loading }) => {
 
 const mapStateToProps = (state) => {
     return {
-        album: state.albums.album,
+        album: state.albums.currentAlbum,
+        myAlbums: state.profile.albums,
         loading: state.interface.loading
     }
 }

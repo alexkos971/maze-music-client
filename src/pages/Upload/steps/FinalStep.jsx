@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import {MainContext} from "../index.jsx";
 
-import { getMyAlbums, setProfile } from '../../../redux/actions/profileActions';
+import { setProfile } from '../../../redux/actions/profileActions';
+import { uploadSong } from '../../../redux/actions/songsActions';
+import { showAlert } from "../../../redux/actions/interfaceActions";
 
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import Axios from "../../../core/axios";
 import  Button from "../../../components/Button";
-import { showAlert } from "../../../redux/actions/interfaceActions";
+import { uploadAlbum } from "../../../redux/actions/albumsActions.js";
 
 const FinalStep = ({ dispatch, profile }) => {
 	const { form, setLoad, load } = useContext(MainContext);
@@ -15,7 +17,6 @@ const FinalStep = ({ dispatch, profile }) => {
 
     const uploadHandler = async () => {
         try {
-            setLoad(true);
             const formData = new FormData();
             
             for (let key in form) {
@@ -36,38 +37,13 @@ const FinalStep = ({ dispatch, profile }) => {
 
             switch (form.type) {
                 case 'Single track':
-
-                return Axios.post('/api/upload/track', formData)
-                    .then(async (data) => {
-                        if (data.track) {
-                            const songs = profile.songs.push(data.track)
-                            await dispatch(setProfile({...profile, songs: songs}));
-                        }
-                        else {
-                            dispatch(showAlert({type: 'error', text: data.message}))
-                        }    
-                    })
-                    .then(() => {
-                        setLoad(false);
-                        history.push('/Profile')
-                    });
+                    await dispatch(uploadSong(formData));
+                    history.push('/Profile')
 
                 case 'Album':
-
-                return Axios.post('/api/upload/album', formData)
-                    .then(async (data) => {
-                        if (data.album) {
-                            let albums = profile.albums.push(data.album)
-                            return dispatch(setProfile({...profile, albums: albums}));
-                        }
-                        else {
-                            dispatch(showAlert({type: 'error', text: data.message}))
-                        }    
-                    })
-                    .then(() => {
-                        setLoad(false);
-                        history.push('/Profile')
-                    });
+                    await dispatch(uploadAlbum(formData));
+                    history.push('/Profile')
+                        
                 default: return;
             }
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {  connect } from "react-redux";
 
+import { apiUrl } from "../../config/constants";
+
 import { setSavedSongs } from "../../redux/actions/profileActions";
 import { deleteSong } from "../../redux/actions/songsActions";
 import { onPlay } from "../../redux/actions/playActions";
@@ -46,7 +48,7 @@ const SongsTemp = ({
     }
 
     useEffect(() => {
-        if (songs.length && savedSongs && !songsArray) {
+        if (songs?.length && savedSongs && !songsArray) {
             checkSaved(songs)
         }
     }, [songs, savedSongs, songsArray])
@@ -59,9 +61,7 @@ const SongsTemp = ({
             let newArr = [...prev];
             newArr[index] = {...item, saved: !item.saved};
             return newArr;
-        })
-        
-        // console.log('changed songsArray = ', songsArray)
+        });
 
         if (savedSongs && savedSongs.length > 0) {
             const check = await savedSongs.some(el => el._id === item._id);
@@ -91,6 +91,11 @@ const SongsTemp = ({
                 {
                     songs.map((item, index) => 
                         <li key={index}>
+                            <i className={`fas fa-${(start && song && song._id === item._id)  ? "pause" : "play"}-circle play_btn`} 
+                                onClick={() => { 
+                                    dispatch(onPlay(item, songs));
+                                }}>
+                            </i>
                             <span className="music__main-temp-songs-list_name">
                                 <span className="music__main-temp-songs-list-link">
                                     <span className="music__main-temp-songs-list_artist-name">
@@ -113,7 +118,6 @@ const SongsTemp = ({
                                 </span>
                                 <span className="music__main-temp-songs-list_right-time_now">0:00 </span>
                             </div>
-
                         </li>
                     )
                 }
@@ -136,7 +140,7 @@ const SongsTemp = ({
                         </i>
 
                         <div className="music__main-temp-songs-list-avatar">
-                            <img src={item.cover} alt="avatar" />
+                            {item.cover ?  <img src={apiUrl + item.cover} alt="" /> : null}
                         </div>
 
                         <span className="music__main-temp-songs-list_name">

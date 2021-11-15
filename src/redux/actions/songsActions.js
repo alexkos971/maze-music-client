@@ -1,12 +1,12 @@
 import { 
     FETCH_RECOMEND_SONGS, 
-    DELETE_SONG
+    DELETE_SONG,
+    UPLOAD_SONG
 } from '../types/songsTypes';
 
 import axios from "../../core/axios";
 
-import { showAlert } from "../actions/interfaceActions";
-import { setProfile } from "../actions/profileActions";
+import { loading, showAlert } from "../actions/interfaceActions";
 
 export const getRecomendSongs = () => {
     return async (dispatch, getState) => {
@@ -34,29 +34,56 @@ export const getRecomendSongs = () => {
 }
 
 export const deleteSong = (id) => {
-    return async (dispatch, getState) => {
-        try {
-            let qustion = window.confirm("Вы точно хотите удалить этот трек ?");
-            
-            if (qustion) {
-                
+    return async (dispatch) => {
+        let qustion = window.confirm("Вы точно хотите удалить этот трек ?");
+        
+        if (qustion) {
+            try {
+                dispatch(loading(true));    
                 let { data } = await axios.delete(`/api/songs/delete/${id}`);
                 
-                if (data) {
-                    const newSongs = getState().profile.songs.filter(item => item._id !== data.song._id);
-                    
-                    dispatch(setProfile({...getState().profile, songs: newSongs}));
-                    showAlert({type: 'success', text: data.message})
+                if (data.isSuccess) {
+                    dispatch(showAlert({type: 'success', text: data.message}))
                     
                     dispatch({
                         type: DELETE_SONG,
                         payload: data.song
                     })
                 }
+                else {
+                    showAlert({type: 'error', text: data.message})
+                }
+                dispatch(loading(false));    
+            }
+            catch (e) {
+                showAlert({type: 'error', text: e.message})   
             }
         }
-        catch (e) {
-            showAlert({type: 'error', text: e.message})   
+    }
+}
+
+export const uploadSong = (form) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loading(true));
+
+            const { data } = await axios.post('/api/upload/track', form)
+            
+            if (data.isSuccess) {
+                dispatch(showAlert({type: 'success', text: data.message }))
+                dispatch({
+                    type: UPLOAD_SONG,
+                    payload: data.track
+                })
+            }
+            else {
+                dispatch(showAlert({type: 'error', text: data.message }))
+            }
+            dispatch(loading(false));
+            return data.isSuccess;
+        }
+        catch(e) {
+            console.log(e)
         }
     }
 }

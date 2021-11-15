@@ -80,6 +80,13 @@ const Sidebar = ({ dispatch, path }) => {
                         </li>);
                 })}   
             </ul>
+
+            {/* <div className="music__sidebar-collapse">
+              <div className="music__sidebar-collapse-wrap">
+                <span>Collapse</span>
+                <i className="fas fa-chevron-left"></i>
+              </div>
+            </div> */}
         </div>
     );
 }

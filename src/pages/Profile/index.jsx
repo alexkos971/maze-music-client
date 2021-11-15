@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { changeDir } from '../../redux/actions/interfaceActions';
-import { changeProfileDescription, changeProfileName} from '../../redux/actions/profileActions';
+import { changeProfileDescription, changeProfileName, logout} from '../../redux/actions/profileActions';
 
 import image  from '../../assets/img/Avatar.svg';
 
@@ -10,8 +10,9 @@ import SongsTemp from "../../components/SongsTemp";
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader";
 import Button from "../../components/Button";
+import { apiUrl } from '../../config/constants';
 
-const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start, night, loading }) => {
+const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
     const frequent = {
         artists: [
             { 
@@ -42,6 +43,14 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
             }
         ]
     }
+    
+        const avatarRef = useRef(null)
+    
+        useEffect(() => {
+            if (!profile.avatar.length) {
+                avatarRef.current.setAttribute('data-nick', profile.avatarNick)
+            }
+        }, [profile.name])
 
 
     if (loading && profile) {
@@ -56,18 +65,18 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                 
                 <div className="music__main-profile-header-wrap">
                     
-                    <div className="music__main-profile-header-wrap-avatar">
+                    <div className="music__main-profile-header-wrap-avatar" ref={avatarRef}>
 
-                        <div className="music__main-profile-header-wrap-avatar-img">
-                            <img src={profile.avatar || image} alt=""/>
+                        {/* <div className="music__main-profile-header-wrap-avatar-img"> */}
+                            <img src={apiUrl + profile.avatar || image} alt=""/>
                             
-                            <div className="music__main-profile-header-wrap-avatar-img-change" onClick={() => dispatch(changeDir('change-avatar'))}>
+                            <div className="music__main-profile-header-wrap-avatar-change" onClick={() => dispatch(changeDir('change-avatar'))}>
                                 <Link to="/change-avatar">
                                     <span>Change</span>
                                 </Link>
                             </div>
-                        
-                        </div>
+                
+                        {/* </div> */}
                     </div>          
 
                     <div className="music__main-profile-header-wrap-nick">
@@ -118,7 +127,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
 
                     <div className="music__main-profile-header-frequents-frequent-desc">
                         <span className="music__main-profile-header-frequents-frequent-desc-title">Description:</span>
-                        <span className="music__main-profile-header-frequents-frequent-desc-text">{profile.description.length < 30 ? profile.description :  profile.description_large}</span>
+                        <span className="music__main-profile-header-frequents-frequent-desc-text">{profile.description}</span>
                         
                         <span className="music__main-profile-header-frequents-frequent-desc-icon">
                             <i className="fas fa-pencil-alt" onClick={() => dispatch(changeProfileDescription())}></i>
@@ -150,7 +159,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                     <li className="music__main-profile-settings-list-item">
                         <span>Files on device:</span>
 
-                        <Button type="button" text="C:/Users/Alex/AppData/Roaming/maze-music/data" active mr />
+                        <Button type="button" text="C:/Users/Alex/AppData/Roaming/maze-music/data" class="active mr" />
                     </li>
                     <li className="music__main-profile-settings-list-item">
                         <span>Notifications:</span>
@@ -158,6 +167,14 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
                         <div className="music__main-profile-settings-list-item-checkbox">
                             <Button type={'checkbox'}/>
                         </div>
+                    </li>
+
+                    <li className="music__main-profile-settings-list-item">
+                        <Link to="/auth" onClick={async () => {
+                            dispatch(logout())
+                        }}>
+                            <span>Logout</span>
+                        </Link>
                     </li>
                 </ul>
             </div>
@@ -173,7 +190,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, savedSongs, song, start
 
             <div className="music__main-profile-albums">
                 <h2 className="subtitle">Albums</h2>
-                {myAlbums && myAlbums.length > 0 ?
+                {myAlbums?.length > 0 ?
                     <CardsTemp items={myAlbums} to="Albums" my/>
                     :
                     <span className="music__main-profile-empty">You have no albums</span>

@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import Button from "../../../components/Button";
 import { MainContext } from "../index.jsx";
 
 import ChooseName from "./ChooseName";

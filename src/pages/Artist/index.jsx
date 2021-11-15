@@ -6,6 +6,8 @@ import SongsTemp from "../../components/SongsTemp"
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader";
 
+import { apiUrl } from '../../config/constants'
+
 import { getArtist } from '../../redux/actions/artistsActions';
 
 const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
@@ -68,7 +70,7 @@ const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
                 </div>
 
                 <div className="music__main-artist-header-avatar">
-                    <img src={artist.avatar} alt=""/>
+                    <img src={apiUrl + artist.avatar} alt=""/>
                 </div>
             </div>
             
