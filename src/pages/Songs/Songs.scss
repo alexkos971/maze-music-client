@@ -1,4 +1,18 @@
 .music__main-saved-songs {
     position: relative;
-    padding: 25px 60px 0px 60px;
+    padding: 0px 60px 0px 60px;
+
+    &-head {
+        display: flex;
+        justify-content: space-between;
+
+        &-sort {
+            display: flex;
+            align-items: center;
+
+            span {
+                margin-right: 18px;
+            }
+        }
+    }
 } 

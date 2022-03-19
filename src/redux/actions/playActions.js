@@ -1,10 +1,21 @@
-import { PLAY_SONG, NOW_SONG, SWITCH_SONG, SET_SONG_DURATION, ITEM_DURATION, SET_START } from '../types/playTypes';
+import { 
+    PLAY_SONG, 
+    NOW_SONG, 
+    SWITCH_SONG, 
+    SET_SONG_DURATION, 
+    ITEM_DURATION, 
+    SET_START,
+    SET_CURRENT_PLAYLIST 
+} from '../types/playTypes';
+
+import checkSavedSongs from "./songsActions";
+import store from "../../index.js";
 
 export const onPlay = (item, list) => {
     return {
         type: PLAY_SONG,
         song: item,
-        list: list
+        list: checkSavedSongs(list, store.getState().profile.saved_songs)
     }
 }
 
@@ -43,5 +54,12 @@ export const setNowSong = (song) => {
     return {
         type: NOW_SONG,
         payload: song
+    }
+}
+
+export const setCurrentPlaylist = (playlist) => {
+    return {
+        type: SET_CURRENT_PLAYLIST,
+        payload: playlist
     }
 }

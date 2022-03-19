@@ -1,18 +1,23 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import { getRecomendArtists } from '../../redux/actions/artistsActions';
-import { getRecomendSongs } from '../../redux/actions/songsActions';
+import { setRecomendSongs } from '../../redux/actions/songsActions';
 
 import SongsTemp from "../../components/SongsTemp";
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader"
 
-const For = ({ dispatch, loading, recomendSongs, recomendArtists, profile }) => {
+const For = ({ dispatch, loading, recomendSongs, recomendArtists }) => {
 
     useEffect(() => {
-        dispatch(getRecomendSongs())
-    }, [dispatch, recomendSongs, profile.songs]);
+        if (!recomendSongs.length) {
+            dispatch(setRecomendSongs())
+        }
+        else {
+            dispatch(setRecomendSongs(recomendSongs))
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(getRecomendArtists())
@@ -60,8 +65,9 @@ const For = ({ dispatch, loading, recomendSongs, recomendArtists, profile }) => 
                     </div> */}
                 </div>
 
-                {recomendSongs &&
-                    <SongsTemp songs={recomendSongs}/>
+                {recomendSongs?.length ?
+                    <SongsTemp songs={recomendSongs} setSongs={setRecomendSongs}/>
+                    : null
                 }
             </div>
         </div>

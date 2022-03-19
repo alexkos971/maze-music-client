@@ -1,15 +1,27 @@
-import React, { useState,  useEffect, useCallback } from 'react';
+import React, { useState,  useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setDuration, setStart } from '../../redux/actions/playActions';
+import { setDuration, setStart, onPlay, setCurrentPlaylist } from '../../redux/actions/playActions';
 import { setFullPlayer } from '../../redux/actions/interfaceActions';
+import { saveSong } from '../../redux/actions/profileActions';
 
 import { apiUrl } from '../../config/constants'
 
 let audio;
 
-const Player = ({ dispatch, start, full, song, currentDuration, fullScreen, setFullScreen}) => { 
+const Player = ({ 
+    dispatch, 
+    start, 
+    full, 
+    song, 
+    currentDuration, 
+    recomendSongs,
+    savedSongs,
+    currentPlaylist,
+    fullScreen
+}) => { 
     const [stateVolume, setStateVolume] = useState(50);
     const [inputDuration, setInputDuration] = useState(0);
+    const [isFirstStart, setIsFirstStart] = useState(true);
 
     const setAudio = () => {
         if (song) {
@@ -27,21 +39,23 @@ const Player = ({ dispatch, start, full, song, currentDuration, fullScreen, setF
             }
         }    
     }
-    
-    useEffect(() => {
-        setInputDuration(0)
-    }, [song])
-    
-    let onStartPlay = useCallback(() => {
-        if (start) {
-            // dispatch(itemDuration(audio.duration))
-            audio.play();
-        }
-        else {
-            audio.pause();  
-        }
 
-    }, [start])
+    useEffect(() => {
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                // dispatch(setStart(!start));
+                playSong();
+            }
+        })
+    }, []);
+    
+    // useEffect(() => {
+    //     setInputDuration(0)
+    // }, [song])
+    
+    let onStartPlay = () => {
+        return start ? audio.play() : audio.pause();  
+    }
     
 
     useEffect(() => {
@@ -52,7 +66,7 @@ const Player = ({ dispatch, start, full, song, currentDuration, fullScreen, setF
             setAudio();
             onStartPlay()
         }
-    }, [song])
+    }, [song.src, isFirstStart])
     
     
 
@@ -71,46 +85,66 @@ const Player = ({ dispatch, start, full, song, currentDuration, fullScreen, setF
         }
     }
 
-
     useEffect(() => {
         audio.volume = stateVolume / 100
     }, [stateVolume]);
+      
     
-    
+    const playSong = () => {
+        if (song?.src) {
+            if (isFirstStart) {
+                dispatch(onPlay(song, recomendSongs));
+                setIsFirstStart(false);
+            }
+            else {
+                dispatch(setStart(!start));
+            }
+        }
+    }
     
     const mouseWheel = elem => {
-        // console.log(elem.deltaY);
         if (elem.deltaY > 9.8 * 100 || elem.deltaY < 0.2 * 100) {
             return false;
         }
             setStateVolume(elem.deltaY/stateVolume* 100)
-        }
+    }
         
-        const repeatTrack = () => {
-            setInputDuration(0)
-            audio.currentTime = 0;
+    const repeatTrack = () => {
+        setInputDuration(0)
+        audio.currentTime = 0;
             
         if (start) {
             audio.play();
         }
     }
 
+    const onSaveSong = async (item) => {  
+        await dispatch(saveSong(item));
+
+        let checkOnCurrentPlaylist = await currentPlaylist.find(el => el._id == item._id);
+        if (checkOnCurrentPlaylist) {
+            if (currentPlaylist !== savedSongs) {
+                let newSongs = await currentPlaylist.map(elem => {
+                    if (elem._id == item._id) {
+                        elem.saved = !item.saved;
+                    }
+                    return elem;
+                });
+                dispatch(setCurrentPlaylist(newSongs));
+            }
+        }
+    }
+
     return (
         <div className="music__player">
-            {/* <div className="music__player-artist">
-                <div className="music__player-artist-wrap">
-                <img src={song.cover} alt=""/>
-                </div>
-            </div> */}
-
             <div className="music__player-controls">
-                <i className="fas fa-backward" id="play_prev" onClick={() => console.log(song)}></i>
+                <i className="fas fa-backward play-prev" id="play_prev" onClick={() => console.log(song)}></i>
 
                 <i className={`fas fa-${start ? "pause" : "play"}-circle play_btn`} 
-                    onClick={() => song.src && dispatch(setStart(!start))}>
+                    onClick={() => playSong()}>
                 </i>
                 
-                <i className="fas fa-forward" id="play_next" onClick={() => console.log(song)}></i>
+                <i className="fas fa-forward play-prev" id="play_next" onClick={() => console.log(song)}></i>
             </div>
 
             <div className="music__player-song-desk">
@@ -133,7 +167,6 @@ const Player = ({ dispatch, start, full, song, currentDuration, fullScreen, setF
                     id="music-range" 
                     disabled={!song && true}
                     value={inputDuration}
-                    // defaultValue={dur}
                     onChange={handleProgress} />
 
                 <span id="music-time_total">{song && song.duration}</span>
@@ -152,11 +185,11 @@ const Player = ({ dispatch, start, full, song, currentDuration, fullScreen, setF
                         onChange={(e) => setStateVolume(e.target.value)} />
                 </span>
                 
-                <span onClick={() => alert("saved")}>
-                    <i className={`fa${song && song.saved ? "s" : "r"} fa-heart`}></i>
+                <span onClick={() => onSaveSong(song)}>
+                    <i className={`fa${song?.saved ? "s" : "r"} fa-heart`}></i>
                 </span>
 
-                <span onClick={() => setFullScreen(!fullScreen)}  className="music__player-full">
+                <span  className="music__player-full">
                     {/* <img src={repeatIcon} alt="repeat all" id="repeat_all"/> */}
                     <i className={`fas fa-${!fullScreen ? "expand" : "compress"}`}></i>
                 </span>
@@ -173,7 +206,9 @@ const mapStateToProps = (state) => {
     return {
         start: state.onPlay.start,
         song: state.onPlay.song,
-        songFrom: state.onPlay.songFrom,
+        recomendSongs: state.songs.recomendSongs,
+        savedSongs: state.profile.saved_songs,
+        currentPlaylist: state.onPlay.currentPlaylist,
         currentDuration: state.onPlay.currentDuration,
         full: state.interface.fullPlayer
     }

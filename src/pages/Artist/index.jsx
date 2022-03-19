@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams, Link} from 'react-router-dom';
 import { connect } from "react-redux";
 
 import SongsTemp from "../../components/SongsTemp"
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader";
+import Button from "../../components/Button";
+import PrevPage from "../../components/PrevPage";
 
 import { apiUrl } from '../../config/constants'
 
@@ -29,6 +31,9 @@ const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
         <div className="music__main-artist">
 
             <div className="music__main-artist-header">
+                
+                <PrevPage/>
+
                 <div className="music__main-artist-header-desc">
 
                     <h1 className="music__main-artist-header-desc-name">{artist.name}</h1>
@@ -36,13 +41,13 @@ const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
 
                     <div className="music__main-artist-header-desc-info">
                         {
-                            // console.log(artist)
-                            artist.tags && 
+                            artist.tags ?
                             artist.tags.map((item, index) => 
                                 <Link className="music__main-artist-header-desc-info-genre" to={`/Genre/${item.name}`} key={index}>
                                     {item.name}
                                 </Link>
-                            )
+                            ) : 
+                            <span className="music__main-artist-header-desc-info-genre">{'No Genre'}</span>
                         }
 
                             <span className="middot">&middot;</span>
@@ -57,21 +62,36 @@ const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
                     </div>
                     
                     <div className="music__main-artist-header-desc-btns">
-                        <span className="music__main-artist-header-desc-btns-follow">
-                            <i className="fas fa-bookmark"></i>
-                            <span>Follow</span>
-                        </span>
-
-                        <span className="music__main-artist-header-desc-btns-listen">
-                            <i className="fas fa-play"></i>
-                            <span>Listen</span>
-                        </span>
+                        <Button 
+                            type="button"
+                            subClass="dark mr-20"
+                            onClick={() => alert('follow')}
+                            text={
+                                <>
+                                    <i className="fas fa-bookmark"></i>
+                                    <span>Follow</span>
+                                </>
+                            }/>
+                        
+                        <Button 
+                            type="button"
+                            onClick={() => alert('lister')}
+                            text={
+                                <>
+                                    <i className="fas fa-play"></i>
+                                    <span className='ml-12'>Listen</span>
+                                </>
+                            }/>
                     </div>
                 </div>
 
-                <div className="music__main-artist-header-avatar">
-                    <img src={apiUrl + artist.avatar} alt=""/>
-                </div>
+                {
+                    artist.avatar ?
+                        <div className="music__main-artist-header-avatar">
+                            <img src={apiUrl + artist.avatar} alt=""/>
+                        </div>
+                    : null
+                }
             </div>
             
             <div className="music__main-artist-albums">

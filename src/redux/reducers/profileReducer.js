@@ -37,8 +37,9 @@ export const profileReducer = (state = initialState, action) => {
             return {...state, saved_songs: action.payload}
 
         case SAVE_SONG:
-            return { ...state, saved_songs: [...state.saved_songs, action.payload] }
+            return { ...state, saved_songs: action.isSaved ? state.saved_songs.filter(el => el._id !== action.payload._id) : [...state.saved_songs, {...action.payload, saved: true}] }
         
+
         case DELETE_SONG:
             return {...state, songs: state.songs.filter(el => el._id !== action.payload)}
             

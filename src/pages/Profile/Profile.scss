@@ -14,7 +14,7 @@
         width: 100%;
         height: 250px;
         background-color: #AAD8D3;
-        padding: 80px 60px;
+        padding: 80px $padding-page;
         padding-bottom: 90px;
         position: relative;
 
@@ -118,18 +118,23 @@
                     }
 
                     &-info {
-                        display: block;
+                        display: flex;
+                        flex-direction: column;
                         position: relative;
                         top: -4px;
 
                         p {
                             margin: 0 !important;
+                            font-size: 14px;
+                            color: $gray-font;
                         }
-                    }
-                    span {
-                        font-size: 20px;
-                        position: relative; 
-                        color: #393E46;
+                        
+                        span {
+                            font-size: 18px;
+                            margin: 8px 0px 6px;
+                            position: relative; 
+                            color: #393E46;
+                        }
                     }
                 }
             }
@@ -187,7 +192,7 @@
 
 
     &-settings {
-        padding: 0px 60px;
+        padding: 0px $padding-page;
         margin-top: 30px;
         width: 100%;
         position: relative;
@@ -206,7 +211,7 @@
                 justify-content: space-between;
 
                 span {
-                    font-size: 20px;
+                    font-size: 16px;
                 }
 
                 a {

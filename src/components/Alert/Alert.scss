@@ -5,6 +5,15 @@
         position: fixed;
         left: 50%;
         bottom: calc(0% + 60px);
+        
+        @include media-breakpoint-down(md) {
+            bottom: calc(0% + 80px);
+        }
+
+        @include media-breakpoint-down(sm) {
+            bottom: calc(0% + 140px);
+            width: calc(100% - 42px);
+        }
     }
     
     &-alert {

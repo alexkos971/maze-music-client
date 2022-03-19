@@ -19,6 +19,11 @@ import { LOADING, SHOW_ALERT } from '../types/interfaceTypes';
 
 import axios from "../../core/axios";
 import { showAlert, loading } from './interfaceActions';
+import { setNowSong } from './playActions';
+
+export const getNickByAvatar = name => {
+    return name.split(" ").reduce((item, acc) => item[0] + acc[0]);
+}
 
 export const setProfile = () => {
     return async (dispatch) => {
@@ -26,7 +31,9 @@ export const setProfile = () => {
             const { data } = await axios.get('/api/users/profile')
             
             if (data) {
-                let avatarNick = data.name.split(" ").reduce((item, acc) => item[0] + acc[0])
+                let avatarNick = getNickByAvatar(data.name);
+
+                await data.saved_songs.map(item => item.saved = true);
 
                 return dispatch({
                     type: SET_PROFILE,
@@ -188,10 +195,39 @@ export const setSavedSongs = (data) => {
     }
 }
 
+
 export const saveSong = (item) => {
-    return {
-        type: SAVE_SONG,
-        payload: item
+    return async (dispatch, getState) => {
+        try {   
+            const { data } = await axios.put(`/api/songs/save/${item._id}`, {isSaved: item.saved});
+
+            if (data.isSuccess) {
+                dispatch(showAlert({
+                    type: 'success',
+                    text: data.message
+                }));
+                
+                // Change set on Player component
+                if (item._id == getState().onPlay.song._id) {
+                    dispatch(setNowSong({...item, saved: !item.saved}));
+                }
+
+                dispatch({
+                    type: SAVE_SONG,
+                    payload: item,
+                    isSaved: item.saved
+                });
+            }
+            else {
+                dispatch(showAlert({
+                    type: 'error',
+                    text: data.message
+                }));
+            }
+        }
+        catch(e) {
+            console.log(e)
+        }
     }
 }
 

@@ -23,18 +23,7 @@ function App({ dispatch, song, night, profile, defaultPath }) {
     if (token && !profile.name) {
       dispatch(setProfile());
     }
-      // if (!token) {
-      //   history.push('/auth')
-      // }
-      // else {
-      //   history.push('for-you');
-      // }
   }, [token, profile, dispatch]);
-
-  // Save last song before close window
-  window.addEventListener('beforeunload', () => {
-    localStorage.setItem('lastSong', JSON.stringify(song))
-  });
   
   
   return (
@@ -53,11 +42,7 @@ function App({ dispatch, song, night, profile, defaultPath }) {
           <div className={ !night ? "music-night" : "music"}>
             <Sidebar/>
             
-            { profile.name ? 
-              <Main />
-              : 
-              <Preloader/>
-            }
+            <Main />
         
             <Player {...{setFullScreen, fullScreen}} />
           </div>

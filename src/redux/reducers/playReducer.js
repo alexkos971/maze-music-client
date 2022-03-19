@@ -1,5 +1,12 @@
-import { PLAY_SONG, NOW_SONG, SWITCH_SONG, SET_SONG_DURATION, ITEM_DURATION, SET_START } from '../types/playTypes';
-import { apiUrl } from '../../config/constants';
+import { 
+    PLAY_SONG, 
+    NOW_SONG, 
+    SWITCH_SONG, 
+    SET_SONG_DURATION, 
+    ITEM_DURATION, 
+    SET_START,
+    SET_CURRENT_PLAYLIST 
+} from '../types/playTypes';
 
 // Template of song time
 let timeTemplate = s => {
@@ -7,23 +14,24 @@ let timeTemplate = s => {
 }
 
 
-const checkLocalStotage = async () => {
-    let check = await localStorage.getItem('lastSong');
-    
-    if (!check) {
-        localStorage.setItem('lastSong', {})
-        check = localStorage.getItem('lastSong');
+const checkLocalStorage = () => {
+    let storageSong = localStorage.getItem('lastSong');
+
+    if (!storageSong) {
+        return {};
     }
     else {
-        return JSON.parse(check);
+        return {};
+        // return JSON.parse(storageSong);
     }
 }
 
 let initialState = {
     start: false,
-    song: checkLocalStotage(),
+    song: checkLocalStorage(),
     songFrom: [],
     currentDuration: '0:00',
+    currentPlaylist: [],
     itemDuration: '0:00'
 }
 
@@ -31,15 +39,14 @@ const switchSong = (to, list) => {
     list.map((item, index) => {
         if (initialState.song._id === item._id) {
             if (to === "next") {
-                console.log(item)
                 // return item[index + 1]
             }
-            else if (to === "prev") 
-                console.log(item)
+            else if (to === "prev") {
             // return item[index - 1]
             }
             return item;
-    })
+        }    
+    }); 
     return list[0];
 }
 
@@ -47,6 +54,7 @@ export const playReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case PLAY_SONG:
+            localStorage.setItem('lastSong', JSON.stringify(action.song));
 
             if (action.song._id === state.song._id) {
                 return {...state, start: !state.start}
@@ -55,8 +63,9 @@ export const playReducer = (state = initialState, action) => {
                 return {...state, 
                     song: action.song, 
                     start: true, 
-                    songFrom: action.list };
-            }
+                    songFrom: action.list 
+                };
+        }
                  
         case NOW_SONG:
             return { ...state, song: action.payload }
@@ -71,6 +80,9 @@ export const playReducer = (state = initialState, action) => {
             return {...state, itemDuration: timeTemplate(action.payload)}
         case SET_START:
             return { ...state, start: action.payload }
+
+        case SET_CURRENT_PLAYLIST:
+            return {...state, currentPlaylist: action.payload }
                 
         default: return state;
     }

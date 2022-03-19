@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { changeDir } from "../../redux/actions/interfaceActions"
+import { changeDir, setFullPlayer } from "../../redux/actions/interfaceActions"
  
 import { NavLink} from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/img/Logo.svg';
@@ -49,7 +49,7 @@ const Sidebar = ({ dispatch, path }) => {
           "path": "/upload",
           "icon": "cloud-upload-alt",
           "id": 7
-        }];
+    }];
  
     return (
         <div className="music__sidebar">
@@ -71,7 +71,11 @@ const Sidebar = ({ dispatch, path }) => {
                             <NavLink 
                                 to={`${item.path}`} 
                                 onClick={() => {
-                                    dispatch(changeDir({name: item.name, path: item.path}))
+                                    dispatch(changeDir({name: item.name, path: item.path}));
+
+                                    if (window.innerWidth < 768) {
+                                      dispatch(setFullPlayer(false));
+                                    }
                                 }}>
                                 <i className={`fas fa-${item.icon} music__sidebar-item-icon`}></i>
                                 

@@ -1,36 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Preloader from "../../components/Preloader";
+import Button from "../../components/Button";
 import SongsTemp from "../../components/SongsTemp";
 
-const Songs = ({  dispatch, savedSongs, song, start }) => {
-    
-    // const { loading, request } = useHttp();
-    // const { token } = useAuth()
+import { setSavedSongs } from "../../redux/actions/profileActions";
 
-    // const saveSong = useCallback(async () => {
-    //     try {
-    //         if (token) {
-                
-    //             const data = await request(`/api/songs/save/${id}`, "POST", null, {
-    //                 Authorization: `Bearer ${token}`
-    //             });
-
-    //             if (data) {
-    //                 dispatch(setSavedSongs(data))
-    //             }
-    //         }
-    //     }
-    //     catch (e) {
-    //         console.log(e)
-    //     }
-    // }, [ savedSongs, token])
-
-    // useEffect(() => {
-    //     saveSong()
-    // }, [dispatch, token, savedSongs])
+const Songs = ({ savedSongs }) => {
 
     if (!savedSongs) {
         return (
@@ -40,9 +17,17 @@ const Songs = ({  dispatch, savedSongs, song, start }) => {
 
     return (
         <div className="music__main-saved-songs">
-            <h2 className="subtitle">Saved songs</h2>
+            <div className="music__main-saved-songs-head">
+                <h2 className="subtitle">Saved songs</h2>
+
+                <div className="music__main-saved-songs-head-sort">
+                    <span>Sort by: </span>
+                    <Button type="select" list={['Last added', 'Older', 'Name']}/>
+                </div>
+            </div>
+
                 {savedSongs && savedSongs.length > 0 ?
-                    <SongsTemp songs={savedSongs} type="Saved"/>
+                    <SongsTemp songs={savedSongs} setSongs={setSavedSongs} type="Saved"/>
                     :
                     <h2>You dont have saved songs</h2>
                 }

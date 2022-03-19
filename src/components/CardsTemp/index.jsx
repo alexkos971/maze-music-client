@@ -6,11 +6,14 @@ import Slider from 'react-slick';
 import { apiUrl } from '../../config/constants'
 import { changeDir } from "../../redux/actions/interfaceActions";
 import { setNowAlbum, deleteAlbum } from "../../redux/actions/albumsActions";
+import { getNickByAvatar } from "../../redux/actions/profileActions";
 
 import { leftIcon, rightIcon } from '../images';
 
 const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
 
+
+    
     const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
         <div
             {...props}
@@ -60,7 +63,13 @@ const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
                         <div className="music__main-slider-item" key={index} onClick={() => dispatch(changeDir({name: 'Artist', path: '/artist'}))}>
                             <Link to={"/artist/" + item._id}>
                                 <div className="music__main-slider-item-wrap">
-                                        <img src={apiUrl +item.avatar} alt="" className="slider_img" />
+                                        {item.avatar?.length ?
+                                            <img src={apiUrl +item.avatar} alt="" className="slider_img" />
+                                            :
+                                            <div className="music__main-slider-item-wrap-nick">
+                                                <span>{getNickByAvatar(item.name)}</span>
+                                            </div>
+                                        }
 
                                     <div className="music__main-slider-item-wrap-text">        
                                         <h2 className="music__main-slider-item-wrap_artist">{item.name}</h2>
@@ -121,6 +130,9 @@ const CardsTemp = ({dispatch, items, to, start, my, myAlbums }) => {
                 </Slider>
             </div>
         )
+    }
+    else {
+        return null;
     }
 }
 

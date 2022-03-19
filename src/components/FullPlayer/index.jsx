@@ -49,8 +49,8 @@ const FullPlayer = ({ dispatch, full, song }) => {
                     }
                 </div>
     
-                <div className="music__main-full-cover">
-                    <div className="music__main-full-cover-container">
+                <div className="music__main-full-main">
+                    <div className="music__main-full-main-cover">
                         <img src={apiUrl + song.cover} alt=""/>
                     </div>
                 </div>

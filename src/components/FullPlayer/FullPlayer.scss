@@ -1,17 +1,25 @@
 .music__main-full {
     position: fixed;
-    bottom: -100%;
+    top: 100%;
     width: 100%;
-    height: calc(100% - 75px);
+    height: 100vh;
     color: #bfbfbf;
-    z-index: 100;
+    // z-index: 100;
+    z-index: 9;
     background-color: #0f1626;
     transition: .2s all ease-in;
     padding: 15px 60px 10px 60px;
 
+    @include media-breakpoint-down(sm) {
+        padding: 18px;
+    }
+
     &.active {
-        bottom: 50px;
+        width: 100%;
+        top: 0;
+        box-sizing: border-box;
         background-color: $blue-bcg-200;
+
     }
 
     &-info {
@@ -29,32 +37,41 @@
         }
     }    
 
-    &-cover {
-        width: 30%;
-        overflow: hidden;
+    &-main {
         position: relative;
         margin-top: 60px;
-        box-shadow: 0px 0px 27px 6px rgba(0,0,0,0.75);
-        // box-shadow: 15px 15px 20px -4px rgba(0,0,0,0.75);
 
-        &:after {
-            content: "";
-            padding-top: 100%;
-            display: block;
+        @include media-breakpoint-down(sm) {
+            margin-top: 32px;
+        }
+        
+        &-cover {
+            width: 28vw;
+            height: 28vw;
+            box-shadow: 0px 0px 27px 6px rgba(0,0,0,0.75);
+            
+            @include media-breakpoint-down(md) {
+                width: 40vw;
+                height: 40vw;
+            }
+
+            @include media-breakpoint-down(sm) {
+                width: 80vw;
+                height: 80vw;
+                margin: 0 auto;
+            }
+
+            @include media-breakpoint-down(xs) {
+                width: calc(100vw - 32px);
+                height: calc(90vw - 32px);
+            }
         }
 
-        &-container {
-            position: absolute;
-            width: 100%;
-            transform: translate(-50%, -50%);
-            top: 50%;
-            left: 50%;
-        }
         img {
-            width: 110%;
-            left: -5%;
+            width: 100%;
+            height: 100%;
             position: relative;
-            height: auto;
+            object-fit: cover;
         }
     }
 

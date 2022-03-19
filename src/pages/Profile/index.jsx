@@ -10,6 +10,7 @@ import SongsTemp from "../../components/SongsTemp";
 import CardsTemp from "../../components/CardsTemp";
 import Preloader from "../../components/Preloader";
 import Button from "../../components/Button";
+import PrevPage from "../../components/PrevPage";
 import { apiUrl } from '../../config/constants';
 
 const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
@@ -44,13 +45,13 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
         ]
     }
     
-        const avatarRef = useRef(null)
-    
-        useEffect(() => {
-            if (!profile.avatar.length) {
-                avatarRef.current.setAttribute('data-nick', profile.avatarNick)
-            }
-        }, [profile.name])
+    const avatarRef = useRef(null)
+
+    useEffect(() => {
+        if (!profile.avatar.length) {
+            avatarRef.current.setAttribute('data-nick', profile.avatarNick)
+        }
+    }, [profile.name])
 
 
     if (loading && profile) {
@@ -64,6 +65,8 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
             <div className="music__main-profile-header">
                 
                 <div className="music__main-profile-header-wrap">
+                    
+                    <PrevPage classNames={"center"}/>
                     
                     <div className="music__main-profile-header-wrap-avatar" ref={avatarRef}>
 

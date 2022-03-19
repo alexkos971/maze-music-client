@@ -5,7 +5,6 @@ import CardsTemp from "../../components/CardsTemp";
 const Search = ({ artists, night }) => {
 	return (
 		<div className={`music__main-search`}>
-			<div className={`music__main-bg ${!night ? "night" : ""}`}></div>
 			
 			<div className="music__main-search-container">
 				<h2 className="subtitle">Search</h2>

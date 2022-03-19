@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -6,20 +6,21 @@ import { changeDir, setNight, showAlert  } from "../../redux/actions/interfaceAc
 import image  from '../../assets/img/Avatar.svg';
 import { apiUrl } from "../../config/constants";
 
-const Header = ({ dispatch, profile, night, path }) => {
+const Header = ({ dispatch, profile, night, path, isFilled, toStartPage }) => {
     
-    const avatarRef = useRef(null)
+    const avatarRef = useRef(null);
+    // const [scrolledPosition, setScrolledPosition] = useState(0);
     
     useEffect(() => {
-        if (avatarRef) {
+        if (avatarRef && profile.name) {
             avatarRef.current.setAttribute('data-nick', profile.avatarNick)
         }
-    }, [profile.name])
+    }, [profile.name]);
     
     return (
-    <div className="music__main-header">
+    <div className={`music__main-header ${isFilled ? 'filled' : ''}`}>
                 
-        <span className={`music__main-header-dir`}>{path.name}</span>
+        <span className={`music__main-header-dir`} onClick={toStartPage}>{path.name}</span>
 
         <div className="music__main-header-head">
             <ul className={`music__main-header-head-navbar${night ? " dark" : ""}`}>

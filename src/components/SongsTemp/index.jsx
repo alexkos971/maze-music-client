@@ -1,88 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {  connect } from "react-redux";
 
 import { apiUrl } from "../../config/constants";
 
-import { setSavedSongs } from "../../redux/actions/profileActions";
+import { saveSong } from "../../redux/actions/profileActions";
 import { deleteSong } from "../../redux/actions/songsActions";
-import { onPlay } from "../../redux/actions/playActions";
-import Preloader from "../Preloader";
+import { onPlay, setCurrentPlaylist } from "../../redux/actions/playActions";
 
 const SongsTemp = ({ 
     dispatch,
-    savedSongs,  
     profile, 
-    song, 
+    song,  
     start, 
     my, 
     night, 
-    loading,
     type, 
     setAlbum, 
-    songs }) => {
+    currentPlaylist,
+    savedSongs,
 
-    const [songsArray, setSongsArray] = useState(null);
-
-
-    const checkSaved = async (list) => {
-        if (savedSongs.length > 0) {
-            list.forEach(async item => {
-                savedSongs.forEach(elem => {
-                    if (item._id === elem._id) {
-                        item.saved = true;
-                    }
-                    else {
-                        item.saved = false;
-                    }
-                })
-            })
-        }
-        else {
-            list.forEach(item => {
-                item.saved = false;
-            });
-        }
-
-        setSongsArray(list);
-    }
+    songs, //songs
+    setSongs // redux action to set songs array
+}) => {
 
     useEffect(() => {
-        if (songs?.length && savedSongs && !songsArray) {
-            checkSaved(songs)
-        }
-    }, [songs, savedSongs, songsArray])
-
-
+        dispatch(setCurrentPlaylist(songs))
+    }, [songs])
 
     const onSaveSong = async (item, index) => {
-
-        setSongsArray(prev => {
-            let newArr = [...prev];
-            newArr[index] = {...item, saved: !item.saved};
-            return newArr;
-        });
-
-        if (savedSongs && savedSongs.length > 0) {
-            const check = await savedSongs.some(el => el._id === item._id);
-                if (!check) {
-                    dispatch(setSavedSongs([...savedSongs, item]));
-                }
-                else {
-                    const newSongs = await savedSongs.filter(el => el._id != item._id);
-                    dispatch(setSavedSongs(newSongs));
-                }
+        let newSongs = songs;
+        await dispatch(saveSong(item));
+        
+        if (type !== 'Saved') {     
+            
+            newSongs[index].saved = !item.saved;
+            await dispatch(setSongs(newSongs));
+            dispatch(setCurrentPlaylist(newSongs));
         }
         else {
-            dispatch(setSavedSongs([...savedSongs, item]));
+            dispatch(setCurrentPlaylist(savedSongs));
         }
 
-    }
-
-    if (!songsArray) {
-        return (
-            <Preloader/>
-        )
     }
 
     if (type && type === 'Album') {
@@ -127,13 +86,10 @@ const SongsTemp = ({
 
     return (
         <ol className={`music__main-temp-songs-list${!night ? " night" : ""}`}>
-        
-            {!loading &&
-                songsArray.map((item, index) => {
-                
+            {currentPlaylist.map((item, index) => {
                 return (
-                    <li key={index} className={(song && song._id === item._id) ? "now_play" : ''}>
-                        <i className={`fas fa-${(start && song && song._id === item._id)  ? "pause" : "play"}-circle play_btn`} 
+                    <li key={index} className={(song._id === item._id) ? "now_play" : ''}>
+                        <i className={`fas fa-${(start && song && song?._id === item._id)  ? "pause" : "play"}-circle play_btn`} 
                             onClick={() => { 
                                 dispatch(onPlay(item, songs));
                             }}>
@@ -167,10 +123,11 @@ const SongsTemp = ({
                                 <i className="fas fa-arrow-circle-down"></i>
                             </span>
 
+                            {/* Saved working */}
                             <span className="music__main-temp-songs-list_right-save"
                                 onClick={() => onSaveSong(item, index)}>
                                 
-                                <i className={`fa${type == 'Saved' ? 's' :  (item.saved ? 's' : 'r')} fa-heart`}></i>
+                                <i className={`fa${item.saved ? 's' : 'r'} fa-heart`}></i>
                             </span>
                             
                             <span className="music__main-temp-songs-list_right-time_now">
@@ -180,8 +137,7 @@ const SongsTemp = ({
 
                     </li>
                 );
-                })
-            }
+            })}
     </ol>
     )
 }
@@ -192,8 +148,8 @@ const mapStateToProps = (state) => {
         start: state.onPlay.start,
         night: state.interface.night,
         loading: state.interface.loading,
-        mySongs: state.profile.songs,
         savedSongs: state.profile.saved_songs,
+        currentPlaylist: state.onPlay.currentPlaylist,
         recomendSongs: state.songs.recomendSongs,
         profile: state.profile
     }

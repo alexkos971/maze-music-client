@@ -7,29 +7,44 @@ import {
 import axios from "../../core/axios";
 
 import { loading, showAlert } from "../actions/interfaceActions";
+import store from "../../index.js";
 
-export const getRecomendSongs = () => {
-    return async (dispatch, getState) => {
-        try {
-            if (getState().songs.recomendSongs.length > 0) {
-                return dispatch({
-                    type: FETCH_RECOMEND_SONGS,
-                    payload: getState().songs.recomendSongs
-                })
-            }
-            else {
+const checkSavedSongs = (list, savedSongs) => {
+    let newList = list.map(item => {
+        if (savedSongs.length > 0) {
+            item.saved = savedSongs.some(elem => elem._id == item._id);
+        }
+        else {
+            item.saved = false;
+        }
+        return item;
+    });
+    return newList;
+}
+
+export default checkSavedSongs;
+
+export const setRecomendSongs = (newSongs) => {
+    if (!newSongs) {
+        return async (dispatch, getState) => {
+            try {
                 const { data } = await axios.get('/api/songs/recomendation');
                 
                 dispatch({
                     type: FETCH_RECOMEND_SONGS,
-                    payload: data
-                })
+                    payload: checkSavedSongs(data, getState().profile.saved_songs)
+                });
+            }
+            catch (e) {
+                console.log(e);
             }
         }
-        catch (e) {
-            console.log(e);
+    }
+    else {
+        return {
+            type: FETCH_RECOMEND_SONGS,
+            payload: checkSavedSongs(newSongs, store.getState().profile.saved_songs)
         }
-        
     }
 }
 

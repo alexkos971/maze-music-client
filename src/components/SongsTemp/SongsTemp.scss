@@ -171,14 +171,16 @@
 
         &_right {
             position: absolute;
-            right: 30px;
-            width: 130px;
+            right: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
 
             span {
-                margin-left: 15px;
+                width: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 font-size: 18px;
                 color: $gray-font;
                 

@@ -36,11 +36,13 @@
         transition: .2s all;
 
         &:hover {
-            .music__main-slider-item-wrap {
+            .music__main-slider-item-wrap img {
                 -webkit-filter: brightness(.5) !important;
                 -moz-filter: brightness(.5) !important;
+                opacity: .5;
             }
 
+            // For albums (show nav)
             .music__main-slider-item-hover {        
                 position: absolute;
                 top: 50%;
@@ -102,12 +104,32 @@
             }
     
             img {
-                width: 120%;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
                 position: absolute;
                 top: 0;
                 z-index: -1;
+                transition: .3s;
                 filter: brightness(.6);
-                left: -5%;
+            }
+
+            &-nick {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: $gray-400;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    font-size: 48px;
+                    font-weight: 400;
+                    color: $gray-btn;
+                }
             }
         
             &-text {
@@ -158,12 +180,9 @@
     transform: translate3d(0px, 0px, 0px);
 }
 
-
-
 .slider_wrap {
     display: flex;
     margin-top: 30px;
-    // padding-left: 5%;
 }
 .slider {
     min-width: 180%;
@@ -214,12 +233,6 @@
 .slick-next {
     right: 8%;
 }
-
-// &_artist {
-//     width: 100%;
-//     height: 100%;
-//     background-color: #2BA6A2;
-// }
 
 @media screen and (max-width: 1200px) {
     .music__main-slider-item {
