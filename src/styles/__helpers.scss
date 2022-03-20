@@ -8,7 +8,15 @@ $sizes: (
 @mixin media-breakpoint-down($breakpoint) {
     $prop: map-get($sizes, $breakpoint);
         
-        @media screen and (max-width: #{$prop}px) {
-            @content;
-        }
+    @media screen and (max-width: #{$prop}px) {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-up($breakpoint) {
+    $prop: map-get($sizes, $breakpoint);
+        
+    @media screen and (min-width: #{$prop}px) {
+        @content;
+    }
 }

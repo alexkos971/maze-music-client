@@ -16,13 +16,13 @@ let timeTemplate = s => {
 
 const checkLocalStorage = () => {
     let storageSong = localStorage.getItem('lastSong');
-
+    
     if (!storageSong) {
         return {};
     }
     else {
-        return {};
-        // return JSON.parse(storageSong);
+        return JSON.parse(storageSong);
+        // return {};
     }
 }
 
@@ -55,19 +55,21 @@ export const playReducer = (state = initialState, action) => {
     switch (action.type) {
         case PLAY_SONG:
             localStorage.setItem('lastSong', JSON.stringify(action.song));
-
+            
             if (action.song._id === state.song._id) {
                 return {...state, start: !state.start}
             }
+
             else {            
                 return {...state, 
-                    song: action.song, 
+                    song: action.song,
                     start: true, 
                     songFrom: action.list 
                 };
         }
                  
         case NOW_SONG:
+            localStorage.setItem('lastSong', JSON.stringify(action.payload));
             return { ...state, song: action.payload }
         
         case SWITCH_SONG: 

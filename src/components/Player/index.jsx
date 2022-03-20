@@ -48,11 +48,7 @@ const Player = ({
             }
         })
     }, []);
-    
-    // useEffect(() => {
-    //     setInputDuration(0)
-    // }, [song])
-    
+        
     let onStartPlay = () => {
         return start ? audio.play() : audio.pause();  
     }
@@ -63,6 +59,7 @@ const Player = ({
             audio = new Audio()
         }
         else {
+            setInputDuration(0);
             setAudio();
             onStartPlay()
         }
@@ -80,7 +77,6 @@ const Player = ({
             let compute = (e.target.value * audio.duration) / 100;
             dispatch(setDuration(compute))
             setInputDuration(e.target.value)
-            // dispatch(setInputDuration(compute))
             audio.currentTime = compute;
         }
     }

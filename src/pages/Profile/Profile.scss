@@ -1,5 +1,5 @@
 .music__main-profile {
-    position: absolute;
+    position: relative;
     top: 0px;
     width: 100%;
     padding-bottom: 50px;
@@ -14,7 +14,7 @@
         width: 100%;
         height: 250px;
         background-color: #AAD8D3;
-        padding: 80px $padding-page;
+        padding: $padding-top-page $padding-left-page;
         padding-bottom: 90px;
         position: relative;
 
@@ -192,7 +192,7 @@
 
 
     &-settings {
-        padding: 0px $padding-page;
+        padding: 0px $padding-left-page;
         margin-top: 30px;
         width: 100%;
         position: relative;

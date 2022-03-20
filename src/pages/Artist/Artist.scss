@@ -142,7 +142,7 @@ $color: #8e8e8e;
         width: 100%;
         position: relative;
         margin-top: 40px;
-        margin-left: $padding-page;
+        margin-left: $padding-left-page;
     }
 
     &-artists {
@@ -153,7 +153,7 @@ $color: #8e8e8e;
     &-songs {
         position: relative;
         margin-top: 60px;
-        margin-left: $padding-page;
-        margin-right: $padding-page;
+        margin-left: $padding-left-page;
+        margin-right: $padding-left-page;
     }
 }
