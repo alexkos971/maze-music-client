@@ -81,7 +81,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
                     <div className="music__main-profile-header-wrap-nick">
                         <div className="music__main-profile-header-wrap-nick-name">
                             <h1>{profile.name}</h1>
-
+                                
                             <span  onClick={() => dispatch(changeProfileName())}>
                                 <i className="fas fa-pencil-alt"></i>
                             </span>

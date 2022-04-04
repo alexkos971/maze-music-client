@@ -18,7 +18,7 @@ import {
 import { LOADING, SHOW_ALERT } from '../types/interfaceTypes';
 
 import axios from "../../core/axios";
-import { showAlert, loading } from './interfaceActions';
+import { showAlert, showModal, loading } from './interfaceActions';
 import { setNowSong } from './playActions';
 import checkSavedSongs from "./songsActions";
 
@@ -35,10 +35,6 @@ export const setProfile = () => {
                 let avatarNick = getNickByAvatar(data.profile.name);
 
                 await data.profile.saved_songs.map(item => item.saved = true);
-
-                // if (getState().profile.saved_songs?.length) {
-                //     data.songs = checkSavedSongs(data.songs, getState().profile.saved_songs); 
-                // }
 
                 return dispatch({
                     type: SET_PROFILE,
@@ -93,9 +89,21 @@ export const changeProfileDescription = (data) => {
     }
 }
 
-export const changeProfileName = (data) => {
-    return async (dispatch) => {
-        let name = prompt('Paste the new name');
+export const changeProfileName = () => {
+    return async (dispatch, getState) => {
+
+        let name = getState().profile.name;
+
+        await dispatch(showModal({
+            type: 'input',
+            value: name,
+            onSubmit: (newName) => {
+                if (name !== newName) {
+                    name = newName;
+                }
+                return;
+            }
+        }));
         
         if (!name) {
             dispatch({

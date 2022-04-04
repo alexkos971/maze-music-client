@@ -2,6 +2,7 @@
   "name": "maze-music",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/alexkos971/maze-music-client/tree/development",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -9,6 +10,7 @@
     "axios": "^0.21.1",
     "concurrently": "^5.3.0",
     "dotenv": "^10.0.0",
+    "gh-pages": "^3.2.3",
     "node-sass": "^4.14.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
@@ -24,8 +26,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build",
     "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "concurrently \"npm start\" \"npm run fake-json\""
   },
   "eslintConfig": {
