@@ -1,6 +1,6 @@
 {
-  "name": "MAZE MUSIC",
-  "short_name": "MM",
+  "name": "maze-music",
+  "short_name": "maze-music",
   "theme_color": "#f4f6f8",
   "background_color": "#151515",
   "display": "standalone",
