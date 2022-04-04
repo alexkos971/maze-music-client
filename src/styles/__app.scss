@@ -1,7 +1,10 @@
+// plugins
+
 // pages
 @import "../pages/Main.scss";
 @import "../pages/Profile/Profile.scss";
 @import "../pages/Album/Album.scss";
+@import "../pages/Auth/Auth.scss";
 @import "../pages/Albums/Albums.scss";
 @import "../pages/Artist/Artist.scss";
 @import "../pages/For/For.scss";
@@ -23,3 +26,4 @@
 @import "../components/Preloader/Preloader.scss";
 @import "../components/SongsTemp/SongsTemp.scss";
 @import "../components/Alert/Alert.scss";
+@import "../components/Modal/Modal.scss";

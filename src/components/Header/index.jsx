@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -6,7 +6,7 @@ import { changeDir, setNight, showAlert  } from "../../redux/actions/interfaceAc
 import image  from '../../assets/img/Avatar.svg';
 import { apiUrl } from "../../config/constants";
 
-const Header = ({ dispatch, profile, night, path, isFilled, toStartPage }) => {
+const Header = ({ dispatch, profile, night, path, isFilled, toStartPage, collapsed }) => {
     
     const avatarRef = useRef(null);
     // const [scrolledPosition, setScrolledPosition] = useState(0);
@@ -18,7 +18,7 @@ const Header = ({ dispatch, profile, night, path, isFilled, toStartPage }) => {
     }, [profile.name]);
     
     return (
-    <div className={`music__main-header ${isFilled ? 'filled' : ''}`}>
+    <div className={`music__main-header ${isFilled ? 'filled' : ''} ${collapsed ? 'collapsed' : ''}`}>
                 
         <span className={`music__main-header-dir`} onClick={toStartPage}>{path.name}</span>
 
@@ -56,6 +56,7 @@ const mapStateToProps = state => ({
     night: state.interface.night,
     path: state.interface.path,
     profile: state.profile,
+    collapsed: state.interface.sidebarCollapsed
 })
 
 export default connect(mapStateToProps)(Header)

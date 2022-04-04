@@ -66,7 +66,7 @@ const For = ({ dispatch, loading, recomendSongs, recomendArtists }) => {
                 </div>
 
                 {recomendSongs?.length ?
-                    <SongsTemp songs={recomendSongs} setSongs={setRecomendSongs}/>
+                    <SongsTemp songs={recomendSongs} setSongs={setRecomendSongs} type="Songs"/>
                     : null
                 }
             </div>

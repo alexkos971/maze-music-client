@@ -2,17 +2,15 @@
     position: relative;
     top: 0px;
     width: 100%;
-    padding-bottom: 50px;
+    padding-bottom: 120px;
 
-    &-empty {
-        font-size: 20px;
-        position: relative;
-        left: 20px;
+    .music__main-page-go-back {
+        left: -30px;
     }
 
     &-header {
         width: 100%;
-        height: 250px;
+        // height: 250px;
         background-color: #AAD8D3;
         padding: $padding-top-page $padding-left-page;
         padding-bottom: 90px;
@@ -200,13 +198,13 @@
 
         &-list {
             position: relative;
-            left: 20px;
-            width: 60%;
-            line-height: 50px;
+            padding-left: 20px;            
+            // line-height: 50px;
 
             &-item {
                 display: flex;
                 width: 100%;
+                margin-bottom: 20px;
                 align-items: center;
                 justify-content: space-between;
 
@@ -222,24 +220,24 @@
     }
 
     &-songs {
-        width: 60%;
         margin-top: 30px;
-        margin-left: 60px;
+        padding: 0px $padding-left-page;
         position: relative;
 
         @include media-breakpoint-down(lg) {
-            margin-left: 0;
             width: auto;
-            padding: 0 60px;
         }
     }
 
     &-change-avatar {
-        display: block;
         width: 50%;
-        margin: 0 auto;
-        position: relative;
-        top: 20%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         &-btn {
             position: relative;
@@ -257,6 +255,10 @@
     &.night {
 
         .music__main-profile { 
+
+            &-empty {
+                color: $gray-font;
+            }
 
             &-header {
                 background-color: #393E46;

@@ -1,5 +1,6 @@
 import { 
-    PLAY_SONG, 
+    PLAY_SONG,
+    PLAY_ALBUM,
     NOW_SONG, 
     SWITCH_SONG, 
     SET_SONG_DURATION, 
@@ -67,6 +68,9 @@ export const playReducer = (state = initialState, action) => {
                     songFrom: action.list 
                 };
         }
+
+        case PLAY_ALBUM:
+            return {...state, currentPlaylist: action.payload.songs}
                  
         case NOW_SONG:
             localStorage.setItem('lastSong', JSON.stringify(action.payload));
@@ -80,8 +84,9 @@ export const playReducer = (state = initialState, action) => {
     
         case ITEM_DURATION:
             return {...state, itemDuration: timeTemplate(action.payload)}
+            
         case SET_START:
-            return { ...state, start: action.payload }
+            return { ...state, start: (action.payload) ? action.payload : !state.start }
 
         case SET_CURRENT_PLAYLIST:
             return {...state, currentPlaylist: action.payload }

@@ -1,29 +1,28 @@
 .music__main-upload {
     position: relative;
-    display: block;
     width: 100%;
-    // overflow: hidden;
-    // height: 80%;
-    // top: 18px;
-    // padding: 25px 0px 0px 0px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    transition: .3s;
     margin: 0 auto;
-    padding-top: $padding-top-page;
-    height: 80vh;
+    padding: $padding-top-page 0px;
 
-    .music__main {
-        overflow: hidden;
+    &.hidden {
+        opacity: 0;
+        visibility: hidden;
     }
 
     &-scroll {
-        position: absolute;
-        left: 50%;
-        bottom: 5%;
+        position: relative;
+        bottom: 0px;
         width: 80%;
         opacity: 1;
-        animation: scrollMove 2s ease;
-        transform: translate(-50%, 0%);
+        animation: scrollMove .4s ease;
         display: flex;
-        // align-items: center;
         justify-content: center;
 
         &.relative {
@@ -61,6 +60,10 @@
                 width: 80px;
                 background-color: #000;
                 margin-right: 10px;
+
+                @include media-breakpoint-down(lg) {
+                    width: 50px;
+                }
             }
         }
     }
@@ -69,6 +72,7 @@
         display: block;
         position: relative;
         padding-top: 60px;
+        width: 100%;
         opacity: 1;
         z-index: 2;
         overflow: hidden;
@@ -95,11 +99,11 @@
 
         &-btns {
             position: relative;
-            width: 45%;
+            // width: 45%;
             display: flex;
             justify-content: center;
             margin: 0 auto;
-            margin: 50px auto;
+            margin: 24px auto;
             align-items: center;
             // padding: 0px 20px;
 
@@ -115,11 +119,18 @@
             width: 68%;
             text-align: center;
 
+            @include media-breakpoint-down(sm) {
+                width: 100%;
+            }
+
             &-dropdown {
                 display: block;
                 width: 45%;
                 margin: 20px auto;
 
+                @include media-breakpoint-down(lg) {
+                    width: 75%;
+                }
 
                 &-input {
                     position: relative;
@@ -139,6 +150,7 @@
 
                     &-carret {
                         padding: 10px;
+                        display: flex;
                         cursor: pointer;
                         transition: .2s;
                         transform-origin: center;
@@ -201,11 +213,11 @@
 
                 &-button {
                     transition: .1s all;
-                    margin-bottom: 30px;
+                    margin-bottom: 18px;
                     margin-right: 20px;
 
                     &:hover {
-                        transform: scale(1.2);
+                        transform: scale(1.1);
                     }
 
                 }
@@ -260,6 +272,10 @@
             margin: 0 auto;
             width: 45%;
             text-align: center;
+
+            &-btn {
+                margin: 0 auto;
+            }
         }
 
         &-fields {
@@ -287,15 +303,11 @@
     @keyframes scrollMove {
         0% {
             opacity: 0;
-            bottom: -5%;
-        }
-        80% {
-            opacity: 0;
-            bottom: -5%;
+            bottom: -30px;
         }
         100% {
             opacity: 1;
-            bottom: 5%;
+            bottom: 0px;
         }
     }
 }
@@ -321,11 +333,28 @@
                 color: #8e8e8e;
             }
         }
-    }
-}
 
-@media screen and (max-width: 1200px) {
-    .music__main-upload-scroll {
-        transform: translate(-50%, 0%) scale(0.8);
+        &-container {
+            &-genres {
+                &-wrap {
+                    &-button {
+                        button {
+                            color: $white !important;
+                            background-color: $gray-500 !important;
+                            
+                            &.active {
+                                color: $gray-bcg !important;
+                                background-color: $gray-200 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        .music-button {
+            color: $gray-500;
+            background-color: $gray-200;
+        }
     }
 }

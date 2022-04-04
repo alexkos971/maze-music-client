@@ -3,9 +3,13 @@ import {
     SET_NIGHT, 
     SET_HEADER, 
     CHANGE_DIR, 
-    CHANGE_AUTH, 
+    CHANGE_AUTH,
+    COLLAPSE_SIDEBAR, 
     SHOW_ALERT, 
     HIDE_ALERT, 
+
+    SHOW_MODAL,
+    HIDE_MODAL,
     LOADING } from '../types/interfaceTypes';
 
 export const changeDir = (newDir) => {
@@ -42,13 +46,20 @@ export const setHeader = (state) => {
     }
 }
 
+export const collapseSidebar = (payload) => {
+    return {
+        type: COLLAPSE_SIDEBAR,
+        payload
+    }
+}
+
 export const hideAlert = (index) => {
     return (dispatch, getState) => {
         let alerts = getState().interface.alert;
 
         return dispatch({
             type: HIDE_ALERT,
-            payload: alerts.filter((el, i) => i !== index)
+            payload: alerts.filter((_, i) => i !== index)
         })
     }
 }
@@ -64,6 +75,18 @@ export const showAlert = (alert) => {
     }
 }
 
+export const showModal = (modal) => {
+    return {
+        type: SHOW_MODAL,
+        payload: modal
+    }
+}
+
+export const hideModal = () => {
+    return {
+        type: HIDE_MODAL
+    }
+}
 
 export const loading = (state) => {
     return {

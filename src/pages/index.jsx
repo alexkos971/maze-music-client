@@ -18,12 +18,13 @@ import ChangeAvatar from "./Profile/ChangeAvatar";
 
 import Header from "../components/Header";
 import Alert from "../components/Alert";
+import Modal from "../components/Modal";
 import MainBcg from "../components/MainBcg";
 import Preloader from "../components/Preloader";
 
 import { userToken } from "../config/constants";
 
-const Main = ({ onSavePlaylist, defaultPath, alert, pathName, profileName  }) => {
+const Main = ({ onSavePlaylist, defaultPath, alert, pathName, profileName, modal  }) => {
     const token = userToken(),
         viewWrap = useRef(null),
         [isFilled, setIsFilled] = useState(false);
@@ -72,7 +73,7 @@ const Main = ({ onSavePlaylist, defaultPath, alert, pathName, profileName  }) =>
                     </Route>
                     
                     <Route path={'/change-avatar'} exact component={ChangeAvatar}/>
-                    <Route path={"/artist/:id"} component={Artist}/>
+                    <Route path={"/artist/:id"} exact component={Artist}/>
                     <Route path={"/album/:id"} component={Album} />
                     <Route path={"/albums"} exact component={Albums}/>
                     <Route path={"/songs"} exact component={Songs}/>
@@ -82,6 +83,7 @@ const Main = ({ onSavePlaylist, defaultPath, alert, pathName, profileName  }) =>
                     <Route path="/settings" component={Settings}/>
 
                     {alert.length ? <Alert items={alert}/> : null}
+                    <Modal {...modal} />
                 </div>
                 :
                 <Preloader/>
@@ -98,6 +100,7 @@ const mapStateToProps = (state) => {
         defaultPath: state.interface.defaultPath,
         profileName: state.profile.name,
         alert: state.interface.alert,
+        modal: state.interface.modal,
         pathName: state.interface.path.name
     }
 }

@@ -1,5 +1,7 @@
 import { 
-    PLAY_SONG, 
+    PLAY_SONG,
+    PLAY_ALBUM,
+
     NOW_SONG, 
     SWITCH_SONG, 
     SET_SONG_DURATION, 
@@ -9,6 +11,7 @@ import {
 } from '../types/playTypes';
 
 import checkSavedSongs from "./songsActions";
+import axios from "../../core/axios";
 import store from "../../index.js";
 
 export const onPlay = (item, list) => {
@@ -16,6 +19,27 @@ export const onPlay = (item, list) => {
         type: PLAY_SONG,
         song: item,
         list: checkSavedSongs(list, store.getState().profile.saved_songs)
+    }
+}
+
+export const playAlbum = (album, loaded) => {
+    return async (dispatch) => {
+
+        if (!loaded) {
+            const { data } = await axios.get(`/api/albums/album/${album._id}`)
+            
+            if (data.isSuccess) {
+                await dispatch(onPlay(data.album.songs[0], data.album.songs))
+            }
+        }
+        else {
+            await dispatch(onPlay(album.songs[0], album.songs))
+        }
+
+        return dispatch({
+            type: PLAY_ALBUM,
+            payload: album
+        })
     }
 }
 

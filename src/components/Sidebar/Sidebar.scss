@@ -8,12 +8,14 @@ $height: 40px;
     height: 100%;
     background-color: #F4F6F8;
     position: relative;
+    transition: .3s;
     display: block;
     padding: 24px 0px;
     box-sizing: border-box;
     color: #8e8e8e;
     z-index: 10;
     
+
     @include media-breakpoint-down(md) {
       max-width: 60px;
     }
@@ -32,11 +34,12 @@ $height: 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      // transition: .3s;
       margin-bottom: 35px;
       padding: 0 24px;
 
       @include media-breakpoint-down(md) {
-        padding: 0 13px;
+        padding: 0 12px;
       }
 
       @include media-breakpoint-down(sm) {
@@ -47,13 +50,15 @@ $height: 40px;
         display: none;
         width: 100%;
         height: auto;
-
+        max-height: 38px;
+        
         @include media-breakpoint-down(md) {
           display: block;
         }
       }
       
       &-main {
+        max-height: 38px;
         width: 100%;
         height: auto;
         display: block;
@@ -72,6 +77,8 @@ $height: 40px;
     ul {
       line-height: 40px;
       width: 100%;
+      height: 100%;
+      overflow-y: auto;
       position: relative;
 
       @include media-breakpoint-down(sm) {
@@ -96,7 +103,6 @@ $height: 40px;
 
         @include media-breakpoint-down(md) {
           padding: 0 7px;
-          margin-bottom: 12px;
         }
         
         @include media-breakpoint-down(sm) {
@@ -121,7 +127,7 @@ $height: 40px;
           }
           
           &:hover {
-            background: rgba(0, 0, 0, 0.05);
+            background: $gray-hover;
             
             @include media-breakpoint-down(sm) {
              background: transparent; 
@@ -175,9 +181,13 @@ $height: 40px;
         span {
           font-size: 15px;
           font-weight: 600;
+          transition: .3s;
 
           @include media-breakpoint-down(md) {
-            display: none;
+            // display: none;
+            opacity: 0;
+            width: 0;
+            visibility: hidden;
           }
         } 
       }   
@@ -195,25 +205,97 @@ $height: 40px;
       bottom: 50px;
       width: 100%;
       padding: 13px 15px;
-      // background: #282828;
+      box-sizing: border-box;
+      user-select: none;
+
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
       
       &-wrap {
         display: flex;
         width: 100%;
+        box-sizing: border-box;
         justify-content: space-between;
+        align-items: center;
         cursor: pointer;
         padding: 13px 15px;
         border-radius: 5px;
 
         &:hover {
-          background-color: $gray-font-light;
+          background-color: $gray-hover;
+        }
+
+        span {
+          font-size: 15px;
+          font-weight: 600;
+          transition: .4s;
         }
 
         i {
-          position: absolute;
-          right: 30px;
-          top: 50%;
-          transform: translateY(-50%);
+          font-size: 16px;
+        }
+      }
+    }
+  
+    &.collapsed {
+      max-width: 60px;
+
+      .music__main-header {
+        width: calc(100% - 60px);
+      }
+      
+      .music__sidebar {
+        &-logo {
+          padding: 0 12px;
+
+          &-tablet {
+            display: block;
+          }
+
+          &-main {
+            display: none;
+          }
+        }
+
+        &-collapse {
+          padding: 13px 7px;
+
+          &-wrap {
+            justify-content: center;
+          }
+
+          span {
+            width: 0;
+            opacity: 0;
+            visibility: hidden;
+          }
+        }
+      }
+
+      ul {
+        li {
+          padding: 0 7px;
+
+          a {
+            height: 46px;
+            justify-content: center;
+          }
+
+          &:active::before {
+            height: 60%;
+          }
+
+          i {
+            margin-right: 0;
+            font-size: 18px;
+          }
+
+          span {
+            opacity: 0;
+            width: 0;
+            visibility: hidden;
+          }
         }
       }
     }
@@ -239,8 +321,14 @@ $height: 40px;
         }
         a {
           &:hover {
-            background-color: #333;
+            background-color: $gray-500;
           }
+        }
+      }
+      
+      &-collapse-wrap {
+        &:hover {
+          background-color: $gray-500;
         }
       }
     }

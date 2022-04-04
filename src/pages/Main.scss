@@ -8,7 +8,8 @@
 
     &-wrap {
         position: relative;
-        height: auto;
+        // height: auto;
+        height: 100%;
         // padding-top: 85px;
     }
 
@@ -38,8 +39,10 @@
     }
 
     &-songs {
-        width: calc(100% - 120px);
+        width: 100%;
         height: 100%;
+        box-sizing: border-box;
+        padding-right: $padding-left-page;
         margin-top: 30px;
         position: relative;
 
@@ -73,4 +76,22 @@
             }
         }
     }  
+
+    &-empty {
+        &-text {
+            position: relative;
+            position: relative;
+            margin-left: 20px;
+            font-size: 18px;
+            color: $black;
+        }
+    }
 }   
+
+.music-night {
+    .music__main {
+        &-empty-text {
+            color: $gray-font;
+        }
+    }
+}

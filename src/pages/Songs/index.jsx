@@ -29,7 +29,7 @@ const Songs = ({ savedSongs }) => {
                 {savedSongs && savedSongs.length > 0 ?
                     <SongsTemp songs={savedSongs} setSongs={setSavedSongs} type="Saved"/>
                     :
-                    <h2>You dont have saved songs</h2>
+                    <span className='music__main-empty-text'>You dont have saved songs</span>
                 }
         </div>
     )

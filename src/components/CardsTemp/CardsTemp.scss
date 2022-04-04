@@ -27,13 +27,31 @@
     }
 
     &-item {
-        width: 95% !important;
+        // width: 95% !important;
+        // max-width: 27vw;
+        width: 27vw !important;
         overflow: hidden;
         position: relative;
         margin-right: 15px;
         cursor: pointer;
         border-radius: 8px;
         transition: .2s all;
+
+        &.large {
+            width: 33vw !important;
+        }
+
+        @include media-breakpoint-down(lg) {
+            max-width: 33vw;
+        }
+
+        @include media-breakpoint-down(md) {
+            max-width: 40vw;
+        }
+
+        @include media-breakpoint-down(sm) {
+            max-width: initial;
+        }
 
         &:hover {
             .music__main-slider-item-wrap img {
@@ -67,6 +85,8 @@
                     color: #2BA6A2;
                     position: relative;
                     margin: 0 50px;
+                    z-index: 2;
+                    pointer-events: all;
                 }
 
                 &-trash {

@@ -25,8 +25,7 @@ const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
             <Preloader/>
         );
     }
-
-        
+      
     return (
         <div className="music__main-artist">
 
@@ -90,7 +89,9 @@ const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
                         <div className="music__main-artist-header-avatar">
                             <img src={apiUrl + artist.avatar} alt=""/>
                         </div>
-                    : null
+                    : 
+                    <div className="music__main-artist-header-avatar-replace"></div>
+                    
                 }
             </div>
             
@@ -107,7 +108,7 @@ const Artist = ({ dispatch, loading, artist, recomendArtists }) => {
             <div className="music__main-artist-songs">
                 <h2 className="subtitle">Most popular songs</h2>
                 { (artist && artist.songs) ?
-                    <SongsTemp songs={artist.songs}/>:
+                    <SongsTemp songs={artist.songs} type="Songs"/>:
                     <h2 className="music__main-subtitle">This artists no have songs</h2>
                 }
             </div>

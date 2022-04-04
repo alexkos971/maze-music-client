@@ -1,25 +1,63 @@
 .music__main-drag {
-	width: 75%;
-    display: block;
-    height: 220px;
-    border-radius: 20px;
+	width: 100%;
+    max-width: 350px;
+    border-radius: 16px;
+    // height: 200px;
+    height: auto;
     position: relative;
-    background-color: #F4F6F8;
+    background-color: #fff;
     margin: 0 auto;
-    margin-bottom: 80px;
+    margin-bottom: 24px;
+    padding: 40px;
     cursor: pointer;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 0px 13px -7px #696969;
+    -webkit-box-shadow: 0px 0px 13px -7px #696969;
 
     &.night {
         background-color: $gray-bcg;
 
-        span i {
-            color: $gray-400;
+        &::after {
+            background-color: $gray-500;
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%234A4A4AFF' stroke-width='4' stroke-dasharray='2%2c 10' stroke-dashoffset='2' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+        
+        &:active {
+            &::after {
+                background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%234A4A4AFF' stroke-width='5' stroke-dasharray='2%2c 10' stroke-dashoffset='2' stroke-linecap='square'/%3e%3c/svg%3e");
+            }
+        }
+
+        span {
+            i {
+                color: $gray-400;
+            }
+
+            h5 {
+                color: $white;
+            }
         }
     }
 
     input {
     	display: none;
+    }
+
+    &::after {
+        content: "";
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        background: #F4F6F8;
+        background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%233222' stroke-width='4' stroke-dasharray='2%2c 10' stroke-dashoffset='2' stroke-linecap='square'/%3e%3c/svg%3e");
+        position: absolute;
+        transition: .4s;
+        top: 50%;
+        left: 50%;
+        z-index: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
     }
 
     &-description {
@@ -29,27 +67,60 @@
         margin: 0;
     }
 
-    &-name {
-        margin: 0;
+    &-file {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        &-name {
+            margin: 0;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        &-clear {
+            pointer-events: all;
+            line-height: 0px;
+            padding: 10px;
+            
+            i {
+                font-size: 24px;
+                line-height: 16px;
+            }
+        }    
+    }
+    
+    &-folder-icon {
+        font-size: 44px;
+        line-height: 40px;
     }
 
-    span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        display: block;
-        text-align: center;
-        transform: translate(-50%, -50%);
 
+    &-wrap {
+        display: block;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        pointer-events: none;
 
         i {
-            font-size: 57px;
             color: #18274a;
-    	}
-	
-    	&.active {
-    	    background-color: darken(#F4F6F8, 5%);
-    	    // border: 1px dashed #000;
-    	}
+        }
+    
+        h5 {
+            margin: 8px 0px;
+        }
+    }
+    // span {	
+    // }
+
+    &.active, &:active {
+        // background-color: darken(#F4F6F8, 5%);
+        // border: 1px dashed #000;
+        
+        &::after {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23333' stroke-width='5' stroke-dasharray='2%2c 10' stroke-dashoffset='2' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
     }
 }

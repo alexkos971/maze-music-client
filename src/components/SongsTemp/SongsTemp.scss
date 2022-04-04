@@ -75,7 +75,8 @@
 
             img {
                 height: 100%;
-                width: auto;       
+                width: 100%;
+                object-fit: cover;       
                 position: relative;
                 z-index: 2;         
             }
@@ -106,12 +107,59 @@
                 animation: bgcImage 3s infinite;
             }
         }
+
+        &_name {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            white-space: nowrap;
+        }
         
         &_artist-name {
             font-weight: bold;
 
             &:hover {
                 font-weight: normal;
+            }
+        }
+
+        &-defis {
+            margin: 0px 10px;
+        }
+
+        &_track-name {
+            // max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+
+            
+            &-wrap {
+                position: relative;
+                // animation: slideText 35s infinite;
+            }
+        }
+        
+        marquee {
+
+            &::after, &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 40px;
+                z-index: 1;
+            }
+            
+            // &::before {
+            //     background: linear-gradient(90deg, white, 15px, transparent);
+            //     left: 0;
+            // }
+            
+            &::after {
+                right: 0;
+                background: linear-gradient(270deg, white, 15px, transparent);
             }
         }
 
@@ -122,8 +170,9 @@
         }
 
         &-album {
+            text-transform: capitalize;
             position: absolute;
-            left: 50%;
+            left: 60%;
         }
 
         .play_btn {
@@ -160,6 +209,14 @@
 
             &:hover::before {
                 content: "";
+            }
+
+            &:hover {
+                marquee {
+                    &::after, &::before {
+                        background: none;
+                    }
+                }
             }
 
             &::before {
@@ -201,6 +258,21 @@
         }
     }
 
+    @keyframes slideText {
+        0% {
+            left: 0%;
+        }
+        5% {
+            left: 0;
+        }
+        50% {
+            left: -10%;
+        }
+        100% {
+            left: 0;
+        }
+    }
+
 }
 
 .music-night {
@@ -215,6 +287,21 @@
 
             &:hover {
                 background-color: $gray-bcg !important;
+            
+                marquee {
+                    &::before, &::after {
+                        background:none;
+                    }
+                }
+            }
+
+            marquee {
+                // &::before {
+                //     background: linear-gradient(90deg, $black-bcg, 15px, transparent);
+                // }    
+                &::after {
+                    background: linear-gradient(270deg, $black-bcg, 15px, transparent);
+                }
             }
         }
 

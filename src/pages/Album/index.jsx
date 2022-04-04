@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { setNowAlbum } from "../../redux/actions/albumsActions";
-
 import SongsTemp from "../../components/SongsTemp"; 
 import Preloader from "../../components/Preloader";
 
@@ -11,12 +10,11 @@ const Album = ({ dispatch, album, loading }) => {
     let id = useParams().id;
 
     useEffect(() => {
-        console.log(id)
-        dispatch(setNowAlbum(String(id)));
-    }, [])
+        dispatch(setNowAlbum(id));
+    }, []);
 
 
-    if (loading && !album) {
+    if (loading) {
         return (
             <Preloader/>
         )
@@ -27,7 +25,7 @@ const Album = ({ dispatch, album, loading }) => {
             <h2 className="subtitle">Album: {album.name}</h2>
 
             {album.songs &&  
-                <SongsTemp songs={album.songs} type="Album"/>
+                <SongsTemp songs={album.songs} setAlbum={setNowAlbum} type="Album"/>
             }
         </div>
     )

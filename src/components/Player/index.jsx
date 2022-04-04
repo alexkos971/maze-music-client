@@ -1,6 +1,6 @@
 import React, { useState,  useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setDuration, setStart, onPlay, setCurrentPlaylist } from '../../redux/actions/playActions';
+import { setDuration, setStart, setCurrentPlaylist } from '../../redux/actions/playActions';
 import { setFullPlayer } from '../../redux/actions/interfaceActions';
 import { saveSong } from '../../redux/actions/profileActions';
 
@@ -14,65 +14,81 @@ const Player = ({
     full, 
     song, 
     currentDuration, 
-    recomendSongs,
     savedSongs,
     currentPlaylist,
     fullScreen
 }) => { 
-    const [stateVolume, setStateVolume] = useState(50);
+    const [stateVolume, setStateVolume] = useState(40);
     const [inputDuration, setInputDuration] = useState(0);
-    const [isFirstStart, setIsFirstStart] = useState(true);
 
     const setAudio = () => {
-        if (song) {
+        setInputDuration(0);
+
+        if (song?.src) {
+
+            if (!audio) {
+                audio = new Audio()
+            }
+    
             audio.src = apiUrl + song.src;
-            audio.volume = stateVolume / 100; 
+            audio.volume = stateVolume / 100;
 
-            audio.ontimeupdate = () => {
-                setInputDuration((audio.currentTime * 100) / audio.duration)
-                dispatch(setDuration((audio.currentTime)));
+            audio.onloadedmetadata = () => {
+                audio.ontimeupdate = (e) => {
+                    setInputDuration((audio.currentTime * 100) / audio.duration);
+                    dispatch(setDuration((audio.currentTime)));
+                }
+                
+                audio.onended = () => {
+                    setInputDuration(0)
+                    onStartPlay();
+                }
             }
-
-            audio.onended = () => {
-                setInputDuration(0)
-                onStartPlay()
-            }
+            onStartPlay();
         }    
     }
-
+    
     useEffect(() => {
-        window.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
-                // dispatch(setStart(!start));
-                playSong();
-            }
-        })
-    }, []);
-        
-    let onStartPlay = () => {
-        return start ? audio.play() : audio.pause();  
+        setAudio();
+    }, [song.src]);
+
+    const playSong = () => {
+        if (song?.src && audio) {
+            dispatch(setStart());
+        }
     }
     
+    let onStartPlay = () => {
+        return start ? audio.play() : audio.pause();  
+    }    
+    
+    useEffect(() => {
+        if (audio) {
+            onStartPlay();
+        }
+    }, [start]);
+    
+    
+    // Start or play by press on Space
+    const spacePressHandle = (e) => {
+        if (e.code === 'Space' 
+            && !e.repeat 
+            && audio 
+            && (document.activeElement.tagName !== 'INPUT')
+        ) {
+            playSong();
+        }
+    }
 
     useEffect(() => {
-        if (!audio) {
-            audio = new Audio()
-        }
-        else {
-            setInputDuration(0);
-            setAudio();
-            onStartPlay()
-        }
-    }, [song.src, isFirstStart])
-    
-    
-
-    useEffect(() => {
-        onStartPlay()
-    }, [start, dispatch, onStartPlay])
+        window.addEventListener('keydown', spacePressHandle);
+        return () => window.removeEventListener("keydown", spacePressHandle);
+    }, []);
+        
 
     
-    const handleProgress = e => { 
+    // User handled
+    const handleProgress = e => {
         if (song.src) {
             let compute = (e.target.value * audio.duration) / 100;
             dispatch(setDuration(compute))
@@ -82,27 +98,19 @@ const Player = ({
     }
 
     useEffect(() => {
-        audio.volume = stateVolume / 100
+        if (audio) {
+            audio.volume = stateVolume / 100;
+        }
     }, [stateVolume]);
       
     
-    const playSong = () => {
-        if (song?.src) {
-            if (isFirstStart) {
-                dispatch(onPlay(song, recomendSongs));
-                setIsFirstStart(false);
-            }
-            else {
-                dispatch(setStart(!start));
-            }
+    const mouseWheel = e => {
+        if (e.deltaY > 0) {
+            setStateVolume((prev) => (prev + 5 > 100) ? prev : prev + 5);
         }
-    }
-    
-    const mouseWheel = elem => {
-        if (elem.deltaY > 9.8 * 100 || elem.deltaY < 0.2 * 100) {
-            return false;
+        else {
+            setStateVolume((prev) => (prev - 5 < 0) ? prev : prev - 5);
         }
-            setStateVolume(elem.deltaY/stateVolume* 100)
     }
         
     const repeatTrack = () => {
@@ -160,9 +168,10 @@ const Player = ({
                 <input 
                     type="range" 
                     name="progressBar" 
+                    preload="metadata"
                     id="music-range" 
-                    disabled={!song && true}
-                    value={inputDuration}
+                    disabled={!song}
+                    value={inputDuration ? inputDuration : 0}
                     onChange={handleProgress} />
 
                 <span id="music-time_total">{song && song.duration}</span>
@@ -177,7 +186,7 @@ const Player = ({
                         type="range" 
                         value={stateVolume} 
                         className="music__player-volume-range" 
-                        onWheel={e => mouseWheel(e)}
+                        onWheel={mouseWheel}
                         onChange={(e) => setStateVolume(e.target.value)} />
                 </span>
                 

@@ -12,7 +12,7 @@ import store from "../../index.js";
 const checkSavedSongs = (list, savedSongs) => {
     let newList = list.map(item => {
         if (savedSongs.length > 0) {
-            item.saved = savedSongs.some(elem => elem._id == item._id);
+            item.saved = savedSongs.some(elem => elem._id === item._id);
         }
         else {
             item.saved = false;

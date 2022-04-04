@@ -20,24 +20,29 @@ import { LOADING, SHOW_ALERT } from '../types/interfaceTypes';
 import axios from "../../core/axios";
 import { showAlert, loading } from './interfaceActions';
 import { setNowSong } from './playActions';
+import checkSavedSongs from "./songsActions";
 
 export const getNickByAvatar = name => {
     return name.split(" ").reduce((item, acc) => item[0] + acc[0]);
 }
 
 export const setProfile = () => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
             const { data } = await axios.get('/api/users/profile')
             
-            if (data) {
-                let avatarNick = getNickByAvatar(data.name);
+            if (data.isSuccess) {
+                let avatarNick = getNickByAvatar(data.profile.name);
 
-                await data.saved_songs.map(item => item.saved = true);
+                await data.profile.saved_songs.map(item => item.saved = true);
+
+                // if (getState().profile.saved_songs?.length) {
+                //     data.songs = checkSavedSongs(data.songs, getState().profile.saved_songs); 
+                // }
 
                 return dispatch({
                     type: SET_PROFILE,
-                    payload: {...data, avatarNick}
+                    payload: {...data.profile, avatarNick}
                 })
             }
         }

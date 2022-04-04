@@ -1,25 +1,48 @@
 import { SET_NOW_ALBUM, DELETE_ALBUM, UPLOAD_ALBUM} from "../types/albumsTypes";
 import { loading, showAlert } from "../actions/interfaceActions";
+import checkSavedSongs from "../actions/songsActions"
 
+import store from "../../index.js";
 import axios from "../../core/axios"
 
-export const setNowAlbum = (id, my) => {
-    return async (dispatch) => {
-        try {
-            dispatch(loading(true))
-            
-            const {data} = await axios.get(`/api/albums/album/${id}`);
-            
-            if (data.isSuccess) {
-                dispatch({
-                    type: SET_NOW_ALBUM,
-                    payload: data.album
-                })
+export const setNowAlbum = (id, newAlbum) => {
+    if (!newAlbum) {
+        return async (dispatch, getState) => {
+            try {
+                dispatch(loading(true));
+                
+                const {data} = await axios.get(`/api/albums/album/${id}`);
+
+                if (data.isSuccess) {
+
+                    let albumSongs = await checkSavedSongs(data.album.songs, getState().profile.saved_songs);
+                    
+                    data.album.songs = albumSongs;
+
+                    dispatch({
+                        type: SET_NOW_ALBUM,
+                        payload: data.album
+                    });
+                }
+
+                else {
+                    dispatch(showAlert({
+                        type: 'error',
+                        text: 'Не удалосб загрузить альбом'
+                    }));
+                }
+                
+                return dispatch(loading(false))
             }
-            dispatch(loading(false))
+            catch(e) {
+                console.log(e)
+            }
         }
-        catch(e) {
-            console.log(e)
+    }
+    else {
+        return {
+            type: SET_NOW_ALBUM,
+            payload: {...newAlbum, songs: checkSavedSongs(newAlbum.songs, store.getState().profile.saved_songs)}
         }
     }
 }

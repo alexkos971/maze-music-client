@@ -66,21 +66,17 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
                 
                 <div className="music__main-profile-header-wrap">
                     
-                    <PrevPage classNames={"center"}/>
+                    <PrevPage classNames={"center dark"}/>
                     
-                    <div className="music__main-profile-header-wrap-avatar" ref={avatarRef}>
-
-                        {/* <div className="music__main-profile-header-wrap-avatar-img"> */}
+                    <Link to="/change-avatar">
+                        <div className="music__main-profile-header-wrap-avatar" ref={avatarRef}>
                             <img src={apiUrl + profile.avatar || image} alt=""/>
-                            
+                        
                             <div className="music__main-profile-header-wrap-avatar-change" onClick={() => dispatch(changeDir('change-avatar'))}>
-                                <Link to="/change-avatar">
-                                    <span>Change</span>
-                                </Link>
+                                <span>Change</span>
                             </div>
-                
-                        {/* </div> */}
-                    </div>          
+                        </div>          
+                    </Link>
 
                     <div className="music__main-profile-header-wrap-nick">
                         <div className="music__main-profile-header-wrap-nick-name">
@@ -184,10 +180,10 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
             
             <div className="music__main-profile-songs">
                 <h2 className="subtitle">Songs</h2>
-                {mySongs && mySongs.length > 0 ?
-                    <SongsTemp songs={mySongs} my={true} />
+                {mySongs?.length > 0 ?
+                    <SongsTemp songs={mySongs} my type={'Songs'} />
                     :
-                    <span className="music__main-profile-empty">You have no songs</span>
+                    <span className="music__main-empty-text">You have no songs</span>
                 }
             </div>
 
@@ -196,7 +192,7 @@ const Profile = ({ dispatch, profile, mySongs, myAlbums, night, loading }) => {
                 {myAlbums?.length > 0 ?
                     <CardsTemp items={myAlbums} to="Albums" my/>
                     :
-                    <span className="music__main-profile-empty">You have no albums</span>
+                    <span className="music__main-empty-text">You have no albums</span>
                 }
             </div>
         </div>

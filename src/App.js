@@ -10,7 +10,7 @@ import './index.scss';
 import Sidebar from './components/Sidebar';
 import Main from './pages';
 import Player from './components/Player';
-import AuthPage from './pages/AuthPage';
+import AuthPage from './pages/Auth';
 import Preloader from "./components/Preloader"
 import { userToken } from "../src/config/constants";
 
