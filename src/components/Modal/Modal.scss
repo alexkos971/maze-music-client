@@ -1,0 +1,73 @@
+.music__main-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+
+    &.hidden {
+        z-index: -1;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    &-bcg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: .9;
+        background-color: $black-bcg;
+    }
+
+    &-view {
+        width: 30vw;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        
+        &-input {
+            &-text {
+                position: relative;
+                width: 100%;
+                height: 60px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-indent: 10px;
+                padding: 5px 20px;
+                box-sizing: border-box;
+                border: none;
+                font-size: 15px;
+                color: #8E8E8E !important;
+                border-radius: 5px;
+                background-color: #F4F6F8 !important;
+                animation: showInput .4s;
+            }
+        }
+
+        &-btns {
+            display: flex;
+            justify-content: center;
+            margin: 24px auto;
+    
+            button {
+                margin: 0px 12px;
+            }
+        }
+    }
+
+    @keyframes showInput {
+        0% {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}
