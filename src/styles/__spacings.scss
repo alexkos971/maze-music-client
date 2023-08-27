@@ -1,0 +1,47 @@
+$sides: (
+    'top': 't',
+    'left': 'l',
+    'bottom': 'b',
+    'right': 'r'
+);
+
+@each $side, $letter in $sides {
+    @for $px  from 0 through 30 {
+        .m#{$letter}-#{$px * 5} {
+            margin-#{$side}: #{$px * 5}px; 
+        }
+
+        .p#{$letter}-#{$px * 5} {
+            padding-#{$side}: #{$px * 5}px; 
+        }
+    }
+}
+
+@for $px  from 0 through 30 {
+    .m-#{$px * 5} {
+        margin: #{$px * 5}px; 
+    }
+
+    .p-#{$px * 5} {
+        padding: #{$px * 5}px; 
+    }
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+.p-30 {
+    padding: var(--spacing--30);
+}
+
+.pv-30 {
+    padding: 0 var(--spacing--30);
+}
+
+.jc-sb {
+    justify-content: space-between;
+}
+
+.jc-c {
+    justify-content: center;
+}

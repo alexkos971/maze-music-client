@@ -1,0 +1,1 @@
+export const public_url = process.env.PUBLIC_URL;

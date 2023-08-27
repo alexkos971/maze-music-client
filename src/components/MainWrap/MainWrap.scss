@@ -1,0 +1,11 @@
+@import '../../styles/_colors';
+
+.layout_main {
+    display: flex;
+    align-items: stretch;
+    min-height: 100dvh;
+    
+    * {
+        color: $black-36;
+    }
+}
