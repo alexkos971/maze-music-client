@@ -20,10 +20,11 @@ button {
 
 a {
     text-decoration: none;
-    color: $main-black;
+    color: var(--main-black);
 }
 
-.container {
+.container {    
+
     .container {
         padding-left: 0;
         padding-right: 0;

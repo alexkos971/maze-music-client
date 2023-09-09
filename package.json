@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,19 +14,25 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "bootstrap": "^5.3.1",
+    "i18next": "^23.4.6",
+    "i18next-resources-for-ts": "^1.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^13.2.0",
+    "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.1",
     "sass": "^1.66.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "toc": "i18next-resources-for-ts toc -i ./i18n/translations/en -o ./@types/resources.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -42,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "craco-alias": "^3.0.1"
   }
 }

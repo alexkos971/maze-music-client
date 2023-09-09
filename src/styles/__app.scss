@@ -1,4 +1,4 @@
-@import '__bootstrap';
+@import '_bootstrap';
 @import "__colors";
 @import "__spacings";
 @import "__helpers";
@@ -21,4 +21,9 @@ body {
 
 * {
     box-sizing: border-box;
+}
+
+.container, .container-fluid {
+    padding-left: 60px;
+    padding-right: 60px;
 }

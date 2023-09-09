@@ -1,12 +1,18 @@
-$black-36: #393E46;
-$black: #000;
+:root {
+    --black-36: #393E46;
+    --black: #000;
+    --white: #fff;
+    
+    --main-black: var(--black-36);
+    
+    --green-05: #00ADB5;
+    --red-fc: #F44C4C;
+    --yellow-fa: #F4E15A;
+    
+    --gray-de: #DEDEDE;
+    --gray-4a: #4A4A4A;
+    --gray-f5: #F5F5F5;
+    --gray-c4: #C4C4C4;
+    --gray-ee: #EEEEEE;
 
-$main-black: $black-36;
-
-$green-05: #00ADB5;
-$red-fc: #F44C4C;
-$yellow-fa: #F4E15A;
-
-$gray-de: #DEDEDE;
-$gray-4a: #4A4A4A;
-$gray-f5: #F5F5F5;
+}

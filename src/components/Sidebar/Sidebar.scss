@@ -1,19 +1,51 @@
 @import "../../styles/_colors";
 
 .sidebar {
-    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1px solid $gray-de;
+    border-right: 1px solid var(--gray-de);
+    background-color: var(--white);
     max-width: 90px;
+    height: 100vh;
+    height: 100dvh;
     transition: .4s;
     padding: 26px 0px 32px;
 
-    &.sidebar {
-        &_collapsed {
-            max-width: 250px;
+    &.sidebar_collapsed {
+        max-width: 250px;
+    }
+
+    &:not(.sidebar_collapsed) {
+        padding: 20px 0px 32px;
+        
+        .sidebar {
+            &__logo {
+                padding: 0px 24px;
+            }
+
+            &-button {
+                &__title {
+                    width: 0;
+                    line-height: 0;
+                    opacity: 0 !important;
+                    flex-basis: 0;
+                    margin: 0;
+                }
+
+                &_collapse .sidebar-button__wrap {
+                    padding-left: 0;
+                    padding-right: 0;
+                    justify-content: center;
+
+                    &::before {
+                        width: 36px;
+                        height: 36px;
+                        transform: scale(-1, 1);
+                    }
+                }
+            }
         }
     }
 
@@ -24,6 +56,7 @@
         img {
             width: 100%;
             height: auto;
+            max-height: 42px;
         }
     }
 
@@ -39,7 +72,7 @@
         padding-left: 16px;
         padding-right: 16px;
         position: relative;
-        width: 100%;
+        width: 100%;        
 
         &:not(:first-child) {
             margin-top: 17px;
@@ -49,7 +82,7 @@
             content: "";
             height: 30px;
             width: 1.5px;
-            background-color: $gray-4a;
+            background-color: var(--gray-4a);
             position: absolute;
             right: 0;
             top: 50%;
@@ -65,9 +98,10 @@
             padding: 13px 16px;
             transition: .3s;
             width: 100%;
+            cursor: pointer;
 
             &:hover {
-                background-color: $gray-f5;
+                background-color: var(--gray-f5);
             }
         }
 
@@ -76,6 +110,7 @@
             height: 24px;
             transition: .3s;
             opacity: 0.5;
+            flex-shrink: 0;
 
             img {
                 width: 100%;
@@ -86,14 +121,15 @@
 
         &__title {
             margin-left: 16px;
-            color: $black;
+            color: var(--main-black);
             font-size: 16px;
             font-weight: 600;
             opacity: 0.5;
             transition: .3s;
+            white-space: nowrap;
         }
 
-        &.sidebar-button {
+        &.sidebar-button {            
             &_current {
                 &::after {
                     opacity: 1;
@@ -111,12 +147,11 @@
 
                 .sidebar-button {
                     &__wrap {
-                        background-color: transparent;
+                        // background-color: transparent;
                         position: relative;
 
                         &::before {
                             content: "";
-                            margin-right: 16px;
                             width: 24px;
                             height: 24px;
                             background-image: url(../../assets/images/icons/chevron-left-gray.svg);
