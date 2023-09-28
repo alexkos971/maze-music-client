@@ -1,0 +1,23 @@
+.typeable-input {
+    @apply text-base 
+    duration-300 
+    py-4 
+    px-[18px] 
+    rounded-[5px] 
+    w-full 
+    block
+    text-left          
+    bg-white
+    border-gray-e5 
+    placeholder:text-gray-8e
+    text-black-36 
+    border-[0.5px];
+
+    &.typeable-input_error {
+        @apply border-red-fc placeholder:text-red-fc text-red-fc opacity-60;
+    }
+
+    &.typeable-input_placeholder {
+        @apply text-gray-8e;
+    }
+}

@@ -3,6 +3,14 @@
         "items": {
             "for-you": "For you",
             "library": "Library"
+        },
+        "collapse": "Collapse"
+    },    
+    "fields" : {
+        "errors": {
+            "empty" : "This field must not be empty",
+            "invalid_phone": "Phone number is incorrect",
+            "invalid_email": "Email is incorrect"
         }
     }
 }

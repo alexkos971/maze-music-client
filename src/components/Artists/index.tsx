@@ -1,4 +1,4 @@
-import Card from "@components/UI/Card";
+import Card from "@components/ui/Card";
 import { StaticImageData } from "next/image";
 import React from "react";
 import { Identifier } from "typescript";
@@ -36,9 +36,8 @@ const Artists = ({title, data}: ArtistsProps) => {
                         }
 
                         return (
-                            <div className="px-[10px] w-full min-w-[33.33333%]">
-                                <Card
-                                    key={item.name + '_' +index}
+                            <div key={item.name + '_' +index} className="px-[10px] w-full min-w-[33.33333%]">
+                                <Card                                    
                                     link={`/artist/${item.id}`}
                                     image={item.avatar ?? null}
                                     title={item.name}

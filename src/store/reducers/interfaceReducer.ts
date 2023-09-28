@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { lsSetItem, lsGetItem } from "@helpers/localstorage";
-import { stat } from "fs";
 
 type sidebar_collapsed = {
     type: string,

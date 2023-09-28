@@ -10,7 +10,7 @@ import { useAppSelector, useAppDispatch } from "@hooks/index";
 import { setSidebarCollapsed, setDirectory } from "@store/reducers/interfaceReducer";
 import { Logo, LogoIcon, BoxBlackIcon, ExploreBlackIcon } from "@helpers/images";
 
-const Sidebar = () => {
+const Sidebar : React.FC = () => {
     const [isCollapsed, directory] = useAppSelector(state => [state.interface.sidebar_is_collapsed, state.interface.directory]);
     const dispatch = useAppDispatch();
 
@@ -33,7 +33,7 @@ const Sidebar = () => {
             style={{maxWidth: isCollapsed ? 250: 90 }}>
 
             <div className={`logo sidebar__logo w-full ${isCollapsed ? 'pr-8 pl-5' : 'px-6'}`}>
-                <Image src={isCollapsed ? Logo : LogoIcon} alt="Logo" style={{ height: 'auto' }} className="max-h-[42px] w-full h-auto"/>
+                <Image src={isCollapsed ? Logo : LogoIcon} alt="Logo" width={0} height={0} className="max-h-[42px] w-full h-auto"/>
             </div>
 
             <ul className="sidebar__menu flex flex-col w-full mt-8">
@@ -46,7 +46,7 @@ const Sidebar = () => {
                         >
                             <Link href={item.path} className={styles['sidebar-button__wrap']}>
                                 <div className={`${styles['sidebar-button__icon']}`}>
-                                    <Image src={item.icon} alt="Icon"/>
+                                    <Image src={item.icon} alt="Icon" width={0} height={0}/>
                                 </div>
                                 <span className={`${styles['sidebar-button__title']}`}>{item.title}</span>
                             </Link>
@@ -60,7 +60,7 @@ const Sidebar = () => {
                     className={styles['sidebar-button__wrap']} 
                     onClick={() => dispatch(setSidebarCollapsed(!isCollapsed))}>
                     
-                    <span className={styles['sidebar-button__title']}>Collapse</span>
+                    <span className={styles['sidebar-button__title']}>{i18n.t("sidebar.collapse")}</span>
                 </div>
             </div>
         </aside>

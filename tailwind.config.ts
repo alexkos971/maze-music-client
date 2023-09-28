@@ -18,7 +18,10 @@ const config: Config = {
       'gray-4a': '#4A4A4A',
       'gray-f5': '#F5F5F5',
       'gray-c4': '#C4C4C4',
-      'gray-ee': '#EEEEEE'
+      'gray-ee': '#EEEEEE',
+      'gray-8e': '#8E8E8E',
+      'gray-f8': '#F4F6F8',
+      'gray-e5': '#E5E5E5'
     },
     extend: {
       backgroundImage: {

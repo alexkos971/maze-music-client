@@ -21,7 +21,7 @@ const Header = () => {
   }, [profile.name])
 
   return (
-    <header className={'sticky top-0 left-0 py-5 bg-white'}>
+    <header className={'sticky top-0 left-0 py-5 bg-white z-10'}>
       <div className="container-fluid">
         <div className="header__wrap flex items-center justify-end">
           <span className="header__title font-semibold text-lg text-green-05 mr-auto">{directory.title}</span>

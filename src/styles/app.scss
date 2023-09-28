@@ -3,8 +3,8 @@
 @tailwind utilities;
 @tailwind variants;
 
-// @import "__colors";
 // @import "__spacings";
+@import "__reset";
 @import "__variables";
 @import "__helpers";
 // @import '__reset';
@@ -13,19 +13,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
 html {
-    font-family: 'Open Sans', sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Open Sans', sans-serif;    
 }
 
-body {
-    margin: 0;
-    padding: 0;
+body {    
     font-family: 'Open Sans', sans-serif;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 .container, .container-fluid {
