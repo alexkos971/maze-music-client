@@ -1,0 +1,21 @@
+{
+    "sidebar": {
+        "collapse": "Collapse"
+    },
+    "pages": {
+        "for-you": {
+            "header_title": "For you"
+        },
+        "library": {
+            "header_title": "Library"
+        }
+    },
+    "fields" : {
+        "errors": {
+            "empty" : "This field must not be empty",
+            "invalid_phone": "Phone number is incorrect",
+            "invalid_email": "Email is incorrect",
+            "short_password": "Password must contain at least 8 characters"
+        }
+    }
+}

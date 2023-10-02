@@ -1,16 +1,33 @@
 // @ts-check
 import React, { useEffect, useRef, useState } from "react";
-import { setTheme, setDirectory } from "@store/reducers/interfaceReducer";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import { setTheme } from "@store/reducers/interfaceReducer";
 
 import Link from "next/link";
 import Image from "next/image";
 import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon } from "@helpers/images";
 
 import { useAppDispatch, useAppSelector } from "@hooks/index";
+import { directories } from "@helpers/directory";
+import { lsGetItem } from "@helpers/localstorage";
 
 const Header = () => {
-  const [theme, directory, profile] = useAppSelector((state) => [state.interface.theme, state.interface.directory, state.profile]);
+  const [theme, profile] = useAppSelector((state) => [state.interface.theme, state.profile]);
   const dispatch = useAppDispatch();
+
+  const {pathname} = useRouter();
+  const [title, setTitle] = useState<string>('');
+  let current_locale = lsGetItem('i18nLanguage');
+  
+  useEffect(() => {
+    for (let val in directories) {
+      if (directories[val].path == pathname) {
+        setTitle(t(directories[val].title))
+      }
+    }
+  }, [pathname, current_locale]);
+
 
   let avatarRef = useRef<HTMLDivElement>(null);
 
@@ -20,16 +37,18 @@ const Header = () => {
     }
   }, [profile.name])
 
+
+  const {t} = useTranslation();
+
   return (
     <header className={'sticky top-0 left-0 py-5 bg-white z-10'}>
       <div className="container-fluid">
         <div className="header__wrap flex items-center justify-end">
-          <span className="header__title font-semibold text-lg text-green-05 mr-auto">{directory.title}</span>
+          <span className="header__title font-semibold text-lg text-green-05 mr-auto">{title}</span>
 
           <div className="header__nav flex items-center mr-16">
             <Link 
               href={'/settings'} 
-              onClick={() => dispatch(setDirectory({ path: '/settings', title: 'Settings' }))}
               className={'header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6'}>
               <Image src={SettingsGrayIcon} alt="Settings Icon" className="w-full h-full object-contain"/>
             </Link>

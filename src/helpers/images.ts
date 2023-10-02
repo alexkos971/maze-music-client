@@ -10,6 +10,8 @@ import ChevronLeftGrayIcon from "@assets/images/icons/chevron-left-gray.svg";
 import LogoIcon from "@assets/images/icons/logo-only-icon.svg";
 import Logo from "@assets/images/logo.svg";
 import ChevronDownBlack from "@assets/images/icons/chevron-down-black.svg";
+import EyeIcon from "@assets/images/icons/eye.svg";
+import EyeClosedIcon from "@assets/images/icons/eye-closed.svg";
 
 // Uploads
 import WeekndAvatar from "@assets/images/uploads/weeknd.png";
@@ -27,6 +29,8 @@ export {
     ChevronLeftGrayIcon,
     Logo,
     LogoIcon,
+    EyeIcon,
+    EyeClosedIcon,
     WeekndAvatar,
     ChevronDownBlack  
 };

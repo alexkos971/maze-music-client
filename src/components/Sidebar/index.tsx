@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Sidebar.module.scss"
+import React from "react";
+import styles from "./Sidebar.module.scss";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
 import Image from "next/image";
-
-import i18n from "i18next";
+import { useTranslation } from "next-i18next";
 
 import { useAppSelector, useAppDispatch } from "@hooks/index";
-import { setSidebarCollapsed, setDirectory } from "@store/reducers/interfaceReducer";
-import { Logo, LogoIcon, BoxBlackIcon, ExploreBlackIcon } from "@helpers/images";
+import { setSidebarCollapsed } from "@store/reducers/interfaceReducer";
+import { Logo, LogoIcon } from "@helpers/images";
+import { directories } from "@helpers/directory";
 
 const Sidebar : React.FC = () => {
-    const [isCollapsed, directory] = useAppSelector(state => [state.interface.sidebar_is_collapsed, state.interface.directory]);
+    const [isCollapsed] = useAppSelector(state => [state.interface.sidebar_is_collapsed]);
     const dispatch = useAppDispatch();
+    const directory = useRouter().pathname;
 
-    const sidebar_menu = [
-        {
-            icon: ExploreBlackIcon,
-            path: '/for-you',
-            title: i18n.t("sidebar.items.for-you"),
-        },
-        {
-            icon: BoxBlackIcon,
-            path: '/library',
-            title: i18n.t("sidebar.items.library"),
-        }
-    ];
+    const {t} = useTranslation('common');
+
+    const menu_pages = ['for_you', "library"];
+    const sidebar_menu = menu_pages.map((item : string) => directories[item]);
 
     return (
         <aside 
@@ -41,14 +35,13 @@ const Sidebar : React.FC = () => {
                     sidebar_menu.map((item, index) => (
                         <li 
                             key={index + item.title}
-                            onClick={() => dispatch(setDirectory({ path: item.path, title: item.title }))} 
-                            className={`${styles['sidebar-button']} ${item.path == directory.path ? styles['sidebar-button_current'] : ''} ${isCollapsed ? '' : styles['sidebar-button_only_icon']}`}
+                            className={`${styles['sidebar-button']} ${item.path == directory ? styles['sidebar-button_current'] : ''} ${isCollapsed ? '' : styles['sidebar-button_only_icon']}`}
                         >
                             <Link href={item.path} className={styles['sidebar-button__wrap']}>
                                 <div className={`${styles['sidebar-button__icon']}`}>
-                                    <Image src={item.icon} alt="Icon" width={0} height={0}/>
+                                    {item.icon ? <Image src={item.icon} alt="Icon" width={0} height={0}/> : ''}
                                 </div>
-                                <span className={`${styles['sidebar-button__title']}`}>{item.title}</span>
+                                <span className={`${styles['sidebar-button__title']}`}>{t(item.title)}</span>
                             </Link>
                         </li>
                     ))
@@ -60,7 +53,7 @@ const Sidebar : React.FC = () => {
                     className={styles['sidebar-button__wrap']} 
                     onClick={() => dispatch(setSidebarCollapsed(!isCollapsed))}>
                     
-                    <span className={styles['sidebar-button__title']}>{i18n.t("sidebar.collapse")}</span>
+                    <span className={styles['sidebar-button__title']}>{t("sidebar.collapse")}</span>
                 </div>
             </div>
         </aside>

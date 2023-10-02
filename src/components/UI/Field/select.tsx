@@ -5,12 +5,19 @@ import { useOutsideClick } from "@hooks/interface";
 import { MainFieldProps } from "./index";
 import styles from "./Field.module.scss";
 import { useFieldValidation } from "@hooks";
+import { useFormValidation } from "../Form/validation";
 import { FieldError, FieldTitle } from "./index";
 
-interface SelectProps extends MainFieldProps {
-    value?: string | number | {slug: string | number, title : string | number};
-    options: string[] | number[] | {[key: string | number]: string | number};
-    onChange?: (val: string | number | {slug: string | number, title : string | number}) => void;
+interface SelectSimpleProps extends MainFieldProps {
+    value?: string | number | null;
+    options: string[] | number[];
+    onChange?: (val: string | number) => void;
+};
+
+interface SelectObjectProps extends MainFieldProps {
+    value?: {slug: string | number, title : string | number} | null;
+    options: {[key: string | number]: string | number};
+    onChange?: (val: { slug: string | number, title : string | number }) => void;
 };
 
 export const Select = ({
@@ -22,33 +29,49 @@ export const Select = ({
     name,
     required = false,
     title
-} : SelectProps) => {
+} : SelectSimpleProps | SelectObjectProps) => {
     if (options) {
         const field_id = id ? id : useId();
         const selectRef = useRef(null);
         const is_outside = useOutsideClick(selectRef);
         const [ selectIsOpened, setSelectIsOpened ] = useState(false);
+        const {  registerField } = useFormValidation();
 
         const [ error, setError ] = useState<string>('');
-        const [val, setVal] = useState<SelectProps['value']>(
+        const [val, setVal] = useState<SelectSimpleProps['value'] | SelectObjectProps['value']>(
             value 
-            ?? placeholder 
-            ?? ( 
-                Array.isArray(options) 
-                ? options[0] 
-                : {slug: Object.keys(options)[0], title : options[Object.keys(options)[0]]}  )
+            ?? (
+            !placeholder ? 
+                (
+                    Array.isArray(options) 
+                    ? options[0] 
+                    : {slug: Object.keys(options)[0], title : options[Object.keys(options)[0]]}  
+                ) : null
+            )
         );
+        const [is_valid, setIsValid] = useState(!error.length && ( (required && val) || !required ) ? true : false);
 
-        useEffect(() => {
-            const [is_valid, current_error] = useFieldValidation(val, 'select', required);
+        const selectHandle = (option_slug: string | number, option_title: string | number) => {
+            let newValue = Array.isArray(options) ? option_title : { slug: option_slug, title: option_title };
+
+            setVal(newValue);
+
+            const [current_valid, current_error] = useFieldValidation(newValue, 'select', required);
             if (error !== current_error) {
                 setError(current_error);
             }
-            // Call side on change
-            if (onChange && val) {
-                onChange(val);
+            
+            if (current_valid !== is_valid) {
+                setIsValid(current_valid);
             }
-        }, [val]);
+
+            setSelectIsOpened(false);
+
+            // Call side on change
+            if (onChange && newValue) {
+                onChange(newValue);
+            }
+        };
 
         // Close Select if Clicked out of select 
         useEffect(() => {
@@ -56,15 +79,17 @@ export const Select = ({
                 setSelectIsOpened(false);
             }
         }, [is_outside]);
+
+        // Check Field Validation
+        useEffect(() => {
+            registerField(name, is_valid);
+        }, [is_valid]);
                             
         const MenuItem : React.FC<{option_slug: string | number, option_title: string | number}> = ({option_slug, option_title}) => (
             <li 
-                className={`cursor-pointer text-base text-gray-4a py-2 px-4 duration-300 hover:bg-gray-f8 ${(val == option_title || (typeof val == 'object' && val.slug == option_slug)) ? 'text-green-05 font-medium' : ''}`} 
+                className={`cursor-pointer text-base text-gray-4a py-2 px-4 duration-300 hover:bg-gray-f8 ${(val == option_title || (val && typeof val == 'object' && val.slug == option_slug)) ? 'text-green-05 font-medium' : ''}`} 
                 data-item={option_slug}
-                onClick={() => {
-                    setVal(Array.isArray(options) ? option_title : { slug: option_slug, title: option_title })
-                    setSelectIsOpened(false);
-                }}>                                
+                onClick={() => selectHandle(option_slug, option_title)}>                                
                     {option_title}
             </li>
         )
@@ -86,13 +111,15 @@ export const Select = ({
                             cursor-pointer
                             ${placeholder && (placeholder == val || !val) ? styles['typeable-input_placeholder'] : ''}`}>
                         
-                        {(val !== null && typeof val === 'object') ? val['title'] : val}
+                        {(val == null && placeholder) 
+                            ? placeholder 
+                            : ((val !== null && typeof val === 'object') ? val['title'] : val)}
                     </span>
 
                     <input 
                         type="hidden"
                         name={name}
-                        value={(val !== null && typeof val === 'object') ? val['slug'] : val}
+                        value={!val ? '' : (typeof val === 'object') ? val['slug'] : val}
                         required={required ?? false}
                         placeholder={placeholder ?? ''}        
                         id={field_id}
@@ -102,7 +129,7 @@ export const Select = ({
                         <Image alt="Chevron Down Icon" src={ChevronDownBlack} width={0} height={0} className="w-full h-full object-contain"/>
                     </div>
 
-                    <div className={`field__options absolute bg-white border-[0.5px] border-gray-e5 rounded-[5px]  w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
+                    <div className={`field__options absolute z-10 bg-white border-[0.5px] border-gray-e5 rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
                         <ul>
                             {Object.keys(options).map((key: any) => <MenuItem key={key} option_slug={ Array.isArray(options) ? options[key] : key } option_title={options[key]}/>)}
                         </ul>

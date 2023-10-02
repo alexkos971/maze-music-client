@@ -6,8 +6,11 @@ import { FieldError, FieldTitle } from "./index";
 import { useFormValidation } from "../Form/validation";
 import { useFieldValidation } from "@hooks";
 
+import { EyeIcon, EyeClosedIcon } from "@helpers/images";
+import Image from "next/image";
+
 interface TextFieldProps extends MainFieldProps {    
-    value?: string | number | undefined;    
+    value?: string | number;    
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
@@ -19,14 +22,13 @@ const TextFieldTemplate = ({
     type,
     id, 
     title,
-    value,
+    value = '',
     placeholder,
     onChange,
     name,
     required = false
 } : FieldTemplateProps) => {    
     const {  registerField } = useFormValidation();
-
     const field_id = id ? id : useId();
 
     const [ error, setError ] = useState<string>('');
@@ -63,20 +65,7 @@ const TextFieldTemplate = ({
             <label className="field__label relative" htmlFor={name}>
 
             {(() => {
-                if (type !== 'textarea') {
-                    return (
-                        <input 
-                            className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' )} 
-                            type={type} 
-                            name={name} 
-                            value={val}
-                            required={required ?? false}
-                            placeholder={placeholder ?? ''}
-                            onChange={handleInput}
-                            id={field_id}/>
-                    );
-                }
-                else {
+                if (type == 'textarea') {
                     return (                        
                         <textarea 
                             className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' ) + `resize-none`} 
@@ -88,9 +77,45 @@ const TextFieldTemplate = ({
                             onChange={handleInput} >
                             {val}
                         </textarea>
+                    );
+                }
+                else if ( type == 'password' ) {
+                    const [isVisible, setIsVisible] = useState<boolean>(false);
+
+                        return (
+                            <>
+                                <input 
+                                    className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' )} 
+                                    type={isVisible ? 'text' : 'password'} 
+                                    name={name} 
+                                    value={val}
+                                    required={required ?? false}
+                                    placeholder={placeholder ?? ''}
+                                    onChange={handleInput}
+                                    id={field_id}/>
+
+                                <div
+                                    onClick={() => setIsVisible(!isVisible)} 
+                                    className="block absolute right-[18px] top-1/2 translate-y-[-50%] cursor-pointer">
+                                    <Image src={isVisible ?  EyeIcon : EyeClosedIcon} width={0} height={0} alt={`Eye ${isVisible ? '' : 'Closed'} Icon`} className="w-full h-full object-contain"/>
+                                </div>
+                            </>
+                        );
+                }
+                else {
+                    return (
+                        <input 
+                            className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' )} 
+                            type={type} 
+                            name={name} 
+                            value={val}
+                            required={required ?? false}
+                            placeholder={placeholder ?? ''}
+                            onChange={handleInput}
+                            id={field_id}/>
                     );      
                 }
-            })()}        
+            })()}    
             </label>
 
             <FieldError error={error}/>            
@@ -104,6 +129,10 @@ const Text : React.FC<TextFieldProps> = (props) => {
 
 const Email : React.FC<TextFieldProps> = (props) => {
     return <TextFieldTemplate  {...{...props, type: 'email'}}/>;
+}
+
+const Password : React.FC<TextFieldProps> = (props) => {
+    return <TextFieldTemplate  {...{...props, type: 'password'}}/>;
 }
 
 const TextArea : React.FC<TextFieldProps> = (props) => {
@@ -121,7 +150,8 @@ const Search : React.FC<TextFieldProps> = (props) => {
 export {
     Text,
     Email,
+    Password,
     TextArea,
     Tel,
-    Search
+    Search,
 };

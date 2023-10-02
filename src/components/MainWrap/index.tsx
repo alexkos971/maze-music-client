@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import styles from './MainWrap.module.scss';
 
 import Sidebar from "../Sidebar";
 import Header from "../Header";

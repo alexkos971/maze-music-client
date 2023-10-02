@@ -1,4 +1,3 @@
-import i18n from "i18next";
 import { FieldTypes } from "@components/ui/Field";
 
 const isValidEmail = (email: string) => {
@@ -19,15 +18,19 @@ export const useFieldValidation = (
   isRequired: boolean
 ) : [boolean, string] => {
     if (isRequired && (value === '' || value === undefined || value === null)) {
-      return [false, i18n.t("fields.errors.empty")];
+      return [false, "fields.errors.empty"];
     }
   
     if (type === 'email' && !isValidEmail(value)) {
-      return [false, i18n.t("fields.errors.invalid_email")];
+      return [false, "fields.errors.invalid_email"];
     }
   
     if (type === 'tel' && !isValidPhoneNumber(value)) {
-      return [false, i18n.t("fields.errors.invalid_phone")];
+      return [false, "fields.errors.invalid_phone"];
+    }
+
+    if (type === 'password' && value.length < 8) {
+      return [false, "fields.errors.short_password"];
     }
   
     // Additional validations for other field types can be added here

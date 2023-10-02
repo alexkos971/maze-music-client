@@ -1,0 +1,21 @@
+{
+    "sidebar": {
+        "collapse": "Згорнути"
+    },    
+    "pages": {
+        "for-you": {
+            "header_title": "Для тебе"
+        },
+        "library": {
+            "header_title": "Бібліотека"
+        }
+    },
+    "fields" : {
+        "errors": {
+            "empty" : "Це поле не повинно бути порожнім",
+            "invalid_phone": "Номер телефону некоректний",
+            "invalid_email": "Емейл некоректний",
+            "short_password": "Пароль повинен містити щонайменше 8 символів"
+        }
+    }
+}

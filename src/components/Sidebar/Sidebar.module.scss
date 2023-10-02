@@ -59,6 +59,8 @@
             opacity: 0.5;
             transition: .3s;
             white-space: nowrap;
+            overflow: hidden; 
+            text-overflow: ellipsis;
         }
 
         &.sidebar-button {            
