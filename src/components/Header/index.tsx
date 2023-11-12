@@ -1,33 +1,22 @@
 // @ts-check
-import React, { useEffect, useRef, useState } from "react";
-import { useTranslation } from "next-i18next";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { setTheme } from "@store/reducers/interfaceReducer";
 
 import Link from "next/link";
 import Image from "next/image";
+import { directories } from "@helpers/directory";
 import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon } from "@helpers/images";
 
+import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "@hooks/index";
-import { directories } from "@helpers/directory";
-import { lsGetItem } from "@helpers/localstorage";
 
 const Header = () => {
-  const [theme, profile] = useAppSelector((state) => [state.interface.theme, state.profile]);
+  const [theme, title, profile] = useAppSelector((state) => [state.interface.theme, state.interface.directory.title, state.profile]);
+  const {pathname} = useRouter();
   const dispatch = useAppDispatch();
 
-  const {pathname} = useRouter();
-  const [title, setTitle] = useState<string>('');
-  let current_locale = lsGetItem('i18nLanguage');
-  
-  useEffect(() => {
-    for (let val in directories) {
-      if (directories[val].path == pathname) {
-        setTitle(t(directories[val].title))
-      }
-    }
-  }, [pathname, current_locale]);
-
+  const {t} = useTranslation();
 
   let avatarRef = useRef<HTMLDivElement>(null);
 
@@ -37,31 +26,30 @@ const Header = () => {
     }
   }, [profile.name])
 
-
-  const {t} = useTranslation();
-
   return (
     <header className={'sticky top-0 left-0 py-5 bg-white z-10'}>
       <div className="container-fluid">
         <div className="header__wrap flex items-center justify-end">
-          <span className="header__title font-semibold text-lg text-green-05 mr-auto">{title}</span>
+          <span className="header__title font-semibold text-lg text-green-05 mr-auto">{t(title)}</span>
 
           <div className="header__nav flex items-center mr-16">
+            {/* Settings */}
             <Link 
               href={'/settings'} 
-              className={'header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6'}>
+              className={`header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6 ${pathname == directories['settings']['path'] ? 'brightness-50' : ''}`}>
               <Image src={SettingsGrayIcon} alt="Settings Icon" className="w-full h-full object-contain"/>
             </Link>
 
-            <Link 
-              href={'/notifications'} 
+            {/* Notification Tooltip */}
+            <span  
               className={`header__nav-item notification-icon notification-icon_new 
               cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6
               relative before:absolute before:right-[6px] before:top-[6px] before:w-[9px] before:h-[9px] before:rounded-xl before:bg-green-05 
             `}>            
               <Image src={NotificationGrayIcon} alt="Notifications Icon" className="w-full h-full object-contain"/>
-            </Link>
+            </span>
 
+            {/* Switch Theme */}
             <button 
               type="button" 
               className="header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6" 
@@ -70,7 +58,7 @@ const Header = () => {
             </button>
           </div>
 
-          <div className="header__profile cursor-pointer flex items-center">
+          <Link href={'/profile'} className="header__profile cursor-pointer flex items-center">
               <div
                 ref={avatarRef} 
                 className={`header__profile-avatar 
@@ -79,7 +67,7 @@ const Header = () => {
                 `}>
               </div>
               <span className="header__profile-name font-normal text-base text-black ml-4">{profile.name}</span>
-          </div>
+          </Link>
         </div>
       </div>
     </header>  

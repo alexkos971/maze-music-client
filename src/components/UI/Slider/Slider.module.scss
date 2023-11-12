@@ -1,0 +1,8 @@
+.slider-item {
+    position: relative;
+    
+    @screen sm {
+        max-width: var(--max-w);
+        flex: 0 0 var(--max-w);
+    }
+}

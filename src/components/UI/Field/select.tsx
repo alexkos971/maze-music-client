@@ -35,7 +35,7 @@ export const Select = ({
         const selectRef = useRef(null);
         const is_outside = useOutsideClick(selectRef);
         const [ selectIsOpened, setSelectIsOpened ] = useState(false);
-        const {  registerField } = useFormValidation();
+        const registerField = useFormValidation() && useFormValidation().registerField;
 
         const [ error, setError ] = useState<string>('');
         const [val, setVal] = useState<SelectSimpleProps['value'] | SelectObjectProps['value']>(
@@ -82,7 +82,9 @@ export const Select = ({
 
         // Check Field Validation
         useEffect(() => {
-            registerField(name, is_valid);
+            if ( registerField ) {
+                registerField(name, is_valid);
+            }
         }, [is_valid]);
                             
         const MenuItem : React.FC<{option_slug: string | number, option_title: string | number}> = ({option_slug, option_title}) => (

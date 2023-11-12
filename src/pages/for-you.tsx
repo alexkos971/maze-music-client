@@ -1,55 +1,50 @@
 import React from "react";
 import Artists from "@components/Artists";
 import MainWrap from "@components/MainWrap";
-
-import Button from "@components/ui/Button";
-import { Text, Email, Select, Password } from "@components/ui/Field";
-import Form from "@components/ui/Form";
+import TrackList from "@components/TrackList";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { useRouter } from "next/router";
-import { lsSetItem } from "@helpers/localstorage";
+import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@helpers/images";
+import Playlists from "@components/Playlists";
 
-import {WeekndAvatar} from "@helpers/images";
-
-export default function ForYou() {
-    const router = useRouter();
-    const {locale, pathname, query, asPath} = router;
-
-    const handleLocaleChange = (newLocale: string) => {
-        router.push({ pathname, query }, asPath, { locale: newLocale });
-
-        lsSetItem({ name: 'i18nLanguage', value: newLocale });
-    };
+export default function ForYou() {    
 
     return (
         <MainWrap>
             <Artists 
+                className='mt-[0px]'
                 title="Artists"
                 data={[
                 {
-                    id: 'as234qas',
+                    id: 'a1',
                     name: 'The',
                     followers: [],
                     albums: [],
                 },
                 {
-                    id: 'as234qas',
+                    id: 'b2',
                     name: 'Dua Lipa',
                     avatar: WeekndAvatar,
                     albums: [123, 2342, 234, 3434],
                     followers: [123, 2342, 234, 3434]
                 },
                 {
-                    id: 'as234qas',
+                    id: 'c3',
                     name: 'The Weeknd',
                     avatar: WeekndAvatar,
                     albums: [],
                     followers: []
                 },
                 {
-                    id: 'as234qas',
+                    id: 'd4',
+                    name: 'Dua Lipa',
+                    avatar: WeekndAvatar,
+                    albums: [123, 2342, 234, 3434],
+                    followers: [123, 2342, 234, 3434]
+                },
+                {
+                    id: 'e5',
                     name: 'Dua Lipa',
                     avatar: WeekndAvatar,
                     albums: [123, 2342, 234, 3434],
@@ -57,35 +52,39 @@ export default function ForYou() {
                 },
             ]}/>
 
-            <Form>
-                <Text 
-                    name="text"
-                    title="SOme title"
-                    placeholder="Placeholder"
-                    required={true} />
+            <Playlists
+                title="Popular Playlists"
+                data={[
+                    {
+                        id: 'q11',
+                        name: 'Classical Hits',
+                        feature: ClassicalHitsCover,
+                        author: "Alex Kos",                    
+                        tracks: [123, 3453, 23232, 34534, 345343]
+                    },
+                    {
+                        id: 'q1ds1',
+                        name: 'Rock',
+                        author: "Alex Kos",
+                        feature: RockCover,
+                        tracks: [123, 3453, 23232, 34534, 345343]
+                    },
+                    {
+                        id: 'busuu',
+                        name: 'Bass House',
+                        feature: ElectronicCover,
+                        author: "Alex Kos",
+                        tracks: [123, 3453, 23232, 34534, 345343]
+                    },
+                ]}
+            />      
 
-                <Email 
-                    title="Email"
-                    name="email"
-                    placeholder="Email"
-                    required={true} />
-                
-                <Password 
-                    title="Password"
-                    name="password"
-                    placeholder="Password"
-                    required={true} />
-                
-                <Select 
-                    name="language"
-                    title="Language"
-                    value={locale ?? null}
-                    options={['en', 'ua']} 
-                    onChange={handleLocaleChange}/>
-
-                <Button type="submit">Submit</Button>
-            </Form>
-            
+            <TrackList
+                title="Popular songs"
+                data={{
+                    name: 'Some Name',
+                    tracks: ['1h3','873s', 's873', '0230']
+                }} />  
         </MainWrap>
     );
 }

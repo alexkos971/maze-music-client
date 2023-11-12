@@ -1,10 +1,13 @@
+import React from "react";
 import Card from "@components/ui/Card";
 import { StaticImageData } from "next/image";
-import React from "react";
 import { Identifier } from "typescript";
+import Slider from "@components/ui/Slider";
 
 type ArtistsProps = {
     title?: string,
+    className?: string,
+    slidesToShow?: number | undefined,
     data: {
         id: string;
         avatar?: string | StaticImageData | undefined | null,
@@ -14,14 +17,15 @@ type ArtistsProps = {
     }[]
 };
 
-const Artists = ({title, data}: ArtistsProps) => {
+const Artists = ({title, data, slidesToShow, className}: ArtistsProps) => {    
+
     return( 
-        <div className="cards block">
+        <div className={`cards block mt-8 pb-8 ${className}`}>
             { title ? <h2 className="text-4xl font-semibold mb-5">{title}</h2> : '' }
 
-            <div className="cards__items flex items-stretch mx-[-10px]">
+            <Slider options={{slidesToShow: slidesToShow ?? 2.5}}>
                 {
-                    data.map((item, index) => {
+                    data.map((item) => {
                         let subtitle = '';
                         
                         if (item.albums?.length) {
@@ -35,19 +39,22 @@ const Artists = ({title, data}: ArtistsProps) => {
                             }
                         }
 
+
                         return (
-                            <div key={item.name + '_' +index} className="px-[10px] w-full min-w-[33.33333%]">
+                            <Slider.Item key={item.id}>
                                 <Card                                    
                                     link={`/artist/${item.id}`}
                                     image={item.avatar ?? null}
                                     title={item.name}
+                                    options={{size: 'large'}}
                                     subtitle={subtitle}
                                 />
-                            </div>
+
+                            </Slider.Item>
                         )
                     })
                 }
-            </div>
+            </Slider>
         </div>
     );
 };

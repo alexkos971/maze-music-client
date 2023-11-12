@@ -1,0 +1,119 @@
+@import "../../styles/_helpers";
+
+.player {
+    &-progress {
+        &__wrap {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 16px;
+            position: relative;
+            --track-progress: 0;
+
+            &::before, &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 100%;
+                height: 6px;
+                border-radius: 6px;
+                background-color: var(--white);
+                user-select: none;               
+                -webkit-user-select: none;               
+                -moz-user-select: none;               
+                -o-user-select: none;               
+                pointer-events: none;
+            }
+
+            &::after {
+                width: var(--track-progress);
+                background-color: var(--green-05);
+            }
+        }
+
+        &__input {
+            width: 100%;
+            height: 10px;
+            opacity: 0;     
+            position: relative;
+            cursor: pointer;
+            z-index: 1;   
+        }
+    }
+
+    &-nav-button {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        &.player-nav-button_prev-track {
+            transform: scaleX(-1);
+        }
+    }
+
+    &-volume {
+        display: flex;
+        align-items: center;
+        position: relative;
+        transition: .3s;
+        cursor: pointer;
+        --track-volume: 0;
+
+        &:hover {
+            .player-volume__input {
+                opacity: 1;
+                visibility: visible;
+                width: desktop_vw_min(100px);
+            }
+        }
+
+        &__input {
+            opacity: 0;
+            visibility: hidden;
+            // Needed
+            transition: .3s;
+            width: 0;
+            position: relative;
+            margin-left: 8px;
+
+            &::before, &::after {
+                content: "";
+                width: 100%;
+                height: 4px;
+                border-radius: 2px;
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: var(--gray-4a); 
+                user-select: none;               
+                -webkit-user-select: none;               
+                -moz-user-select: none;               
+                -o-user-select: none;               
+                pointer-events: none;
+            }
+
+            &::after {
+                background-color: var(--gray-c4);
+                width: var(--track-volume);
+                z-index: 1;
+            }
+
+            input {
+                width: 100%;
+                height: 4px;
+                opacity: 0;
+                display: block;
+                z-index: 1;
+            }
+        }
+    }
+}

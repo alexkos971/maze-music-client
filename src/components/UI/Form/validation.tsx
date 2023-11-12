@@ -8,10 +8,11 @@ interface ValidationContextType {
 
 const ValidationContext = createContext<ValidationContextType | null>(null);
 
-export const useFormValidation = () : ValidationContextType => {
+export const useFormValidation = () : ValidationContextType | false => {
     const context = useContext(ValidationContext);
     if ( !context ) {
-        throw new Error('useFormValidation must be used within a ValidationProvider');
+        return false;
+        // throw new Error('useFormValidation must be used within a ValidationProvider');
     }
     return context; 
 }

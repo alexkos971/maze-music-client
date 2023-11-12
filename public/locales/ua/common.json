@@ -8,6 +8,9 @@
         },
         "library": {
             "header_title": "Бібліотека"
+        },
+        "settings": {
+            "header_title": "Налаштування"
         }
     },
     "fields" : {

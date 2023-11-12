@@ -8,6 +8,9 @@
         },
         "library": {
             "header_title": "Library"
+        },
+        "settings": {
+            "header_title": "Settings"
         }
     },
     "fields" : {
