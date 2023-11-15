@@ -55,7 +55,7 @@ const TrackList = ({ title, data, className }: TrackListProps) => {
 
                                 <div className="ml-auto flex items-center">
                                     <button
-                                        className="w-6 h-6 shrink-0 mr-6" 
+                                        className="w-5 h-5 shrink-0 mr-6" 
                                         type="button">
                                         <Image 
                                             src={true ? HeartOutlineGray : HeartSolidGreen} 
