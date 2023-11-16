@@ -5,6 +5,7 @@ import { store } from "@store/rootReducer";
 import { appWithTranslation } from "next-i18next";
 import { Title } from "@components/Meta";
 import Head from "next/head";
+import MainWrap from "@components/MainWrap";
 
 function MyApp({ Component, pageProps } : AppProps) {  
   return (
@@ -15,8 +16,19 @@ function MyApp({ Component, pageProps } : AppProps) {
       <Head>
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      
-      <Component {...pageProps} />
+
+      {(() => {
+        switch (Component.name) {
+          case 'Error':
+            return <Component {...pageProps} />;
+          default: 
+            return (
+              // Wrapper with Sidebar, Player, Header
+              <MainWrap>
+                <Component {...pageProps} />
+              </MainWrap>
+            );
+        }})()}
     </Provider>
   )
 }

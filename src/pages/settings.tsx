@@ -4,13 +4,12 @@ import LanguageSwitcher from "@components/LanguageSwitcher";
 
 export default function Settings() {    
 
-    return (
-        <MainWrap>
-            <h1>Settings</h1>
-
-            <LanguageSwitcher/>    
-        </MainWrap>
-    );
+  return (
+    <>
+      <h1>Settings</h1>
+      <LanguageSwitcher/>    
+    </>
+  );
 }
 
 export async function getStaticProps({ locale } : { locale: string }) {

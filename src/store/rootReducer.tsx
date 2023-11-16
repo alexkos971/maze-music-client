@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import interfaceReducer from "./reducers/interfaceReducer";
 import profileReducer from "./reducers/profileReducer";
+import playerReducer from "./reducers/playerReducer";
 
 export const store = configureStore({
     reducer: {
         interface: interfaceReducer,
         profile: profileReducer,
+        player: playerReducer
     }
 });
 

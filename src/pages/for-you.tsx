@@ -1,6 +1,5 @@
 import React from "react";
 import Artists from "@components/Artists";
-import MainWrap from "@components/MainWrap";
 import TrackList from "@components/TrackList";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -10,8 +9,8 @@ import Playlists from "@components/Playlists";
 
 export default function ForYou() {    
 
-    return (
-        <MainWrap>
+    return (        
+        <>
             <Artists 
                 className='mt-[0px]'
                 title="Artists"
@@ -84,8 +83,8 @@ export default function ForYou() {
                 data={{
                     name: 'Some Name',
                     tracks: ['1h3','873s', 's873', '0230']
-                }} />  
-        </MainWrap>
+                }} /> 
+        </>
     );
 }
 

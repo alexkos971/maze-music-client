@@ -3,11 +3,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Library() {
 
-    return (
-        <MainWrap>
-            <h1>Library)</h1>
-        </MainWrap>
-    );
+  return (
+    <h1>Library)</h1>
+  );
 }
 
 export async function getStaticProps({ locale } : { locale: string }) {

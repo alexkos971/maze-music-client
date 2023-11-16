@@ -1,25 +1,21 @@
-import React, { useState, useEffect, useRef, RefObject } from "react";
-import formatSecond from "@helpers/format-seconds";
-import styles from "./Player.module.scss";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import formatSecond from "@helpers/format-seconds";
+import { useAppDispatch, useAppSelector } from "@hooks";
+import { setCurrentTime, setTrack, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
+
+import styles from "./Player.module.scss";
 import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, VolumeGray, ChevronUpGray } from "@helpers/images";
 import FullPlayer from "./FullPlayer";
 
 const Player = () => {
     const [ isExpanded, setIsExpanded ] = useState(false);
-
-    // const [currentTime, setCurrentTime, isPlaying, setIsPlaying, volume, setVolume, changeMusic, repeatType, setRepeat, disableKeydown] = useAppStore(state => [state.currentMusicTime, state.setCurrentMusicTime, state.isPlaying, state.setPlayingState, state.volume, state.setVolume, state.changeMusic, state.repeatType, state.setRepeatType, state.disableKeyDown])
-    const [currentTime, setCurrentTime] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [volume, setVolume] = useState(1);
     
-    const [track, setTrack] = useState<{src: string}>({
-        src: 'https://cdn6.sefon.pro/prev/1_g6J1XUbWkvypx60Kw2RQ/1700126692/3/Paramore%20-%20Decode%20%28OST%20%D0%A1%D1%83%D0%BC%D0%B5%D1%80%D0%BA%D0%B8%29%20%28192kbps%29.mp3'
-    });
+    const [currentTime, isPlaying, volume, track] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track]);
+    const dispatch = useAppDispatch(); 
     
     // move to redux
     const changeTrack = (direction : 'next' | 'prev', auto?: boolean ) => {
-        // setTrack({ src:  });
         return 'sdsds';
     };
 
@@ -35,7 +31,7 @@ const Player = () => {
 
     const changeVolumeHandler = (volumeValue: number) => {
         ref.current && (ref.current.volume = volumeValue);
-        setVolume(volumeValue);
+        dispatch(setVolume(volumeValue));
     }
 
 
@@ -48,9 +44,9 @@ const Player = () => {
 
             if ( keyPressedCode === "space" ) {
                 if ( isPlaying ) {
-                    setIsPlaying(false)
+                    dispatch(setIsPlaying(false));
                 } else {
-                    setIsPlaying(true)
+                    dispatch(setIsPlaying(true));
                 }
             } else if ( keyPressedCode === "arrowleft" ) {
                 const newCurrentTime = currentTime - 5
@@ -68,16 +64,16 @@ const Player = () => {
                     changeTrack("next", true);
                 } else {
                     ref.current && (ref.current.currentTime = newCurrentTime);
-                    setCurrentTime(newCurrentTime)
+                    dispatch(setCurrentTime(newCurrentTime));
                 }
             } else if ( keyPressedCode === "arrowup" ) {
                 const newVal = volume + 0.2 > 1 ? 1 : volume + 0.2
                 ref.current && (ref.current.volume = newVal);
-                setVolume(newVal);
+                dispatch(setVolume(newVal));
             } else if ( keyPressedCode === "arrowdown" ) {
                 const newVal = volume - 0.2 < 0 ? 0 : volume - 0.2
                 ref.current && (ref.current.volume = newVal);
-                setVolume(newVal)
+                dispatch(setVolume(newVal));
             }
         } 
 
@@ -93,7 +89,7 @@ const Player = () => {
     useEffect(() => {
         if ( track && ref.current) {
             ref.current.src = track.src;
-            ref.current.currentTime = currentTime
+            ref.current.currentTime = currentTime;
             ref.current.volume = volume;
             if ( !isPlaying ) {
                 ref.current.pause();
@@ -107,13 +103,13 @@ const Player = () => {
     const musicTimeUpdateHandler = () => {
         if ( ref.current && ref.current.currentTime === duration ) changeTrack("next", true);
 
-        else if (ref.current) setCurrentTime(ref.current.currentTime) 
+        else if (ref.current) dispatch(setCurrentTime(ref.current.currentTime)); 
     }
 
     const playClickHandler = () => {
         if ( track ) {
-            if ( !isPlaying ) setIsPlaying(true)
-            else setIsPlaying(false)
+            if ( !isPlaying ) dispatch(setIsPlaying(true));
+            else dispatch(setIsPlaying(false));
         }
     }
 
@@ -182,7 +178,7 @@ const Player = () => {
             changeTrack("prev");
         } else {
             ref.current && (ref.current.currentTime = 0);
-            setCurrentTime(0);
+            dispatch(setCurrentTime(0));
         }
     }
 
