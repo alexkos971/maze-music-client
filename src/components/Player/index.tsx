@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import formatSecond from "@helpers/format-seconds";
 import { useAppDispatch, useAppSelector } from "@hooks";
-import { setCurrentTime, setTrack, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
+import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
 
 import styles from "./Player.module.scss";
 import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, VolumeGray, ChevronUpGray } from "@helpers/images";
 import FullPlayer from "./FullPlayer";
+import Range from "@components/ui/Range";
 
 const Player = () => {
     const [ isExpanded, setIsExpanded ] = useState(false);
@@ -30,8 +31,8 @@ const Player = () => {
     // const [messageApi, contextHolder] = message.useMessage()
 
     const changeVolumeHandler = (volumeValue: number) => {
-        ref.current && (ref.current.volume = volumeValue);
-        dispatch(setVolume(volumeValue));
+        ref.current && (ref.current.volume = volumeValue / 100);
+        dispatch(setVolume(volumeValue / 100));
     }
 
 
@@ -209,9 +210,9 @@ const Player = () => {
                 </button>
 
                 <button 
-                    className={`track__button w-8 h-8 mx-4 bg-green-05 rounded-full flex items-center justify-center group-hover:opacity-100 group-hover:block`} 
+                    className={styles['player-play-button']} 
                     onClick={playClickHandler}>
-                    <Image src={isPlaying ? PauseBlack : PlayBlack} width={0} height={0} alt="Play" className="w-5 h-5"/>
+                    <Image src={isPlaying ? PauseBlack : PlayBlack} width={0} height={0} alt="Play"/>
                 </button>
 
                 <button 
@@ -234,15 +235,11 @@ const Player = () => {
             <div className={`player-progress mx-auto flex items-center justify-center w-full`}>
                 <span className="text-white text-xs">{formatSecond(currentTime)}</span>
 
-                 <div className={`${styles['player-progress__wrap']}`} style={{'--track-progress' : ((currentTime !== 0 && duration !== 0) ? ((currentTime / duration) * 100) : 0) + '%'} as React.CSSProperties}>
-                    <input 
-                        value={currentTime} 
-                        onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))} 
-                        max={duration} 
-                        className={`${styles['player-progress__input']}`} 
-                        type="range" 
-                        name="track-progress" />
-                </div>   
+                <Range
+                    value={currentTime}
+                    className={'mx-4 max-w-[480px]'}
+                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
+                    max={duration} />
                 
                 <span className="text-white text-xs">{formatSecond(duration) ?? "00:00"}</span>
             </div>
@@ -257,20 +254,18 @@ const Player = () => {
                         <Image src={VolumeGray} alt="Volume"/>                    
                     </button>
                     
-                    <span className={styles['player-volume__input']} style={{'--track-volume': (volume !== 0 ? volume * 100 : 0) + '%'} as React.CSSProperties}>
-                        <input 
-                            min={0}
-                            max={100}
-                            value={volume * 100} 
-                            onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value) / 100)} 
-                            type="range" 
-                            name="track-volume" />
-                    </span>
+                    <Range
+                        value={volume * 100}
+                        min={0}
+                        color="gray"
+                        max={100}
+                        withThumb={false}
+                        onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
+                        className={styles['player-volume__range']}
+                        />
                 </span>
 
-                <button
-                    className={`${styles['player-nav-button']}`} 
-                    type="button">                    
+                <button type="button" className={`${styles['player-nav-button']}`}> 
                     <Image src={true ? HeartOutlineGray : HeartSolidGreen} alt="Heart Icon"/>
                 </button>
 
