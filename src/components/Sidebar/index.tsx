@@ -27,7 +27,7 @@ const Sidebar : React.FC = () => {
 
     return (
         <aside 
-            className={`sidebar w-full shrink-0 h-screen flex flex-col items-center pt-[26px] ${isCollapsed ? 'sidebar_collapsed' : ''} pb-[32px] border-r border-r-gray-de duration-500`}
+            className={`sidebar w-full shrink-0 h-screen flex flex-col items-center pt-[26px] ${isCollapsed ? 'sidebar_collapsed' : ''} pb-2 border-r border-r-gray-de duration-500`}
             style={{maxWidth: isCollapsed ? 250: 90 }}>
 
             <div className={`${styles['sidebar__logo']} ${isCollapsed ? 'pr-8 pl-5' : 'px-6'}`}>

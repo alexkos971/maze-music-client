@@ -4,9 +4,9 @@ import { useFormValidation } from "../Form/validation";
 interface ButtonProps {
     type?: 'button' | 'submit',
     children: ReactNode,
-    color?: 'green' | 'black' | 'gray',
+    color?: 'green' | 'black' | 'gray' | 'white',
     disabled?: boolean | undefined,
-    size: 'normal' | 'small'
+    size?: 'normal' | 'small'
 };
 
 const Button: React.FC<ButtonProps> = ({ 
@@ -25,8 +25,8 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     const btn_sizes = {
-        'small' : 'py-[6px] px-[10px] max-w-[100px]',
-        'normal' : 'py-[10px] px-6 max-w-[160px]'
+        'small' : 'py-[6px] px-[10px] max-w-[100px] text-sm justify-center',
+        'normal' : 'py-[10px] px-6 max-w-[160px] text-base'
     };
 
     const { isFormValid } = useFormValidation();
@@ -39,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({
             onClick={() => {
                 console.log(isFormValid)
             }}        
-            className={`text-base duration-300 rounded-md mt-6 w-full flex items-center gap-2 ${btn_sizes[size]} cursor-pointer ${isDisabled ? btn_colors['disabled'] : btn_colors[color]}`}>
+            className={`duration-300 rounded-md mt-6 w-full flex items-center gap-2 ${btn_sizes[size]} cursor-pointer ${isDisabled ? btn_colors['disabled'] : btn_colors[color]}`}>
             {children}
         </button>
     );

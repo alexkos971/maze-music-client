@@ -3,17 +3,22 @@ import React, { useEffect, useRef, UIEvent } from "react";
 import { useRouter } from "next/router";
 import { setTheme, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 import {store} from '@store/rootReducer';
+import styles from './Header.module.scss';
 
 import Link from "next/link";
 import { directories } from "@helpers/directory";
-import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon } from "@helpers/images";
+import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon, ChevronDownBlack } from "@helpers/images";
 
 import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "@hooks/index";
 
-const Header = () => {
+interface Props {
+  canReturnBack?: boolean
+}
+
+const Header = ({canReturnBack = false} : Props) => {
   const dispatch = useAppDispatch();
-  const {pathname} = useRouter();
+  const {pathname, back} = useRouter();
   const [theme, title, profile, header_is_filled, fullplayer_is_expanded] = useAppSelector((state) => [state.interface.theme, state.interface.directory.title, state.profile, state.interface.header_is_filled, state.interface.fullplayer_is_expanded]);
 
   const {t} = useTranslation();
@@ -36,7 +41,11 @@ const Header = () => {
   return (
     <header className={`sticky top-0 left-0 py-5 z-20 duration-300 ${header_is_filled ? 'bg-white' : ''}`} ref={headerRef}>
       <div className="container-fluid">
-        <div className="header__wrap flex items-center justify-end">
+        <div className="header__wrap flex items-center justify-end relative">
+
+          {/* Go Back Arrow */}
+          {canReturnBack === true ? <button type="button" onClick={back} className={styles.header__back}><ChevronDownBlack/></button> : ''}
+
           <span className="header__title font-semibold text-lg text-green-05 mr-auto">{t(title)}</span>
 
           <div className="header__nav flex items-center mr-16">

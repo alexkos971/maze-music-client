@@ -24,16 +24,13 @@ import HeartSolidGreen from "../assets/images/icons/heart-solid-green.svg";
 import DoubleArrowsGray from "../assets/images/icons/double-arrows-gray.svg";
 import RepeatGray from "../assets/images/icons/repeat-gray.svg";
 import VolumeGray from "../assets/images/icons/volume-gray.svg";
+import BookMarkPlusBlack from '../assets/images/icons/bookmark-plus-black.svg';
 
 // Uploads
 import WeekndAvatar from "../assets/images/uploads/weeknd.png";
 import ClassicalHitsCover from "../assets/images/uploads/classical-hits-cover.jpg";
 import ElectronicCover from "../assets/images/uploads/electronic-cover.jpg";
 import RockCover from "../assets/images/uploads/rock-cover.jpg";
-import dynamic from "next/dynamic";
-
-// import Logo from '../assets/images/logo.svg';
-// import LogoIcon from '../assets/images/icons/logo-only-icon.svg';
 
 export { 
     SettingsGrayIcon,
@@ -59,6 +56,7 @@ export {
     PauseBlack, 
     PlayGreen,
     PauseGreen,
+    BookMarkPlusBlack,
     HeartOutlineGray,
     HeartSolidGreen,
     DoubleArrowsGray,

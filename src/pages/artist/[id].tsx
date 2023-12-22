@@ -3,16 +3,17 @@ import { GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import ArtistHero from "@components/ArtistHero";
+import MainWrap from "@components/MainWrap";
 
 export default function Artist() {
     return (
-      <>
+      <MainWrap canReturnBack={true}>
         <ArtistHero/>
 
         <div className="container-fluid">
           <h1>Artist</h1>
         </div>
-      </>
+      </MainWrap>
     );
 }
 

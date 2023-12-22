@@ -1,14 +1,15 @@
 .artist-hero {
     position: relative;
-    // ovh
+    overflow: hidden;
     width: 100%;
-    min-height: 432px;
-    padding-top: var(--header-height);
     background-color: var(--black);
     margin-top: calc(0px - var(--header-height));
-
+    
     &__content {
+        padding-top: var(--header-height);
         padding-right: 40px;
+        padding-bottom: 60px;
+        min-height: 432px;
     }
 
     &__title {
@@ -54,11 +55,34 @@
         }
     }
 
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 0px 32px;
+
+        button {
+            max-width: 123px;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-size: 18px;
+            font-weight: 600;
+
+            svg {
+                *[fill] {
+                    fill: currentColor;
+                }
+            }
+        }
+    }
+
     &__avatar {
-        margin-top: calc(0px - var(--header-height));
-        margin-left: 20px;
-        margin-right: calc(0px - var(--container-padding));
-        height: 435px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        // margin-left: 20px;
+        // margin-right: calc(0px - var(--container-padding));
+        height: 100%;
 
         img {
             width: 100%;

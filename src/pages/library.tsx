@@ -1,10 +1,13 @@
+import MainWrap from "@components/MainWrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Library() {
   return (
-    <div className="container-fluid">
-      <h1>Library)</h1>
-    </div>
+    <MainWrap>
+      <div className="container-fluid">
+        <h1>Library)</h1>
+      </div>
+    </MainWrap>
   );
 }
 

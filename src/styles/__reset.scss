@@ -15,6 +15,13 @@ a, button, input, textarea {
     outline: none;
 }
 
+img {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+}
+
 svg {
     flex-shrink: 0;
 

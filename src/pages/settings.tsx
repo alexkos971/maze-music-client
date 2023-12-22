@@ -1,13 +1,16 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import LanguageSwitcher from "@components/LanguageSwitcher";
+import MainWrap from "@components/MainWrap";
 
 export default function Settings() {    
 
   return (
-    <div className="container-fluid">
-      <h1>Settings</h1>
-      <LanguageSwitcher/>    
-    </div>
+    <MainWrap>
+      <div className="container-fluid">
+        <h1>Settings</h1>
+        <LanguageSwitcher/>    
+      </div>
+    </MainWrap>
   );
 }
 

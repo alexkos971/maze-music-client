@@ -4,13 +4,15 @@ import Sidebar from "../Sidebar";
 import Header, { fillHeaderByScroll } from "../Header";
 import Player from "@components/Player";
 
-import { setTheme, setFullplayerExpanded } from '@store/reducers/interfaceReducer';
+import { setTheme, setFullplayerExpanded, setHeaderIsFilled } from '@store/reducers/interfaceReducer';
 import { useAppDispatch, useAppSelector } from '@hooks';
 import { lsGetItem } from '@helpers/localstorage';
 
-interface Props {}
+interface Props {
+    canReturnBack?: boolean
+}
 
-const MainWrap = (props: PropsWithChildren<Props>) => {
+const MainWrap = ( { canReturnBack, ...props } : PropsWithChildren<Props>) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
@@ -21,6 +23,7 @@ const MainWrap = (props: PropsWithChildren<Props>) => {
     let fullplayer_is_expanded = useAppSelector(state => state.interface.fullplayer_is_expanded);
     useEffect(() => {
         dispatch(setFullplayerExpanded(false));
+        dispatch(setHeaderIsFilled(false));
     }, [router.pathname]);
 
     return (
@@ -29,7 +32,7 @@ const MainWrap = (props: PropsWithChildren<Props>) => {
                 <Sidebar />
 
                 <div className={`w-screen h-screen ${fullplayer_is_expanded ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'}`} onScroll={fillHeaderByScroll}>
-                    <Header/>
+                    <Header canReturnBack={canReturnBack}/>
 
                     <div className="main-wrap min-h-screen pb-16">
                         {props.children}

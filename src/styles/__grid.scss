@@ -2,12 +2,16 @@ html {
     --col-padding: 10px;
     --container-padding: 60px;
     --container-max-width: 1440px;
+
+    @include media-breakpoint-down(sm) {
+        --container-padding: 16px;
+    }
 }
 
 
 .container, .container-fluid {
     padding-left: var(--container-padding);
-    padding-right: 60px;
+    padding-right: var(--container-padding);
     
 }
 

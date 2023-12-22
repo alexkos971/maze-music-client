@@ -2,7 +2,7 @@ import styles from "./ArtistHero.module.scss";
 import Button from "@components/ui/Button";
 import Image from "next/image";
 
-import { PlayBlack } from "@helpers/images";
+import { PlayBlack, BookMarkPlusBlack } from "@helpers/images";
 
 const ArtistHero = () => {
     const artist = {
@@ -45,7 +45,10 @@ const ArtistHero = () => {
                                 <span>{artist.albums.length} albums</span>
                             </div>
 
-                            <Button color="white"><PlayBlack/> Listen</Button>
+                            <div className={styles['artist-hero__actions']}>
+                                <Button color="white"><PlayBlack/> Listen</Button>
+                                <Button color="gray"><BookMarkPlusBlack/> Follow</Button>
+                            </div>
                         </div>
                     </div>
 

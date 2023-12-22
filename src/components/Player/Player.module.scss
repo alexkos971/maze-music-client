@@ -134,7 +134,7 @@
     &__cover {
         width: 100%;
         position: relative;
-        height: desktop_vw_min(431px);
+        height: desktop_vw_min(500px);
 
         img {
             width: 100%;
@@ -144,7 +144,7 @@
     }
 
     &__info {
-        margin-top: 45px;
+        margin-top: 60px;
 
         &-title {
             font-size: 42px;

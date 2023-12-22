@@ -35,6 +35,12 @@ export const interfaceSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setTheme, setSidebarCollapsed, setDirectory, setFullplayerExpanded, setHeaderIsFilled } = interfaceSlice.actions;
+export const { 
+    setTheme, 
+    setSidebarCollapsed, 
+    setDirectory, 
+    setFullplayerExpanded, 
+    setHeaderIsFilled
+} = interfaceSlice.actions;
 
 export default interfaceSlice.reducer;
