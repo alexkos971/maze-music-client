@@ -97,7 +97,7 @@ export const Select = ({
         )
 
         return (
-            <div className={`field field_select flex flex-col mt-3 max-w-sm`}>
+            <div className={`${styles.field} ${styles.field_select} flex flex-col mt-3 max-w-sm`}>
                 <FieldTitle title={title}/>
             
                 <label 
@@ -127,8 +127,8 @@ export const Select = ({
                         id={field_id}
                     />
 
-                    <div className={`absolute w-[24px] h-[24px] top-1/2 right-4 pointer-events-none duration-300 translate-y-[-50%] ${selectIsOpened ? 'scale-y-[-1]' : ''}`}>
-                        <Image alt="Chevron Down Icon" src={ChevronDownBlack} width={0} height={0} className="w-full h-full object-contain"/>
+                    <div className={`${styles.field__chevron} absolute w-[24px] h-[24px] top-1/2 right-4 pointer-events-none duration-300 translate-y-[-50%] ${selectIsOpened ? 'scale-y-[-1]' : ''}`}>
+                        <ChevronDownBlack />
                     </div>
 
                     <div className={`field__options absolute z-10 bg-white border-[0.5px] border-gray-e5 rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>

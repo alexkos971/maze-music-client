@@ -14,3 +14,35 @@ ul, ol {
 a, button, input, textarea {
     outline: none;
 }
+
+svg {
+    flex-shrink: 0;
+
+    // *[fill] {
+    //     fill: currentColor;
+    // }
+
+    // *[stroke] {
+    //     stroke: currentColor;
+    // }
+}
+
+div {
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--gray-de);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--green-05);
+        border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        opacity: 0.8;
+    }
+}

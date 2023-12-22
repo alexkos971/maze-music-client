@@ -1,10 +1,9 @@
 import { BoxBlackIcon, ExploreBlackIcon, SettingsGrayIcon } from "@helpers/images";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 export interface DirType {
     path: string;
     title: string;
-    icon?: undefined | StaticImport | string
+    icon?: undefined | Element
 };
 
 export const directories : Record<string, DirType>  = {
@@ -22,5 +21,9 @@ export const directories : Record<string, DirType>  = {
         icon: SettingsGrayIcon,
         path: '/settings',
         title: "pages.settings.header_title"
+    },
+    artist: {
+        path: '/artist',
+        title: "pages.artist.header_title"
     }
 }

@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import formatSecond from "@helpers/format-seconds";
 import { useAppDispatch, useAppSelector } from "@hooks";
-import { setCurrentTime, setTrack, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
+import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
+import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 
 import styles from "./Player.module.scss";
 import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, VolumeGray, ChevronUpGray } from "@helpers/images";
 import FullPlayer from "./FullPlayer";
+import Range from "@components/ui/Range";
+import { useThrottle } from "@hooks/listeners";
 
 const Player = () => {
-    const [ isExpanded, setIsExpanded ] = useState(false);
     
-    const [currentTime, isPlaying, volume, track] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track]);
+    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded, header_is_filled] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track, state.interface.fullplayer_is_expanded, state.interface.header_is_filled]);
     const dispatch = useAppDispatch(); 
     
     // move to redux
@@ -30,8 +31,8 @@ const Player = () => {
     // const [messageApi, contextHolder] = message.useMessage()
 
     const changeVolumeHandler = (volumeValue: number) => {
-        ref.current && (ref.current.volume = volumeValue);
-        dispatch(setVolume(volumeValue));
+        ref.current && (ref.current.volume = volumeValue / 100);
+        dispatch(setVolume(volumeValue / 100));
     }
 
 
@@ -182,101 +183,119 @@ const Player = () => {
         }
     }
 
-    const nextMusicClickHandler = () => changeTrack("next", false)
+    const nextMusicClickHandler = () => changeTrack("next", false);
+
+
+    // Get Height of the Player
+    const playerRef = useRef<HTMLDivElement>(null);    
+    useEffect(() => {
+        const resizeHandler = () => {        
+            playerRef?.current?.clientHeight ? document.documentElement.style.setProperty('--player-height', playerRef.current.clientHeight + 'px') : false;
+        }
+        resizeHandler();
+
+        window.addEventListener('resize', useThrottle(resizeHandler, 70));
+
+        return () => window.removeEventListener('resize', resizeHandler);
+    }, [playerRef]);
 
     return (
-        <div className={`${styles['player']} container-fluid`}>
-            { isExpanded ? <FullPlayer/> :'' }
+        <div className={styles.player}>
+            <FullPlayer/>
 
-            {
-                track 
-                && <audio 
-                        ref={ref} 
-                        onTimeUpdate={musicTimeUpdateHandler} 
-                        onLoadedMetadata={metadataLoadHandler} >
-                    <source src={track.src} type="audio/mpeg" />
-                    Your browser does not support the audio element.
-                </audio>
-            }
-            
-            {/* Prev - Play - Next */}
-            <div className="flex items-center">
-                <button 
-                    onClick={previousMusicClickHandler}
-                    className={`${styles['player-nav-button']} ${styles['player-nav-button_prev-track']}`}
-                    type="button">
-                        <Image src={DoubleArrowsGray} alt="Prev Track" />
-                </button>
+            <div className={styles.player__wrap} ref={playerRef}>
+                <div className="container-fluid">
+                    <div className={styles.player__inner}>
 
-                <button 
-                    className={`track__button w-8 h-8 mx-4 bg-green-05 rounded-full flex items-center justify-center group-hover:opacity-100 group-hover:block`} 
-                    onClick={playClickHandler}>
-                    <Image src={isPlaying ? PauseBlack : PlayBlack} width={0} height={0} alt="Play" className="w-5 h-5"/>
-                </button>
-
-                <button 
-                    onClick={nextMusicClickHandler}
-                    className={styles['player-nav-button']}
-                    type="button">
-                        <Image src={DoubleArrowsGray} alt="Next Track" />
-                </button>
-            </div>
-
-            {/* Show/Hide  Full Player */}
-            <button 
-                onClick={() => setIsExpanded(!isExpanded)} 
-                type="button" 
-                className={`player-expand ml-16 duration-200 ${styles['player-nav-button']} ${isExpanded ? 'scale-y-[-1]' : ''}`}>
-                <Image src={ChevronUpGray} alt="Expand Player"/>
-            </button>
-
-            {/* Progress */}
-            <div className={`player-progress mx-auto flex items-center justify-center w-full`}>
-                <span className="text-white text-xs">{formatSecond(currentTime)}</span>
-
-                 <div className={`${styles['player-progress__wrap']}`} style={{'--track-progress' : ((currentTime !== 0 && duration !== 0) ? ((currentTime / duration) * 100) : 0) + '%'} as React.CSSProperties}>
-                    <input 
-                        value={currentTime} 
-                        onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))} 
-                        max={duration} 
-                        className={`${styles['player-progress__input']}`} 
-                        type="range" 
-                        name="track-progress" />
-                </div>   
-                
-                <span className="text-white text-xs">{formatSecond(duration) ?? "00:00"}</span>
-            </div>
-
-            {/* Volume/Save/Repeat */}
-            <div className="flex items-center gap-6 shrink-0">
-                <span className={styles['player-volume']}>
-                    <button
-                        className={`${styles['player-nav-button']}`} 
-                        type="button">                    
+                        {
+                            track && 
+                            <audio 
+                                ref={ref} 
+                                onTimeUpdate={musicTimeUpdateHandler} 
+                                onLoadedMetadata={metadataLoadHandler} >
+                                <source src={track.src} type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        }                
                         
-                        <Image src={VolumeGray} alt="Volume"/>                    
-                    </button>
-                    
-                    <span className={styles['player-volume__input']} style={{'--track-volume': (volume !== 0 ? volume * 100 : 0) + '%'} as React.CSSProperties}>
-                        <input 
-                            min={0}
-                            max={100}
-                            value={volume * 100} 
-                            onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value) / 100)} 
-                            type="range" 
-                            name="track-volume" />
-                    </span>
-                </span>
+                        {/* Prev - Play - Next */}
+                        <div className="flex items-center">
+                            <button 
+                                onClick={previousMusicClickHandler}
+                                className={`${styles['player-nav-button']} ${styles['player-nav-button_prev-track']}`}
+                                type="button">
+                                    <DoubleArrowsGray/>
+                            </button>
 
-                <button
-                    className={`${styles['player-nav-button']}`} 
-                    type="button">                    
-                    <Image src={true ? HeartOutlineGray : HeartSolidGreen} alt="Heart Icon"/>
-                </button>
+                            <button 
+                                className={styles['player-play-button']} 
+                                onClick={playClickHandler}>
+                                {isPlaying ? <PauseBlack/> : <PlayBlack/>}                                
+                            </button>
 
-                <button type="button" onClick={repeatClickHandler} className={styles['player-nav-button']}>
-                    <Image src={RepeatGray} alt="Repeat" />
-                </button>
+                            <button 
+                                onClick={nextMusicClickHandler}
+                                className={styles['player-nav-button']}
+                                type="button">
+                                <DoubleArrowsGray />
+                            </button>
+                        </div>
+
+                        {/* Show/Hide  Full Player */}
+                        <button 
+                            onClick={() => {
+                                dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
+                                dispatch( setHeaderIsFilled(false) );                        
+                            }} 
+                            type="button" 
+                            className={`player-expand ml-16 duration-200 ${styles['player-nav-button']} ${fullplayer_is_expanded ? 'scale-y-[-1]' : ''}`}>
+                            <ChevronUpGray/>
+                        </button>
+
+                        {/* Progress */}
+                        <div className={`player-progress mx-auto flex items-center justify-center w-full`}>
+                            <span className="text-white text-xs">{formatSecond(currentTime)}</span>
+
+                            <Range
+                                value={currentTime}
+                                className={'mx-4 max-w-[480px]'}
+                                onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
+                                max={duration} />
+                            
+                            <span className="text-white text-xs">{formatSecond(duration) ?? "00:00"}</span>
+                        </div>
+
+                        {/* Navigation - Volume/Save/Repeat */}
+                        <div className={styles['player__nav']}>
+                            <span className={styles['player-volume']}>
+                                <button
+                                    className={`${styles['player-nav-button']}`} 
+                                    type="button">                    
+                                    
+                                    <VolumeGray alt="Volume"/>                    
+                                </button>
+                                
+                                <Range
+                                    value={volume * 100}
+                                    min={0}
+                                    color="gray"
+                                    max={100}
+                                    withThumb={false}
+                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
+                                    className={styles['player-volume__range']}
+                                    />
+                            </span>
+
+                            <button type="button" className={`${styles['player-nav-button']}`}> 
+                                {true ? <HeartOutlineGray/> : <HeartSolidGreen/>}
+                            </button>
+
+                            <button type="button" onClick={repeatClickHandler} className={styles['player-nav-button']}>
+                                <RepeatGray/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

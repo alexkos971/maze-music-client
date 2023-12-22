@@ -21,3 +21,16 @@
         @apply text-gray-8e;
     }
 }
+
+.field {
+    &_select {
+
+        .field__chevron {
+            img, svg {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    }
+}

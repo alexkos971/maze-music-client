@@ -12,3 +12,26 @@
     $vw_value: ($px / 1440px) * 100 * 1vw;
     @return calc(max(#{$vw_value}, #{$px}));
 }
+
+$screen-sizes: (
+    'lg': '1200',
+    'md': '992',
+    'sm': '768',
+    'xs': '576'
+);
+
+@mixin media-breakpoint-down($breakpoint) {
+    $prop: map-get($screen-sizes, $breakpoint);
+        
+    @media screen and (max-width: #{$prop}px) {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-up($breakpoint) {
+    $prop: map-get($screen-sizes, $breakpoint);
+        
+    @media screen and (min-width: #{$prop}px) {
+        @content;
+    }
+}

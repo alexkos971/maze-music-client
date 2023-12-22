@@ -11,6 +11,9 @@
         },
         "settings": {
             "header_title": "Settings"
+        },
+        "artist": {
+            "header_title": "Artist"
         }
     },
     "fields" : {

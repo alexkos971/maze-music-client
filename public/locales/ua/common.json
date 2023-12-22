@@ -11,6 +11,9 @@
         },
         "settings": {
             "header_title": "Налаштування"
+        },
+        "artist": {
+            "header_title": "Виконавець"
         }
     },
     "fields" : {

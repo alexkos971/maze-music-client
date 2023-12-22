@@ -18,7 +18,7 @@ export const Title = () => {
   
     useEffect(() => {
       for (let val in directories) {
-        if (directories[val].path == pathname) {
+        if (pathname?.includes(directories[val].path)) {
           dispatch(setDirectory(directories[val]))
         }
       }
@@ -26,7 +26,7 @@ export const Title = () => {
   
     return (
         <Head>
-            <title>{`${t(directory.title)} - Maze Music`}</title>
+          <title>{`${t(directory.title)} - Maze Music`}</title>
         </Head>
     );
 }

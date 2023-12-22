@@ -1,10 +1,10 @@
 // @ts-check
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, UIEvent } from "react";
 import { useRouter } from "next/router";
-import { setTheme } from "@store/reducers/interfaceReducer";
+import { setTheme, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
+import {store} from '@store/rootReducer';
 
 import Link from "next/link";
-import Image from "next/image";
 import { directories } from "@helpers/directory";
 import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon } from "@helpers/images";
 
@@ -12,9 +12,9 @@ import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "@hooks/index";
 
 const Header = () => {
-  const [theme, title, profile] = useAppSelector((state) => [state.interface.theme, state.interface.directory.title, state.profile]);
-  const {pathname} = useRouter();
   const dispatch = useAppDispatch();
+  const {pathname} = useRouter();
+  const [theme, title, profile, header_is_filled, fullplayer_is_expanded] = useAppSelector((state) => [state.interface.theme, state.interface.directory.title, state.profile, state.interface.header_is_filled, state.interface.fullplayer_is_expanded]);
 
   const {t} = useTranslation();
 
@@ -24,10 +24,17 @@ const Header = () => {
     if (avatarRef?.current && profile.name) {
       avatarRef.current.setAttribute('data-nick', profile.name.split(" ").reduce((item, acc) => item[0] + acc[0]));
     }
-  }, [profile.name])
+  }, [profile.name]);
+
+
+  // Get Height of the Header
+  const headerRef = useRef<HTMLDivElement>(null);    
+  useEffect(() => {
+    headerRef?.current?.clientHeight ? document.documentElement.style.setProperty('--header-height', headerRef.current.clientHeight + 'px') : false;
+  }, [headerRef]);
 
   return (
-    <header className={'sticky top-0 left-0 py-5 bg-white z-10'}>
+    <header className={`sticky top-0 left-0 py-5 z-20 duration-300 ${header_is_filled ? 'bg-white' : ''}`} ref={headerRef}>
       <div className="container-fluid">
         <div className="header__wrap flex items-center justify-end">
           <span className="header__title font-semibold text-lg text-green-05 mr-auto">{t(title)}</span>
@@ -37,7 +44,7 @@ const Header = () => {
             <Link 
               href={'/settings'} 
               className={`header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6 ${pathname == directories['settings']['path'] ? 'brightness-50' : ''}`}>
-              <Image src={SettingsGrayIcon} alt="Settings Icon" className="w-full h-full object-contain"/>
+              <SettingsGrayIcon className="w-full h-full object-contain"/>
             </Link>
 
             {/* Notification Tooltip */}
@@ -46,7 +53,7 @@ const Header = () => {
               cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6
               relative before:absolute before:right-[6px] before:top-[6px] before:w-[9px] before:h-[9px] before:rounded-xl before:bg-green-05 
             `}>            
-              <Image src={NotificationGrayIcon} alt="Notifications Icon" className="w-full h-full object-contain"/>
+              <NotificationGrayIcon alt="Notifications Icon" className="w-full h-full object-contain"/>
             </span>
 
             {/* Switch Theme */}
@@ -54,7 +61,10 @@ const Header = () => {
               type="button" 
               className="header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6" 
               onClick={() => dispatch(setTheme(theme == 'dark' ? 'light' : 'dark'))}>
-              <Image src={theme == 'dark' ? MoonBlackIcon : SunGrayIcon } alt={(theme == 'dark' ? 'Moon' : 'Sun') + 'Icon'} className="w-full h-full object-contain"/>
+              {(() => {
+                let theme_classes = 'w-full h-full object-contain';
+                return theme == 'dark' ? <MoonBlackIcon /> : <SunGrayIcon/>
+              })()}
             </button>
           </div>
 
@@ -66,12 +76,22 @@ const Header = () => {
                   after:absolute ${'after:content-[attr(data-nick)]'} after:left-1/2 after:top-1/2 after:w-full after:h-full after:translate-x-[-50%] after:translate-y-[-50%] after:font-normal after:text-base after:text-gray-c4 after:text-center after:flex after:items-center after:justify-center after:bg-gray-ee
                 `}>
               </div>
-              <span className="header__profile-name font-normal text-base text-black ml-4">{profile.name}</span>
+              <span className={`header__profile-name font-normal text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-black'}`}>{profile.name}</span>
           </Link>
         </div>
       </div>
     </header>  
   );
 }
+
+export const fillHeaderByScroll = (e: UIEvent<HTMLDivElement>) : void => {
+  if (e.currentTarget.scrollTop > 50 && !store.getState().interface.header_is_filled) {
+    store.dispatch(setHeaderIsFilled(true));
+  }
+  else if (e.currentTarget.scrollTop <= 50 && store.getState().interface.header_is_filled) {
+    store.dispatch(setHeaderIsFilled(false));
+  }
+}
+    
 
 export default Header;

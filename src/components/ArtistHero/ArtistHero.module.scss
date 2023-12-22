@@ -1,0 +1,69 @@
+.artist-hero {
+    position: relative;
+    // ovh
+    width: 100%;
+    min-height: 432px;
+    padding-top: var(--header-height);
+    background-color: var(--black);
+    margin-top: calc(0px - var(--header-height));
+
+    &__content {
+        padding-right: 40px;
+    }
+
+    &__title {
+        font-size: 54px;
+        font-weight: 700;
+        color: var(--white);
+        letter-spacing: 0.54px;
+    }
+
+    &__description {
+        margin-top: 24px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 160%;
+        color: var(--gray-8e);
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+        gap: 0px 16px;
+        margin-top: 24px;
+
+        button {
+            margin-top: 0;
+        }
+
+        span {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--white);
+        }
+
+        * {
+            color: var(--white);
+        }   
+
+        &-separator {
+            width: 4px;
+            height: 4px;
+            background-color: var(--white);
+            border-radius: 50%;
+        }
+    }
+
+    &__avatar {
+        margin-top: calc(0px - var(--header-height));
+        margin-left: 20px;
+        margin-right: calc(0px - var(--container-padding));
+        height: 435px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}

@@ -7,8 +7,15 @@ interface Track {
     name: string;
     src: string;
     cover: string;
-    artist: string;
-    // duration: number;
+    artist: {
+        id: string,
+        name: string;
+    };
+    album: null | {
+        id: string,
+        name: string;
+    }
+    duration: number;
     playedCount: number
 };
 
@@ -36,4 +43,12 @@ interface Artist {
     created_date: Date;
     description: string;
     avatar: string;
+}
+
+interface User extends Artist {
+    savedTracks: number[],
+    savedPlaylists: number[],
+    followings: number[],
+    email: string,
+    password: string
 }

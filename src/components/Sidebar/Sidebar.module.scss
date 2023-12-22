@@ -1,4 +1,17 @@
 .sidebar {
+    &__logo {
+        width: 100%;
+        height: auto;
+        max-height: 30px;
+        display: flex;
+        justify-content: center;
+
+        svg, img {
+            width: auto;
+            height: 100%;        
+        }
+    }
+
     &-button {
         display: flex;
         padding-left: 16px;

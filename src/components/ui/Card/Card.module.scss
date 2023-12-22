@@ -1,0 +1,75 @@
+@import '../../../styles/_helpers';
+
+.card {
+    height: 0;    
+
+    &:hover {    
+        .card__image {
+            img {
+                transform: scale(1.1);
+            }
+
+            &::after {
+                opacity: 1;
+            }
+        }
+
+        .card__play-button {
+            transform: translateY(-50%) translateX(-50%);
+            opacity: 1;
+        }
+    }
+
+    &_small {
+        padding-bottom: desktop_vw_min(230px);
+        max-height: 230px;
+    }
+    
+    &_large {
+        padding-bottom: desktop_vw_min(290px);
+        max-height: 290px;
+    }
+
+    &__image {
+
+        // BG shadow for hover
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: .3s;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.01) 0%, #000 84.14%);
+        }
+
+        img {
+            transition: .3s;
+        }
+    }
+
+    &__play-button {
+        width: 42px;
+        height: 42px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, calc(-50% + 32px));
+        border-radius: 50%;
+        background-color: var(--green-05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1;
+        transition: .3s;
+        opacity: 0;
+
+        svg, img {
+            width: 24px;
+            height: 24px;
+        }
+    }
+}

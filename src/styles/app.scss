@@ -4,9 +4,10 @@
 @tailwind variants;
 
 // @import "__spacings";
-@import "__reset";
 @import "__variables";
 @import "__helpers";
+@import "__grid";
+@import "__reset";
 // @import '__reset';
 
 // Fonts
@@ -18,9 +19,4 @@ html {
 
 body {    
     font-family: 'Open Sans', sans-serif;
-}
-
-.container, .container-fluid {
-    padding-left: 60px;
-    padding-right: 60px;
 }

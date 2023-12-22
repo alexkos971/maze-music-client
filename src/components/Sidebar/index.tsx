@@ -1,9 +1,9 @@
-import React from "react";
-import styles from "./Sidebar.module.scss";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
+import styles from "./Sidebar.module.scss";
 
+import { lsGetItem } from "@helpers/localstorage";
 import Link from "next/link";
-import Image from "next/image";
 import { useTranslation } from "next-i18next";
 
 import { useAppSelector, useAppDispatch } from "@hooks/index";
@@ -21,13 +21,17 @@ const Sidebar : React.FC = () => {
     const menu_pages = ['for_you', "library"];
     const sidebar_menu = menu_pages.map((item : string) => directories[item]);
 
+    useEffect(() => {
+        dispatch(setSidebarCollapsed(lsGetItem('sidebar_is_collapsed')));
+    }, []);
+
     return (
         <aside 
-            className={`sidebar w-full shrink-0 h-screen flex flex-col items-center ${isCollapsed ? 'sidebar_collapsed pt-[26px]' : 'pt-[20px]'} pb-[32px] border-r border-r-gray-de duration-500`}
+            className={`sidebar w-full shrink-0 h-screen flex flex-col items-center pt-[26px] ${isCollapsed ? 'sidebar_collapsed' : ''} pb-[32px] border-r border-r-gray-de duration-500`}
             style={{maxWidth: isCollapsed ? 250: 90 }}>
 
-            <div className={`logo sidebar__logo w-full ${isCollapsed ? 'pr-8 pl-5' : 'px-6'}`}>
-                <Image src={isCollapsed ? Logo : LogoIcon} alt="Logo" width={0} height={0} className="max-h-[42px] w-full h-auto"/>
+            <div className={`${styles['sidebar__logo']} ${isCollapsed ? 'pr-8 pl-5' : 'px-6'}`}>
+                {isCollapsed ? <Logo/> : <LogoIcon/>}
             </div>
 
             <ul className="sidebar__menu flex flex-col w-full mt-8">
@@ -39,7 +43,7 @@ const Sidebar : React.FC = () => {
                         >
                             <Link href={item.path} className={styles['sidebar-button__wrap']}>
                                 <div className={`${styles['sidebar-button__icon']}`}>
-                                    {item.icon ? <Image src={item.icon} alt="Icon" width={0} height={0}/> : ''}
+                                    {item.icon ? <item.icon/> : ''}
                                 </div>
                                 <span className={`${styles['sidebar-button__title']}`}>{t(item.title)}</span>
                             </Link>

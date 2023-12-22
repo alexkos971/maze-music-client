@@ -1,0 +1,107 @@
+html {
+    --col-padding: 10px;
+    --container-padding: 60px;
+    --container-max-width: 1440px;
+}
+
+
+.container, .container-fluid {
+    padding-left: var(--container-padding);
+    padding-right: 60px;
+    
+}
+
+.container {
+    max-width: var(--container-max-width);
+    
+    .container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+}
+
+  
+.row {
+    width: auto;    
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: calc(0px - var(--col-padding));
+    margin-right: calc(0px - var(--col-padding));
+}
+  
+.col-xl, .col-xl-auto, .col-xl-12, .col-xl-11, .col-xl-10, .col-xl-9, .col-xl-8, .col-xl-7, .col-xl-6, .col-xl-5, .col-xl-4, .col-xl-3, .col-xl-2, .col-xl-1, 
+.col-lg, .col-lg-auto, .col-lg-12, .col-lg-11, .col-lg-10, .col-lg-9, .col-lg-8, .col-lg-7, .col-lg-6, .col-lg-5, .col-lg-4, .col-lg-3, .col-lg-2, .col-lg-1, 
+.col-md, .col-md-auto, .col-md-12, .col-md-11, .col-md-10, .col-md-9, .col-md-8, .col-md-7, .col-md-6, .col-md-5, .col-md-4, .col-md-3, .col-md-2, .col-md-1, 
+.col-sm, .col-sm-auto, .col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1, 
+.col, .col-auto, .col-12, .col-11, .col-10, .col-9, .col-8, .col-7, .col-6, .col-5, .col-4, .col-3, .col-2, .col-1 {
+    position: relative;
+    width: 100%;
+    padding-left: var(--col-padding);
+    padding-right: var(--col-padding);
+}
+
+$col-sizes: (
+    1: 8.33333333%,
+    2: 16.66666667%,
+    3: 25%,
+    4: 33.33333%,
+    5: 41.66666667%,
+    6: 50%,
+    7: 58.33333333%,
+    8: 66.66666667%,
+    9: 75%,
+    10: 83.33333333%,
+    11: 91.66666667%,
+    12: 100%  
+);
+
+@mixin col-styles($screen) {
+    .col-#{$screen} {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+    } 
+    
+    .col-#{$screen}-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%
+    }
+    
+    @each $key, $value in $col-sizes {
+        .col-#{$screen}-#{$key} {
+            flex: 0 0 $value;
+            max-width: $value;
+        }
+    
+        .offset-#{$screen}-#{$key} {
+            margin-left: $value;
+        }
+    }
+}
+
+
+@include media-breakpoint-up(xs) {
+    @include col-styles('sm');
+}
+
+@include media-breakpoint-up(sm) {
+    @include col-styles('md');
+}
+
+@include media-breakpoint-up(md) {
+    @include col-styles('lg');
+}
+
+.col-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%
+}
+
+@each $key, $value in $col-sizes {
+    .col-#{$key} {
+        flex: 0 0 $value;
+        max-width: $value;
+    }
+}
