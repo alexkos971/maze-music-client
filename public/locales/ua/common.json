@@ -1,7 +1,18 @@
 {
     "sidebar": {
         "collapse": "Згорнути"
-    },    
+    },   
+    "player": {
+        "lyrics": "Текст"
+    }, 
+    "title": {
+        "albums": "Альбоми",
+        "artists_for_you": "Виконавці для тебе",
+        "popular_playlists": "Популярні виконавці",
+        "popular_songs": "Популярні треки",
+        "similar_artists": "Схожі виконавці",
+        "top_tracks_this_month": "Топ треків цього місяця"
+    },
     "pages": {
         "for-you": {
             "header_title": "Для тебе"

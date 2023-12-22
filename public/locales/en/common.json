@@ -2,6 +2,17 @@
     "sidebar": {
         "collapse": "Collapse"
     },
+    "player": {
+        "lyrics": "Lyrics"
+    },
+    "title": {
+        "albums": "Albums",
+        "artists_for_you": "Artists for you",
+        "popular_playlists": "Popular playlists",
+        "popular_songs": "Popular songs",
+        "similar_artists": "Similar artists",
+        "top_tracks_this_month": "Top tracks this month"
+    },
     "pages": {
         "for-you": {
             "header_title": "For you"

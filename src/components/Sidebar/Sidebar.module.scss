@@ -118,6 +118,12 @@
                         }
                     }
                 }
+
+                &.sidebar-button_only_icon {
+                    .sidebar-button__wrap::before {
+                        transform: scale(-1, 1);
+                    }
+                }
             }
         }
     }

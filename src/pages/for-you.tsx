@@ -7,15 +7,17 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@helpers/images";
 import Playlists from "@components/Playlists";
+import { useTranslation } from "next-i18next";
 
 export default function ForYou() {    
+    const {t} = useTranslation('common');
 
     return (        
         <MainWrap>
             <div className="container-fluid">
                 <Artists 
                     className='mt-[0px]'
-                    title="Artists"
+                    title={t('title.artists_for_you')}
                     data={[
                     {
                         id: 'a1',
@@ -54,7 +56,7 @@ export default function ForYou() {
                 ]}/>
 
                 <Playlists
-                    title="Popular Playlists"
+                    title={t('title.popular_playlists')}
                     data={[
                         {
                             id: 'q11',
@@ -81,7 +83,7 @@ export default function ForYou() {
                 />      
 
                 <TrackList
-                    title="Popular songs"
+                    title={t('title.popular_songs')}
                     data={{
                         name: 'Some Name',
                         tracks: [

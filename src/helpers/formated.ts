@@ -7,4 +7,15 @@ const formatSecond = (totalSeconds: number) => {
     return `${minutes}:${secondsFormatted}`;
 };
 
-export default formatSecond;
+const formatNumber = (num: number) : string => {
+    const suffixes = ["", "K", "M", "B", "T"];
+
+    const magnitude = Math.floor(Math.log10(Math.abs(num)) / 3);
+    const roundedNum = ( num / Math.pow(10, magnitude * 3) ).toFixed(1);
+
+    return `${roundedNum}${suffixes[magnitude]}`;
+} 
+
+export {
+    formatSecond, formatNumber
+};

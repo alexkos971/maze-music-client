@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import formatSecond from "@helpers/format-seconds";
+import {formatSecond} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
 import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";

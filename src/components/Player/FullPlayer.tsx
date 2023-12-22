@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import { useAppSelector } from '@hooks';
 
 import { fillHeaderByScroll } from '@components/Header';
@@ -7,6 +8,7 @@ import styles from './Player.module.scss';
 import Image from 'next/image';
 
 const FullPlayer = () => {
+    const {t} = useTranslation('common');
     const [ fullplayer_is_expanded, track ] = useAppSelector(state => [state.interface.fullplayer_is_expanded, state.player.track]);
 
     return (
@@ -34,7 +36,7 @@ const FullPlayer = () => {
 
                     <div className="offset-lg-1 col-lg-5">
                         <div className={styles.fullplayer__lyrics}>
-                            <h3>Lyrics:</h3>
+                            <h3>{t("player.lyrics")}:</h3>
 
                             <div className={styles['fullplayer__lyrics-text']}>
                                 <p>We found each other<br/>

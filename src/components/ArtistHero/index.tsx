@@ -1,7 +1,7 @@
 import styles from "./ArtistHero.module.scss";
 import Button from "@components/ui/Button";
 import Image from "next/image";
-
+import { formatNumber } from "@helpers/formated";
 import { PlayBlack, BookMarkPlusBlack } from "@helpers/images";
 
 const ArtistHero = () => {
@@ -38,7 +38,7 @@ const ArtistHero = () => {
 
                                 <span className={styles['artist-hero__info-separator']}></span>
                                 
-                                <span>{artist.listenings} listeners</span>
+                                <span>{formatNumber(artist.listenings)} listeners</span>
                                 
                                 <span className={styles['artist-hero__info-separator']}></span>
                                 
