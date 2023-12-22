@@ -33,6 +33,8 @@ const Player = () => {
     const changeVolumeHandler = (volumeValue: number) => {
         ref.current && (ref.current.volume = volumeValue / 100);
         dispatch(setVolume(volumeValue / 100));
+        ref.current && (ref.current.volume = volumeValue / 100);
+        dispatch(setVolume(volumeValue / 100));
     }
 
 
