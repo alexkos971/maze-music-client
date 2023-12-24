@@ -7,11 +7,25 @@
     },
     "title": {
         "albums": "Albums",
+        "artists": "Artists",
+        "tracks": "Songs",
         "artists_for_you": "Artists for you",
         "popular_playlists": "Popular playlists",
         "popular_songs": "Popular songs",
         "similar_artists": "Similar artists",
         "top_tracks_this_month": "Top tracks this month"
+    },
+    "interface": {
+        "listen": "Listen",
+        "follow": "Follow",
+        "listeners": "listeners",
+        "albums": "albums",
+        "followers": "followers",
+        "artists": "artists",
+        "tracks": "songs",
+        "see_all": "See All",
+        "subscriptions": "subscriptions",
+        "change": "Change"
     },
     "pages": {
         "for-you": {
@@ -25,6 +39,9 @@
         },
         "artist": {
             "header_title": "Artist"
+        },
+        "profile": {
+            "header_title": "Profile"
         }
     },
     "fields" : {

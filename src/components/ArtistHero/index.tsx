@@ -3,8 +3,12 @@ import Button from "@components/ui/Button";
 import Image from "next/image";
 import { formatNumber } from "@helpers/formated";
 import { PlayBlack, BookMarkPlusBlack } from "@helpers/images";
+import { useTranslation } from "next-i18next";
+import DottedRow from "@components/ui/DottedRow";
 
 const ArtistHero = () => {
+    const {t} = useTranslation('common');
+
     const artist = {
         name: 'The Weeknd',
         description: 'Abel Makkonen Tesfaye, popularly known as The Weeknd (born February 16, 1990 in Toronto, Ontario, Canada), is a Canadian R&B/hip-hop musician, singer-songwriter and record producer. He chose his stage name in tribute to when he was 17 years old, when, along with his friend...',
@@ -24,7 +28,7 @@ const ArtistHero = () => {
     }
 
     return (
-        <div className={styles['artist-hero']}>
+        <section className={styles['artist-hero']}>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-7">
@@ -33,21 +37,15 @@ const ArtistHero = () => {
                             <h1 className={styles['artist-hero__title']}>{artist.name}</h1>
                             <p className={styles['artist-hero__description']}>{artist.description}</p>
                         
-                            <div className={styles['artist-hero__info']}>
+                            <DottedRow className={styles['artist-hero__info']}>
                                 <Button color="gray" size="small">{artist.genre}</Button>        
-
-                                <span className={styles['artist-hero__info-separator']}></span>
-                                
-                                <span>{formatNumber(artist.listenings)} listeners</span>
-                                
-                                <span className={styles['artist-hero__info-separator']}></span>
-                                
-                                <span>{artist.albums.length} albums</span>
-                            </div>
+                                <span>{formatNumber(artist.listenings)} {t('interface.listeners')}</span>
+                                <span>{artist.albums.length} {t('interface.albums')}</span>
+                            </DottedRow>
 
                             <div className={styles['artist-hero__actions']}>
-                                <Button color="white"><PlayBlack/> Listen</Button>
-                                <Button color="gray"><BookMarkPlusBlack/> Follow</Button>
+                                <Button color="white"><PlayBlack/> {t('interface.listen')}</Button>
+                                <Button color="gray"><BookMarkPlusBlack/> {t('interface.follow')}</Button>
                             </div>
                         </div>
                     </div>
@@ -59,7 +57,7 @@ const ArtistHero = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 

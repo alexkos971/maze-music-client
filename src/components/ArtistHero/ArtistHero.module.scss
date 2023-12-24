@@ -28,30 +28,8 @@
     }
 
     &__info {
-        display: flex;
-        align-items: center;
-        gap: 0px 16px;
-        margin-top: 24px;
-
-        button {
-            margin-top: 0;
-        }
-
-        span {
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--white);
-        }
-
         * {
             color: var(--white);
-        }   
-
-        &-separator {
-            width: 4px;
-            height: 4px;
-            background-color: var(--white);
-            border-radius: 50%;
         }
     }
 
@@ -61,7 +39,7 @@
         gap: 0px 32px;
 
         button {
-            max-width: 123px;
+            min-width: 123px;
             padding-left: 15px;
             padding-right: 15px;
             font-size: 18px;

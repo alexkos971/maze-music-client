@@ -25,5 +25,9 @@ export const directories : Record<string, DirType>  = {
     artist: {
         path: '/artist',
         title: "pages.artist.header_title"
+    },
+    profile: {
+        path: '/profile',
+        title: "pages.profile.header_title"
     }
 }

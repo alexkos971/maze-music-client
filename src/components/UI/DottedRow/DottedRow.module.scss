@@ -1,0 +1,17 @@
+.dotted-row {
+    display: flex;
+    align-items: center;
+    gap: 0px 16px;
+    margin-top: 24px;
+
+    & > * {
+        margin: 0;
+    }
+    
+    &__dot {
+        width: 4px;
+        height: 4px;
+        background-color: var(--white);
+        border-radius: 50%;
+    }
+}

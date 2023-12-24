@@ -7,11 +7,25 @@
     }, 
     "title": {
         "albums": "Альбоми",
+        "artists": "Виконавці",
+        "tracks": "Треки",
         "artists_for_you": "Виконавці для тебе",
         "popular_playlists": "Популярні виконавці",
         "popular_songs": "Популярні треки",
         "similar_artists": "Схожі виконавці",
         "top_tracks_this_month": "Топ треків цього місяця"
+    },
+    "interface": {
+        "listen": "Слухати",
+        "follow": "Стежити",
+        "listeners": "слухачів",
+        "albums": "альбомів",
+        "followers": "слухачів",
+        "artists": "виконавців",
+        "tracks": "треки",
+        "see_all": "Дивитися Усе",
+        "subscriptions": "підписники",
+        "change": "Змінити"
     },
     "pages": {
         "for-you": {
@@ -25,6 +39,9 @@
         },
         "artist": {
             "header_title": "Виконавець"
+        },
+        "profile": {
+            "header_title": "Профіль"
         }
     },
     "fields" : {

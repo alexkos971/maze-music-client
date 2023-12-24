@@ -25,8 +25,8 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     const btn_sizes = {
-        'small' : 'py-[6px] px-[10px] max-w-[100px] text-sm justify-center',
-        'normal' : 'py-[10px] px-6 max-w-[160px] text-base'
+        'small' : 'py-[6px] px-[10px] min-w-[100px] text-sm justify-center',
+        'normal' : 'py-[10px] px-6 min-w-[160px] text-base'
     };
 
     const { isFormValid } = useFormValidation();
@@ -39,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({
             onClick={() => {
                 console.log(isFormValid)
             }}        
-            className={`duration-300 rounded-md mt-6 w-full flex items-center gap-2 ${btn_sizes[size]} cursor-pointer ${isDisabled ? btn_colors['disabled'] : btn_colors[color]}`}>
+            className={`duration-300 rounded-md mt-6 flex items-center gap-2 ${btn_sizes[size]} cursor-pointer ${isDisabled ? btn_colors['disabled'] : btn_colors[color]}`}>
             {children}
         </button>
     );

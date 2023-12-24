@@ -3,6 +3,7 @@ import Card from "@components/ui/Card";
 import { StaticImageData } from "next/image";
 import { Identifier } from "typescript";
 import Slider from "@components/ui/Slider";
+import { useTranslation } from "next-i18next";
 
 type PlaylistsProps = {
     title?: string,
@@ -18,6 +19,8 @@ type PlaylistsProps = {
 };
 
 const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {    
+    const {t} = useTranslation();
+    const tracks_title = t('interface.tracks');
 
     return( 
         <div className={`block cards mt-8 ${className}`}>
@@ -36,7 +39,7 @@ const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {
                                     image={item.feature ?? null}
                                     title={item.name}
                                     options={{size: "small", playButton: true}}
-                                    subtitle={item.tracks.length + ' Tracks'}
+                                    subtitle={`${item.tracks.length} ${tracks_title}`}
                                 />
 
                             </Slider.Item>

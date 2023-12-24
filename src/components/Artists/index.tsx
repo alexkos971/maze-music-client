@@ -3,6 +3,7 @@ import Card from "@components/ui/Card";
 import { StaticImageData } from "next/image";
 import { Identifier } from "typescript";
 import Slider from "@components/ui/Slider";
+import { useTranslation } from "next-i18next";
 
 type ArtistsProps = {
     title?: string,
@@ -18,6 +19,10 @@ type ArtistsProps = {
 };
 
 const Artists = ({title, data, slidesToShow, className}: ArtistsProps) => {    
+    let {t} = useTranslation('common');
+    let albums_title = t('interface.albums');
+    let followers_title = t('interface.followers');
+
     return( 
         <div className={`cards block mt-8 pb-8 ${className}`}>
             { title ? <h2 className="text-4xl font-semibold mb-5">{title}</h2> : '' }
@@ -28,13 +33,13 @@ const Artists = ({title, data, slidesToShow, className}: ArtistsProps) => {
                         let subtitle = '';
                         
                         if (item.albums?.length) {
-                            subtitle += item.albums.length + ' Albums';
+                            subtitle += `${item.albums.length} ${albums_title}`;
                         }
 
                         if (item.followers?.length){
                             if (subtitle.length) {
                                 subtitle += ' | ';
-                                subtitle += item.followers.length + ' Followers';
+                                subtitle += `${item.followers.length} ${followers_title}`;
                             }
                         }
 

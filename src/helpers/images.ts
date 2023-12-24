@@ -25,6 +25,7 @@ import DoubleArrowsGray from "../assets/images/icons/double-arrows-gray.svg";
 import RepeatGray from "../assets/images/icons/repeat-gray.svg";
 import VolumeGray from "../assets/images/icons/volume-gray.svg";
 import BookMarkPlusBlack from '../assets/images/icons/bookmark-plus-black.svg';
+import EditBlack from '../assets/images/icons/edit-black.svg';
 
 // Uploads
 import WeekndAvatar from "../assets/images/uploads/weeknd.png";
@@ -61,5 +62,6 @@ export {
     HeartSolidGreen,
     DoubleArrowsGray,
     RepeatGray,
-    VolumeGray 
+    VolumeGray,
+    EditBlack
 };

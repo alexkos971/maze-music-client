@@ -81,11 +81,11 @@ const Player = () => {
         } 
 
         if ( !disableKeydown ) {
-            document.addEventListener("keydown", handler)
+            // document.addEventListener("keydown", handler)
         }
 
         return() => {
-            document.removeEventListener("keydown", handler)
+            // document.removeEventListener("keydown", handler)
         }
     }, [isPlaying, currentTime, volume, disableKeydown])
 
