@@ -22,7 +22,8 @@ const Sidebar : React.FC = () => {
     const sidebar_menu = menu_pages.map((item : string) => directories[item]);
 
     useEffect(() => {
-        dispatch(setSidebarCollapsed(lsGetItem('sidebar_is_collapsed')));
+        let sidebarState = lsGetItem('sidebar_is_collapsed');
+        dispatch(setSidebarCollapsed( typeof sidebarState === 'boolean' ? sidebarState : false ));
     }, []);
 
     return (

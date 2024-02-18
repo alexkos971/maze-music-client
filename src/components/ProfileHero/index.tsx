@@ -12,7 +12,7 @@ const ProfileHero = () => {
 
     return (
         <section className={styles['profile-hero']}>
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-2">
                         <div className={styles['profile-hero__avatar']}>

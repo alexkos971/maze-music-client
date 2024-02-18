@@ -8,15 +8,14 @@
 @import "__helpers";
 @import "__grid";
 @import "__reset";
-// @import '__reset';
+@import "__common";
 
-// Fonts
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
-
-html {
-    font-family: 'Open Sans', sans-serif;    
+html, body {
+    font-family: var(--font-primary);    
+    font-weight: 400;
 }
 
-body {    
-    font-family: 'Open Sans', sans-serif;
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    font-family: var(--font-secondary);    
 }

@@ -1,0 +1,98 @@
+@import '@styles/__helpers';
+
+.auth {
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    &::before {
+        content: "";
+        width: 100%;
+        height: min(75%, 750px);
+        background-color: var(--gray-f8);
+        clip-path: polygon(0 0, 100% 0, 100% 62%, 0% 100%);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 62%, 0% 100%);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        transition: .3s;
+    }
+
+    &__card {
+        background: var(--white);
+        width: 100%;
+        border-radius: 8px;
+        padding: 100px clamp(16px, desktop_vw(90px), 90px) 64px;
+        box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        justify-content: center;
+        margin: 3rem auto;
+        transition: .2s; 
+        transition-delay: .5s;
+    }
+
+    &__logo {
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+        transition-delay: .8s;
+        animation: logoAppear 1s;
+        opacity: 1;
+        margin-bottom: 64px;
+
+        img, svg {
+            width: 100%;
+            height: 54px;
+        }
+    }
+
+    &__content {
+        transition: .6s ease-in;
+        transition-delay: .8s;
+        max-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .block-title {
+            margin-bottom: 32px;
+        }
+    }
+
+    &:not(.auth_loaded) {
+        &::before {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+
+        .auth__logo {
+            margin-bottom: 0;
+        }
+
+        .auth__card {
+            width: auto;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .auth__content {
+            opacity: 0;
+            max-height: 0px;
+            visibility: hidden;
+        }
+    }
+}
+
+@keyframes logoAppear {
+    from {
+        opacity: 0;
+    }
+}

@@ -2,14 +2,13 @@ import { check_env } from "@helpers";
 
 export const lsGetItem = (name: string): any => {
     return check_env(() : any => {
-        var results = localStorage.getItem(name);
+        let results = localStorage.getItem(name);
         
-        if (results !== null) {
+        if (results) {
             return JSON.parse(results);
         }
-        else {
-            return undefined;   
-        }
+        
+        return undefined;   
     });
 }
   

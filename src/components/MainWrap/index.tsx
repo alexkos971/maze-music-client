@@ -17,7 +17,7 @@ const MainWrap = ( { canReturnBack, ...props } : PropsWithChildren<Props>) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(setTheme(lsGetItem('theme')));    
+        dispatch(setTheme(lsGetItem('theme') ?? 'light'));    
     }, [])
     
     let fullplayer_is_expanded = useAppSelector(state => state.interface.fullplayer_is_expanded);

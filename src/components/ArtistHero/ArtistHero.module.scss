@@ -5,11 +5,25 @@
     background-color: var(--black);
     margin-top: calc(0px - var(--header-height));
     
+    // Black Haze
+    &::after {
+        content: "";
+        position: absolute;
+        width: 65%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        // background: linear-gradient(90deg, #000000 52.94%, rgba(0, 0, 0, 0.91) 83%, rgba(0, 0, 0, 0) 100%);
+        background: linear-gradient(90deg, #000000 80%, rgba(0, 0, 0, 0.8) 90%, rgba(0, 0, 0, 0.3) 98%, rgba(0, 0, 0, 0) 100%);
+    }
+
     &__content {
         padding-top: var(--header-height);
         padding-right: 40px;
         padding-bottom: 60px;
         min-height: 432px;
+        position: relative;
+        z-index: 1;
     }
 
     &__title {
@@ -37,6 +51,7 @@
         display: flex;
         align-items: center;
         gap: 0px 32px;
+        margin-top: 36px;
 
         button {
             min-width: 123px;
@@ -54,13 +69,12 @@
     }
 
     &__avatar {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        // margin-left: 20px;
-        // margin-right: calc(0px - var(--container-padding));
+        width: 50%;
         height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        // margin-right: calc(-50vw + 50%);
 
         img {
             width: 100%;

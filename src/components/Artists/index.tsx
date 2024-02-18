@@ -25,7 +25,7 @@ const Artists = ({title, data, slidesToShow, className}: ArtistsProps) => {
 
     return( 
         <div className={`cards block mt-8 pb-8 ${className}`}>
-            { title ? <h2 className="text-4xl font-semibold mb-5">{title}</h2> : '' }
+            { title ? <h2 className="block-title">{title}</h2> : '' }
 
             <Slider options={{slidesToShow: slidesToShow ?? 2.5}}>
                 {

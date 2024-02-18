@@ -14,11 +14,11 @@ import ChevronDownBlack from "../assets/images/icons/chevron-down-black.svg";
 import EyeIcon from "../assets/images/icons/eye.svg";
 import EyeClosedIcon from "../assets/images/icons/eye-closed.svg";
 import PlayWhite from "../assets/images/icons/play-white.svg";
-import PauseWhite from "../assets/images/icons/pause-white.svg";
+// import PauseWhite from "../assets/images/icons/pause-white.svg";
 import PlayBlack from "../assets/images/icons/play-black.svg";
 import PauseBlack from "../assets/images/icons/pause-black.svg";
-import PlayGreen from "../assets/images/icons/play-green.svg";
-import PauseGreen from "../assets/images/icons/pause-green.svg";
+// import PlayGreen from "../assets/images/icons/play-green.svg";
+// import PauseGreen from "../assets/images/icons/pause-green.svg";
 import HeartOutlineGray from "../assets/images/icons/heart-outline-gray.svg";
 import HeartSolidGreen from "../assets/images/icons/heart-solid-green.svg";
 import DoubleArrowsGray from "../assets/images/icons/double-arrows-gray.svg";
@@ -52,11 +52,11 @@ export {
     ClassicalHitsCover,
     ChevronDownBlack,
     PlayWhite,
-    PauseWhite,  
+    // PauseWhite,  
     PlayBlack,
     PauseBlack, 
-    PlayGreen,
-    PauseGreen,
+    // PlayGreen,
+    // PauseGreen,
     BookMarkPlusBlack,
     HeartOutlineGray,
     HeartSolidGreen,

@@ -17,7 +17,7 @@
         border-radius: 50%;
         cursor: pointer;
         // --avatar-size: desktop_vw_min(150px);
-        --avatar-size: calc(100% - 12px);
+        --avatar-size: min(calc(100% - 12px), 250px);
 
         width: var(--avatar-size);
         padding-bottom: var(--avatar-size);

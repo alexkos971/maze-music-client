@@ -12,7 +12,7 @@ const ArtistHero = () => {
     const artist = {
         name: 'The Weeknd',
         description: 'Abel Makkonen Tesfaye, popularly known as The Weeknd (born February 16, 1990 in Toronto, Ontario, Canada), is a Canadian R&B/hip-hop musician, singer-songwriter and record producer. He chose his stage name in tribute to when he was 17 years old, when, along with his friend...',
-        avatar: 'https://sefon.pro/img/artist_photos/paramore.jpg',
+        avatar: 'https://www.nme.com/wp-content/uploads/2023/02/NME-PARAMORE-HERO-2023@2560x1625.jpg',
         genre: 'Pop Music',
         listenings: 73458276,
         albums: [
@@ -29,9 +29,9 @@ const ArtistHero = () => {
 
     return (
         <section className={styles['artist-hero']}>
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row">
-                    <div className="col-lg-7">
+                    <div className="col-lg-6">
                         <div className={styles['artist-hero__content']}>
 
                             <h1 className={styles['artist-hero__title']}>{artist.name}</h1>
@@ -49,13 +49,11 @@ const ArtistHero = () => {
                             </div>
                         </div>
                     </div>
-
-                    <div className="col-lg-5">
-                        <div className={styles['artist-hero__avatar']}>
-                            <Image src={artist.avatar} width={400} height={400} alt="Artist Avatar"/>
-                        </div>
-                    </div>
                 </div>
+            </div>
+
+            <div className={styles['artist-hero__avatar']}>
+                <Image src={artist.avatar} width={400} height={400} alt="Artist Avatar" className="skeleton-image"/>
             </div>
         </section>
     );

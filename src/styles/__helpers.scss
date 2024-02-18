@@ -1,15 +1,15 @@
 @function desktop_vw($px) { 
-    $vw_value: ($px / 1440px) * 100 * 1vw;
+    $vw_value: ($px / 1190px) * 100 * 1vw;
     @return calc(#{$vw_value});
 }
 
 @function desktop_vw_min($px) {
-    $vw_value: ($px / 1440px) * 100 * 1vw;
+    $vw_value: ($px / 1190px) * 100 * 1vw;
     @return calc(min(#{$vw_value}, #{$px}));
 }
 
 @function desktop_vw_max($px) {
-    $vw_value: ($px / 1440px) * 100 * 1vw;
+    $vw_value: ($px / 1190px) * 100 * 1vw;
     @return calc(max(#{$vw_value}, #{$px}));
 }
 

@@ -9,7 +9,7 @@ import { directories } from "@helpers/directory";
 import { useTranslation } from "next-i18next";
 import Head from "next/head";
 
-export const Title = () => {
+export const MetaTitle = () => {
     const pathname = usePathname();
     let current_locale = lsGetItem('i18nLanguage');  
     const {t} = useTranslation();

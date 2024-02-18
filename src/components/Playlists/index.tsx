@@ -24,7 +24,7 @@ const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {
 
     return( 
         <div className={`block cards mt-8 ${className}`}>
-            { title ? <h2 className="text-4xl font-semibold mb-5">{title}</h2> : '' }
+            { title ? <h2 className="block-title">{title}</h2> : '' }
 
             <Slider options={{
                 slidesToShow: 4,

@@ -9,7 +9,7 @@ import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@h
 import Playlists from "@components/Playlists";
 import { useTranslation } from "next-i18next";
 
-export default function ForYou() {    
+const ForYou = () => {    
     const {t} = useTranslation('common');
 
     return (        
@@ -113,6 +113,8 @@ export default function ForYou() {
         </MainWrap>
     );
 }
+
+export default ForYou;
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {

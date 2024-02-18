@@ -3,7 +3,7 @@ import styles from "./Field.module.scss";
 import { MainFieldProps } from "./index";
 import { FieldError, FieldTitle } from "./index";
 
-import { useFormValidation } from "../Form/validation";
+import { useFormValidation } from "@components/UI/Form/validation";
 import { useFieldValidation } from "@hooks";
 
 import { EyeIcon, EyeClosedIcon } from "@helpers/images";
@@ -28,6 +28,7 @@ const TextFieldTemplate = ({
     name,
     required = false
 } : FieldTemplateProps) => {    
+
     const {  registerField } = useFormValidation();
     const field_id = id ? id : useId();
 
@@ -97,7 +98,7 @@ const TextFieldTemplate = ({
                                 <div
                                     onClick={() => setIsVisible(!isVisible)} 
                                     className="block absolute right-[18px] top-1/2 translate-y-[-50%] cursor-pointer">
-                                    <Image src={isVisible ?  EyeIcon : EyeClosedIcon} width={0} height={0} alt={`Eye ${isVisible ? '' : 'Closed'} Icon`} className="w-full h-full object-contain"/>
+                                    {isVisible ?  <EyeIcon/> : <EyeClosedIcon/>}
                                 </div>
                             </>
                         );

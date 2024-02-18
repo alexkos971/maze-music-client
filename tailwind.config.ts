@@ -26,12 +26,16 @@ const config: Config = {
       'gray-8e': '#8E8E8E',
       'gray-f8': '#F4F6F8',
       'gray-e5': '#E5E5E5'
-    },
+    }, 
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      fontFamily: {
+        primary: ['var(--font-primary)'],
+        secondary: ['var(--font-secondary)']      
       },
       width: theme => ({
         'screen': '100dvw'

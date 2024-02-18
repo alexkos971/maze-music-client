@@ -8,9 +8,11 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'sefon.pro',
-                // port: '',
-                // pathname: '/account123/**',
-            }
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.nme.com',
+            },
         ]
     }
 }

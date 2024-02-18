@@ -16,7 +16,7 @@ const Track = ({
     index
 }: TrackProps) => {
     const dispatch = useAppDispatch();
-    let [currentTrack, isPlaying, ] = useAppSelector(store => [store.player.track, store.player.isPlaying]);
+    let [currentTrack, isPlaying ] = useAppSelector(store => [store.player.track, store.player.isPlaying]);
 
     const is_current_track = track?.id == currentTrack?.id;
 
@@ -40,7 +40,7 @@ const Track = ({
                         }
                     }}>
                     
-                    {isPlaying ? <PauseBlack/> : <PlayBlack/>}
+                    {isPlaying && is_current_track ? <PauseBlack/> : <PlayBlack/>}
                 </button>
             </span>
         
@@ -48,7 +48,9 @@ const Track = ({
                 {track.cover ? <img src={track.cover} alt="Feature"/> : ''}
             </div>
 
-            <h4 className={`track__name text-sm font-semibold ${is_current_track ? "text-green-05" : "text-black"} ml-4`}><Link href={'/artist/' + track.artist.id}>{track.artist.name}</Link> - {track.name}</h4>
+            <h4 className={`track__name text-sm font-primary font-semibold ${is_current_track ? "text-green-05" : "text-black"} ml-4`}>
+                <Link href={'/artist/' + track.artist.id}>{track.artist.name}</Link> - {track.name}
+            </h4>
             
             { track.album ? <span className={`track__name text-sm font-normal text-gray-8e ml-auto`}>{track.album.name}</span> : ''}
 
