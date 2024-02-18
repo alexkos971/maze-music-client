@@ -17,7 +17,6 @@ export const MetaTitle = () => {
     const [ directory ] = useAppSelector(state => [state.interface.directory]);
   
     useEffect(() => {
-      console.log(pathname);
       for (let val in directories) {
         if (pathname?.includes(directories[val].path)) {
           dispatch(setDirectory(directories[val]))

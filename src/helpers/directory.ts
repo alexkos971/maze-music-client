@@ -29,5 +29,13 @@ export const directories : Record<string, DirType>  = {
     profile: {
         path: '/profile',
         title: "pages.profile.header_title"
-    }
+    },
+    sign_in: {
+        path: '/sign-in',
+        title: "pages.sign-in.title"
+    },
+    sign_up: {
+        path: '/sign-up',
+        title: "pages.sign-up.title"
+    },
 }

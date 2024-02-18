@@ -26,20 +26,27 @@
         background: var(--white);
         width: 100%;
         border-radius: 8px;
-        padding: 100px clamp(16px, desktop_vw(90px), 90px) 64px;
+        padding: 100px 90px 64px;
         box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
-        // align-items: center;
         justify-content: center;
         margin: 3rem auto;
-        transition: .2s; 
+        transition: .3s; 
         transition-delay: .5s;
+
+        @include media-breakpoint-down(lg) {
+            padding: 64px 40px 32px;
+        }
+
+        @include media-breakpoint-down(sm) {
+            padding: 42px 16px 32px;
+        }
     }
 
     &__logo {
         width: 100%;
-        max-width: 340px;
+        max-width: min(55vw, 340px);
         margin: 0 auto;
         transition-delay: .8s;
         animation: logoAppear 1s;
@@ -53,8 +60,8 @@
     }
 
     &__content {
-        transition: .6s ease-in;
-        transition-delay: .8s;
+        transition: .4s ease-in;
+        transition-delay: .2s;
         max-height: 100vh;
         overflow: hidden;
         display: flex;
@@ -72,13 +79,10 @@
             transform: translateY(-100%);
         }
 
-        .auth__logo {
-            margin-bottom: 0;
-        }
-
         .auth__card {
             width: auto;
-            padding: 0;
+            padding-left: 0;
+            padding-right: 0;
             box-shadow: none;
             background: transparent;
         }

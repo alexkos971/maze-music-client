@@ -37,7 +37,7 @@ const Button: React.FC<ButtonProps> = ({
             type={'button'} 
             disabled={isDisabled}     
             onClick={() => console.log(isFormValid())}        
-            className={`duration-300 rounded-md font-secondary flex items-center justify-center gap-2 ${btn_sizes[size]} cursor-pointer ${isDisabled ? btn_colors['disabled'] : btn_colors[color]}`}>
+            className={`duration-300 rounded-md font-secondary flex items-center justify-center gap-2 ${btn_sizes[size]} ${isDisabled ? btn_colors['disabled'] : btn_colors[color] + ' cursor-pointer'}`}>
             {children}
         </button>
     );

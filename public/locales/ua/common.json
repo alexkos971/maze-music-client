@@ -42,6 +42,12 @@
         },
         "profile": {
             "header_title": "Профіль"
+        },
+        "sign-in": {
+            "title": "Увійти"
+        },
+        "sign-up": {
+            "title": "Зареєструватися"
         }
     },
     "fields" : {
