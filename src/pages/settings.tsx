@@ -8,7 +8,10 @@ export default function Settings() {
     <MainWrap>
       <div className="container-fluid">
         <h1>Settings</h1>
-        <LanguageSwitcher/>    
+        
+        <div className="max-w-sm">
+          <LanguageSwitcher/>    
+        </div>
       </div>
     </MainWrap>
   );

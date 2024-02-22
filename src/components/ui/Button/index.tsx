@@ -6,7 +6,9 @@ interface ButtonProps {
     children: ReactNode,
     color?: 'green' | 'black' | 'gray' | 'white',
     disabled?: boolean | undefined,
-    size?: 'normal' | 'small'
+    size?: 'normal' | 'small',
+    className?: string,
+    onClick: () => void
 };
 
 const Button: React.FC<ButtonProps> = ({ 
@@ -14,7 +16,9 @@ const Button: React.FC<ButtonProps> = ({
     children, 
     color = 'green',
     disabled,
-    size = 'normal'
+    size = 'normal',
+    className,
+    onClick
 }) => {
     const btn_colors = {
         'white': 'bg-white text-black-36 hover:opacity-70',
@@ -29,15 +33,29 @@ const Button: React.FC<ButtonProps> = ({
         'normal' : 'py-[10px] px-6 min-w-[160px] text-base'
     };
 
-    const { isFormValid } = useFormValidation();
-    const isDisabled = typeof disabled == "boolean"  ? disabled : ( type == 'submit' ? !isFormValid() : false );
+    let isDisabled = typeof disabled == "boolean"  ? disabled : false;
+    
+    if (type == 'submit') {
+        const { isFormValid } = useFormValidation();
+        isDisabled = !isFormValid();
+    }
 
     return (
         <button 
             type={'button'} 
             disabled={isDisabled}     
-            onClick={() => console.log(isFormValid())}        
-            className={`duration-300 rounded-md font-secondary flex items-center justify-center gap-2 ${btn_sizes[size]} ${isDisabled ? btn_colors['disabled'] : btn_colors[color] + ' cursor-pointer'}`}>
+            onClick={onClick ?? null}        
+            className={`
+                duration-300 
+                rounded-md 
+                font-secondary 
+                flex 
+                items-center 
+                justify-center 
+                gap-2 
+                ${btn_sizes[size]} ${isDisabled ? btn_colors['disabled'] : btn_colors[color] + ' cursor-pointer'}
+                ${className ?? ''}`}>
+            
             {children}
         </button>
     );

@@ -60,7 +60,7 @@ const TextFieldTemplate = ({
     }, [is_valid]);
 
     return (
-        <div className={`field field_${type} flex flex-col mt-3 max-w-sm w-full`}>
+        <div className={`field field_${type} flex flex-col mt-3 w-full`}>
             <FieldTitle title={title}/>
 
             <label className="field__label relative" htmlFor={name}>

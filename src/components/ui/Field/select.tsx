@@ -97,7 +97,7 @@ export const Select = ({
         )
 
         return (
-            <div className={`${styles.field} ${styles.field_select} flex flex-col mt-3 max-w-sm`}>
+            <div className={`${styles.field} ${styles.field_select} flex flex-col mt-3`}>
                 <FieldTitle title={title}/>
             
                 <label 
