@@ -4,6 +4,7 @@ import { StaticImageData } from "next/image";
 import { Identifier } from "typescript";
 import Slider from "@components/ui/Slider";
 import { useTranslation } from "next-i18next";
+import Title from "@components/UI/Title";
 
 type PlaylistsProps = {
     title?: string,
@@ -24,7 +25,7 @@ const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {
 
     return( 
         <div className={`block cards mt-8 ${className}`}>
-            { title ? <h2 className="block-title">{title}</h2> : '' }
+            { title ? <Title>{title}</Title> : '' }
 
             <Slider options={{
                 slidesToShow: 4,

@@ -1,14 +1,10 @@
-import React, { ReactNode, createContext, useCallback, useState, useEffect } from "react";
-import Dots from "./dots";
-import useEmblaCarousel, { EmblaCarouselType } from 'embla-carousel-react';
+import React, { ReactNode, createContext, useState, useRef } from "react";
+import Dots from "@components/UI/Slider/dots";
 import styles from "./Slider.module.scss";
 
 interface SliderOptions {
     slidesToShow?: number | 1,
-    withDots?: boolean,
-    dragFree?: boolean,
-    containScroll? : string
-
+    withDots?: boolean
 };
 
 type ItemComponent = React.FC<{ children: ReactNode }>;
@@ -21,57 +17,34 @@ const Slider: SliderComponent = ({
     children, 
     options
 }) => {
-
-    const defaultOptions : SliderOptions = {
+    let settings = {
         withDots: true,
         slidesToShow: 1,
+        ...options
     };
 
-    const sliderOptions = Object.assign(defaultOptions, options);
-
-    const [emblaRef, emblaApi]  = useEmblaCarousel({
-        loop: false,
-        slidesToScroll: 1,
-        dragFree: true, 
-        containScroll: 'trimSnaps'
-    });
-
+    let sliderRef = useRef<HTMLDivElement | null>(null);
     let [active, setActive] = useState<number>(0);
-
-    const scrollTo = useCallback(
-        (index: number) => emblaApi && emblaApi.scrollTo(index),
-        [emblaApi]
-    );
-
-    // const onInit = useCallback((emblaApi: EmblaCarouselType) => {
-    //     setScrollSnaps(emblaApi.scrollSnapList())
-    //   }, [])
     
-      const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
-        setActive(emblaApi.selectedScrollSnap())
-        // setPrevBtnDisabled(!emblaApi.canScrollPrev())
-        // setNextBtnDisabled(!emblaApi.canScrollNext())
-      }, [])
+    const scrollTo = (next: number) => {
+        setActive(next);
+        
+        if (!sliderRef?.current) return;
 
-    useEffect(() => {
-        if (!emblaApi) return
-        // onInit(emblaApi)
-        onSelect(emblaApi)
-        // emblaApi.on('reInit', onInit)
-        emblaApi.on('reInit', onSelect)
-        emblaApi.on('select', onSelect)
-    }, [
-        emblaApi, 
-        // onInit, 
-        onSelect
-    ]);
+        let childWidth: number = parseInt(getComputedStyle(sliderRef.current?.children[0]).width);
+
+        if (typeof childWidth !== 'number' || childWidth <= 0) return;
+
+        let scrollLeft = childWidth * next;
+        sliderRef.current.scrollLeft = scrollLeft;
+    };
     
     return (
-        <SliderContext.Provider value={{ ...options }}>
-            <div className="embla relative mx-[-10px] flex w-full" ref={emblaRef}>
-                <div className="embla__container flex w-full">{children}</div>               
-                
-                { sliderOptions.withDots ?
+        <SliderContext.Provider value={{ ...settings }}>
+            <div className={styles.slider}>
+                <div className={`${styles.slider__wrap} hide-scrollbar`} ref={sliderRef}>{children}</div>               
+
+                { settings.withDots ?
                     <Dots count={Array.isArray(children) ? children.length : 0} active={active} setActive={scrollTo}/>
                 : '' }
             </div>       
@@ -87,12 +60,12 @@ Slider.Item = ({
     
     return (
         <SliderContext.Consumer>
-            {(props) => {
+            {({ slidesToShow = 1 }) => {
                 return (
                     <div 
-                        className={`embla__slide px-[10px] w-full ${styles['slider-item']}`} 
+                        className={styles.slider__slide} 
                         style={{
-                            ['--max-w' as any]: String((100 / props.slidesToShow!) + '%')
+                            ['--max-w' as any]: String((100 / slidesToShow) + '%')
                         }}>
                             {children}
                     </div>

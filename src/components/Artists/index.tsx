@@ -1,9 +1,10 @@
 import React from "react";
-import Card from "@components/ui/Card";
+import Card from "@components/UI/Card";
 import { StaticImageData } from "next/image";
 import { Identifier } from "typescript";
-import Slider from "@components/ui/Slider";
+import Slider from "@components/UI/Slider";
 import { useTranslation } from "next-i18next";
+import Title from "@components/UI/Title";
 
 type ArtistsProps = {
     title?: string,
@@ -25,7 +26,7 @@ const Artists = ({title, data, slidesToShow, className}: ArtistsProps) => {
 
     return( 
         <div className={`cards block mt-8 pb-8 ${className}`}>
-            { title ? <h2 className="block-title">{title}</h2> : '' }
+            { title ? <Title>{title}</Title> : '' }
 
             <Slider options={{slidesToShow: slidesToShow ?? 2.5}}>
                 {

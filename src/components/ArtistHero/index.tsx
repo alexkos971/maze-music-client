@@ -1,10 +1,10 @@
 import styles from "./ArtistHero.module.scss";
-import Button from "@components/ui/Button";
+import Button from "@components/UI/Button";
 import Image from "next/image";
 import { formatNumber } from "@helpers/formated";
 import { PlayBlack, BookMarkPlusBlack } from "@helpers/images";
 import { useTranslation } from "next-i18next";
-import DottedRow from "@components/ui/DottedRow";
+import DottedRow from "@components/UI/DottedRow";
 
 const ArtistHero = () => {
     const {t} = useTranslation('common');

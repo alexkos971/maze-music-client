@@ -7,7 +7,7 @@ interface Title {
 }
 
 const Title = ({ children, className, tag = 'h2'} : Title) => {
-    let Tag = `${tag}`;
+    let Tag : keyof JSX.IntrinsicElements = `${tag}`;
 
     return <Tag className={`text-3xl mb-5 font-bold ${className ?? ''}`}>{children}</Tag>
 }

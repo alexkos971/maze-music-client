@@ -1,8 +1,33 @@
-.slider-item {
+.slider {
     position: relative;
+    display: flex;
+    margin: 0px calc(0px - var(--container-padding));
+
+    &__wrap {
+        display: flex;
+        width: 100%;
+        scroll-behavior: smooth;
+        padding: 0px calc(var(--container-padding) - 10px);
+        overflow-x: auto;
+    }
+
+    &__slide {
+        position: relative;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+        
+        @screen sm {
+            max-width: min(440px, var(--max-w));
+            flex: 0 0 min(440px, var(--max-w));
+        }
+    }
+
+    &__dots {
+        @apply absolute top-[calc(100%+32px)] left-1/2 translate-x-[-50%] flex items-center justify-center;
     
-    @screen sm {
-        max-width: var(--max-w);
-        flex: 0 0 var(--max-w);
+        &-item {
+            @apply mx-2 shrink-0 p-1 block after:block after:w-2 after:h-2 after:rounded-lg;
+        }
     }
 }

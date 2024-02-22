@@ -1,4 +1,4 @@
-import React, { InsHTMLAttributes, ReactNode, ReactPropTypes } from "react";
+import React, { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";

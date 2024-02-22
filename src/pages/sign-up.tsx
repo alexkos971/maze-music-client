@@ -7,13 +7,14 @@ import Form from "@components/UI/Form";
 import { Email, Password } from "@components/ui/Field";
 import Button from "@components/ui/Button";
 import { useTranslation } from "next-i18next";
+import Title from "@components/UI/Title";
 
 const SignUp = () => {
     const {t} = useTranslation("common");
     
     return (
         <AuthWrap size="large">
-            <h1 className="block-title">{t("pages.sign-up.title")}</h1>
+            <Title tag="h1">{t("pages.sign-up.title")}</Title>
 
             <Form className="flex flex-col items-center max-w-sm">
                 <Email name="email" placeholder="Email"/>
