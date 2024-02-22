@@ -9,6 +9,7 @@ import { Email, Password } from "@components/ui/Field";
 import Button from "@components/ui/Button";
 import { useTranslation } from "next-i18next";
 import { useFormValidation } from "@components/ui/Form/validation";
+import Title from "@components/UI/Title";
 
 
 const SignIn = () => {
@@ -25,7 +26,7 @@ const SignIn = () => {
 
     return (
         <AuthWrap>
-            <h1 className="block-title">{t("pages.sign-in.title")}</h1>
+            <Title tag="h1">{t("pages.sign-in.title")}</Title>
 
             <Form className="flex flex-col items-center max-w-sm">
                 <Email name="email" placeholder="Email"/>
@@ -45,7 +46,7 @@ const SignIn = () => {
                 </div>
             </Form>
 
-            <span className="font-secondary mt-12">Don't have an account? <Link href="/sign-up" className="underline">Register</Link></span>
+            <span className="mt-12">Don't have an account? <Link href="/sign-up" className="underline">Register</Link></span>
         </AuthWrap>
     );
 }

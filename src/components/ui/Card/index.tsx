@@ -24,8 +24,8 @@ const CardContent = ({ options, title, subtitle, link } : CardContent) => {
 
     return (
         <div className={`card__content flex flex-col z-[1] w-full ${options?.size === 'small' ? 'w-full px-4 py-2' : 'absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]'}`}>
-            <Title className={`${options?.size === 'small' ? 'text-left text-xl font-semibold text-black-36' : 'text-center text-3xl text-white'}`}>{title}</Title>
-            <p className={`${options?.size === 'small' ? 'text-left mt-1 text-base text-black' : 'text-center mt-2 text-gray-ee text-sm'} ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
+            <Title className={`font-secondary ${options?.size === 'small' ? 'text-left text-xl font-semibold text-black-36' : 'text-center text-3xl text-white'}`}>{title}</Title>
+            <p className={`${options?.size === 'small' ? 'text-left mt-1 text-sm text-black' : 'text-center mt-2 text-gray-ee text-sm'} ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
         </div>
     );
 }

@@ -47,8 +47,7 @@ const Button: React.FC<ButtonProps> = ({
             onClick={onClick ?? null}        
             className={`
                 duration-300 
-                rounded-md 
-                font-secondary 
+                rounded-md  
                 flex 
                 items-center 
                 justify-center 
