@@ -6,7 +6,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
-import { useFormValidation } from "@components/UI/Form/validation";
+import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
+// import { useFormValidation } from "@components/UI/Form/validation";
 
 import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker } from "@components/UI/Field";
 import { ListenerRadio, ArtistRadio } from "@helpers/images";
@@ -20,9 +21,7 @@ const ButtonsNav = ({
 } : { buttonText?: string, canSkip?: boolean, currentStep: number, goToStep: (step: number) => void}) => {
     return (        
         <div className="flex items-center mt-6">
-            <Button className={canSkip ? 'w-1/2' : 'w-full'} onClick={() => {
-                goToStep(currentStep + 1);
-            }}>{buttonText}</Button>
+            <Button className={canSkip ? 'w-1/2' : 'w-full'} onClick={goToStep}>{buttonText}</Button>
 
             {
                 canSkip ? 
@@ -36,7 +35,7 @@ const ButtonsNav = ({
 const SignUp = () => {
     const {t} = useTranslation("common");
     const [activeStep, goToStep ] = useState(0);
-    const { fields } = useFormValidation();
+    const [fields, setFields] = useState<{}>({});    
 
     useEffect(() => {
         console.log(fields);
@@ -45,7 +44,7 @@ const SignUp = () => {
     return (
         <AuthWrap size="large">
 
-            <Form className="flex flex-col items-center max-w-sm">
+            <Form className="flex flex-col items-center max-w-sm" fields={fields} setFields={setFields}>
                 <Steps activeStep={activeStep} goToStep={goToStep}>
                     <Step title="Role">
                         <Title tag="h2">Choose your role</Title>
@@ -69,7 +68,7 @@ const SignUp = () => {
                             columns={2}
                         />        
 
-                        <ButtonsNav canSkip={false} goToStep={goToStep} currentStep={activeStep} />                                     
+                        <ButtonsNav canSkip={false} goToStep={() => goToStep(activeStep + 1)} currentStep={activeStep} />                                     
                     </Step>
 
                     <Step title="Credentials">
@@ -92,7 +91,7 @@ const SignUp = () => {
                             name="confirm-password"
                             placeholder="Confirm Password"/>
 
-                        <ButtonsNav canSkip={true} goToStep={goToStep} currentStep={activeStep} />
+                        <ButtonsNav canSkip={true} goToStep={() => goToStep(activeStep + 1)} currentStep={activeStep} />
                     </Step>
 
                     <Step title="Profile">
@@ -100,7 +99,7 @@ const SignUp = () => {
 
                         <FilePicker
                             title="Your avatar image"
-                            acceptible-types=""
+                            accept="image/jpeg, image/png"
                             name="avatar"                      
                         />
 
@@ -110,14 +109,13 @@ const SignUp = () => {
                             placeholder="Some description about you..."
                         />
 
-                        <ButtonsNav canSkip={true} goToStep={goToStep} currentStep={activeStep} />
+                        <ButtonsNav canSkip={true} goToStep={() => alert('Final')} currentStep={activeStep} />
                     </Step>
 
-                    <Step title="Preferences">
+                    {/* <Step title="Preferences">
                         <Title tag="h2">Preferences</Title>
-
                         <ButtonsNav canSkip={true} buttonText="Finish" goToStep={goToStep} currentStep={activeStep}/>
-                    </Step>
+                    </Step> */}
                 </Steps>
             </Form>
 

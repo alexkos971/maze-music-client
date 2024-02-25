@@ -132,7 +132,7 @@
         }
 
         .field__label {
-            padding: 18px 28px;
+            padding: 28px 18px;
             border-radius: 5px;
             display: flex;
             flex-direction: column;
@@ -140,6 +140,11 @@
             background: transparentize(#00ADB5, .97);
             border: .5px dashed var(--green-05);
             cursor: pointer;
+            transition: .5s;
+
+            &:active {
+                background: transparentize(#00ADB5, .8);
+            }
         }
 
         .field__image {
@@ -151,14 +156,66 @@
             }
         }
 
-        .field__text {
+        .field__info {
             margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .field__text {
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             color: black;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
 
             span {
                 color: var(--green-05);
+            }
+        }
+
+        .field__clear-button {
+            position: relative;
+            margin-left: auto;
+            width: 20px;
+            height: 20px;
+            display: block;
+
+            &::before, &::after {
+                content: "";
+                width: 16px;
+                height: 2px;
+                background-color: var(--black-36);
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) rotate(-45deg);
+            }
+            
+            &::after {
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+        }
+
+        &_dragged {
+            .field__label {
+                background: transparentize(#00ADB5, .8);
+                border-width: 2px;
+            }
+        }
+
+        &_filled {
+            transition: 0s;
+
+            .field__info {
+                gap: 0px 24px;
+            }
+
+            .field__text {
+                max-width: 160px;
             }
         }
     }

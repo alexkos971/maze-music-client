@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -8,29 +8,31 @@ import Form from "@components/UI/Form";
 import { Email, Password } from "@components/UI/Field";
 import Button from "@components/UI/Button";
 import { useTranslation } from "next-i18next";
-import { useFormValidation } from "@components/ui/Form/validation";
 import Title from "@components/UI/Title";
 
 
 const SignIn = () => {
     const {t} = useTranslation("common");
-    const { isFormValid, fields } = useFormValidation();
+    let [ fields, setFields ] = useState<{}>({});
     
     useEffect(() => {
         console.log(fields);
     }, [fields])
 
-    const submitForm = () => {
-        console.log(isFormValid());
-    }
+    const submitForm = () => {}
 
     return (
         <AuthWrap>
             <Title tag="h1">{t("pages.sign-in.title")}</Title>
 
-            <Form className="flex flex-col items-center max-w-sm">
-                <Email name="email" placeholder="Email"/>
-                <Password name="password" placeholder="Password"/>
+            <Form 
+                className="flex flex-col items-center max-w-sm" 
+                fields={fields} 
+                setFields={setFields}
+            >
+                
+                <Email name="email" placeholder="Email" required={true}/>
+                <Password name="password" placeholder="Password" required={true}/>
 
                 <div className="flex items-center justify-between mt-6 w-full flex-col sm:flex-row items-stretch gap-5">
                     <Button 
@@ -41,7 +43,7 @@ const SignIn = () => {
                         size="normal">{t("pages.sign-in.title")}</Button>
 
                     <span className="flex items-center gap-3 justify-center text-sm">
-                        SIgn In with google
+                        Sign In with google
                     </span>
                 </div>
             </Form>

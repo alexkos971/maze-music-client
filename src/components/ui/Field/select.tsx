@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useId } from "react";
+import React, { useState, useRef, useEffect, useId, useContext } from "react";
 import { ChevronDownBlack } from "@helpers/images";
 import { useOutsideClick } from "@hooks/interface";
 import { MainFieldProps } from "./index";
 import styles from "./Field.module.scss";
 import { useFieldValidation } from "@hooks";
-import { useFormValidation } from "../Form/validation";
+import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
 import { FieldError, FieldTitle } from "./index";
 
 interface SelectSimpleProps extends MainFieldProps {
@@ -35,7 +35,7 @@ export const Select = ({
         const selectRef = useRef(null);
         const is_outside = useOutsideClick(selectRef);
         const [ selectIsOpened, setSelectIsOpened ] = useState(false);
-        const registerField = useFormValidation() && useFormValidation().registerField;
+        const fieldContext = useContext(ValidationContext) as ValidationContextType | null;
 
         const [ error, setError ] = useState<string>('');
         const [val, setVal] = useState<SelectSimpleProps['value'] | SelectObjectProps['value']>(
@@ -82,10 +82,10 @@ export const Select = ({
 
         // Check Field Validation
         useEffect(() => {
-            if ( registerField ) {
-                registerField(name, is_valid);
+            if ( fieldContext?.registerField ) {
+                fieldContext.registerField(name, val, is_valid);
             }
-        }, [is_valid]);
+        }, [val, is_valid]);
                             
         const MenuItem : React.FC<{option_slug: string | number, option_title: string | number}> = ({option_slug, option_title}) => (
             <li 

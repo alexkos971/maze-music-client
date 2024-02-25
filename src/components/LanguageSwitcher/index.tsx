@@ -4,20 +4,26 @@ import { lsSetItem } from "@helpers/localstorage";
 
 const LanguageSwitcher = () => {
     const router = useRouter();
+    
+    const languages : {[key : string] : string} = {
+        'en': 'English',
+        'ua': 'Ukrainian',
+    };
+    
     const {locale, pathname, query, asPath} = router;
 
-    const handleLocaleChange = (newLocale: string) => {
-        router.push({ pathname, query }, asPath, { locale: newLocale });
+    const handleLocaleChange = (newLocale: {slug: string, title: string}) => {
+        router.push({ pathname, query }, asPath, { locale: newLocale.slug });
 
-        lsSetItem({ name: 'i18nLanguage', value: newLocale });
+        lsSetItem({ name: 'i18nLanguage', value: newLocale.slug });
     };
 
     return (
         <Select 
             name="language"
             title="Language"
-            value={locale ?? null}
-            options={['en', 'ua']} 
+            value={locale ? {slug: locale, title: languages[locale]} : null}
+            options={languages} 
             onChange={handleLocaleChange}/>
     );
 };

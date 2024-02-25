@@ -1,9 +1,9 @@
-import React, { ReactNode } from "react";
-import { ValidationProvider } from "./validation";
+import React from "react";
+import { ValidationProvider, ValidationProviderProps } from "./validation";
 
-const Form : React.FC<{ children : ReactNode, className : string }> = ({ children, className }) => {
+const Form : React.FC<ValidationProviderProps> = ({ children, className, fields, setFields }) => {
     return (
-        <ValidationProvider>
+        <ValidationProvider fields={fields} setFields={setFields}>
             <form className={`w-full ${className ?? ''}`}>{children}</form>
         </ValidationProvider>
     );

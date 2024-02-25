@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { useFormValidation } from "@components/UI/Form/validation";
+import React, { ReactNode, useContext } from "react";
+import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
 
 interface ButtonProps {
     type?: 'button' | 'submit',
@@ -36,8 +36,11 @@ const Button: React.FC<ButtonProps> = ({
     let isDisabled = typeof disabled == "boolean"  ? disabled : false;
     
     if (type == 'submit') {
-        const { isFormValid } = useFormValidation();
-        isDisabled = !isFormValid();
+        const buttonContext = useContext(ValidationContext) as ValidationContextType;
+        
+        if (buttonContext) {
+            isDisabled = !buttonContext.isFormValid();
+        }
     }
 
     return (

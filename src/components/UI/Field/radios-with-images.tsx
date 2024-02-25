@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import Image, { StaticImageData } from "next/image";
+import { ValidationContext, ValidationContextType } from "../Form/validation";
 import styles from "./Field.module.scss";
 
 interface ItemProps {
@@ -19,10 +20,21 @@ interface ComponentProps {
 // id, image, title, isChecked,
 export const RadiosWithImages = ({ name, items, onChange, columns = 2 } : ComponentProps) => {
     let [ checked, setChecked ] = useState<string | undefined>(items.find(el => el.checked == true)?.value);
+    const context = useContext(ValidationContext) as ValidationContextType;
 
+    const handleRadio = (value: string, index: number) => {
+        setChecked(value);
+
+        if (onChange) {
+            onChange(value, index);
+        }
+    }
+    
     useEffect(() => {
-
-    }, [])
+        if (context?.registerField) {
+            context.registerField(name, checked);
+        }
+    }, [checked]);
 
     return (
         <div className={[styles.group, styles.group_radios_with_images].join(' ')}>
@@ -38,13 +50,7 @@ export const RadiosWithImages = ({ name, items, onChange, columns = 2 } : Compon
                                 name={name} 
                                 checked={checked == item.value}
                                 value={item.value} 
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    setChecked(item.value);
-
-                                    if (onChange) {
-                                        onChange(item.value, index);
-                                    }
-                                }} />
+                                onChange={() => handleRadio(item.value, index)} />
 
                             {
                                 item.image ?

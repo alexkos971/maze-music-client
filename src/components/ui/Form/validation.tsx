@@ -1,40 +1,38 @@
-import React, { ReactNode, createContext, useContext, useState, useEffect } from "react";
+import React, { ReactNode, createContext, useState } from "react";
 
-interface ValidationContextType {
-    registerField: (fieldName: string, fieldValid: boolean) => void;
-    isFormValid: () => boolean;
-    fields: {[key : string] : boolean} | {};
+export interface ValidationContextType {
+    registerField: (fieldName: string, fieldValue: any, fieldValid?: boolean) => void;
+    isFormValid: () => boolean;    
 };
 
 export const ValidationContext = createContext<ValidationContextType | null>(null);
 
-export const useFormValidation = () : ValidationContextType | false => {
-    const context = useContext(ValidationContext);
-    if ( !context ) {
-        return false;
-        // throw new Error('useFormValidation must be used within a ValidationProvider');
-    }
-    return context; 
-}
-
-
-interface ValidationProviderProps {
-    children: ReactNode | JSX.Element
+export interface ValidationProviderProps {
+    className?: string;
+    children: ReactNode | JSX.Element,
+    fields: {},
+    setFields: (fields: {}) => void
 };
 
-export const ValidationProvider : React.FC<ValidationProviderProps> = ({ children }) => {
-    const [ fields, setFields ] = useState<{ [name: string] : boolean }>({});
+export const ValidationProvider : React.FC<ValidationProviderProps> = ({ children, fields, setFields }) => {
+    const [ validatedFields, setValidatedFields ] = useState<{ [name: string] : boolean }>({});
 
-    const registerField = (fieldName: string, fieldValid: boolean) => {
-        setFields((prev) => ({
+    const registerField = (fieldName: string, fieldValue: any, isValid?: boolean) => {
+        setFields((prev: {}) => ({
             ...prev,
-            [fieldName] : fieldValid
+            [fieldName] : fieldValue
+        }));
+
+        if (typeof isValid !== 'boolean') return;
+        setValidatedFields((prev) => ({
+            ...prev,
+            [fieldName] : isValid
         }));
     }
 
     const isFormValid = () : boolean => {
-        for (const field in fields) {
-            if ( !fields[field] ) {
+        for (const field in validatedFields) {
+            if ( !validatedFields[field] ) {
                 return false;
             }
         }
@@ -42,7 +40,7 @@ export const ValidationProvider : React.FC<ValidationProviderProps> = ({ childre
     }
 
     return (
-        <ValidationContext.Provider value={{ registerField, isFormValid, fields }}>
+        <ValidationContext.Provider value={{ registerField, isFormValid }}>
             {children}
         </ValidationContext.Provider>
     );
