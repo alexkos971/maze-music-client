@@ -1,4 +1,4 @@
-import { FieldTypes } from "@components/ui/Field";
+import { FieldTypes } from "@components/UI/Field";
 
 const isValidEmail = (email: string) => {
     // Simple email validation regex

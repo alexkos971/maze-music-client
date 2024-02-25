@@ -1,35 +1,104 @@
 'use client';
+import { useState, useEffect } from "react";
+
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
-import { Email, Password } from "@components/ui/Field";
-import Button from "@components/ui/Button";
+import { Text, Email, Password, RadiosWithImages, TextArea } from "@components/UI/Field";
+import { ListenerRadio, ArtistRadio } from "@helpers/images";
+import Button from "@components/UI/Button";
 import { useTranslation } from "next-i18next";
 import Title from "@components/UI/Title";
+import {Steps, Step } from "@components/UI/Steps";
 
 const SignUp = () => {
     const {t} = useTranslation("common");
-    
+    const [activeStep, setActiveStep ] = useState(0)        
+    const [availableSteps, setAvailableSteps ] = useState([0]);        
+
+    useEffect(() => {
+        console.log(activeStep, availableSteps);
+    }, [activeStep, availableSteps])
+
     return (
         <AuthWrap size="large">
-            <Title tag="h1">{t("pages.sign-up.title")}</Title>
 
             <Form className="flex flex-col items-center max-w-sm">
-                <Email name="email" placeholder="Email"/>
-                <Password name="password" placeholder="Password"/>
+                <Steps availableSteps={availableSteps} activeStep={activeStep} setActiveStep={setActiveStep}>
+                    <Step title="Role">
+                        <Title tag="h2">Choose your role</Title>
 
-                <div className="flex items-center justify-between mt-6 w-full flex-col sm:flex-row items-stretch gap-2">
-                    <Button type="submit" color="green" size="normal">{t("pages.sign-up.title")}</Button>
+                        <RadiosWithImages 
+                            name={'role'}
+                            items={[
+                                {
+                                    title: 'Listener',
+                                    value: 'listener',
+                                    image: ListenerRadio,
+                                    checked: true
+                                },
+                                {
+                                    title: 'Artist',
+                                    value: 'artist',
+                                    image: ArtistRadio
+                                },
+                            ]}
+                            // onChange={(id, index) => console.log(id, index)}
+                            columns={2}
+                        />        
 
-                    <span className="flex items-center gap-3 justify-center text-sm">
-                        SIgn In with google
-                    </span>
-                </div>
+                        <Button className="w-full mt-5" onClick={() => {
+                            setAvailableSteps([0, 1]);
+                            setActiveStep(1);
+                        }}>Next</Button>                                        
+                    </Step>
+
+                    <Step title="Credentials">
+                        <Title tag="h2">Credentials</Title>
+
+                        <Text
+                            name="full_name"
+                            placeholder="Full Name"
+                        />
+
+                        <Email
+                            name="email"
+                            placeholder="Email"/>
+                        
+                        <Password
+                            name="password"
+                            placeholder="Password"/>
+                        
+                        <Password
+                            name="confirm-password"
+                            placeholder="Confirm Password"/>
+
+                        <div className="flex items-center mt-6">
+                            <Button className="w-1/2" onClick={() => {
+                                setAvailableSteps([0, 1, 2]);
+                                setActiveStep(2);
+                            }}>Next</Button>
+
+                            <button type="button" className="text-base text-center text-gray-c4 w-1/2">Skip</button>
+                        </div>
+                    </Step>
+
+                    <Step title="Profile">
+                        <Title tag="h2">Profile</Title>
+
+                        <TextArea
+                            name="description"
+                            placeholder="Some description about you..."
+                        />
+
+                        <Button className="mt-6 w-1/2">Next</Button>
+                    </Step>
+                </Steps>
             </Form>
 
-            <span className="font-secondary mt-12">Already have an account? <Link href="/sign-in" className="underline">Login</Link></span>
+            <span className="mt-12">Already have an account? <Link href="/sign-in" className="underline">Login</Link></span>
         </AuthWrap>
     );
 }

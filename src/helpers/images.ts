@@ -27,6 +27,9 @@ import VolumeGray from "../assets/images/icons/volume-gray.svg";
 import BookMarkPlusBlack from '../assets/images/icons/bookmark-plus-black.svg';
 import EditBlack from '../assets/images/icons/edit-black.svg';
 
+import ListenerRadio from "../assets/images/listener-radio.png";
+import ArtistRadio from "../assets/images/artist-radio.png";
+
 // Uploads
 import WeekndAvatar from "../assets/images/uploads/weeknd.png";
 import ClassicalHitsCover from "../assets/images/uploads/classical-hits-cover.jpg";
@@ -63,5 +66,7 @@ export {
     DoubleArrowsGray,
     RepeatGray,
     VolumeGray,
-    EditBlack
+    EditBlack,
+    ListenerRadio,
+    ArtistRadio
 };

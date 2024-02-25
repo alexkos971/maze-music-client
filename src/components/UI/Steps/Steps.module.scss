@@ -1,0 +1,88 @@
+.steps {
+    position: relative;
+    width: 100%;
+    
+    &__wrap {        
+        width: 100%;
+        display: flex;
+        position: relative;
+    }
+    
+    &__step {
+        width: 100%;
+        transition: .4s;
+        position: relative;
+        --step-offset: 0%;
+        min-height: 270px;     
+        
+        &:not(.steps__step_current) {
+            position: absolute;
+            transform: translateX(var(--step-offset));
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    &__progress {
+        position: relative;
+        margin-top: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        &-item {
+            font-size: 16px;
+            letter-spacing: 2%;
+            color: var(--black-36);
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin: 0px 6px;
+
+            &::before {
+                content: "";
+                width: 14px;
+                height: 14px;
+                border: 2px solid var(--black-36);
+                border-radius: 50%;
+                display: block;
+                order: -1;
+                flex-shrink: 0;
+                margin: 0px 12px;
+                background-color: var(--black-36);
+            }
+            
+            &::after {
+                order: -2;
+                content: "";
+                width: 63px;
+                flex-shrink: 0;
+                height: 2px;
+                background-color: var(--black-36);                
+                display: block;
+                position: relative;
+            }
+
+            &:first-child::after {
+                display: none;
+            }
+            
+            &_disabled {
+                position: relative;                
+                color: var(--gray-c4);
+    
+               &::before {
+                    background-color: transparent;
+                    border-color: var(--gray-c4);
+               } 
+
+               &::after {
+                    background-color: var(--gray-c4);
+               }
+            }
+        }
+    }
+}

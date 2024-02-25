@@ -1,4 +1,4 @@
-import { ReactNode, Children, cloneElement } from "react";
+import { ReactNode, Children } from "react";
 import styles from './DottedRow.module.scss';
 
 interface Props {

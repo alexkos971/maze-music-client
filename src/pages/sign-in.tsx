@@ -5,8 +5,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
-import { Email, Password } from "@components/ui/Field";
-import Button from "@components/ui/Button";
+import { Email, Password } from "@components/UI/Field";
+import Button from "@components/UI/Button";
 import { useTranslation } from "next-i18next";
 import { useFormValidation } from "@components/ui/Form/validation";
 import Title from "@components/UI/Title";

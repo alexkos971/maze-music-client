@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useId } from "react";
-import Image from "next/image";
 import { ChevronDownBlack } from "@helpers/images";
 import { useOutsideClick } from "@hooks/interface";
 import { MainFieldProps } from "./index";

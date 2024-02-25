@@ -1,5 +1,6 @@
 import React from "react";
 import { Select} from "./select";
+import { RadiosWithImages } from "./radios-with-images";
 
 import { useTranslation } from "next-i18next";
 
@@ -59,7 +60,8 @@ export {
     TextArea,
     Email,
     Tel,
-    Search
+    Search,
+    RadiosWithImages
 };
 
 // export default Field;

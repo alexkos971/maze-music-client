@@ -7,7 +7,6 @@ import { useFormValidation } from "@components/UI/Form/validation";
 import { useFieldValidation } from "@hooks";
 
 import { EyeIcon, EyeClosedIcon } from "@helpers/images";
-import Image from "next/image";
 
 interface TextFieldProps extends MainFieldProps {    
     value?: string | number;    
