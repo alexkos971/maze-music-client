@@ -26,6 +26,7 @@ import RepeatGray from "../assets/images/icons/repeat-gray.svg";
 import VolumeGray from "../assets/images/icons/volume-gray.svg";
 import BookMarkPlusBlack from '../assets/images/icons/bookmark-plus-black.svg';
 import EditBlack from '../assets/images/icons/edit-black.svg';
+import CloudArrowUpGreen from "../assets/images/icons/cloud-arrow-up-green.svg";
 
 import ListenerRadio from "../assets/images/listener-radio.png";
 import ArtistRadio from "../assets/images/artist-radio.png";
@@ -58,6 +59,7 @@ export {
     // PauseWhite,  
     PlayBlack,
     PauseBlack, 
+    CloudArrowUpGreen,
     // PlayGreen,
     // PauseGreen,
     BookMarkPlusBlack,

@@ -1,32 +1,52 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
-import { Text, Email, Password, RadiosWithImages, TextArea } from "@components/UI/Field";
+import { useFormValidation } from "@components/UI/Form/validation";
+
+import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker } from "@components/UI/Field";
 import { ListenerRadio, ArtistRadio } from "@helpers/images";
 import Button from "@components/UI/Button";
 import { useTranslation } from "next-i18next";
 import Title from "@components/UI/Title";
 import {Steps, Step } from "@components/UI/Steps";
 
+const ButtonsNav = ({ 
+    buttonText = 'Next', canSkip = false, currentStep, goToStep 
+} : { buttonText?: string, canSkip?: boolean, currentStep: number, goToStep: (step: number) => void}) => {
+    return (        
+        <div className="flex items-center mt-6">
+            <Button className={canSkip ? 'w-1/2' : 'w-full'} onClick={() => {
+                goToStep(currentStep + 1);
+            }}>{buttonText}</Button>
+
+            {
+                canSkip ? 
+                    <button type="button" className="text-base text-center text-gray-c4 w-1/2">Skip</button> 
+                : ''
+            }
+        </div>
+    );
+}
+
 const SignUp = () => {
     const {t} = useTranslation("common");
-    const [activeStep, setActiveStep ] = useState(0)        
-    const [availableSteps, setAvailableSteps ] = useState([0]);        
+    const [activeStep, goToStep ] = useState(0);
+    const { fields } = useFormValidation();
 
     useEffect(() => {
-        console.log(activeStep, availableSteps);
-    }, [activeStep, availableSteps])
+        console.log(fields);
+    }, [fields])
 
     return (
         <AuthWrap size="large">
 
             <Form className="flex flex-col items-center max-w-sm">
-                <Steps availableSteps={availableSteps} activeStep={activeStep} setActiveStep={setActiveStep}>
+                <Steps activeStep={activeStep} goToStep={goToStep}>
                     <Step title="Role">
                         <Title tag="h2">Choose your role</Title>
 
@@ -49,10 +69,7 @@ const SignUp = () => {
                             columns={2}
                         />        
 
-                        <Button className="w-full mt-5" onClick={() => {
-                            setAvailableSteps([0, 1]);
-                            setActiveStep(1);
-                        }}>Next</Button>                                        
+                        <ButtonsNav canSkip={false} goToStep={goToStep} currentStep={activeStep} />                                     
                     </Step>
 
                     <Step title="Credentials">
@@ -75,25 +92,31 @@ const SignUp = () => {
                             name="confirm-password"
                             placeholder="Confirm Password"/>
 
-                        <div className="flex items-center mt-6">
-                            <Button className="w-1/2" onClick={() => {
-                                setAvailableSteps([0, 1, 2]);
-                                setActiveStep(2);
-                            }}>Next</Button>
-
-                            <button type="button" className="text-base text-center text-gray-c4 w-1/2">Skip</button>
-                        </div>
+                        <ButtonsNav canSkip={true} goToStep={goToStep} currentStep={activeStep} />
                     </Step>
 
                     <Step title="Profile">
                         <Title tag="h2">Profile</Title>
 
+                        <FilePicker
+                            title="Your avatar image"
+                            acceptible-types=""
+                            name="avatar"                      
+                        />
+
                         <TextArea
+                            className={'mt-6'}
                             name="description"
                             placeholder="Some description about you..."
                         />
 
-                        <Button className="mt-6 w-1/2">Next</Button>
+                        <ButtonsNav canSkip={true} goToStep={goToStep} currentStep={activeStep} />
+                    </Step>
+
+                    <Step title="Preferences">
+                        <Title tag="h2">Preferences</Title>
+
+                        <ButtonsNav canSkip={true} buttonText="Finish" goToStep={goToStep} currentStep={activeStep}/>
                     </Step>
                 </Steps>
             </Form>

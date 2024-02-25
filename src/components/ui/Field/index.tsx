@@ -13,6 +13,8 @@ import {
     Search
 } from "./text";
 
+import { FilePicker } from "./file-picker";
+
 
 const FieldTitle : React.FC<{title: string | undefined}> = ({ title }) => (
     <>
@@ -35,6 +37,7 @@ export interface MainFieldProps {
     id?: string;
     value?: any;
     name: string;
+    className?: string;
     placeholder?: string;
     required?: boolean;
 };
@@ -61,7 +64,8 @@ export {
     Email,
     Tel,
     Search,
-    RadiosWithImages
+    RadiosWithImages,
+    FilePicker
 };
 
 // export default Field;

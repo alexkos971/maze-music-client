@@ -24,6 +24,7 @@ const TextFieldTemplate = ({
     value = '',
     placeholder,
     onChange,
+    className = '',
     name,
     required = false
 } : FieldTemplateProps) => {    
@@ -55,11 +56,13 @@ const TextFieldTemplate = ({
     }
 
     useEffect(() => {
-        registerField(name, is_valid);
+        if (registerField) {
+            registerField(name, is_valid);
+        }
     }, [is_valid]);
 
     return (
-        <div className={`field field_${type} flex flex-col mt-3 w-full`}>
+        <div className={`field field_${type} flex flex-col mt-3 w-full ${className}`}>
             <FieldTitle title={title}/>
 
             <label className="field__label relative" htmlFor={name}>
@@ -68,14 +71,14 @@ const TextFieldTemplate = ({
                 if (type == 'textarea') {
                     return (                        
                         <textarea 
-                            className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' ) + `resize-none`} 
+                            className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' ) + ` resize-none`} 
                             name={name} 
                             placeholder={placeholder ?? ''}
                             id={field_id}
                             required={required ?? false}
                             rows={3}
+                            value={val}
                             onChange={handleInput} >
-                            {val}
                         </textarea>
                     );
                 }

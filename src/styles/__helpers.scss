@@ -44,3 +44,7 @@ $screen-sizes: (
         display: none;
     }
 }
+
+@function opacity($color, $opacity) {
+    @return rgba($color, $opacity); 
+}

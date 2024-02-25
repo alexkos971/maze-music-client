@@ -6,7 +6,7 @@ interface ValidationContextType {
     fields: {[key : string] : boolean} | {};
 };
 
-const ValidationContext = createContext<ValidationContextType | null>(null);
+export const ValidationContext = createContext<ValidationContextType | null>(null);
 
 export const useFormValidation = () : ValidationContextType | false => {
     const context = useContext(ValidationContext);
@@ -19,7 +19,7 @@ export const useFormValidation = () : ValidationContextType | false => {
 
 
 interface ValidationProviderProps {
-    children: ReactNode
+    children: ReactNode | JSX.Element
 };
 
 export const ValidationProvider : React.FC<ValidationProviderProps> = ({ children }) => {

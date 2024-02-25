@@ -4,14 +4,14 @@ import styles from "./Steps.module.scss";
 
 interface StepsContextType {
     activeStep: number,
-    availableSteps?: number[]
+    goToStep?: number[]
 }
 
 type StepComponent = React.FC<{ children: ReactNode, title: string, index?: number }>;
 type StepsComponent = React.FC<{ 
     children: JSX.Element | JSX.Element[], 
     activeStep?: number, 
-    setActiveStep: (step: number) => void,
+    goToStep: (step: number) => void,
     availableSteps?: number[] 
 }>;
 
@@ -22,8 +22,7 @@ const StepsContext = createContext<StepsContextType>({
 const Steps : StepsComponent = ({ 
     children,
     activeStep = 0,
-    setActiveStep,
-    availableSteps = [0]
+    goToStep,
 }) => {
     // Make children as array by default
     children = !Array.isArray(children) ? [children] : children;
@@ -33,11 +32,11 @@ const Steps : StepsComponent = ({
 
 
     let changeStep = (step: number): void => {
-        setActiveStep(step);
+        goToStep(step);
     }
 
     return (
-        <StepsContext.Provider value={{ activeStep, availableSteps }}>
+        <StepsContext.Provider value={{ activeStep }}>
             <div className={styles.steps}>
                 <div className={styles.steps__wrap}>
                     {
@@ -48,7 +47,6 @@ const Steps : StepsComponent = ({
                 </div>
 
                 <ProgressBar 
-                    availableSteps={availableSteps} 
                     currentStep={activeStep}
                     onChangeStep={changeStep}
                     steps={children}/>

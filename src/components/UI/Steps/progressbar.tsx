@@ -19,14 +19,12 @@ const ProgressItem = ({
 )
 
 interface ProgressBarProps {
-    availableSteps: number[],
     steps: JSX.Element[],
     currentStep: number,
     onChangeStep: (number: number) => void 
 }
 
-const ProgressBar = ({  
-    availableSteps,
+const ProgressBar = ({
     currentStep,
     steps,
     onChangeStep
@@ -42,7 +40,7 @@ const ProgressBar = ({
                             key={'progress' + index}
                             title={item.props.title} 
                             index={index}
-                            onClick={() => availableSteps.includes(index) ? onChangeStep(index) : false}
+                            onClick={() => currentStep >= index ? onChangeStep(index) : false}
                             isDisabled={index > currentStep}
                         />
                     );

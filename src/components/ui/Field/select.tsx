@@ -25,6 +25,7 @@ export const Select = ({
     placeholder,
     options,
     onChange,
+    className = '',
     name,
     required = false,
     title
@@ -96,7 +97,7 @@ export const Select = ({
         )
 
         return (
-            <div className={`${styles.field} ${styles.field_select} flex flex-col mt-3`}>
+            <div className={`${styles.field} ${styles.field_select} flex flex-col mt-3 ${className}`}>
                 <FieldTitle title={title}/>
             
                 <label 
