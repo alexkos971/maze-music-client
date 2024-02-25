@@ -1,7 +1,8 @@
+import useProtectedPage from "@hooks/protectedPage";
 import MainWrap from "@components/MainWrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-export default function Library() {
+export default useProtectedPage(function Library() {
   return (
     <MainWrap>
       <div className="container-fluid">
@@ -9,7 +10,7 @@ export default function Library() {
       </div>
     </MainWrap>
   );
-}
+})
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {

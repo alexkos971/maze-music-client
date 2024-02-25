@@ -1,4 +1,5 @@
 import React from "react";
+import useProtectedPage from "@hooks/protectedPage";
 import { GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -9,7 +10,7 @@ import TrackList from "@components/TrackList";
 import Playlists from "@components/Playlists";
 import Artists from "@components/Artists";
 
-export default function Artist() {
+function Artist() {
   const {t} = useTranslation('common');
 
     return (
@@ -115,6 +116,8 @@ export default function Artist() {
       </MainWrap>
     );
 }
+
+export default useProtectedPage(Artist);
 
 export async function getStaticProps({ locale } : { locale: string }) {
   return {

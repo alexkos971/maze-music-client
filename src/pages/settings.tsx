@@ -1,8 +1,9 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import useProtectedPage from "@hooks/protectedPage";
 import LanguageSwitcher from "@components/LanguageSwitcher";
 import MainWrap from "@components/MainWrap";
 
-export default function Settings() {    
+export default useProtectedPage(function Settings() {    
 
   return (
     <MainWrap>
@@ -15,7 +16,7 @@ export default function Settings() {
       </div>
     </MainWrap>
   );
-}
+});
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {
