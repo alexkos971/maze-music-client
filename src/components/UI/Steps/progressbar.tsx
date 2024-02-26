@@ -30,7 +30,7 @@ const ProgressBar = ({
     onChangeStep
 } : ProgressBarProps) => {
     return (
-        <div className={styles.steps__progress}>
+        <div className={[styles.steps__progress, 'hide-scrollbar'].join(' ')}>
             {
                 Children.map(steps, (item, index) => {
                     if (!item.props.title) return;

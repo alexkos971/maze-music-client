@@ -9,7 +9,7 @@ interface Props {
 }
 
 const AuthWrap = ({ children, size = 'small' } : Props) => {
-    let cardWrapClass = size == 'large' ? 'col-md-10 offset-md-1' : 'col-lg-6 offset-lg-3 col-md-8 offset-md-2'
+    let cardWrapClass = size == 'large' ? 'col-sm-10 offset-sm-1' : 'col-lg-6 offset-lg-3 col-sm-8 offset-sm-2'
     let [ isLoaded, setIsLoaded ] = useState(false);
 
     useEffect(() => {

@@ -27,11 +27,11 @@ export const ValidationProvider : React.FC<ValidationProviderProps> = ({ childre
             [fieldName] : fieldValue
         }));
 
-        if (typeof isValid !== 'boolean') return;
-        setValidFields((prev) => ({
-            ...prev,
-            [fieldName] : isValid
-        }));
+        if (typeof isValid !== 'boolean' || !setValidFields) return;
+            setValidFields((prev) => ({
+                ...prev,
+                [fieldName] : isValid
+            }));
     }
 
     const isFormValid = () : boolean => {

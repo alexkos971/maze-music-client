@@ -6,7 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
-import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
+import { AppContext } from "@components/AppWrap";
 
 import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker, ConfirmPassword } from "@components/UI/Field";
 import { ListenerRadio, ArtistRadio } from "@helpers/images";
@@ -36,8 +36,8 @@ const SignUp = () => {
     const [activeStep, goToStep ] = useState(0);
     const [fields, setFields] = useState<{}>({});    
     const [validFields, setValidFields] = useState<{}>({});    
+    const { showToast } = useContext(AppContext);
 
-    // useEffect(() => {}, [fields])
 
     useEffect(() => {    
         console.log(validFields);
@@ -128,7 +128,7 @@ const SignUp = () => {
 
                         <ButtonsNav 
                             canSkip={true} 
-                            goToStep={() => alert('Final')} 
+                            goToStep={() => showToast({ type: 'success', text: "Authorized" })} 
                         />
                     </Step>
 
