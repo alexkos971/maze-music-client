@@ -55,7 +55,8 @@
             "empty" : "This field must not be empty",
             "invalid_phone": "Phone number is incorrect",
             "invalid_email": "Email is incorrect",
-            "short_password": "Password must contain at least 8 characters"
+            "short_password": "Password must contain at least 8 characters",
+            "confirm_password": "Passwords do NOT match!"
         }
     }
 }

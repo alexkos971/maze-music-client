@@ -7,15 +7,16 @@ const isValidEmail = (email: string) => {
   }
   
 const isValidPhoneNumber = (phoneNumber: string) => {
-// Simple phone number validation regex (for demonstration)
-const phoneRegex = /^\d{10}$/; // Assumes 10-digit phone number
-return phoneRegex.test(phoneNumber) || !phoneNumber.length;
+  // Simple phone number validation regex (for demonstration)
+  const phoneRegex = /^\d{10}$/; // Assumes 10-digit phone number
+  return phoneRegex.test(phoneNumber) || !phoneNumber.length;
 }
 
 export const useFieldValidation = (
   value: any, 
   type: FieldTypes, 
-  isRequired: boolean
+  isRequired: boolean,
+  password?: string | undefined
 ) : [boolean, string] => {
     if (isRequired && (value === '' || value === undefined || value === null)) {
       return [false, "fields.errors.empty"];
@@ -31,6 +32,10 @@ export const useFieldValidation = (
 
     if (type === 'password' && value.length < 8) {
       return [false, "fields.errors.short_password"];
+    }
+
+    if (type === 'confirm-password' && value !== password) {
+      return [false, "fields.errors.confirm_password"];
     }
   
     // Additional validations for other field types can be added here

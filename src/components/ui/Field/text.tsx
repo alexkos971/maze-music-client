@@ -14,7 +14,8 @@ interface TextFieldProps extends MainFieldProps {
 };
 
 interface FieldTemplateProps extends TextFieldProps {
-    type: 'text' | 'email' | 'tel' | 'search' | 'password' | 'textarea';
+    type: 'text' | 'email' | 'tel' | 'search' | 'password' | 'confirm-password' | 'textarea';
+    password?: string
 }
 
 const TextFieldTemplate = ({ 
@@ -25,11 +26,12 @@ const TextFieldTemplate = ({
     placeholder,
     onChange,
     className = '',
+    password = undefined,
     name,
     required = false
 } : FieldTemplateProps) => {    
 
-    const context = useContext(ValidationContext) as ValidationContextType;
+    const formContext = useContext(ValidationContext) as ValidationContextType;
     const field_id = id ? id : useId();
 
     const [ error, setError ] = useState<string>('');
@@ -39,7 +41,7 @@ const TextFieldTemplate = ({
     const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) : void => {
         setVal(e.currentTarget.value);
 
-        const [ current_valid, current_error ] = useFieldValidation(e.currentTarget.value, type, required);
+        const [ current_valid, current_error ] = useFieldValidation(e.currentTarget.value, type, required, (type == 'confirm-password' && password) ? password : undefined);
 
         if (error !== current_error) {
             setError(current_error);
@@ -56,8 +58,8 @@ const TextFieldTemplate = ({
     }
 
     useEffect(() => {
-        if (context?.registerField) {
-            context.registerField(name, val, is_valid);
+        if (formContext?.registerField) {
+            formContext.registerField(name, val, is_valid);
         }
     }, [val, is_valid]);
 
@@ -81,7 +83,7 @@ const TextFieldTemplate = ({
                             </textarea>
                         );
                     }
-                    else if ( type == 'password' ) {
+                    else if ( type == 'password' || type == 'confirm-password' ) {
                         const [isVisible, setIsVisible] = useState<boolean>(false);
 
                             return (
@@ -137,6 +139,10 @@ const Password : React.FC<TextFieldProps> = (props) => {
     return <TextFieldTemplate  {...{...props, type: 'password'}}/>;
 }
 
+const ConfirmPassword : React.FC<TextFieldProps> = (props) => {
+    return <TextFieldTemplate  {...{...props, type: 'confirm-password'}}/>;
+}
+
 const TextArea : React.FC<TextFieldProps> = (props) => {
     return <TextFieldTemplate  {...{...props, type: 'textarea'}}/>;
 }
@@ -153,6 +159,7 @@ export {
     Text,
     Email,
     Password,
+    ConfirmPassword,
     TextArea,
     Tel,
     Search,

@@ -1,7 +1,9 @@
-import React, { ReactNode, createContext, useState } from "react";
+import React, { ReactNode, createContext, useState, useEffect } from "react";
+
+type registerFieldType = (fieldName: string, fieldValue: any, fieldValid?: boolean) => void;
 
 export interface ValidationContextType {
-    registerField: (fieldName: string, fieldValue: any, fieldValid?: boolean) => void;
+    registerField: registerFieldType;
     isFormValid: () => boolean;    
 };
 
@@ -12,27 +14,29 @@ export interface ValidationProviderProps {
     children: ReactNode | JSX.Element,
     fields: {},
     setFields: (fields: {}) => void
+    validFields: { [name: string] : boolean }, 
+    setValidFields: (fields: () => void | { [name: string] : boolean }) => void
 };
 
-export const ValidationProvider : React.FC<ValidationProviderProps> = ({ children, fields, setFields }) => {
-    const [ validatedFields, setValidatedFields ] = useState<{ [name: string] : boolean }>({});
+export const ValidationProvider : React.FC<ValidationProviderProps> = ({ children, fields, setFields, validFields, setValidFields }) => {
+    // const [ validatedFields, setValidatedFields ] = useState<{ [name: string] : boolean }>({});
 
-    const registerField = (fieldName: string, fieldValue: any, isValid?: boolean) => {
+    const registerField : registerFieldType = (fieldName, fieldValue, isValid) => {
         setFields((prev: {}) => ({
             ...prev,
             [fieldName] : fieldValue
         }));
 
         if (typeof isValid !== 'boolean') return;
-        setValidatedFields((prev) => ({
+        setValidFields((prev) => ({
             ...prev,
             [fieldName] : isValid
         }));
     }
 
     const isFormValid = () : boolean => {
-        for (const field in validatedFields) {
-            if ( !validatedFields[field] ) {
+        for (const field in validFields) {
+            if ( !validFields[field] ) {
                 return false;
             }
         }

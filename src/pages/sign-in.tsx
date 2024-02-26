@@ -15,9 +15,7 @@ const SignIn = () => {
     const {t} = useTranslation("common");
     let [ fields, setFields ] = useState<{}>({});
     
-    useEffect(() => {
-        console.log(fields);
-    }, [fields])
+    // useEffect(() => {}, [fields])
 
     const submitForm = () => {}
 

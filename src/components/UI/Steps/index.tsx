@@ -2,7 +2,7 @@ import React, { ReactNode, createContext, Children, cloneElement } from "react";
 import ProgressBar from './progressbar';
 import styles from "./Steps.module.scss";
 
-interface StepsContextType {
+export interface StepsContextType {
     activeStep: number,
     goToStep?: number[]
 }
@@ -26,10 +26,6 @@ const Steps : StepsComponent = ({
 }) => {
     // Make children as array by default
     children = !Array.isArray(children) ? [children] : children;
-    
-    // let [availableSteps, setAvailableSteps] = useState([0]);
-    // let [currentStep, setCurrentStep] = useState(activeStep);
-
 
     let changeStep = (step: number): void => {
         goToStep(step);

@@ -9,6 +9,7 @@ import {
     TextArea,
     Email,
     Password,
+    ConfirmPassword,
     Tel,
     Search
 } from "./text";
@@ -51,7 +52,8 @@ export type FieldTypes =
 | 'password' 
 | 'textarea' 
 | 'file' 
-| 'password';
+| 'password'
+| 'confirm-password';
 
 export { 
     FieldTitle, 
@@ -60,6 +62,7 @@ export {
     Select,
     Text,
     Password,
+    ConfirmPassword,
     TextArea,
     Email,
     Tel,

@@ -39,8 +39,7 @@ export const Select = ({
 
         const [ error, setError ] = useState<string>('');
         const [val, setVal] = useState<SelectSimpleProps['value'] | SelectObjectProps['value']>(
-            value 
-            ?? (
+            value ?? (
             !placeholder ? 
                 (
                     Array.isArray(options) 

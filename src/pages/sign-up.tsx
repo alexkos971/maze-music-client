@@ -7,9 +7,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
-// import { useFormValidation } from "@components/UI/Form/validation";
 
-import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker } from "@components/UI/Field";
+import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker, ConfirmPassword } from "@components/UI/Field";
 import { ListenerRadio, ArtistRadio } from "@helpers/images";
 import Button from "@components/UI/Button";
 import { useTranslation } from "next-i18next";
@@ -17,11 +16,11 @@ import Title from "@components/UI/Title";
 import {Steps, Step } from "@components/UI/Steps";
 
 const ButtonsNav = ({ 
-    buttonText = 'Next', canSkip = false, currentStep, goToStep 
-} : { buttonText?: string, canSkip?: boolean, currentStep: number, goToStep: (step: number) => void}) => {
+    buttonText = 'Next', canSkip = false, goToStep, disabled = false 
+} : { buttonText?: string, canSkip?: boolean, goToStep: () => void, disabled?: boolean}) => {
     return (        
         <div className="flex items-center mt-6">
-            <Button className={canSkip ? 'w-1/2' : 'w-full'} onClick={goToStep}>{buttonText}</Button>
+            <Button disabled={disabled} className={canSkip ? 'w-1/2' : 'w-full'} onClick={goToStep}>{buttonText}</Button>
 
             {
                 canSkip ? 
@@ -36,15 +35,24 @@ const SignUp = () => {
     const {t} = useTranslation("common");
     const [activeStep, goToStep ] = useState(0);
     const [fields, setFields] = useState<{}>({});    
+    const [validFields, setValidFields] = useState<{}>({});    
 
-    useEffect(() => {
-        console.log(fields);
-    }, [fields])
+    // useEffect(() => {}, [fields])
+
+    useEffect(() => {    
+        console.log(validFields);
+    },  [validFields])
 
     return (
         <AuthWrap size="large">
 
-            <Form className="flex flex-col items-center max-w-sm" fields={fields} setFields={setFields}>
+            <Form 
+                className="flex flex-col items-center max-w-sm" 
+                fields={fields} 
+                setFields={setFields} 
+                validFields={validFields}
+                setValidFields={setValidFields}>
+                
                 <Steps activeStep={activeStep} goToStep={goToStep}>
                     <Step title="Role">
                         <Title tag="h2">Choose your role</Title>
@@ -77,21 +85,30 @@ const SignUp = () => {
                         <Text
                             name="full_name"
                             placeholder="Full Name"
+                            required={true}
                         />
 
                         <Email
                             name="email"
-                            placeholder="Email"/>
+                            placeholder="Email"
+                            required={true}/>
                         
                         <Password
                             name="password"
-                            placeholder="Password"/>
+                            placeholder="Password"
+                            required={true}/>
                         
-                        <Password
+                        <ConfirmPassword
+                            password={fields.password}
                             name="confirm-password"
-                            placeholder="Confirm Password"/>
+                            placeholder="Confirm Password"
+                            required={true}/>
 
-                        <ButtonsNav canSkip={true} goToStep={() => goToStep(activeStep + 1)} currentStep={activeStep} />
+                        <ButtonsNav 
+                            disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password']}
+                            canSkip={false} 
+                            goToStep={() => goToStep(activeStep + 1)} 
+                        />
                     </Step>
 
                     <Step title="Profile">
@@ -109,7 +126,10 @@ const SignUp = () => {
                             placeholder="Some description about you..."
                         />
 
-                        <ButtonsNav canSkip={true} goToStep={() => alert('Final')} currentStep={activeStep} />
+                        <ButtonsNav 
+                            canSkip={true} 
+                            goToStep={() => alert('Final')} 
+                        />
                     </Step>
 
                     {/* <Step title="Preferences">
