@@ -2,7 +2,7 @@ import { createContext, ReactNode, useState, SetStateAction, Dispatch } from "re
 import Toast, { ToastProps } from "@components/UI/Toast";
 
 export interface AppContextType {
-    showToast: Dispatch<SetStateAction<false | ToastProps>>
+    showToast: Dispatch<SetStateAction<ToastProps>>
 };
 
 export const AppContext = createContext<AppContextType>({
@@ -16,7 +16,7 @@ interface AppWrapProps {
 export default function AppWrap({ children } : AppWrapProps) {
 
     // Toast
-    const [toast, showToast] = useState<ToastProps | false>(false);
+    const [toast, showToast] = useState<ToastProps>({type: 'hidden', text: ''});
 
     return (
         <AppContext.Provider value={{ showToast }}>
@@ -24,7 +24,7 @@ export default function AppWrap({ children } : AppWrapProps) {
 
             <Toast 
                 text={toast ? toast.text : ''} 
-                type={toast ? toast.type : 'hidden'}/>
+                type={toast.type}/>
         </AppContext.Provider>
     )
 }

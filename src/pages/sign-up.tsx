@@ -24,7 +24,7 @@ const ButtonsNav = ({
 
             {
                 canSkip ? 
-                    <button type="button" className="text-base text-center text-gray-c4 w-1/2">Skip</button> 
+                    <button onClick={goToStep} type="button" className="text-base text-center text-gray-c4 w-1/2">Skip</button> 
                 : ''
             }
         </div>
@@ -128,14 +128,14 @@ const SignUp = () => {
 
                         <ButtonsNav 
                             canSkip={true} 
-                            goToStep={() => showToast({ type: 'success', text: "Authorized" })} 
+                            goToStep={() => goToStep(activeStep + 1)} 
                         />
                     </Step>
 
-                    {/* <Step title="Preferences">
+                    <Step title="Preferences">
                         <Title tag="h2">Preferences</Title>
-                        <ButtonsNav canSkip={true} buttonText="Finish" goToStep={goToStep} currentStep={activeStep}/>
-                    </Step> */}
+                        <ButtonsNav canSkip={true} buttonText="Finish" goToStep={() => showToast({ type: 'success', text: "Authorized" })} currentStep={activeStep}/>
+                    </Step>
                 </Steps>
             </Form>
 
