@@ -7,7 +7,7 @@ import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interf
 import styles from "./Player.module.scss";
 import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, VolumeGray, ChevronUpGray } from "@helpers/images";
 import FullPlayer from "./FullPlayer";
-import Range from "@components/ui/Range";
+import Range from "@components/UI/Range";
 import { useThrottle } from "@hooks/listeners";
 
 const Player = () => {

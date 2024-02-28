@@ -34,21 +34,31 @@ interface Player {
     volume: number;    
 };
 
-interface Artist {
+interface User {
     id: string;
-    followers: number,    
+    role: 'listener' | 'artist' | 'admin',
     name: string;
-    albums: string[];
-    tracks: string[];
     created_date: Date;
     description: string;
     avatar: string;
 }
 
-interface User extends Artist {
+interface Artist extends User {
+    followers: number,    
+    listenings: number,    
+    albums: string[];
+    tracks: string[];
+}
+
+interface Profile extends User {
+    email: string,
+    password: string,   
+    followers: number,    
+    followings: number[],
+    albums: string[];
+    playlists: string[];
+    tracks: string[];
     savedTracks: number[],
     savedPlaylists: number[],
-    followings: number[],
-    email: string,
-    password: string
+    savedAlbums: number[],
 }

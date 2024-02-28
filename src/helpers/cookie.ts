@@ -13,7 +13,6 @@ export const cookieGetItem = (cookie_name: string) : string | null  => {
     document.cookie = cookie_name += "=; expires=" + cookie_date.toUTCString();
   }
   
-  
   type SetItem = {
     name: string,
     value: string,

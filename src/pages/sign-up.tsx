@@ -139,7 +139,7 @@ const SignUp = () => {
                 </Steps>
             </Form>
 
-            <span className="mt-12">Already have an account? <Link href="/sign-in" className="underline">Login</Link></span>
+            <span className="mt-12">Already have an account? <Link href="/sign-in" className="underline">Sign-In</Link></span>
         </AuthWrap>
     );
 }

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const profileSlice = createSlice({
     name: 'profile',
@@ -8,7 +9,9 @@ export const profileSlice = createSlice({
     reducers: {
         setProfile: (state, action) => {
             state = {...action.payload};
-        }
+        },
+        // signIn() {},
+        signUp: (state, action) => {},
     }
 });
 

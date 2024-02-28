@@ -46,7 +46,7 @@ const SignIn = () => {
                 </div>
             </Form>
 
-            <span className="mt-12">Don't have an account? <Link href="/sign-up" className="underline">Register</Link></span>
+            <span className="mt-12">Don't have an account? <Link href="/sign-up" className="underline">Sign-Up</Link></span>
         </AuthWrap>
     );
 }
