@@ -1,4 +1,6 @@
-export const check_env = (callback : () => any) => {
+import { cookieGetItem } from "./cookie";
+
+const check_env = (callback : () => any) => {
     if (typeof window !== 'undefined') {
         return callback();
     }
@@ -6,3 +8,5 @@ export const check_env = (callback : () => any) => {
         return null;
     }
 }
+
+export {cookieGetItem, check_env };

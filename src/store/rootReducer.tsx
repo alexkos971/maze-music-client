@@ -3,12 +3,19 @@ import interfaceReducer from "./reducers/interfaceReducer";
 import profileReducer from "./reducers/profileReducer";
 import playerReducer from "./reducers/playerReducer";
 
+// API
+import { authApi } from "./api/authApi";
+
 export const store = configureStore({
     reducer: {
         interface: interfaceReducer,
         profile: profileReducer,
-        player: playerReducer
-    }
+        player: playerReducer,
+        
+        // Connect API
+        [authApi.reducerPath]: authApi.reducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware)
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

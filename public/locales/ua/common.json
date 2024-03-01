@@ -25,7 +25,9 @@
         "tracks": "треки",
         "see_all": "Дивитися Усе",
         "subscriptions": "підписники",
-        "change": "Змінити"
+        "change": "Змінити",
+        "authorized": "Авторизовано !",
+        "logged_out": "Ви вийшли !"
     },
     "pages": {
         "for-you": {

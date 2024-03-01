@@ -34,31 +34,50 @@ interface Player {
     volume: number;    
 };
 
-interface User {
-    id: string;
+interface SignUpDto {
     role: 'listener' | 'artist' | 'admin',
     name: string;
-    created_date: Date;
+    email: string,
+    password: string,
     description: string;
     avatar: string;
+    genres: string[];
 }
 
-interface Artist extends User {
+interface GetSessionInfoDto {
+    id: number;
+    email: string;
+    iat: number;
+    exp: number;
+}
+
+interface SignInDto {
+    email: string,
+    password: string,   
+}
+
+interface ArtistDto {
+    id: string;
     followers: number,    
     listenings: number,    
     albums: string[];
     tracks: string[];
 }
 
-interface Profile extends User {
+interface ProfileDto {
+    id: string;
+    name: string;
     email: string,
-    password: string,   
+    password: string,
+
     followers: number,    
     followings: number[],
+    
     albums: string[];
     playlists: string[];
     tracks: string[];
+    
     savedTracks: number[],
     savedPlaylists: number[],
-    savedAlbums: number[],
+    savedAlbums: number[],    
 }

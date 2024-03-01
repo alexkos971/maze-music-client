@@ -1,23 +1,36 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
+import { AppContext } from "@components/AppWrap";
+import { useTranslation } from "next-i18next";
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
 import { Email, Password } from "@components/UI/Field";
 import Button from "@components/UI/Button";
-import { useTranslation } from "next-i18next";
 import Title from "@components/UI/Title";
+import { directories } from "@helpers/directory";
 
+import { useSignInMutation } from "@store/api/authApi";
+import { useRouter } from "next/router";
 
 const SignIn = () => {
-    const {t} = useTranslation("common");
-    let [ fields, setFields ] = useState<{}>({});
+    let [ fields, setFields ] = useState<SignInDto>({});
     
-    // useEffect(() => {}, [fields])
-
-    const submitForm = () => {}
+    let [signIn, {data, error, isSuccess, isLoading}] = useSignInMutation();
+    const { showToast } = useContext(AppContext);
+    const { push } = useRouter();
+    const {t} = useTranslation('common');
+    
+    useEffect(() => {    
+        if (error) {
+            showToast({type: 'error', text: error.data.message})
+        } 
+        else if (isSuccess) {
+            push(directories.for_you.path);
+            showToast({type: 'success', text: t('interface.authorized')});
+        }
+    }, [data, isSuccess, error])
 
     return (
         <AuthWrap>
@@ -35,8 +48,9 @@ const SignIn = () => {
                 <div className="flex items-center justify-between mt-6 w-full flex-col sm:flex-row items-stretch gap-5">
                     <Button 
                         type="submit" 
-                        color="green" 
-                        onClick={submitForm}
+                        color="green"
+                        isLoading={isLoading} 
+                        onClick={() => signIn(fields)}
                         className="sm:w-1/2"
                         size="normal">{t("pages.sign-in.title")}</Button>
 

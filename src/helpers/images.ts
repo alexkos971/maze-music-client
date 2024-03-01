@@ -19,6 +19,8 @@ import PlayBlack from "../assets/images/icons/play-black.svg";
 import PauseBlack from "../assets/images/icons/pause-black.svg";
 // import PlayGreen from "../assets/images/icons/play-green.svg";
 // import PauseGreen from "../assets/images/icons/pause-green.svg";
+import LoadSpin from "../assets/images/icons/load-spin.svg";
+
 import HeartOutlineGray from "../assets/images/icons/heart-outline-gray.svg";
 import HeartSolidGreen from "../assets/images/icons/heart-solid-green.svg";
 import DoubleArrowsGray from "../assets/images/icons/double-arrows-gray.svg";
@@ -56,6 +58,7 @@ export {
     ClassicalHitsCover,
     ChevronDownBlack,
     PlayWhite,
+    LoadSpin,
     // PauseWhite,  
     PlayBlack,
     PauseBlack, 

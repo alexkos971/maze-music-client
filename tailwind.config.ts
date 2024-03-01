@@ -14,6 +14,7 @@ const config: Config = {
       'black-06': '#0F1626',
       'green-05': '#00ADB5',
       'green-a3': '#AAD8D3',
+      'blue-75': '#72B0E5',
       'red-fc': '#F44C4C',
       'yellow-fa': '#F4E15A',
       'gray-de': '#DEDEDE',

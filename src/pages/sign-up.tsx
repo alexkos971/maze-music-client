@@ -38,11 +38,6 @@ const SignUp = () => {
     const [validFields, setValidFields] = useState<{}>({});    
     const { showToast } = useContext(AppContext);
 
-
-    useEffect(() => {    
-        console.log(validFields);
-    },  [validFields])
-
     return (
         <AuthWrap size="large">
 

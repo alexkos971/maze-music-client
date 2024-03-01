@@ -1,11 +1,15 @@
+import { check_env } from "@helpers";
+
 export const cookieGetItem = (cookie_name: string) : string | null  => {
+  return check_env(() : any => {
     var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
-  
-    if ( results )
-      return ( unescape ( results[2] ) );
-    else
-      return null;   
-  }
+    
+      if ( results )
+        return ( unescape ( results[2] ) );
+      else
+        return null;   
+  });  
+}
   
   export const cookieDeleteItem = ( cookie_name: string ) =>{
     var cookie_date = new Date ( );  // Текущая дата и время

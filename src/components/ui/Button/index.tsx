@@ -1,5 +1,6 @@
 import React, { ReactNode, useContext } from "react";
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
+import { LoadSpin } from "@helpers/images";
 
 interface ButtonProps {
     type?: 'button' | 'submit',
@@ -8,6 +9,7 @@ interface ButtonProps {
     disabled?: boolean | undefined,
     size?: 'normal' | 'small',
     className?: string,
+    isLoading?: boolean,
     onClick?: () => void
 };
 
@@ -16,6 +18,7 @@ const Button: React.FC<ButtonProps> = ({
     children, 
     color = 'green',
     disabled,
+    isLoading = false,
     size = 'normal',
     className,
     onClick
@@ -47,7 +50,7 @@ const Button: React.FC<ButtonProps> = ({
         <button 
             type={'button'} 
             disabled={isDisabled}     
-            onClick={onClick ?? null}        
+            onClick={onClick ?? undefined}        
             className={`
                 duration-300 
                 rounded-md  
@@ -58,7 +61,12 @@ const Button: React.FC<ButtonProps> = ({
                 ${btn_sizes[size]} ${isDisabled ? btn_colors['disabled'] : btn_colors[color] + ' cursor-pointer'}
                 ${className ?? ''}`}>
             
-            {children}
+            
+            {
+                !isLoading
+                    ? children
+                : <LoadSpin className="w-6 h-6"/>    
+            }
         </button>
     );
 }

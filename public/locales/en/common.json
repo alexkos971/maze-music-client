@@ -25,7 +25,9 @@
         "tracks": "songs",
         "see_all": "See All",
         "subscriptions": "subscriptions",
-        "change": "Change"
+        "change": "Change",
+        "authorized": "Authorized !",
+        "logged_out": "Logged Out !"
     },
     "pages": {
         "for-you": {
