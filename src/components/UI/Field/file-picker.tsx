@@ -3,9 +3,9 @@ import styles from "./Field.module.scss";
 import { MainFieldProps } from "./index";
 import { FieldError, FieldTitle } from "./index";
 import { CloudArrowUpGreen } from "@helpers/images";
+import { useTranslation } from "next-i18next";
 
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
-// import { useFieldValidation } from "@hooks";
 
 interface FileFieldProps extends MainFieldProps {    
 	accept?: string;
@@ -21,6 +21,7 @@ const FilePicker = ({
     required = false,
 	accept = '*'
 } : FileFieldProps) => {    
+	const {t} = useTranslation('common');
 
     const context = useContext(ValidationContext) as ValidationContextType;
     const field_id = id ? id : useId();
@@ -104,7 +105,7 @@ const FilePicker = ({
 				<div className={styles.field__info}>
 					<span className={styles.field__text}>
 						{ !file?.name 
-							? <>Drag and drop file or <span>select file</span></>
+							? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} />
 							: file.name	
 						}
 						

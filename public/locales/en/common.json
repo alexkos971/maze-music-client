@@ -46,10 +46,37 @@
             "header_title": "Profile"
         },
         "sign-in": {
-            "title": "Sign In"
+            "title": "Sign In",
+            "sign_up": "Don't have an account?"
         },
         "sign-up": {
-            "title": "Sign Up"
+            "title": "Sign Up",
+            "btn_next": "Next",
+            "skip": "Skip",
+            "btn_finish": "Finish",
+            "sign_in": "Already have an account?",
+            "steps": {
+                "role": {
+                    "title": "Role",
+                    "listener": "Listener",
+                    "artist": "Artist"
+                },
+                "credentials": {
+                    "title": "Credentials"
+                },
+                "profile": {
+                    "title": "Profile",
+                    "avatar": {
+                        "title": "Your avatar image"                         
+                    },
+                    "description": {
+                        "placeholder": "Some description about you"
+                    }
+                },
+                "preferences": {
+                    "title": "Preferences"
+                }
+            }
         }
     },
     "fields" : {
@@ -59,6 +86,13 @@
             "invalid_email": "Email is incorrect",
             "short_password": "Password must contain at least 8 characters",
             "confirm_password": "Passwords do NOT match!"
+        },
+        "placeholders" : {
+            "full_name": "Full Name",
+            "email": "Email",
+            "password": "Password",
+            "confirm_password": "Confirm Password",
+            "file": "Drag and drop file or <span>select file</span>"
         }
     }
 }

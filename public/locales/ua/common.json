@@ -46,10 +46,37 @@
             "header_title": "Профіль"
         },
         "sign-in": {
-            "title": "Увійти"
+            "title": "Увійти",
+            "sign_up": "Не маєш аккаунта ?"
         },
         "sign-up": {
-            "title": "Зареєструватися"
+            "title": "Зареєструватися",
+            "btn_next": "Далі",
+            "skip": "Пропустити",
+            "btn_finish": "Підтвердити",
+            "sign_in": "Вже є аккаунт ?",
+            "steps": {
+                "role": {
+                    "title": "Роль",
+                    "listener": "Слухач",
+                    "artist": "Виконавець"
+                },
+                "credentials": {
+                    "title": "Облікові данні"
+                },
+                "profile": {
+                    "title": "Профіль",
+                    "avatar": {
+                        "title": "Ваше фото профіля"                         
+                    },
+                    "description": {
+                        "placeholder": "Якийсь опис про вас"
+                    }
+                },
+                "preferences": {
+                    "title": "Уподобання"
+                }
+            }
         }
     },
     "fields" : {
@@ -59,6 +86,13 @@
             "invalid_email": "Емейл некоректний",
             "short_password": "Пароль повинен містити щонайменше 8 символів",
             "confirm_password": "Паролі НЕ збігаються!"
+        },
+        "placeholders" : {
+            "full_name": "Повне ім'я",
+            "email": "Імейл",
+            "password": "Пароль",
+            "confirm_password": "Підтвердити пароль",
+            "file": "Перетащіть або <span>оберіть файл</span>"
         }
     }
 }

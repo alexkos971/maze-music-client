@@ -43,8 +43,8 @@ const SignIn = () => {
                 setFields={setFields}
             >
                 
-                <Email name="email" placeholder="Email" required={true}/>
-                <Password name="password" placeholder="Password" required={true}/>
+                <Email name="email" placeholder={t("fields.placeholders.email")} required={true}/>
+                <Password name="password" placeholder={t("fields.placeholders.password")} required={true}/>
 
                 <div className="flex items-center justify-between mt-6 w-full flex-col sm:flex-row items-stretch gap-5">
                     <Button 
@@ -62,7 +62,7 @@ const SignIn = () => {
                 </div>
             </Form>
 
-            <span className="mt-12">Don't have an account? <Link href="/sign-up" className="underline">Sign-Up</Link></span>
+            <span className="mt-12">{t("pages.sign-in.sign_up")} <Link href="/sign-up" className="underline">{t("pages.sign-up.title")}</Link></span>
         </AuthWrap>
     );
 }

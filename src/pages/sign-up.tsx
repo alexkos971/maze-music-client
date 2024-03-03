@@ -8,24 +8,26 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
 import { AppContext } from "@components/AppWrap";
+import { useTranslation } from "next-i18next";
 
 import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker, ConfirmPassword } from "@components/UI/Field";
 import { ListenerRadio, ArtistRadio } from "@helpers/images";
 import Button from "@components/UI/Button";
-import { useTranslation } from "next-i18next";
 import Title from "@components/UI/Title";
 import {Steps, Step } from "@components/UI/Steps";
 
 const ButtonsNav = ({ 
     buttonText = 'Next', canSkip = false, goToStep, disabled = false 
 } : { buttonText?: string, canSkip?: boolean, goToStep: () => void, disabled?: boolean}) => {
+    const {t} = useTranslation('common');
+
     return (        
         <div className="flex items-center mt-6">
             <Button disabled={disabled} className={canSkip ? 'w-1/2' : 'w-full'} onClick={goToStep}>{buttonText}</Button>
 
             {
                 canSkip ? 
-                    <button onClick={goToStep} type="button" className="text-base text-center text-gray-c4 w-1/2">Skip</button> 
+                    <button onClick={goToStep} type="button" className="text-base text-center text-gray-c4 w-1/2">{t('pages.sign-up.skip')}</button> 
                 : ''
             }
         </div>
@@ -50,20 +52,20 @@ const SignUp = () => {
                 setValidFields={setValidFields}>
                 
                 <Steps activeStep={activeStep} goToStep={goToStep}>
-                    <Step title="Role">
-                        <Title tag="h2">Choose your role</Title>
+                    <Step title={t('pages.sign-up.steps.role.title')}>
+                        <Title tag="h2">{t('pages.sign-up.steps.role.title')}</Title>
 
                         <RadiosWithImages 
                             name={'role'}
                             items={[
                                 {
-                                    title: 'Listener',
+                                    title: t('pages.sign-up.steps.role.listener'),
                                     value: 'listener',
                                     image: ListenerRadio,
                                     checked: true
                                 },
                                 {
-                                    title: 'Artist',
+                                    title: t('pages.sign-up.steps.role.artist'),
                                     value: 'artist',
                                     image: ArtistRadio
                                 },
@@ -71,46 +73,47 @@ const SignUp = () => {
                             columns={2}
                         />        
 
-                        <ButtonsNav canSkip={false} goToStep={() => goToStep(activeStep + 1)} currentStep={activeStep} />                                     
+                        <ButtonsNav buttonText={t('pages.sign-up.btn_next')} canSkip={false} goToStep={() => goToStep(activeStep + 1)} currentStep={activeStep} />                                     
                     </Step>
 
-                    <Step title="Credentials">
-                        <Title tag="h2">Credentials</Title>
+                    <Step title={t('pages.sign-up.steps.credentials.title')}>
+                        <Title tag="h2">{t('pages.sign-up.steps.credentials.title')}</Title>
 
                         <Text
                             name="full_name"
-                            placeholder="Full Name"
+                            placeholder={t('fields.placeholders.full_name')}
                             required={true}
                         />
 
                         <Email
                             name="email"
-                            placeholder="Email"
+                            placeholder={t('fields.placeholders.email')}
                             required={true}/>
                         
                         <Password
                             name="password"
-                            placeholder="Password"
+                            placeholder={t('fields.placeholders.password')}
                             required={true}/>
                         
                         <ConfirmPassword
                             password={fields.password}
                             name="confirm-password"
-                            placeholder="Confirm Password"
+                            placeholder={t('fields.placeholders.confirm_password')}
                             required={true}/>
 
                         <ButtonsNav 
+                            buttonText={t('pages.sign-up.btn_next')}
                             disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password']}
                             canSkip={false} 
                             goToStep={() => goToStep(activeStep + 1)} 
                         />
                     </Step>
 
-                    <Step title="Profile">
-                        <Title tag="h2">Profile</Title>
+                    <Step title={t('pages.sign-up.steps.profile.title')}>
+                        <Title tag="h2">{t('pages.sign-up.steps.profile.title')}</Title>
 
                         <FilePicker
-                            title="Your avatar image"
+                            title={t('pages.sign-up.steps.profile.avatar.title')}
                             accept="image/jpeg, image/png"
                             name="avatar"                      
                         />
@@ -118,23 +121,24 @@ const SignUp = () => {
                         <TextArea
                             className={'mt-6'}
                             name="description"
-                            placeholder="Some description about you..."
+                            placeholder={t('pages.sign-up.steps.profile.description.placeholder')}
                         />
 
                         <ButtonsNav 
+                            buttonText={t('pages.sign-up.btn_next')}
                             canSkip={true} 
                             goToStep={() => goToStep(activeStep + 1)} 
                         />
                     </Step>
 
                     <Step title="Preferences">
-                        <Title tag="h2">Preferences</Title>
-                        <ButtonsNav canSkip={true} buttonText="Finish" goToStep={() => showToast({ type: 'success', text: "Authorized" })} currentStep={activeStep}/>
+                        <Title tag="h2">{t('pages.sign-up.steps.preferences.title')}</Title>
+                        <ButtonsNav canSkip={true} buttonText={t('pages.sign-up.btn_finish')} goToStep={() => showToast({ type: 'success', text: "Authorized" })} currentStep={activeStep}/>
                     </Step>
                 </Steps>
             </Form>
 
-            <span className="mt-12">Already have an account? <Link href="/sign-in" className="underline">Sign-In</Link></span>
+            <span className="mt-12">{t('pages.sign-up.sign_in')} <Link href="/sign-in" className="underline">{t('pages.sign-in.title')}</Link></span>
         </AuthWrap>
     );
 }
