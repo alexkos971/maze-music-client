@@ -39,3 +39,6 @@ export const directories : Record<string, DirType>  = {
         title: "pages.sign-up.title"
     },
 }
+
+export const basePage = directories.for_you;
+export const authPage = directories.sign_in;

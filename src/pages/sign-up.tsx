@@ -1,5 +1,6 @@
 'use client';
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
+import useProtectedPage from "@hooks/protectedPage";
 
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -67,7 +68,6 @@ const SignUp = () => {
                                     image: ArtistRadio
                                 },
                             ]}
-                            // onChange={(id, index) => console.log(id, index)}
                             columns={2}
                         />        
 
@@ -139,7 +139,7 @@ const SignUp = () => {
     );
 }
 
-export default SignUp;
+export default useProtectedPage(SignUp);
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { basePage } from "@helpers/directory"
 
 export default function Home() {    
     const router = useRouter();
@@ -8,7 +9,7 @@ export default function Home() {
     useEffect(() => {    
         // Initial path
         // router.push('/for-you');
-        router.push('/sign-in');
+        router.push(basePage.path);
     }, []);
 
     return (

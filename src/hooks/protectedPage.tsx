@@ -1,26 +1,31 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useLazyGetSessionInfoQuery } from "@store/api/authApi";
-import { directories } from "@helpers/directory";
+import { basePage, authPage } from "@helpers/directory";
 
 export default function useProtectedPage (Component: any) {
     
     return function useProtectedPage(props: any) {
         let [trigger] = useLazyGetSessionInfoQuery();
-        const { push } = useRouter();
+        const router = useRouter();
         
         useEffect(() => { 
             const checkSession = async () => {
-                const { data } = await trigger('');
+                let {isError} = await trigger('');
 
-                if (!data) {                
-                    push(directories.sign_in.path);
+                let isAuthPage = router.pathname == '/sign-in' || router.pathname == '/sign-up'; 
+                
+                if (isError && !isAuthPage) {                
+                    router.replace(authPage.path);
+                } 
+                
+                else if (!isError && isAuthPage ) {
+                    router.replace(basePage.path);
                 }
             }
-
-            checkSession()
+            checkSession();
         }, []);
     
         return <Component {...props}/>

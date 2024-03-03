@@ -9,7 +9,8 @@ import Form from "@components/UI/Form";
 import { Email, Password } from "@components/UI/Field";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
-import { directories } from "@helpers/directory";
+import { basePage } from "@helpers/directory";
+import useProtectedPage from "@hooks/protectedPage"
 
 import { useSignInMutation } from "@store/api/authApi";
 import { useRouter } from "next/router";
@@ -17,20 +18,20 @@ import { useRouter } from "next/router";
 const SignIn = () => {
     let [ fields, setFields ] = useState<SignInDto>({});
     
-    let [signIn, {data, error, isSuccess, isLoading}] = useSignInMutation();
+    let [signIn, { error, isSuccess, isLoading}] = useSignInMutation();
     const { showToast } = useContext(AppContext);
     const { push } = useRouter();
     const {t} = useTranslation('common');
     
-    useEffect(() => {    
+    useEffect(() => {
         if (error) {
             showToast({type: 'error', text: error.data.message})
         } 
-        else if (isSuccess) {
-            push(directories.for_you.path);
+        else if (isSuccess)  {
+            push(basePage.path);
             showToast({type: 'success', text: t('interface.authorized')});
         }
-    }, [data, isSuccess, error])
+    }, [isSuccess, error]);
 
     return (
         <AuthWrap>
@@ -49,6 +50,7 @@ const SignIn = () => {
                     <Button 
                         type="submit" 
                         color="green"
+                        disabled={isLoading}
                         isLoading={isLoading} 
                         onClick={() => signIn(fields)}
                         className="sm:w-1/2"
@@ -65,7 +67,7 @@ const SignIn = () => {
     );
 }
 
-export default SignIn;
+export default useProtectedPage(SignIn);
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {
@@ -74,4 +76,4 @@ export async function getStaticProps({ locale } : { locale: string }) {
             // Will be passed to the page component as props
         },
     };
-}
+} 

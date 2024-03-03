@@ -94,10 +94,10 @@ const Header = ({canReturnBack = false} : Props) => {
 }
 
 export const fillHeaderByScroll = (e: UIEvent<HTMLDivElement>) : void => {
-  if (e.currentTarget.scrollTop > 50 && !store.getState().interface.header_is_filled) {
+  if (e.currentTarget.scrollTop > 35 && !store.getState().interface.header_is_filled) {
     store.dispatch(setHeaderIsFilled(true));
   }
-  else if (e.currentTarget.scrollTop <= 50 && store.getState().interface.header_is_filled) {
+  else if (e.currentTarget.scrollTop <= 35 && store.getState().interface.header_is_filled) {
     store.dispatch(setHeaderIsFilled(false));
   }
 }

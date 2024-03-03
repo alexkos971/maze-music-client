@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "@components/AppWrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import useProtectedPage from "@hooks/protectedPage";
@@ -10,13 +10,20 @@ import Button from "@components/UI/Button";
 import { useSignOutMutation } from "@store/api/authApi";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { directories } from "@helpers/directory";
+import { authPage } from "@helpers/directory";
 
 export default useProtectedPage(function Settings() {    
-  const [signOut, { data, isError, isLoading }] = useSignOutMutation();
+  const [signOut, { isSuccess, isLoading }] = useSignOutMutation();
   const { showToast } = useContext(AppContext);
   const {t} = useTranslation('common');
-  const { push } = useRouter()
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (isSuccess) {
+      showToast({type: 'info', text: t("interface.logged_out")})
+      push(authPage.path);
+    }
+  }, [isSuccess]);
 
   return (
     <MainWrap>
@@ -30,11 +37,7 @@ export default useProtectedPage(function Settings() {
             className="mt-6" 
             color="black" 
             isLoading={isLoading}
-            onClick={() => {
-              signOut('');
-              push(directories.sign_in.path);
-              showToast({type: 'info', text: t("interface.logged_out")})
-            }}>Leave</Button>
+            onClick={() => signOut('')}>Leave</Button>
         </div>
       </div>
     </MainWrap>
