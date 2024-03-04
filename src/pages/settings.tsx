@@ -1,4 +1,6 @@
 "use client";
+import { useAppDispatch } from "@hooks";
+import { showToast } from "@store/reducers/interfaceReducer";
 import { useContext, useEffect } from "react";
 import { AppContext } from "@components/AppWrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -13,14 +15,14 @@ import { useRouter } from "next/router";
 import { authPage } from "@helpers/directory";
 
 export default useProtectedPage(function Settings() {    
+  const dispatch = useAppDispatch();
   const [signOut, { isSuccess, isLoading }] = useSignOutMutation();
-  const { showToast } = useContext(AppContext);
   const {t} = useTranslation('common');
   const { push } = useRouter();
 
   useEffect(() => {
     if (isSuccess) {
-      showToast({type: 'info', text: t("interface.logged_out")})
+      dispatch(showToast({type: 'info', text: t("interface.logged_out")}))
       push(authPage.path);
     }
   }, [isSuccess]);

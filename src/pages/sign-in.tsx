@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect, useContext } from "react";
+import { useAppDispatch } from "@hooks";
+import { showToast } from "@store/reducers/interfaceReducer";
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AppContext } from "@components/AppWrap";
@@ -16,20 +18,20 @@ import { useSignInMutation } from "@store/api/authApi";
 import { useRouter } from "next/router";
 
 const SignIn = () => {
+    const dispatch = useAppDispatch();
     let [ fields, setFields ] = useState<SignInDto>({});
     
     let [signIn, { error, isSuccess, isLoading}] = useSignInMutation();
-    const { showToast } = useContext(AppContext);
     const { push } = useRouter();
     const {t} = useTranslation('common');
     
     useEffect(() => {
         if (error) {
-            showToast({type: 'error', text: error.data.message})
+            dispatch(showToast({type: 'error', text: error.data.message}))
         } 
         else if (isSuccess)  {
             push(basePage.path);
-            showToast({type: 'success', text: t('interface.authorized')});
+            dispatch(showToast({type: 'success', text: t('interface.authorized')}));
         }
     }, [isSuccess, error]);
 

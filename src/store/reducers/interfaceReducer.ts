@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { lsSetItem, lsGetItem } from "@helpers/localstorage";
 import { directories, DirType } from "@helpers/directory";
 
+import { ToastProps } from "@components/UI/Toast";
+
 export const interfaceSlice = createSlice({
     name: 'interface',
     initialState: {
@@ -9,6 +11,7 @@ export const interfaceSlice = createSlice({
         fullplayer_is_expanded: false,
         sidebar_is_collapsed: true,
         header_is_filled: false,
+        toast: <ToastProps>{ text: '', type: 'hidden' },
         // Current directory
         directory: directories['for_you']
     },
@@ -24,6 +27,9 @@ export const interfaceSlice = createSlice({
         setFullplayerExpanded: (state, action) => {
             return {...state, fullplayer_is_expanded : action.payload};
         },
+        showToast: (state, action: { type: string, payload: ToastProps }) => {
+            return { ...state, toast: action.payload }
+        },
         setHeaderIsFilled: (state, action : {type: string, payload: boolean}) => ({...state, header_is_filled: action.payload}),
         setDirectory: (state, action : {type: string, payload: DirType}) => ({...state, directory: action.payload})
     }
@@ -35,7 +41,8 @@ export const {
     setSidebarCollapsed, 
     setDirectory, 
     setFullplayerExpanded, 
-    setHeaderIsFilled
+    setHeaderIsFilled,
+    showToast
 } = interfaceSlice.actions;
 
 export default interfaceSlice.reducer;
