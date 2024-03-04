@@ -12,7 +12,7 @@ const Dots = ({ count, active, setActive } : DotsProps) => {
 
     return (
         <div className={styles.slider__dots}>
-            { Array.from({length: count}, (_, index) => (
+            { Array.from({length: count - 1}, (_, index) => (
                 <button 
                     className={`${styles['slider__dots-item']}  ${active == index ? 'after:bg-gray-40' : 'after:bg-gray-c4'}`}
                     onClick={() => setActive(index)}

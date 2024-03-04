@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { lsSetItem, lsGetItem } from "@helpers/localstorage";
-import { directories, DirType } from "@helpers/directory";
+import { lsSetItem } from "@helpers/localstorage";
+import { basePage, DirType } from "@helpers/directory";
 
 import { ToastProps } from "@components/UI/Toast";
 
@@ -13,7 +13,7 @@ export const interfaceSlice = createSlice({
         header_is_filled: false,
         toast: <ToastProps>{ text: '', type: 'hidden' },
         // Current directory
-        directory: directories['for_you']
+        directory: basePage
     },
     reducers: {
         setTheme: (state, action : {type: string, payload: string }) => {
@@ -25,7 +25,7 @@ export const interfaceSlice = createSlice({
             return {...state, sidebar_is_collapsed : action.payload};
         },
         setFullplayerExpanded: (state, action) => {
-            return {...state, fullplayer_is_expanded : action.payload};
+            return {...state, fullplayer_is_expanded : action.payload, header_is_filled: !action.payload ? true : state.header_is_filled};
         },
         showToast: (state, action: { type: string, payload: ToastProps }) => {
             return { ...state, toast: action.payload }

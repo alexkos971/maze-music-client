@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState, useRef } from "react";
+import React, { ReactNode, createContext, useState, useRef, useEffect } from "react";
 import Dots from "@components/UI/Slider/dots";
 import styles from "./Slider.module.scss";
 
@@ -38,6 +38,14 @@ const Slider: SliderComponent = ({
         let scrollLeft = childWidth * next;
         sliderRef.current.scrollLeft = scrollLeft;
     };
+
+    useEffect(() => {
+        if (!sliderRef.current) return;
+
+        sliderRef.current.addEventListener('scroll', e => {
+            console.log(sliderRef.current?.scrollLeft)
+        });
+    }, []);
     
     return (
         <SliderContext.Provider value={{ ...settings }}>
