@@ -1,6 +1,7 @@
 import React, { ReactNode, createContext, useState, useRef, useEffect } from "react";
 import Dots from "@components/UI/Slider/dots";
 import styles from "./Slider.module.scss";
+import { useThrottle } from "@hooks/listeners";
 
 interface SliderOptions {
     slidesToShow?: number | 1,
@@ -25,32 +26,47 @@ const Slider: SliderComponent = ({
 
     let sliderRef = useRef<HTMLDivElement | null>(null);
     let [active, setActive] = useState<number>(0);
+    let [childWidth, setChildWidth] = useState<number>(0);
+    let [ignoreScroll, setIgnoreScroll] = useState<boolean>(false)
     
     const scrollTo = (next: number) => {
+        setIgnoreScroll(true);
         setActive(next);
         
-        if (!sliderRef?.current) return;
-
-        let childWidth: number = parseInt(getComputedStyle(sliderRef.current?.children[0]).width);
-
-        if (typeof childWidth !== 'number' || childWidth <= 0) return;
-
-        let scrollLeft = childWidth * next;
-        sliderRef.current.scrollLeft = scrollLeft;
+        if (sliderRef?.current && childWidth > 0) {            
+            let scrollLeft = childWidth * next;
+            sliderRef.current.scrollLeft = scrollLeft;
+        }    
+        
+        setTimeout(() => {
+            setIgnoreScroll(false);
+        }, 1000);
     };
 
+    const handleScroll = () => {
+        let scrollableValue = sliderRef.current?.scrollLeft ?? 0;        
+            
+        if (scrollableValue > 0 && childWidth > 0 && !ignoreScroll) {
+            setActive(Math.floor(scrollableValue / childWidth));
+        }
+    }
+
+    // Initial Values
     useEffect(() => {
         if (!sliderRef.current) return;
+        
+        setChildWidth(parseInt(getComputedStyle(sliderRef.current?.children[0]).width));
+        
+        setTimeout(() => {            
+            setChildWidth(parseInt(getComputedStyle(sliderRef.current?.children[0]).width));
+        }, 2000)
 
-        sliderRef.current.addEventListener('scroll', e => {
-            console.log(sliderRef.current?.scrollLeft)
-        });
     }, []);
     
     return (
         <SliderContext.Provider value={{ ...settings }}>
             <div className={styles.slider}>
-                <div className={`${styles.slider__wrap} hide-scrollbar`} ref={sliderRef}>{children}</div>               
+                <div className={`${styles.slider__wrap} hide-scrollbar`} ref={sliderRef} onScroll={handleScroll}>{children}</div>               
 
                 { settings.withDots ?
                     <Dots count={Array.isArray(children) ? children.length : 0} active={active} setActive={scrollTo}/>
