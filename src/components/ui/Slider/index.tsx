@@ -58,7 +58,7 @@ const Slider: SliderComponent = ({
         setChildWidth(parseInt(getComputedStyle(sliderRef.current?.children[0]).width));
         
         setTimeout(() => {            
-            setChildWidth(parseInt(getComputedStyle(sliderRef.current?.children[0]).width));
+            setChildWidth(parseInt(getComputedStyle(sliderRef?.current?.children[0]).width));
         }, 2000)
 
     }, []);

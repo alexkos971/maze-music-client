@@ -1,13 +1,16 @@
 'use client';
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import useProtectedPage from "@hooks/protectedPage";
+import { showToast } from "@store/reducers/interfaceReducer";
+import { useAppDispatch } from "@hooks";
+import { basePage } from "@helpers/directory";
 
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import AuthWrap from "@components/AuthWrap";
 import Form from "@components/UI/Form";
-import { AppContext } from "@components/AppWrap";
 import { useTranslation } from "next-i18next";
 
 import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker, ConfirmPassword } from "@components/UI/Field";
@@ -15,6 +18,8 @@ import { ListenerRadio, ArtistRadio } from "@helpers/images";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
 import {Steps, Step } from "@components/UI/Steps";
+
+import { useSignUpMutation } from "@store/api/authApi";
 
 const ButtonsNav = ({ 
     buttonText = 'Next', canSkip = false, goToStep, disabled = false 
@@ -37,9 +42,23 @@ const ButtonsNav = ({
 const SignUp = () => {
     const {t} = useTranslation("common");
     const [activeStep, goToStep ] = useState(0);
-    const [fields, setFields] = useState<{}>({});    
+    const [fields, setFields] = useState<SignUpDto | {}>({});    
     const [validFields, setValidFields] = useState<{}>({});    
-    const { showToast } = useContext(AppContext);
+    const dispatch = useAppDispatch();
+
+    const { push } = useRouter();
+    let [signUp, { error, isSuccess, isLoading}] = useSignUpMutation();
+
+    useEffect(() => {
+        if (error) {
+            dispatch(showToast({type: 'error', text: t(`pages.sign-up.errors.${error.data.message}`)}))
+        } 
+        else if (isSuccess)  {
+            push(basePage.path);
+            dispatch(showToast({type: 'success', text: t('interface.registered')}));
+        }
+    }, [isSuccess, error]);
+
 
     return (
         <AuthWrap size="large">
@@ -131,9 +150,20 @@ const SignUp = () => {
                         />
                     </Step>
 
-                    <Step title="Preferences">
+                    {/* <Step title="Preferences">
                         <Title tag="h2">{t('pages.sign-up.steps.preferences.title')}</Title>
-                        <ButtonsNav canSkip={true} buttonText={t('pages.sign-up.btn_finish')} goToStep={() => showToast({ type: 'success', text: "Authorized" })} currentStep={activeStep}/>
+
+                            <div className="flex items-center mt-6">
+                                <Button className={'w-full'} onClick={() => fields ? signUp(fields) : false}>{t('pages.sign-up.btn_finish')}</Button>
+                            </div>
+                    </Step> */}
+                    
+                    <Step title={t('pages.sign-up.btn_finish')}>
+                        <Title tag="h2">{t('pages.sign-up.btn_finish')}</Title>
+
+                            <div className="flex items-center mt-6">
+                                <Button className={'w-full'} onClick={() => fields ? signUp(fields) : false}>{t('pages.sign-up.btn_finish')}</Button>
+                            </div>
                     </Step>
                 </Steps>
             </Form>

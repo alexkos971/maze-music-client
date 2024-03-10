@@ -19,6 +19,22 @@ export const authApi = createApi({
                 body
             })
         }),
+        signUp: build.mutation({
+            query: (body: SignUpDto) => {          
+                let formData = new FormData();
+
+                for (let key in body) {
+                    formData.append(key, body[key]);
+                }
+                
+                return {
+                    url: 'sign-up',
+                    method: 'POST',
+                    body,
+                    // formData: true
+                }
+            }
+        }),
         signOut: build.mutation({
            query: (arg: any) => ({ url: 'sign-out', method: 'POST'})
         }),
@@ -28,4 +44,4 @@ export const authApi = createApi({
     })
 });
 
-export const { useSignInMutation, useLazyGetSessionInfoQuery, useSignOutMutation } = authApi;
+export const { useSignInMutation, useSignUpMutation, useLazyGetSessionInfoQuery, useSignOutMutation } = authApi;

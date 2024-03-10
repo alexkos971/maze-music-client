@@ -25,6 +25,8 @@
 }
 
 .field {
+    position: relative;
+    
     &_select {
         .field__chevron {
             img, svg {

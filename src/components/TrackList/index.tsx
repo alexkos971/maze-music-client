@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { useAppDispatch } from "@hooks";
-import Track from "@components/ui/Track";
+import Track from "@components/UI/Track";
 import Title from "@components/UI/Title";
 
 interface TrackListProps {

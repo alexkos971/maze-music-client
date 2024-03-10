@@ -26,10 +26,12 @@ const Header = ({canReturnBack = false} : Props) => {
   let avatarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (avatarRef?.current && profile.name) {
-      avatarRef.current.setAttribute('data-nick', profile.name.split(" ").reduce((item, acc) => item[0] + acc[0]));
+
+    if (profile?.full_name && avatarRef?.current) {
+      avatarRef.current.setAttribute('data-nick', profile.full_name.split(" ").reduce((item, acc) => item[0] + acc[0]));
+
     }
-  }, [profile.name]);
+  }, [profile]);
 
 
   // Get Height of the Header
@@ -85,7 +87,11 @@ const Header = ({canReturnBack = false} : Props) => {
                   after:absolute ${'after:content-[attr(data-nick)]'} after:left-1/2 after:top-1/2 after:w-full after:h-full after:translate-x-[-50%] after:translate-y-[-50%] after:font-normal after:text-base after:text-gray-c4 after:text-center after:flex after:items-center after:justify-center after:bg-gray-ee
                 `}>
               </div>
-              <span className={`header__profile-name font-normal text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-black'}`}>{profile.name}</span>
+              {
+                profile?.full_name 
+                ? <span className={`header__profile-name font-normal text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-black'}`}>{profile.full_name}</span>
+                : <></>
+              }
           </Link>
         </div>
       </div>

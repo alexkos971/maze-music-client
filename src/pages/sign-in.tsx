@@ -27,7 +27,7 @@ const SignIn = () => {
     
     useEffect(() => {
         if (error) {
-            dispatch(showToast({type: 'error', text: error.data.message}))
+            dispatch(showToast({type: 'error', text: error?.data?.message}))
         } 
         else if (isSuccess)  {
             push(basePage.path);

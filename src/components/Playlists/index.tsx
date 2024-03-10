@@ -1,8 +1,8 @@
 import React from "react";
-import Card from "@components/ui/Card";
+import Card from "@components/UI/Card";
 import { StaticImageData } from "next/image";
 import { Identifier } from "typescript";
-import Slider from "@components/ui/Slider";
+import Slider from "@components/UI/Slider";
 import { useTranslation } from "next-i18next";
 import Title from "@components/UI/Title";
 

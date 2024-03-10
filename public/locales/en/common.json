@@ -27,7 +27,8 @@
         "subscriptions": "subscriptions",
         "change": "Change",
         "authorized": "Authorized !",
-        "logged_out": "Logged Out !"
+        "logged_out": "Logged Out !",
+        "registered": "Succesfully registered"
     },
     "pages": {
         "for-you": {
@@ -76,6 +77,9 @@
                 "preferences": {
                     "title": "Preferences"
                 }
+            },
+            "errors": {
+                "user_is_exist": "User already exist"
             }
         }
     },

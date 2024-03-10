@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import styles from './Track.module.scss';
 import { setTrack, setIsPlaying } from "@store/reducers/playerReducer";
-import {formatSecond} from "@helpers/formated";
+import {formatTime} from "@helpers/formated";
 import { PlayBlack, PauseBlack, HeartOutlineGray,HeartSolidGreen } from "@helpers/images";
 import { useAppSelector, useAppDispatch } from "@hooks";
 
@@ -59,7 +59,7 @@ const Track = ({
                     {true ? <HeartOutlineGray/> : <HeartSolidGreen/>}
                 </button>
 
-                <span className="time text-gray-8e">{track.duration ? formatSecond(track.duration) : '0:00'}</span>
+                <span className="time text-gray-8e text-sm">{track.duration ? formatTime(track.duration) : '0:00'}</span>
             </div>
         </div>
     );

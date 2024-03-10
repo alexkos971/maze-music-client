@@ -27,7 +27,8 @@
         "subscriptions": "підписники",
         "change": "Змінити",
         "authorized": "Авторизовано !",
-        "logged_out": "Ви вийшли !"
+        "logged_out": "Ви вийшли !",
+        "registered": "Успешно зарегистрировано"
     },
     "pages": {
         "for-you": {
@@ -76,6 +77,9 @@
                 "preferences": {
                     "title": "Уподобання"
                 }
+            },
+            "errors": {
+                "user_is_exist": "Такий користувач вже існує"
             }
         }
     },

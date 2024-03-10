@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {formatSecond} from "@helpers/formated";
+import {formatTime} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
 import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
@@ -256,7 +256,7 @@ const Player = () => {
 
                         {/* Progress */}
                         <div className={`player-progress mx-auto flex items-center justify-center w-full`}>
-                            <span className="text-white text-xs">{formatSecond(currentTime)}</span>
+                            <span className="text-white text-xs">{formatTime(currentTime)}</span>
 
                             <Range
                                 value={currentTime}
@@ -264,7 +264,7 @@ const Player = () => {
                                 onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
                                 max={duration} />
                             
-                            <span className="text-white text-xs">{formatSecond(duration) ?? "00:00"}</span>
+                            <span className="text-white text-xs">{formatTime(duration) ?? "00:00"}</span>
                         </div>
 
                         {/* Navigation - Volume/Save/Repeat */}
