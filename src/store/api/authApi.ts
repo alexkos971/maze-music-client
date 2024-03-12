@@ -27,11 +27,13 @@ export const authApi = createApi({
                     formData.append(key, body[key]);
                 }
                 
+                console.log(formData)
+
                 return {
                     url: 'sign-up',
                     method: 'POST',
-                    body,
-                    // formData: true
+                    body: formData,
+                    formData: true
                 }
             }
         }),

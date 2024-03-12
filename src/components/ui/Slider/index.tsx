@@ -53,12 +53,12 @@ const Slider: SliderComponent = ({
 
     // Initial Values
     useEffect(() => {
-        if (!sliderRef.current) return;
+        if (!sliderRef?.current) return;
         
         setChildWidth(parseInt(getComputedStyle(sliderRef.current?.children[0]).width));
         
         setTimeout(() => {            
-            setChildWidth(parseInt(getComputedStyle(sliderRef?.current?.children[0]).width));
+            sliderRef && sliderRef.current && setChildWidth(parseInt(getComputedStyle(sliderRef.current.children[0]).width));
         }, 2000)
 
     }, []);

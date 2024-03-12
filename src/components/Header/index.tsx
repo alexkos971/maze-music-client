@@ -1,5 +1,6 @@
 // @ts-check
 import React, { useEffect, useRef, UIEvent } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { setTheme, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 import {store} from '@store/rootReducer';
@@ -84,8 +85,19 @@ const Header = ({canReturnBack = false} : Props) => {
                 ref={avatarRef} 
                 className={`header__profile-avatar 
                   relative w-10 h-10 overflow-hidden block rounded-[50%] shrink-0
-                  after:absolute ${'after:content-[attr(data-nick)]'} after:left-1/2 after:top-1/2 after:w-full after:h-full after:translate-x-[-50%] after:translate-y-[-50%] after:font-normal after:text-base after:text-gray-c4 after:text-center after:flex after:items-center after:justify-center after:bg-gray-ee
+                  before:absolute ${'before:content-[attr(data-nick)]'} before:left-1/2 before:top-1/2 before:w-full before:h-full before:translate-x-[-50%] before:translate-y-[-50%] before:font-normal before:text-base before:text-gray-c4 before:text-center before:flex before:items-center before:justify-center before:bg-gray-ee
                 `}>
+                  {
+                    profile?.avatar ?
+                      <Image 
+                        src={process.env.NEXT_PUBLIC_STATIC + profile.avatar} 
+                        height={40} 
+                        width={40}
+                        alt=""
+                        className="w-full h-full object-cover relative"
+                        />
+                    : <></>
+                  }
               </div>
               {
                 profile?.full_name 

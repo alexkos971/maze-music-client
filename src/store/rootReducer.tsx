@@ -5,6 +5,7 @@ import playerReducer from "./reducers/playerReducer";
 
 // API
 import { authApi } from "./api/authApi";
+import { uploadApi } from "./api/uploadApi";
 
 export const store = configureStore({
     reducer: {
@@ -13,9 +14,10 @@ export const store = configureStore({
         player: playerReducer,
         
         // Connect API
-        [authApi.reducerPath]: authApi.reducer
+        [authApi.reducerPath]: authApi.reducer,
+        [uploadApi.reducerPath]: uploadApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware, uploadApi.middleware)
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
