@@ -3,6 +3,7 @@ import { lsSetItem } from "@helpers/localstorage";
 import { basePage, DirType } from "@helpers/directory";
 
 import { ToastProps } from "@components/UI/Toast";
+import { ModalProps } from "@components/UI/Modal";
 
 export const interfaceSlice = createSlice({
     name: 'interface',
@@ -12,6 +13,7 @@ export const interfaceSlice = createSlice({
         sidebar_is_collapsed: true,
         header_is_filled: false,
         toast: <ToastProps>{ text: '', type: 'hidden' },
+        modal: <ModalProps>{ isOpened: false, content: null },
         // Current directory
         directory: basePage
     },
@@ -30,6 +32,9 @@ export const interfaceSlice = createSlice({
         showToast: (state, action: { type: string, payload: ToastProps }) => {
             return { ...state, toast: action.payload }
         },
+        toggleModal: (state, action) => {
+            return { ...state, modal: { ...state.modal, ...action.payload} }
+        },
         setHeaderIsFilled: (state, action : {type: string, payload: boolean}) => ({...state, header_is_filled: action.payload}),
         setDirectory: (state, action : {type: string, payload: DirType}) => ({...state, directory: action.payload})
     }
@@ -42,7 +47,8 @@ export const {
     setDirectory, 
     setFullplayerExpanded, 
     setHeaderIsFilled,
-    showToast
+    showToast,
+    toggleModal
 } = interfaceSlice.actions;
 
 export default interfaceSlice.reducer;

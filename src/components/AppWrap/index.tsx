@@ -1,5 +1,6 @@
 import { createContext, ReactNode } from "react";
 import Toast from "@components/UI/Toast";
+import Modal from "@components/UI/Modal";
 
 export interface AppContextType {};
 
@@ -16,6 +17,7 @@ export default function AppWrap({ children } : AppWrapProps) {
             {children}
             
             <Toast />
+            <Modal/>
         </AppContext.Provider>
     )
 }

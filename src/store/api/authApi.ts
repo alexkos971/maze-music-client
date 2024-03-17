@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { showToast } from "@store/reducers/interfaceReducer";
+import { setProfile } from "@store/reducers/profileReducer";
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -25,9 +27,7 @@ export const authApi = createApi({
 
                 for (let key in body) {
                     formData.append(key, body[key]);
-                }
-                
-                console.log(formData)
+                }            
 
                 return {
                     url: 'sign-up',
@@ -41,7 +41,21 @@ export const authApi = createApi({
            query: (arg: any) => ({ url: 'sign-out', method: 'POST'})
         }),
         getSessionInfo: build.query({
-            query: () => ({ url: `session` })
+            query: () => ({ url: `session` }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                try {
+                    const response = await queryFulfilled;
+
+                    if (response.data) {
+                        dispatch(setProfile( response.data ))                    
+                    } 
+                    else if (!response.data) {
+                        dispatch(setProfile( null ));                    
+                    }
+                } catch (e) {
+                    dispatch(setProfile( null ));
+                }
+            },
         })
     })
 });

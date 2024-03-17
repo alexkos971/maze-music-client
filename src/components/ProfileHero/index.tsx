@@ -2,13 +2,17 @@ import styles from './ProfileHero.module.scss';
 import Image from 'next/image';
 
 import { useTranslation } from 'next-i18next';
-import { useAppSelector } from '@hooks';
+import { useAppSelector, useAppDispatch } from '@hooks';
+import { toggleModal } from '@store/reducers/interfaceReducer';
+import UpdateProfileForm from './updateProfileForm';
+
 import Button from '@components/UI/Button';
 import EditButton from '@components/UI/EditButton';
 import DottedRow from '@components/UI/DottedRow';
 
 const ProfileHero = () => {
     const {t} = useTranslation('common');
+    const dispatch = useAppDispatch();
     const profile = useAppSelector(state => state.profile);
 
     if (!profile) {
@@ -31,7 +35,19 @@ const ProfileHero = () => {
                                         height={600}
                                     />
                                 
-                                    <div className={styles['profile-hero__avatar-edit']}>
+                                    <div 
+                                        className={styles['profile-hero__avatar-edit']}
+                                        onClick={() => {
+                                            dispatch(toggleModal({ 
+                                                isOpened: true, 
+                                                content: (
+                                                    <UpdateProfileForm 
+                                                        title="Change Avatar"
+                                                        name="avatar" 
+                                                        type="file"/>
+                                                )
+                                            })) 
+                                        }}>                                        
                                         <span>{t('interface.change')}</span>
                                     </div>
                                 </>
@@ -44,17 +60,42 @@ const ProfileHero = () => {
                         <div className={styles['profile-hero__title']}>
                             <h1>{profile.full_name}</h1>
 
-                            <EditButton className='mb-[6px]' onClick={() => console.log("Edit Title")}/>
+                            <EditButton 
+                                className='mb-[6px]' 
+                                onClick={() => {
+                                    dispatch(toggleModal({ 
+                                        isOpened: true, 
+                                        content: (
+                                            <UpdateProfileForm 
+                                                title="Change Name"
+                                                name="full_name" 
+                                                value={profile?.full_name} 
+                                                type="text"/>
+                                        )
+                                    })) 
+                                }}
+                            />
                         </div>
 
-                        {
-                            profile?.description ?
-                                <p className={styles['profile-hero__description']}>
-                                    {profile.description}
-                                    <EditButton className={styles['profile-hero__description-edit']} onClick={() => console.log("Edit Description")}/>
-                                </p>
-                            : <></>
-                        }
+                        <p className={styles['profile-hero__description']}>
+                            {profile?.description?.length ? profile.description : "You don't have a description..."}
+                            
+                            <EditButton 
+                                className={styles['profile-hero__description-edit']} 
+                                onClick={() => {
+                                    dispatch(toggleModal({ 
+                                        isOpened: true, 
+                                        content: (
+                                            <UpdateProfileForm 
+                                                title="Change your description"
+                                                name="description"
+                                                value={profile?.description} 
+                                                type="textarea"/>
+                                        )
+                                    })) 
+                                }}
+                            />
+                        </p>
 
                         <DottedRow className={styles['profile-hero__info']} dotColor='var(--black-36)'>
                             <Button color='gray' size='small'>Listener</Button>

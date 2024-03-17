@@ -85,7 +85,7 @@ const Header = ({canReturnBack = false} : Props) => {
                 ref={avatarRef} 
                 className={`header__profile-avatar 
                   relative w-10 h-10 overflow-hidden block rounded-[50%] shrink-0
-                  before:absolute ${'before:content-[attr(data-nick)]'} before:left-1/2 before:top-1/2 before:w-full before:h-full before:translate-x-[-50%] before:translate-y-[-50%] before:font-normal before:text-base before:text-gray-c4 before:text-center before:flex before:items-center before:justify-center before:bg-gray-ee
+                  before:absolute ${'before:content-[attr(data-nick)]'} before:left-1/2 before:top-1/2 before:w-full before:h-full before:translate-x-[-50%] before:translate-y-[-50%] before:z-10 before:font-normal before:text-base before:text-gray-c4 before:text-center before:flex before:items-center before:justify-center before:bg-gray-ee
                 `}>
                   {
                     profile?.avatar ?

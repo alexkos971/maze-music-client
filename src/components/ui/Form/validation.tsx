@@ -9,13 +9,15 @@ export interface ValidationContextType {
 
 export const ValidationContext = createContext<ValidationContextType | null>(null);
 
+type FieldsType<T> = {} | {[key: string] : T};
+
 export interface ValidationProviderProps {
     className?: string;
     children: ReactNode | JSX.Element,
-    fields: {},
-    setFields: (fields: {}) => void
-    validFields: { [name: string] : boolean }, 
-    setValidFields: (fields: () => void | { [name: string] : boolean }) => void
+    fields: FieldsType<any>,
+    setFields: (value: FieldsType<any>) => void
+    validFields?: FieldsType<boolean>, 
+    setValidFields?: (value: FieldsType<boolean> ) => void
 };
 
 export const ValidationProvider : React.FC<ValidationProviderProps> = ({ children, fields, setFields, validFields, setValidFields }) => {
@@ -28,14 +30,15 @@ export const ValidationProvider : React.FC<ValidationProviderProps> = ({ childre
         }));
 
         if (typeof isValid !== 'boolean' || !setValidFields) return;
-            setValidFields((prev) => ({
-                ...prev,
-                [fieldName] : isValid
-            }));
+        
+        setValidFields((prev :  FieldsType<boolean>) => ({
+            ...prev,
+            [fieldName] : isValid
+        }));
     }
 
     const isFormValid = () : boolean => {
-        for (const field in validFields) {
+        for (let field in validFields) {
             if ( !validFields[field] ) {
                 return false;
             }

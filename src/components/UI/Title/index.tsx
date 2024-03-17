@@ -9,7 +9,16 @@ interface Title {
 const Title = ({ children, className, tag = 'h2'} : Title) => {
     let Tag : keyof JSX.IntrinsicElements = `${tag}`;
 
-    return <Tag className={`text-3xl mb-5 font-bold ${className ?? ''}`}>{children}</Tag>
+    let styles = {
+        h1: 'text-3xl',
+        h2: 'text-3xl',
+        h3: 'text-2xl',
+        h4: 'text-2xl',
+        h5: 'text-xl',
+        h6: 'text-xl'
+    }
+
+    return <Tag className={`${styles[tag]} mb-5 font-bold ${className ?? ''}`}>{children}</Tag>
 }
 
 export default Title;

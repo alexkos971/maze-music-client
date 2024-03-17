@@ -1,0 +1,93 @@
+@import '../../../styles/_helpers';
+
+.modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 30;
+
+    &:not(.modal_opened) {
+        pointer-events: none;
+        user-select: none;        
+
+        .modal__background {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .modal__content {
+            opacity: 0;
+            transform: translate(-50%, 0%);
+            visibility: hidden;
+        }
+    }
+
+    &__background {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .8);
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    &__close-btn {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        right: 16px;
+        top: 16px;
+        cursor: pointer;
+        z-index: 31;
+
+        &::before, &::after {
+            content: "";
+            width: 24px;
+            height: 2px;
+            background-color: black;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+        
+        &::after {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+    }
+
+    &__content {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 50px;
+
+        background: var(--white);
+        width: auto;
+        border-radius: 8px;
+        padding: 64px;
+        box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        transition: .3s; 
+
+        @include media-breakpoint-down(lg) {
+            padding: 64px 40px 32px;
+        }
+
+        @include media-breakpoint-down(sm) {
+            padding: 42px 16px 32px;
+        }
+
+        // h1, h2, h3, h4, h5, h6 {
+        //     font-family: var(--font-primary);
+        // }
+    }
+}
