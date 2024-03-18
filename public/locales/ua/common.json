@@ -15,6 +15,10 @@
         "similar_artists": "Схожі виконавці",
         "top_tracks_this_month": "Топ треків цього місяця"
     },
+    "profile": {
+        "listener": "Слухач",
+        "artist": "Виконавець"
+    },
     "interface": {
         "listen": "Слухати",
         "follow": "Стежити",
@@ -28,7 +32,8 @@
         "change": "Змінити",
         "authorized": "Авторизовано !",
         "logged_out": "Ви вийшли !",
-        "registered": "Успешно зарегистрировано"
+        "registered": "Успешно зарегистрировано",
+        "submit": "Відправити"
     },
     "pages": {
         "for-you": {
@@ -44,7 +49,10 @@
             "header_title": "Виконавець"
         },
         "profile": {
-            "header_title": "Профіль"
+            "header_title": "Профіль",
+            "change_avatar_title": "Змінити аватар",
+            "change_name_title": "Змінити ім'я",
+            "change_description_title": "Змінити опис"
         },
         "sign-in": {
             "title": "Увійти",

@@ -1,6 +1,6 @@
 // @ts-check
 import React, { useEffect, useRef, UIEvent } from "react";
-import Image from "next/image";
+import { useThrottle } from "@hooks/listeners";
 import { useRouter } from "next/router";
 import { setTheme, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 import {store} from '@store/rootReducer';
@@ -12,6 +12,7 @@ import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon, Che
 
 import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "@hooks/index";
+import Avatar from "@components/UI/Avatar";
 
 interface Props {
   canReturnBack?: boolean
@@ -24,21 +25,21 @@ const Header = ({canReturnBack = false} : Props) => {
 
   const {t} = useTranslation();
 
-  let avatarRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-
-    if (profile?.full_name && avatarRef?.current) {
-      avatarRef.current.setAttribute('data-nick', profile.full_name.split(" ").reduce((item, acc) => item[0] + acc[0]));
-
-    }
-  }, [profile]);
-
-
   // Get Height of the Header
   const headerRef = useRef<HTMLDivElement>(null);    
+
+  const setHeaderHeight = () => headerRef?.current?.clientHeight ? document.documentElement.style.setProperty('--header-height', headerRef.current.clientHeight + 'px') : false;
+
   useEffect(() => {
-    headerRef?.current?.clientHeight ? document.documentElement.style.setProperty('--header-height', headerRef.current.clientHeight + 'px') : false;
+    let timer : undefined | ReturnType<typeof setTimeout>;
+
+    timer = setTimeout(() => setHeaderHeight(), 50);
+
+    window.addEventListener('resize', useThrottle(setHeaderHeight, 10));
+
+    return () => {
+      clearTimeout(timer);
+    }
   }, [headerRef]);
 
   return (
@@ -80,31 +81,26 @@ const Header = ({canReturnBack = false} : Props) => {
             </button>
           </div>
 
-          <Link href={'/profile'} className="header__profile cursor-pointer flex items-center">
-              <div
-                ref={avatarRef} 
-                className={`header__profile-avatar 
-                  relative w-10 h-10 overflow-hidden block rounded-[50%] shrink-0
-                  before:absolute ${'before:content-[attr(data-nick)]'} before:left-1/2 before:top-1/2 before:w-full before:h-full before:translate-x-[-50%] before:translate-y-[-50%] before:z-10 before:font-normal before:text-base before:text-gray-c4 before:text-center before:flex before:items-center before:justify-center before:bg-gray-ee
-                `}>
-                  {
-                    profile?.avatar ?
-                      <Image 
-                        src={process.env.NEXT_PUBLIC_STATIC + profile.avatar} 
-                        height={40} 
-                        width={40}
-                        alt=""
-                        className="w-full h-full object-cover relative"
-                        />
+          {
+            profile ?                        
+              <Link href={'/profile'} className="cursor-pointer flex items-center">
+                <Avatar 
+                  size="40px"                            
+                  img={profile.avatar?.length ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : ''}
+                  previewText={profile.full_name ?? ''}
+                />
+                                
+                {
+                  profile.full_name 
+                    ? <span 
+                        className={`font-normal text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-black'}`}>
+                        {profile.full_name}
+                      </span>
                     : <></>
-                  }
-              </div>
-              {
-                profile?.full_name 
-                ? <span className={`header__profile-name font-normal text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-black'}`}>{profile.full_name}</span>
-                : <></>
-              }
-          </Link>
+                }
+              </Link>
+              : <></>
+          }
         </div>
       </div>
     </header>  

@@ -9,11 +9,12 @@ import UpdateProfileForm from './updateProfileForm';
 import Button from '@components/UI/Button';
 import EditButton from '@components/UI/EditButton';
 import DottedRow from '@components/UI/DottedRow';
+import Avatar from '@components/UI/Avatar';
 
 const ProfileHero = () => {
     const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
-    const profile = useAppSelector(state => state.profile);
+    const profile : ProfileDto = useAppSelector(state => state.profile);
 
     if (!profile) {
         return <></>;
@@ -24,36 +25,22 @@ const ProfileHero = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-2">
-                        <div className={styles['profile-hero__avatar']}>
-                            {
-                                profile?.avatar ?
-                                <>
-                                    <Image 
-                                        src={process.env.NEXT_PUBLIC_STATIC + profile.avatar} 
-                                        alt='Avatar'
-                                        width={600}
-                                        height={600}
-                                    />
-                                
-                                    <div 
-                                        className={styles['profile-hero__avatar-edit']}
-                                        onClick={() => {
-                                            dispatch(toggleModal({ 
-                                                isOpened: true, 
-                                                content: (
-                                                    <UpdateProfileForm 
-                                                        title="Change Avatar"
-                                                        name="avatar" 
-                                                        type="file"/>
-                                                )
-                                            })) 
-                                        }}>                                        
-                                        <span>{t('interface.change')}</span>
-                                    </div>
-                                </>
-                                : <></>
-                            }
-                        </div>
+                        <Avatar
+                            previewText={profile.full_name}
+                            img={ profile.avatar ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : '' }
+                            size='100%'
+                            onChange={() => {
+                                dispatch(toggleModal({ 
+                                    isOpened: true, 
+                                    content: (
+                                        <UpdateProfileForm 
+                                            title={t('pages.profile.change_avatar_title')}
+                                            name="avatar" 
+                                            type="file"/>
+                                    )
+                                })) 
+                            }}
+                        />
                     </div>
 
                     <div className="col-lg-7">
@@ -67,7 +54,7 @@ const ProfileHero = () => {
                                         isOpened: true, 
                                         content: (
                                             <UpdateProfileForm 
-                                                title="Change Name"
+                                                title={t('pages.profile.change_name_title')}
                                                 name="full_name" 
                                                 value={profile?.full_name} 
                                                 type="text"/>
@@ -78,7 +65,7 @@ const ProfileHero = () => {
                         </div>
 
                         <p className={styles['profile-hero__description']}>
-                            {profile?.description?.length ? profile.description : "You don't have a description..."}
+                            {profile.description?.length ? profile.description : "You don't have a description..."}
                             
                             <EditButton 
                                 className={styles['profile-hero__description-edit']} 
@@ -87,9 +74,9 @@ const ProfileHero = () => {
                                         isOpened: true, 
                                         content: (
                                             <UpdateProfileForm 
-                                                title="Change your description"
+                                                title={t('pages.profile.change_description_title')}
                                                 name="description"
-                                                value={profile?.description} 
+                                                value={profile.description} 
                                                 type="textarea"/>
                                         )
                                     })) 
@@ -98,9 +85,9 @@ const ProfileHero = () => {
                         </p>
 
                         <DottedRow className={styles['profile-hero__info']} dotColor='var(--black-36)'>
-                            <Button color='gray' size='small'>Listener</Button>
-                            <span><strong>14</strong> {t('interface.followers')}</span>
-                            <span><strong>87</strong> {t('interface.subscriptions')}</span>
+                            <Button color='gray' size='small'>{t(`profile.${profile.role}`)}</Button>
+                            <span><strong>{profile.followers}</strong> {t('interface.followers')}</span>
+                            <span><strong>{profile.savedArtists.length}</strong> {t('interface.subscriptions')}</span>
                         </DottedRow>
                     </div>
                 </div>

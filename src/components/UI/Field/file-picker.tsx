@@ -9,6 +9,7 @@ import { ValidationContext, ValidationContextType } from "@components/UI/Form/va
 
 interface FileFieldProps extends MainFieldProps {    
 	accept?: string;
+	style?: 'default' | 'avatar' | 'cover';
     value?: File | SetStateAction<EventTarget> | EventTarget | null | undefined;    
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
@@ -18,6 +19,7 @@ const FilePicker = ({
     title,
     className = '',
     name,
+	style = "default",
     required = false,
 	accept = '*'
 } : FileFieldProps) => {    

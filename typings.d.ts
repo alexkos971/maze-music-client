@@ -64,7 +64,7 @@ interface ArtistDto {
     tracks: string[];
 }
 
-interface ProfileDto {
+type ProfileDto = {
     id: string;
     name: string;
     email: string,
@@ -80,4 +80,4 @@ interface ProfileDto {
     savedTracks: number[],
     savedPlaylists: number[],
     savedAlbums: number[],    
-}
+} | null

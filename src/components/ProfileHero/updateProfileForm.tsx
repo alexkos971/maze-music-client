@@ -1,9 +1,10 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import Form from "@components/UI/Form";
 import { Text, TextArea, FilePicker } from "@components/UI/Field";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
 import { useUpdateMutation } from "@store/api/profileApi";
+import { useTranslation } from "next-i18next";
 
 interface UpdateProps {
     title?: string, 
@@ -15,7 +16,16 @@ interface UpdateProps {
 const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
     const [fields, setFields] = useState({});
     const [validFields, setValidFields] = useState({});
-    let [update, { isLoading }] = useUpdateMutation();
+    let [update, { isLoading, isSuccess }] = useUpdateMutation();
+
+    const {t} = useTranslation('common');
+
+    useEffect(() => {
+        if (isSuccess) {
+            setFields({});
+            setValidFields({});
+        }
+    }, [isSuccess])
 
     return (
         <>
@@ -32,7 +42,8 @@ const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
                                 value={value}/>
                         case 'file':
                             return <FilePicker
-                                accept="image/jpeg, image/png"
+                                style=""
+                                accept="image/jpeg, image/png"                                
                                 name={name} 
                                 required={true}/>
                         case "text":
@@ -49,9 +60,11 @@ const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
                     className="mt-3 w-full" 
                     type="submit"
                     isLoading={isLoading}
-                    disabled={!Object.keys(validFields).some(key => validFields[key] == false )}
+                    disabled={!Object.keys(validFields).some(key  => validFields[key] == false )}
                     onClick={() => update(fields)}
-                >Submit</Button>
+                >
+                    {t('interface.submit')}
+                </Button>
             </Form>
         </>
     );

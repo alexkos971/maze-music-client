@@ -1,3 +1,3 @@
 export const classnames = (...args: any[]) : string => {
-    return args.join(' ');
+    return args.filter(el => typeof el == 'string' && el.length !== 0 ).join(' ');
 }
