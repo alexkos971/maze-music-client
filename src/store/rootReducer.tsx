@@ -6,6 +6,7 @@ import playerReducer from "./reducers/playerReducer";
 // API
 import { authApi } from "./api/authApi";
 import { profileApi } from "./api/profileApi";
+import { tracksApi } from "./api/tracksApi";
 
 export const store = configureStore({
     reducer: {
@@ -16,10 +17,12 @@ export const store = configureStore({
         // Connect API
         [authApi.reducerPath]: authApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,
+        [tracksApi.reducerPath]: tracksApi.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         authApi.middleware,  
-        profileApi.middleware
+        profileApi.middleware,
+        tracksApi.middleware
     )
 });
 

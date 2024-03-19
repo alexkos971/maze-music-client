@@ -97,7 +97,7 @@ const ForYou = () => {
                                 duration: 206,
                                 name: 'Ignorance',
                                 cover: 'https://sefon.pro/img/artist_photos/paramore.jpg',
-                                src: 'https://cdn8.sefon.pro/prev/sTLlCRbLOjyFvsnIGjkhkg/1700308219/1/Paramore%20-%20Ignorance%20%28192kbps%29.mp3',
+                                src: 'https://cdn6.sefon.pro/prev/bq0maM8X4WMB6K1AcWETnw/1710830223/3/Paramore%20-%20Decode%20%28OST%20%D0%A1%D1%83%D0%BC%D0%B5%D1%80%D0%BA%D0%B8%29%20%28192kbps%29.mp3',
                             },
                             { 
                                 id: 'still',
@@ -107,7 +107,7 @@ const ForYou = () => {
                                 duration: 206,
                                 name: 'Still Into You',
                                 cover: 'https://sefon.pro/img/artist_photos/paramore.jpg',
-                                src: 'https://cdn6.sefon.pro/prev/7R_cOaPsvzyWT8dDpPRBng/1700308219/26/Paramore%20-%20Still%20Into%20You%20%28192kbps%29.mp3',
+                                src: 'https://cdn6.sefon.pro/prev/bq0maM8X4WMB6K1AcWETnw/1710830223/3/Paramore%20-%20Decode%20%28OST%20%D0%A1%D1%83%D0%BC%D0%B5%D1%80%D0%BA%D0%B8%29%20%28192kbps%29.mp3',
                             },
                         ]
                     }} /> 

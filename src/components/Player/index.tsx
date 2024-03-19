@@ -12,7 +12,7 @@ import { useThrottle } from "@hooks/listeners";
 
 const Player = () => {
     
-    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded, header_is_filled] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track, state.interface.fullplayer_is_expanded, state.interface.header_is_filled]);
+    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track, state.interface.fullplayer_is_expanded, state.interface.header_is_filled]);
     const dispatch = useAppDispatch(); 
     
     // move to redux
@@ -282,7 +282,6 @@ const Player = () => {
                                     min={0}
                                     color="gray"
                                     max={100}
-                                    withThumb={false}
                                     onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
                                     className={styles['player-volume__range']}
                                     />

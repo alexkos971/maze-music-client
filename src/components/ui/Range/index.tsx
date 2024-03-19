@@ -9,11 +9,10 @@ interface RangeProps {
     step?: number | null,
     name?: string,
     color?: 'green' | 'gray';
-    withThumb?: boolean,
     className?: React.HTMLAttributes<HTMLDivElement> | string 
 };
 
-const Range = ({ value, onChange, className, max, min, step, name, withThumb = true, color = 'green' } : RangeProps) => {
+const Range = ({ value, onChange, className, max, min, step, name, color = 'green' } : RangeProps) => {
     let classes = [
         styles['range'],
         styles[`range_${color}`],
@@ -40,8 +39,6 @@ const Range = ({ value, onChange, className, max, min, step, name, withThumb = t
             <span className={styles['range__track']}>
                 <span className={styles['range__current-time']}></span>
             </span>
-
-            {withThumb ? <span className={styles['range__thumb']}></span> : ''}
         </div>
     );
 }

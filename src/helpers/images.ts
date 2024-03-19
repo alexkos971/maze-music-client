@@ -6,6 +6,7 @@ import SunGrayIcon from "../assets/images/icons/sun-gray.svg";
 import NotificationGrayIcon from "../assets/images/icons/notification-gray.svg";
 import BoxBlackIcon from "../assets/images/icons/box-black.svg";
 import ExploreBlackIcon from "../assets/images/icons/explore-black.svg";
+import UploadBlackIcon from "../assets/images/icons/upload-black.svg";
 import ChevronLeftGrayIcon from "../assets/images/icons/chevron-left-gray.svg";
 import ChevronUpGray from "../assets/images/icons/chevron-up-gray.svg";
 import LogoIcon from "../assets/images/icons/logo-only-icon.svg";
@@ -46,6 +47,7 @@ export {
     MoonBlackIcon,
     BoxBlackIcon,
     ExploreBlackIcon,
+    UploadBlackIcon,
     ChevronLeftGrayIcon,
     Logo,
     LogoIcon,

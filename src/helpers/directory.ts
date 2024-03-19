@@ -1,4 +1,4 @@
-import { BoxBlackIcon, ExploreBlackIcon, SettingsGrayIcon } from "@helpers/images";
+import { BoxBlackIcon, ExploreBlackIcon, SettingsGrayIcon, UploadBlackIcon } from "@helpers/images";
 
 export interface DirType {
     path: string;
@@ -16,6 +16,11 @@ export const directories : Record<string, DirType>  = {
         icon: BoxBlackIcon,
         path: '/library',
         title: "pages.library.header_title",
+    },
+    upload: {
+        icon: UploadBlackIcon,
+        path: '/upload',
+        title: "pages.upload.header_title"
     },
     settings: {
         icon: SettingsGrayIcon,

@@ -4,6 +4,7 @@ import ProfileHero from "@components/ProfileHero";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default useProtectedPage(function Profile() {
+
     return (
         <MainWrap canReturnBack={true}>
             <ProfileHero/>

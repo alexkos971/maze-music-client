@@ -37,6 +37,10 @@ export const useFieldValidation = (
     if (type === 'confirm-password' && value !== password) {
       return [false, "fields.errors.confirm_password"];
     }
+
+    if (type === 'multi-select' && !value.length) {
+      return [false, "fields.errors.empty_multiselect"];
+    }
   
     // Additional validations for other field types can be added here
   

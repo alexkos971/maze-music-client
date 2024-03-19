@@ -42,6 +42,10 @@
         "library": {
             "header_title": "Бібліотека"
         },
+        "upload": {
+            "header_title": "Загрузити",
+            "success": "Успішно завантажено!"
+        },
         "settings": {
             "header_title": "Налаштування"
         },
@@ -97,7 +101,8 @@
             "invalid_phone": "Номер телефону некоректний",
             "invalid_email": "Емейл некоректний",
             "short_password": "Пароль повинен містити щонайменше 8 символів",
-            "confirm_password": "Паролі НЕ збігаються!"
+            "confirm_password": "Паролі НЕ збігаються!",
+            "empty_multiselect": "Введіть хоча б одне значення!"
         },
         "placeholders" : {
             "full_name": "Повне ім'я",

@@ -16,7 +16,7 @@ const ProfileHero = () => {
     const dispatch = useAppDispatch();
     const profile : ProfileDto = useAppSelector(state => state.profile);
 
-    if (!profile) {
+    if (!profile || !Object.keys(profile).length) {
         return <></>;
     }
 

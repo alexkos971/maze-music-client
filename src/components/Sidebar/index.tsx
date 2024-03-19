@@ -18,7 +18,7 @@ const Sidebar : React.FC = () => {
 
     const {t} = useTranslation('common');
 
-    const menu_pages = ['for_you', "library"];
+    const menu_pages = ['for_you', "library", 'upload'];
     const sidebar_menu = menu_pages.map((item : string) => directories[item]);
 
     useEffect(() => {

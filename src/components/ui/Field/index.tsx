@@ -1,5 +1,6 @@
 import React from "react";
 import { Select} from "./select";
+import { MultiSelect } from "./multi-select";
 import { RadiosWithImages } from "./radios-with-images";
 
 import { useTranslation } from "next-i18next";
@@ -49,6 +50,7 @@ export type FieldTypes =
 | 'tel' 
 | 'search' 
 | 'select' 
+| 'multi-select' 
 | 'password' 
 | 'textarea' 
 | 'file' 
@@ -60,6 +62,7 @@ export {
     FieldError,
 
     Select,
+    MultiSelect,
     Text,
     Password,
     ConfirmPassword,

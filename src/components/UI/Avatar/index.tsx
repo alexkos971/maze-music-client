@@ -19,6 +19,7 @@ export default function Avatar({ img, previewText, size = '40px', onChange } : A
             className={classnames(styles.avatar, onChange ? styles.avatar_can_change : null)} 
             data-text={previewText.length ? previewText.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
             style={{'--avatar-size': size} as CSSProperties}
+            onClick={onChange}
         >
 
             {img && img.length ?            
@@ -30,9 +31,7 @@ export default function Avatar({ img, previewText, size = '40px', onChange } : A
                 /> : <></>
             }
 
-            <div 
-                className={styles.avatar__edit}
-                onClick={onChange}>                                        
+            <div className={styles.avatar__edit}>                                        
                 <span>{t('interface.change')}</span>
             </div>
         </div>
