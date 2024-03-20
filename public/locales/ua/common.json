@@ -22,6 +22,7 @@
     "interface": {
         "listen": "Слухати",
         "follow": "Стежити",
+        "followed": "Стежишь",
         "listeners": "слухачів",
         "albums": "альбомів",
         "followers": "слухачів",

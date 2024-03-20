@@ -8,15 +8,7 @@ const nextConfig = {
             {
                 protocol: 'http',
                 hostname: 'localhost',
-            },
-            {
-                protocol: 'https',
-                hostname: 'sefon.pro',
-            },
-            {
-                protocol: 'https',
-                hostname: 'www.nme.com',
-            },
+            }
         ]
     }
 }

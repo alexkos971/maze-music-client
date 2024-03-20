@@ -2,10 +2,12 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useAppSelector } from '@hooks';
 
+import { MusicNoteGray } from "@helpers/images";
 import { fillHeaderByScroll } from '@components/Header';
 
 import styles from './Player.module.scss';
 import Image from 'next/image';
+import { classnames } from '@helpers/classnames';
 
 const FullPlayer = () => {
     const {t} = useTranslation('common');
@@ -20,13 +22,12 @@ const FullPlayer = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-5">
-                        {
-                            track?.cover?.length ?
-                                <div className={styles.fullplayer__cover}>
+                        <div className={classnames(styles.fullplayer__cover, !track?.cover?.length ? styles.fullplayer__cover_default : null )}>
+                                { track?.cover?.length ?
                                     <Image src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Track Cover" width={400} height={400}/>
-                                </div>
-                            : ''
-                        }
+                                    : <MusicNoteGray/>
+                                }
+                        </div>
 
                         <div className={styles.fullplayer__info}>
                             <h2 className={styles['fullplayer__info-title']}>{track?.name}</h2>

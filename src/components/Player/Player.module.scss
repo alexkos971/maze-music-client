@@ -141,13 +141,28 @@
         position: relative;
         height: 0;
         padding-bottom: 100%;
-        // height: desktop_vw_min(500px);
+        
 
         img {
             width: 100%;
-            height: auto;
-            // height: 100%;
-            object-fit: cover;
+            height: 100%;
+            position: absolute;
+            // object-fit: cover;
+            object-fit: contain;
+        }
+
+        &_default {
+            background-color: var(--gray-28);
+
+            img, svg {
+                width: 40%;
+                height: auto;
+                object-fit: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
         }
     }
 

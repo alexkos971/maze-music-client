@@ -85,8 +85,8 @@ const ProfileHero = () => {
 
                         <DottedRow className={styles['profile-hero__info']} dotColor='var(--black-36)'>
                             <Button color='gray' size='small'>{t(`profile.${profile.role}`)}</Button>
-                            <span><strong>{profile.followers}</strong> {t('interface.followers')}</span>
-                            <span><strong>{profile.savedArtists.length}</strong> {t('interface.subscriptions')}</span>
+                            <span><strong>{profile?.followers}</strong> {t('interface.followers')}</span>
+                            <span><strong>{profile?.savedArtists.length}</strong> {t('interface.subscriptions')}</span>
                         </DottedRow>
                     </div>
                 </div>

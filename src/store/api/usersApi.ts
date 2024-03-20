@@ -41,8 +41,11 @@ export const usersApi = createApi({
         }),
         getUser: build.query({
             query: (id) => ({ url: `/${id}` })
+        }),
+        followUser: build.mutation({
+            query: (followId) => ({url: `/follow/${followId}`, method: 'PUT'})
         })
     })
 });
 
-export const { useUpdateProfileMutation, useGetUserQuery } = usersApi;
+export const { useUpdateProfileMutation, useGetUserQuery, useFollowUserMutation } = usersApi;

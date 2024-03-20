@@ -21,6 +21,7 @@ const config: Config = {
       'gray-4a': '#4A4A4A',
       'gray-40': '#404040',
       'gray-f5': '#F5F5F5',
+      'gray-28': '#263238',
       'gray-7a': '#7C7C7A',
       'gray-c4': '#C4C4C4',
       'gray-ee': '#EEEEEE',
@@ -46,6 +47,12 @@ const config: Config = {
       }),
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+        addVariant('child', '& > *');
+        addVariant('child-img', '& > svg, & > img');
+        addVariant('child-hover', '& > *:hover');
+    }
+  ],
 }
 export default config

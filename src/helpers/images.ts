@@ -22,12 +22,14 @@ import PauseBlack from "../assets/images/icons/pause-black.svg";
 // import PauseGreen from "../assets/images/icons/pause-green.svg";
 import LoadSpin from "../assets/images/icons/load-spin.svg";
 
+import MusicNoteGray from "../assets/images/icons/note-gray.svg";
 import HeartOutlineGray from "../assets/images/icons/heart-outline-gray.svg";
 import HeartSolidGreen from "../assets/images/icons/heart-solid-green.svg";
 import DoubleArrowsGray from "../assets/images/icons/double-arrows-gray.svg";
 import RepeatGray from "../assets/images/icons/repeat-gray.svg";
 import VolumeGray from "../assets/images/icons/volume-gray.svg";
-import BookMarkPlusBlack from '../assets/images/icons/bookmark-plus-black.svg';
+import BookMarkPlusWhite from '../assets/images/icons/bookmark-plus-white.svg';
+import BookMarkFilledWhite from '../assets/images/icons/bookmark-filled-white.svg';
 import EditBlack from '../assets/images/icons/edit-black.svg';
 import CloudArrowUpGreen from "../assets/images/icons/cloud-arrow-up-green.svg";
 
@@ -61,13 +63,15 @@ export {
     ChevronDownBlack,
     PlayWhite,
     LoadSpin,
+    MusicNoteGray,
     // PauseWhite,  
     PlayBlack,
     PauseBlack, 
     CloudArrowUpGreen,
     // PlayGreen,
     // PauseGreen,
-    BookMarkPlusBlack,
+    BookMarkPlusWhite,
+    BookMarkFilledWhite,
     HeartOutlineGray,
     HeartSolidGreen,
     DoubleArrowsGray,

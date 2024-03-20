@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from './Track.module.scss';
 import { setTrack, setIsPlaying } from "@store/reducers/playerReducer";
-import { PlayBlack, PauseBlack, HeartOutlineGray,HeartSolidGreen } from "@helpers/images";
+import { PlayBlack, PauseBlack, HeartOutlineGray,HeartSolidGreen, MusicNoteGray } from "@helpers/images";
 import { useAppSelector, useAppDispatch } from "@hooks";
 
 interface TrackProps {
@@ -43,8 +44,12 @@ const Track = ({
                 </button>
             </span>
         
-            <div className="w-7 h-7 rounded block overflow-hidden ml-3">
-                {track.cover?.length ? <img src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Feature"/> : ''}
+            <div className={`w-7 h-7 relative rounded block overflow-hidden ml-3 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
+                {
+                    track.cover?.length 
+                        ? <Image src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Track's Cover" width={28} height={28}/> 
+                        : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
+                }
             </div>
 
             <h4 className={`track__name text-sm font-primary font-semibold ${is_current_track ? "text-green-05" : "text-black"} ml-4`}>

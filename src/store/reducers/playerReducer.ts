@@ -21,7 +21,7 @@ export const playerSlice = createSlice({
     initialState,
     reducers: {
         setTrack: (state, action) => {
-            lsSetItem({name: 'maze-music-last-track', value: action.payload});
+            lsSetItem({name: 'maze-music-last-track', value: action.payload.track});
             return {
                 ...state, 
                 currentTime: 0,
