@@ -11,9 +11,9 @@ const formatNumber = (num: number) : string => {
     const suffixes = ["", "K", "M", "B", "T"];
 
     const magnitude = Math.floor(Math.log10(Math.abs(num)) / 3);
-    const roundedNum = ( num / Math.pow(10, magnitude * 3) ).toFixed(1);
+    const roundedNum = num <= 0 ? 0 : ( num / Math.pow(10, magnitude * 3) ).toFixed(1);
 
-    return `${roundedNum}${suffixes[magnitude]}`;
+    return `${num}${magnitude > 0 ? suffixes[magnitude] : ''}`;
 } 
 
 export {

@@ -5,6 +5,8 @@ import MainWrap from "@components/MainWrap";
 import Artists from "@components/Artists";
 import TrackList from "@components/TrackList";
 
+import { useGetAllTracksQuery } from "@store/api/tracksApi";
+
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@helpers/images";
@@ -13,6 +15,7 @@ import { useTranslation } from "next-i18next";
 
 const ForYou = () => {    
     const {t} = useTranslation('common');
+    const { isSuccess, isError, data } = useGetAllTracksQuery('');
 
     return (        
         <MainWrap>
@@ -84,33 +87,16 @@ const ForYou = () => {
                     ]}
                 />      
 
-                <TrackList
-                    title={t('title.popular_songs')}
-                    data={{
-                        name: 'Some Name',
-                        tracks: [
-                            { 
-                                id: 'ignorance',
-                                album: null,
-                                artist: {id:'sdfsdfs', name: 'Paramore'},
-                                playedCount: 749823,
-                                duration: 206,
-                                name: 'Ignorance',
-                                cover: 'https://sefon.pro/img/artist_photos/paramore.jpg',
-                                src: 'https://cdn6.sefon.pro/prev/bq0maM8X4WMB6K1AcWETnw/1710830223/3/Paramore%20-%20Decode%20%28OST%20%D0%A1%D1%83%D0%BC%D0%B5%D1%80%D0%BA%D0%B8%29%20%28192kbps%29.mp3',
-                            },
-                            { 
-                                id: 'still',
-                                album: null,
-                                artist: {id:'sdfsdfs', name: 'Paramore'},
-                                playedCount: 749823,
-                                duration: 206,
-                                name: 'Still Into You',
-                                cover: 'https://sefon.pro/img/artist_photos/paramore.jpg',
-                                src: 'https://cdn6.sefon.pro/prev/bq0maM8X4WMB6K1AcWETnw/1710830223/3/Paramore%20-%20Decode%20%28OST%20%D0%A1%D1%83%D0%BC%D0%B5%D1%80%D0%BA%D0%B8%29%20%28192kbps%29.mp3',
-                            },
-                        ]
-                    }} /> 
+                {
+                    data ? 
+                        <TrackList
+                        title={t('title.popular_songs')}
+                        data={{
+                            name: 'Some Name',
+                            tracks: data
+                        }} />
+                    : <></>
+                } 
             </div>
         </MainWrap>
     );

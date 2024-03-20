@@ -1,5 +1,4 @@
 import styles from './ProfileHero.module.scss';
-import Image from 'next/image';
 
 import { useTranslation } from 'next-i18next';
 import { useAppSelector, useAppDispatch } from '@hooks';

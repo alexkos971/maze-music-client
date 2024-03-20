@@ -42,7 +42,10 @@ export const tracksApi = createApi({
                 } catch {}
             }
         }),
+        getAllTracks: build.query({
+            query: (arg: any) => ({ url: '/', method: 'GET'})
+        })
     })
 });
 
-export const { useUploadTrackMutation } = tracksApi;
+export const { useUploadTrackMutation, useGetAllTracksQuery } = tracksApi;

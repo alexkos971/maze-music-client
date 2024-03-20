@@ -18,12 +18,12 @@ const TrackList = ({ title, data, className }: TrackListProps) => {
 
             <div className="track-list__wrap mt-6">
                 {
-                    data.tracks.map((item, index) => {                        
+                    data.tracks ? data.tracks.map((item, index) => {                        
                         return <Track
                             index={index}
                             track={item}
                             key={`${index}${item}`} />;
-                    })
+                    }) : <></>
                 }
             </div>
         </div>

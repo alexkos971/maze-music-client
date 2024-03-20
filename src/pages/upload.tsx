@@ -23,7 +23,7 @@ export default useProtectedPage(function Upload() {
     if (isSuccess) {
       setFields({});
       setValidFields({});
-      showToast({type: 'success', text: t('pages.upload.success')});
+      dispatch(showToast({type: 'success', text: t('pages.upload.success')}));
     }
   }, [isSuccess])
 

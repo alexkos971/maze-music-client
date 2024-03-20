@@ -90,8 +90,8 @@ const Player = () => {
     }, [isPlaying, currentTime, volume, disableKeydown])
 
     useEffect(() => {
-        if ( track && ref.current) {
-            ref.current.src = track.src;
+        if ( track && track.src && ref.current) {
+            ref.current.src = process.env.NEXT_PUBLIC_STATIC + track.src;
             ref.current.currentTime = currentTime;
             ref.current.volume = volume;
             if ( !isPlaying ) {
@@ -215,7 +215,7 @@ const Player = () => {
                                 ref={ref} 
                                 onTimeUpdate={musicTimeUpdateHandler} 
                                 onLoadedMetadata={metadataLoadHandler} >
-                                <source src={track.src} type="audio/mpeg" />
+                                <source src={process.env.NEXT_PUBLIC_STATIC + track.src} type="audio/mpeg" />
                                 Your browser does not support the audio element.
                             </audio>
                         }                

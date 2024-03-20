@@ -2,9 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setProfile } from "@store/reducers/profileReducer";
 import { toggleModal } from "@store/reducers/interfaceReducer";
 
-export const profileApi = createApi({
-    reducerPath: 'profileApi',
-    tagTypes:['Profile'],
+export const usersApi = createApi({
+    reducerPath: 'usersApi',
+    tagTypes:['Users'],
     baseQuery: fetchBaseQuery({ 
         baseUrl: process.env.NEXT_PUBLIC_API_URL + 'users',
         credentials: 'include',
@@ -14,7 +14,7 @@ export const profileApi = createApi({
         }
     }),
     endpoints: (build) => ({
-        update: build.mutation({
+        updateProfile: build.mutation({
             query: (body) => {          
                 let formData = new FormData();
 
@@ -39,7 +39,10 @@ export const profileApi = createApi({
                 } catch {}
             }
         }),
+        getUser: build.query({
+            query: (id) => ({ url: `/${id}` })
+        })
     })
 });
 
-export const { useUpdateMutation } = profileApi;
+export const { useUpdateProfileMutation, useGetUserQuery } = usersApi;

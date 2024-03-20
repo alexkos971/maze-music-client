@@ -3,19 +3,21 @@
  */
 
 interface Track {
-    id: string,
+    _id: string,
     name: string;
     src: string;
     cover: string;
     artist: {
-        id: string,
-        name: string;
+        _id: string;
+        full_name: string;
+        description?: string;
+        avatar: string;
     };
-    album: null | {
-        id: string,
-        name: string;
-    }
-    duration: number;
+    genres: [string];
+    album: null | string;
+    duration: string;
+    date: Date;
+    type: 'single' | 'album';
     playedCount: number
 };
 
@@ -57,7 +59,7 @@ interface SignInDto {
 }
 
 interface ArtistDto {
-    id: string;
+    _id: string;
     followers: number,    
     listenings: number,    
     albums: string[];
@@ -65,7 +67,7 @@ interface ArtistDto {
 }
 
 type ProfileDto = {
-    id: string;
+    _id: string;
     name: string;
     email: string,
     password: string,

@@ -3,19 +3,7 @@ import { lsSetItem, lsGetItem } from "@helpers/localstorage";
 
 let initialState : Player = {
     // track: lsGetItem('maze-music-last-track') ?? null,
-    track: { 
-        id: 'ignorance',
-        album: null,
-        artist: {
-            id: 'sdfsdfs',
-            name: 'Paramore'
-        },
-        playedCount: 749823,
-        duration: 206,
-        name: 'Decode',
-        cover: 'https://sefon.pro/img/artist_photos/paramore.jpg',
-        src: 'https://cdn8.sefon.pro/prev/sTLlCRbLOjyFvsnIGjkhkg/1700308219/1/Paramore%20-%20Ignorance%20%28192kbps%29.mp3',
-    },
+    track: null,
     isPlaying: false,
     currentTime: 0,
     // playList: {

@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import styles from './Track.module.scss';
 import { setTrack, setIsPlaying } from "@store/reducers/playerReducer";
-import {formatTime} from "@helpers/formated";
 import { PlayBlack, PauseBlack, HeartOutlineGray,HeartSolidGreen } from "@helpers/images";
 import { useAppSelector, useAppDispatch } from "@hooks";
 
@@ -18,7 +17,7 @@ const Track = ({
     const dispatch = useAppDispatch();
     let [currentTrack, isPlaying ] = useAppSelector(store => [store.player.track, store.player.isPlaying]);
 
-    const is_current_track = track?.id == currentTrack?.id;
+    const is_current_track = track && currentTrack && track._id == currentTrack._id;
 
     return (
         <div className={`${styles.track} ${ is_current_track ? styles.track__current : ''}`}>
@@ -45,21 +44,21 @@ const Track = ({
             </span>
         
             <div className="w-7 h-7 rounded block overflow-hidden ml-3">
-                {track.cover ? <img src={track.cover} alt="Feature"/> : ''}
+                {track.cover?.length ? <img src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Feature"/> : ''}
             </div>
 
             <h4 className={`track__name text-sm font-primary font-semibold ${is_current_track ? "text-green-05" : "text-black"} ml-4`}>
-                <Link href={'/artist/' + track.artist.id}>{track.artist.name}</Link> - {track.name}
+                {track.name} - <Link href={'/artist/' + track.artist._id} className="hover:underline">{track.artist.full_name}</Link>
             </h4>
             
-            { track.album ? <span className={`track__name text-sm font-normal text-gray-8e ml-auto`}>{track.album.name}</span> : ''}
+            { track.album ? <span className={`track__name text-sm font-normal text-gray-8e ml-auto`}>{track.album}</span> : ''}
 
             <div className={styles['track__right-nav']}>
                 <button type="button">
                     {true ? <HeartOutlineGray/> : <HeartSolidGreen/>}
                 </button>
 
-                <span className="time text-gray-8e text-sm">{track.duration ? formatTime(track.duration) : '0:00'}</span>
+                <span className="time text-gray-8e text-sm">{track.duration ?? '0:00'}</span>
             </div>
         </div>
     );

@@ -11,26 +11,34 @@ const FullPlayer = () => {
     const {t} = useTranslation('common');
     const [ fullplayer_is_expanded, track ] = useAppSelector(state => [state.interface.fullplayer_is_expanded, state.player.track]);
 
+    if (!track) {
+        return <></>;
+    }
+
     return (
         <div className={`${styles.fullplayer} ${fullplayer_is_expanded ? styles.fullplayer_expanded : ''}`} onScroll={fillHeaderByScroll}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-5">
                         {
-                            track?.cover ?
+                            track?.cover?.length ?
                                 <div className={styles.fullplayer__cover}>
-                                    <Image src={track.cover} alt="Track Cover" width={400} height={400}/>
+                                    <Image src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Track Cover" width={400} height={400}/>
                                 </div>
                             : ''
                         }
 
                         <div className={styles.fullplayer__info}>
                             <h2 className={styles['fullplayer__info-title']}>{track?.name}</h2>
-                            <Link href={'/artist/sdfsd'} className={styles['fullplayer__info-artist']}>{track?.artist.name}</Link>
+                            <Link href={`/artist/${track?.artist._id}`} className={styles['fullplayer__info-artist']}>{track?.artist.full_name}</Link>
 
-                            <div className={styles['fullplayer__info-description']}>
-                                <p>Abel Makkonen Tesfaye, popularly known as The Weeknd (born February 16, 1990 in Toronto, Ontario, Canada), is a Canadian R&B/hip-hop musician, singer-songwriter and record producer. He chose his stage name in tribute to when he was 17 years old, when, along with his friend...</p>
-                            </div>
+                            {
+                                track.artist.description ?
+                                    <div className={styles['fullplayer__info-description']}>
+                                        <p>{track.artist.description}</p>
+                                    </div>
+                                : <></>
+                            }
                         </div>
                     </div>
 

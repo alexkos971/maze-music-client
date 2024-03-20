@@ -3,7 +3,7 @@ import Form from "@components/UI/Form";
 import { Text, TextArea, FilePicker } from "@components/UI/Field";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
-import { useUpdateMutation } from "@store/api/profileApi";
+import { useUpdateProfileMutation } from "@store/api/usersApi";
 import { useTranslation } from "next-i18next";
 
 interface UpdateProps {
@@ -16,7 +16,7 @@ interface UpdateProps {
 const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
     const [fields, setFields] = useState({});
     const [validFields, setValidFields] = useState({});
-    let [update, { isLoading, isSuccess }] = useUpdateMutation();
+    let [update, { isLoading, isSuccess }] = useUpdateProfileMutation();
 
     const {t} = useTranslation('common');
 
