@@ -19,8 +19,16 @@ export const tracksApi = createApi({
             query: (body) => {          
                 let formData = new FormData();
 
-                for (let key in body) {
-                    formData.append(key, body[key]);
+                for (let key in body) {                    
+                    if ( Array.isArray(body[key]) ) {
+                        body[key].forEach((_ : any, array_index : number) => {
+                            formData.append(key, body[key][array_index])
+                        })
+                    }
+
+                    else {
+                        formData.append(key, body[key]);
+                    }
                 }            
 
                 return {
