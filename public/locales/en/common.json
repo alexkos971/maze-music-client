@@ -23,6 +23,7 @@
         "listen": "Listen",
         "follow": "Follow",
         "followed": "Followed",
+        "unfollowed": "Unfollowed",
         "listeners": "listeners",
         "albums": "albums",
         "followers": "followers",

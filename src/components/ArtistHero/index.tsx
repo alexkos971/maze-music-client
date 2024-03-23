@@ -6,17 +6,19 @@ import { formatNumber } from "@helpers/formated";
 import { PlayBlack, BookMarkPlusWhite, BookMarkFilledWhite } from "@helpers/images";
 import { useTranslation } from "next-i18next";
 import DottedRow from "@components/UI/DottedRow";
-import { useAppSelector } from "@hooks";
+import { useAppDispatch, useAppSelector } from "@hooks";
 import { useFollowUserMutation } from "@store/api/usersApi";
 import { useEffect } from "react";
+import { showToast } from "@store/reducers/interfaceReducer";
 
 type ArtistProps = any; 
 
 const ArtistHero = ({ artist } : ArtistProps ) => {
     const {t} = useTranslation('common');
+    const dispatch = useAppDispatch();
     const [profile] = useAppSelector(state => [state.profile]);
     const [follow, { isSuccess, isUninitialized, data }] = useFollowUserMutation();
-
+    
     const [ isFollowing, setIsFollowing ] = useState(profile?.savedArtists?.includes(artist._id));
     
     useEffect(() => {
@@ -24,6 +26,7 @@ const ArtistHero = ({ artist } : ArtistProps ) => {
 
         if (data) {
             setIsFollowing(data.followed ? true : false);
+            dispatch(showToast({ type: 'success', text: t(`interface.${data.followed ? 'followed' : 'unfollowed'}`) }))
         }
     }, [isSuccess]);
 
@@ -49,7 +52,7 @@ const ArtistHero = ({ artist } : ArtistProps ) => {
                                 <Button 
                                     color="gray" 
                                     type="button" 
-                                    className="active:scale-95 active:child-img:scale-50"
+                                    className="hover:opacity-100"
                                     onClick={() => follow(artist._id)}>
                                     {
                                         !isFollowing 
