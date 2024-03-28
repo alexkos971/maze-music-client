@@ -9,7 +9,6 @@ import { MetaTitle } from "@components/Meta";
 import Head from "next/head";
 
 function MyApp({ Component, pageProps } : AppProps) {  
-
   return (
     <Provider store={store}>             
       <AppWrap>

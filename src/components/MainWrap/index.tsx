@@ -38,7 +38,7 @@ const MainWrap = ( { canReturnBack, ...props } : PropsWithChildren<Props>) => {
                         {props.children}
                     </div>
 
-                    <Player/>
+                    {/* <Player/> */}
                 </div>
             </div>
         </>

@@ -2,11 +2,12 @@
 
 .auth {
     width: 100%;
-    min-height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100dvh;
+    // display: flex;   
+    overflow-y: auto;
     position: relative;
+    // align-items: center;
+    // justify-content: center;
     
     &::before {
         content: "";
@@ -62,7 +63,7 @@
     &__content {
         transition: .4s ease-in;
         transition-delay: .2s;
-        max-height: 100vh;
+        // max-height: 100vh;
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -74,7 +75,8 @@
         }
     }
 
-    &:not(.auth_loaded) {
+    &:not(.auth_loaded) {        
+
         &::before {
             opacity: 0;
             transform: translateY(-100%);

@@ -8,15 +8,16 @@ interface AvatarProps {
     img: string,
     previewText: string,
     size: string,
-    onChange?: () => void
+    onChange?: () => void,
+    className?: string
 }
 
-export default function Avatar({ img, previewText, size = '40px', onChange } : AvatarProps) {
+export default function Avatar({ img, previewText, size = '40px', onChange, className } : AvatarProps) {
     const {t} = useTranslation('common');
 
     return (
         <div 
-            className={classnames(styles.avatar, onChange ? styles.avatar_can_change : null)} 
+            className={classnames(styles.avatar, onChange ? styles.avatar_can_change : null, className ?? '')} 
             data-text={previewText.length ? previewText.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
             style={{'--avatar-size': size} as CSSProperties}
             onClick={onChange}

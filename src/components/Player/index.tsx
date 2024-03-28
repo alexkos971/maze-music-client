@@ -203,7 +203,8 @@ const Player = () => {
 
     return (
         <div className={styles.player}>
-            <FullPlayer/>
+
+            { track ? <FullPlayer/> : <></> }            
 
             <div className={styles.player__wrap} ref={playerRef}>
                 <div className="container-fluid">
@@ -244,15 +245,19 @@ const Player = () => {
                         </div>
 
                         {/* Show/Hide  Full Player */}
-                        <button 
-                            onClick={() => {
-                                dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
-                                dispatch( setHeaderIsFilled(false) );                        
-                            }} 
-                            type="button" 
-                            className={`player-expand ml-16 duration-200 ${styles['player-nav-button']} ${fullplayer_is_expanded ? 'scale-y-[-1]' : ''}`}>
-                            <ChevronUpGray/>
-                        </button>
+                        { 
+                            track ? 
+                                <button 
+                                    onClick={() => {
+                                        dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
+                                        dispatch( setHeaderIsFilled(false) );                        
+                                    }} 
+                                    type="button" 
+                                    className={`player-expand ml-16 duration-200 ${styles['player-nav-button']} ${fullplayer_is_expanded ? 'scale-y-[-1]' : ''}`}>
+                                    <ChevronUpGray/>
+                                </button>
+                            : <></>
+                        }
 
                         {/* Progress */}
                         <div className={`player-progress mx-auto flex items-center justify-center w-full`}>

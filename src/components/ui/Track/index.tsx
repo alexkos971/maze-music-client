@@ -47,7 +47,7 @@ const Track = ({
             <div className={`w-7 h-7 relative rounded block overflow-hidden ml-3 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
                 {
                     track.cover?.length 
-                        ? <Image src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Track's Cover" width={28} height={28}/> 
+                        ? <Image src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center"/> 
                         : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
                 }
             </div>

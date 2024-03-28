@@ -28,6 +28,7 @@ const ProfileHero = () => {
                             previewText={profile.full_name}
                             img={ profile.avatar ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : '' }
                             size='100%'
+                            className={styles['profile-hero__avatar']}
                             onChange={() => {
                                 dispatch(toggleModal({ 
                                     isOpened: true, 

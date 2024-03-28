@@ -1,4 +1,6 @@
 import { createContext, ReactNode } from "react";
+import { useRouter } from "next/router";
+import Player from "@components/Player";
 import Toast from "@components/UI/Toast";
 import Modal from "@components/UI/Modal";
 
@@ -11,13 +13,20 @@ interface AppWrapProps {
 }
 
 export default function AppWrap({ children } : AppWrapProps) {
+    const router = useRouter();
+    let isAuthPage = router.pathname == '/sign-in' || router.pathname == '/sign-up'; 
     
     return (
         <AppContext.Provider value={{}}>
-            {children}
-            
-            <Toast />
-            <Modal/>
+            <div className="app-wrap overflow-hidden h-screen">
+                {children}
+                
+                <Toast />
+                <Modal/>
+
+                {/* Player */}
+                { !isAuthPage ? <Player/> : <></> }
+            </div>
         </AppContext.Provider>
     )
 }

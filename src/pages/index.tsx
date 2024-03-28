@@ -8,7 +8,6 @@ export default function Home() {
     // Initial Setups
     useEffect(() => {    
         // Initial path
-        // router.push('/for-you');
         router.push(basePage.path);
     }, []);
 

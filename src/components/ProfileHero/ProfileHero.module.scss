@@ -52,4 +52,8 @@
             }
         }
     }
+
+    &__avatar::before {
+        font-size: 48px;
+    }
 }   
