@@ -18,7 +18,7 @@ export default function AppWrap({ children } : AppWrapProps) {
     
     return (
         <AppContext.Provider value={{}}>
-            <div className="app-wrap overflow-hidden h-screen">
+            <div className="app-wrap overflow-hidden h-screen flex flex-col justify-end">
                 {children}
                 
                 <Toast />

@@ -2,7 +2,6 @@ import React, { useEffect, PropsWithChildren } from "react";
 import { useRouter } from "next/router";
 import Sidebar from "../Sidebar";
 import Header, { fillHeaderByScroll } from "../Header";
-import Player from "@components/Player";
 
 import { setTheme, setFullplayerExpanded, setHeaderIsFilled } from '@store/reducers/interfaceReducer';
 import { useAppDispatch, useAppSelector } from '@hooks';
@@ -28,17 +27,15 @@ const MainWrap = ( { canReturnBack, ...props } : PropsWithChildren<Props>) => {
 
     return (
         <>
-            <div className={'flex items-stretch min-h-screen text-black_36 relative'}>
+            <div className={'flex items-stretch text-black_36 relative h-[calc(100dvh-var(--player-height))]'}>
                 <Sidebar />
 
-                <div className={`w-screen h-screen ${fullplayer_is_expanded ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'}`} onScroll={fillHeaderByScroll}>
+                <div className={`w-screen ${fullplayer_is_expanded ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'}`} onScroll={fillHeaderByScroll}>
                     <Header canReturnBack={canReturnBack}/>
 
-                    <div className="main-wrap min-h-screen pb-16">
+                    <div className="main-wrap min-h-full pb-16">
                         {props.children}
                     </div>
-
-                    {/* <Player/> */}
                 </div>
             </div>
         </>
