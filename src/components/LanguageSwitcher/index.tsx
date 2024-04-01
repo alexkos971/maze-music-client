@@ -1,4 +1,4 @@
-import { Select } from "@components/ui/Field";
+import { Select } from "@components/UI/Field";
 import { useRouter } from "next/router";
 import { lsSetItem } from "@helpers/localstorage";
 

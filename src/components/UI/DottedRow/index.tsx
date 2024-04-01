@@ -12,12 +12,10 @@ const DottedRow = ({ children, className, dotColor } : Props) => {
         <div className={`${styles['dotted-row']} ${className ?? ''}`}>
             {
                 Children.map(children, (child, index) => {
-                    console.log(child)
-
                     return (
                         <>
                             {child}
-                            {( index < (Children.count(children) - 1)) ? <span style={dotColor ? {backgroundColor: dotColor} : undefined} className={styles['dotted-row__dot']}></span> : ''}
+                            { ( child && Object.keys(child.props).length && index < Children.count(children) - 1) ? <span style={dotColor ? {backgroundColor: dotColor} : undefined} className={styles['dotted-row__dot']}></span> : ''}
                         </>
                     )
                 })

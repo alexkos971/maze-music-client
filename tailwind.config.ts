@@ -47,6 +47,7 @@ const config: Config = {
       }),
     },
   },
+  darkMode: 'class',
   plugins: [
     function ({ addVariant }) {
         addVariant('child', '& > *');
