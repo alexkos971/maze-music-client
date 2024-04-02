@@ -33,7 +33,7 @@ export default useProtectedPage(function Upload() {
 
         <div className="row">
           <div className="col-lg-6 offset-lg-3">            
-            <Form {...{ fields, setFields, validFields, setValidFields }} className="max-w-4 p-8 rounded-lg bg-gray-f5 dark:bg-gray-4a duration-300">
+            <Form {...{ fields, setFields, validFields, setValidFields }} className="max-w-4 p-8 rounded-lg bg-app-background-secondary duration-300">
               <Title tag="h3" className="text-center">Upload your track</Title>
               
               <Text

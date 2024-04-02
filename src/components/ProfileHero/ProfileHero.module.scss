@@ -20,6 +20,18 @@
 
         .edit-button {
             margin-bottom: 6px;
+
+            svg {
+                color: var(--app-text-primary);
+
+                *[fill] {
+                    fill: currentColor;
+                }
+
+                *[stroke] {
+                    stroke: currentColor;
+                }
+            }
         }
     }
 

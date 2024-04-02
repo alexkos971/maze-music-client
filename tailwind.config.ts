@@ -29,6 +29,7 @@ const config: Config = {
       'gray-f8': '#F4F6F8',
       'gray-e5': '#E5E5E5',
       'app-background': 'var(--app-background)',
+      'app-background-secondary': 'var(--app-background-secondary)',
       'app-text-primary': 'var(--app-text-primary)',
       'app-text-secondary': 'var(--app-text-secondary)'
     }, 

@@ -9,6 +9,7 @@ import Button from '@components/UI/Button';
 import EditButton from '@components/UI/EditButton';
 import DottedRow from '@components/UI/DottedRow';
 import Avatar from '@components/UI/Avatar';
+import { classnames } from '@helpers/classnames';
 
 const ProfileHero = () => {
     const {t} = useTranslation('common');
@@ -48,7 +49,7 @@ const ProfileHero = () => {
                             <h1>{profile.full_name}</h1>
 
                             <EditButton 
-                                className='mb-[6px]' 
+                                className={classnames(styles['profile-hero__title'], styles['edit-button'])} 
                                 onClick={() => {
                                     dispatch(toggleModal({ 
                                         isOpened: true, 

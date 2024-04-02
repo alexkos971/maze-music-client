@@ -29,12 +29,14 @@
     --gray-e5: #E5E5E5;
     --gray-8e: #8E8E8E;
     --gray-3e: #3c424e;
-    --gray-28: #263238;
+    --gray-28: #263238;    
     --gray-88: #888888;
 
     --player-height: 0px;
 
     --app-background: white;
+    --app-background-secondary: var(--gray-f5);
+    
     --app-text-primary: var(--black-36);
     --app-text-secondary: black;
 }
@@ -42,6 +44,10 @@
 [data-theme='dark'] {
     // --app-background: #242625;
     --app-background: #1a1a1a;
+
+    --app-background-secondary: #252525;
+    // --app-background-secondary: var(--gray-28);
+
     --app-text-primary: white;
     --app-text-secondary: var(--gray-8e);
 }
