@@ -9,7 +9,7 @@ import { useTranslation } from "next-i18next";
 
 import { useAppSelector, useAppDispatch } from "@hooks/index";
 import { setSidebarCollapsed } from "@store/reducers/interfaceReducer";
-import { Logo, LogoIcon } from "@helpers/images";
+import { Logo, LogoForDark, LogoIcon } from "@helpers/images";
 import { directories } from "@helpers/directory";
 import { useTheme } from "next-themes";
 
@@ -35,7 +35,7 @@ const Sidebar : React.FC = () => {
             style={{maxWidth: isCollapsed ? 250: 90 }}>
 
             <div className={`${styles['sidebar__logo']} ${isCollapsed ? 'pr-8 pl-5' : 'px-6'}`}>
-                {isCollapsed ? <Logo/> : <LogoIcon/>}
+                {isCollapsed ? ( theme == 'dark' ? <LogoForDark/> : <Logo/>) : <LogoIcon/>}
             </div>
 
             <ul className="sidebar__menu flex flex-col w-full mt-8">

@@ -50,7 +50,7 @@ const config: Config = {
       }),
     },
   },
-  darkMode: 'class',
+  darkMode: ['class', '[data-theme="dark"]'],
   plugins: [
     function ({ addVariant }: { addVariant: any }) {
         addVariant('child', '& > *');
