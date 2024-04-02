@@ -6,7 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 export default useProtectedPage(function Profile() {
 
     return (
-        <MainWrap canReturnBack={true}>
+        <MainWrap canReturnBack={true} overlapHeader={true}>
             <ProfileHero/>
         </MainWrap>
     );

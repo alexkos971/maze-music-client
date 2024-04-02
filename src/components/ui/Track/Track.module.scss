@@ -82,3 +82,11 @@
 
     }
 }
+
+[data-theme="dark"] {
+    .track {
+        &:hover {
+            background-color: var(--gray-4a);
+        }
+    }
+}

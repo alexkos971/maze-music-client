@@ -100,3 +100,9 @@
         }
     }
 }
+
+[data-theme="dark"] {
+    .modal__content {
+        background-color: var(--gray-4a);
+    }
+}

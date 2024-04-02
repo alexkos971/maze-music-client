@@ -130,7 +130,7 @@ export const Select = ({
                         <ChevronDownBlack />
                     </div>
 
-                    <div className={`field__options absolute z-10 bg-white border-[0.5px] border-gray-e5 rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
+                    <div className={`field__options absolute z-10 bg-white dark:bg-gray-4a border-[0.5px] border-gray-e5 rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
                         <ul>
                             {Object.keys(options).map((key: any) => <MenuItem key={key} option_slug={ Array.isArray(options) ? options[key] : key } option_title={options[key]}/>)}
                         </ul>

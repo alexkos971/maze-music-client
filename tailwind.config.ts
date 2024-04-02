@@ -27,7 +27,10 @@ const config: Config = {
       'gray-ee': '#EEEEEE',
       'gray-8e': '#8E8E8E',
       'gray-f8': '#F4F6F8',
-      'gray-e5': '#E5E5E5'
+      'gray-e5': '#E5E5E5',
+      'app-background': 'var(--app-background)',
+      'app-text-primary': 'var(--app-text-primary)',
+      'app-text-secondary': 'var(--app-text-secondary)'
     }, 
     extend: {
       backgroundImage: {
@@ -49,7 +52,7 @@ const config: Config = {
   },
   darkMode: 'class',
   plugins: [
-    function ({ addVariant }) {
+    function ({ addVariant }: { addVariant: any }) {
         addVariant('child', '& > *');
         addVariant('child-img', '& > svg, & > img');
         addVariant('child-hover', '& > *:hover');

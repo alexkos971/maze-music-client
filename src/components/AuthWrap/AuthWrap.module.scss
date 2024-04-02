@@ -98,6 +98,12 @@
     }
 }
 
+[data-theme="dark"] {
+    .auth__card {
+        background-color: var(--gray-4a);
+    }
+}
+
 @keyframes logoAppear {
     from {
         opacity: 0;

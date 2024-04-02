@@ -25,7 +25,7 @@ const Track = ({
             <span className="block w-[18px] h-[18px] relative flex items-center justify-start">
 
                 {(!is_current_track && index !== undefined) ?
-                    <span className={`${styles.track__index} text-sm text-black`}>
+                    <span className={`${styles.track__index} text-sm text-app-text-secondary`}>
                         {`${index + 1}.`}
                     </span>
                 : '' }
@@ -52,7 +52,7 @@ const Track = ({
                 }
             </div>
 
-            <h4 className={`track__name text-sm font-primary font-semibold ${is_current_track ? "text-green-05" : "text-black"} ml-4`}>
+            <h4 className={`track__name text-sm font-primary font-semibold ${is_current_track ? "text-green-05" : "text-app-text-primary"} ml-4`}>
                 {track.name} - <Link href={'/artist/' + track.artist._id} className="hover:underline">{track.artist.full_name}</Link>
             </h4>
             

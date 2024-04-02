@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "./Sidebar.module.scss";
+import { classnames } from "@helpers/classnames";
 
 import { lsGetItem } from "@helpers/localstorage";
 import Link from "next/link";
@@ -10,11 +11,13 @@ import { useAppSelector, useAppDispatch } from "@hooks/index";
 import { setSidebarCollapsed } from "@store/reducers/interfaceReducer";
 import { Logo, LogoIcon } from "@helpers/images";
 import { directories } from "@helpers/directory";
+import { useTheme } from "next-themes";
 
 const Sidebar : React.FC = () => {
     const [isCollapsed] = useAppSelector(state => [state.interface.sidebar_is_collapsed]);
     const dispatch = useAppDispatch();
     const directory = useRouter().pathname;
+    const { theme } = useTheme();
 
     const {t} = useTranslation('common');
 
@@ -28,7 +31,7 @@ const Sidebar : React.FC = () => {
 
     return (
         <aside 
-            className={`sidebar w-full shrink-0 flex flex-col items-center pt-[26px] ${isCollapsed ? 'sidebar_collapsed' : ''} pb-2 border-r border-r-gray-de duration-500`}
+            className={`sidebar w-full shrink-0 flex flex-col items-center pt-[26px] ${isCollapsed ? 'sidebar_collapsed' : ''} pb-2 border-r border-r-gray-de dark:border-r-gray-4a duration-500`}
             style={{maxWidth: isCollapsed ? 250: 90 }}>
 
             <div className={`${styles['sidebar__logo']} ${isCollapsed ? 'pr-8 pl-5' : 'px-6'}`}>
@@ -40,10 +43,16 @@ const Sidebar : React.FC = () => {
                     sidebar_menu.map((item, index) => (
                         <li 
                             key={index + item.title}
-                            className={`${styles['sidebar-button']} ${item.path == directory ? styles['sidebar-button_current'] : ''} ${isCollapsed ? '' : styles['sidebar-button_only_icon']}`}
+                            className={
+                                classnames(
+                                    styles['sidebar-button'],
+                                    theme == 'dark' ? styles['sidebar-button_dark'] : null,
+                                    item.path == directory ? styles['sidebar-button_current'] : null,
+                                    !isCollapsed ? styles['sidebar-button_only_icon'] : null
+                                )}
                         >
                             <Link href={item.path} className={styles['sidebar-button__wrap']}>
-                                <div className={`${styles['sidebar-button__icon']}`}>
+                                <div className={classnames(styles['sidebar-button__icon'])}>
                                     {item.icon ? <item.icon/> : ''}
                                 </div>
                                 <span className={`${styles['sidebar-button__title']}`}>{t(item.title)}</span>
@@ -53,7 +62,12 @@ const Sidebar : React.FC = () => {
                 }
             </ul>
 
-            <div className={`${styles['sidebar-button']} ${styles['sidebar-button_collapse']} ${isCollapsed ? '' : styles['sidebar-button_only_icon']}`}>
+            <div className={classnames(
+                styles['sidebar-button'],
+                styles['sidebar-button_collapse'],
+                isCollapsed ? '' : styles['sidebar-button_only_icon'],
+                theme == 'dark' ? styles['sidebar-button_dark'] : null                
+            )}>
                 <div 
                     className={styles['sidebar-button__wrap']} 
                     onClick={() => dispatch(setSidebarCollapsed(!isCollapsed))}>

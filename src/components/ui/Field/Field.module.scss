@@ -9,10 +9,10 @@
     w-full 
     block
     text-left          
-    bg-white
+    bg-app-background
     border-gray-e5 
     placeholder:text-gray-8e
-    text-black-36 
+    text-app-text-primary 
     border-[0.5px];
 
     &.typeable-input_error {
@@ -21,6 +21,12 @@
 
     &.typeable-input_placeholder {
         @apply text-gray-8e;
+    }
+}
+
+[data-theme="dark"] {
+    .typeable-input {
+        @apply border-gray-7a;
     }
 }
 

@@ -8,7 +8,7 @@ import { ModalProps } from "@components/UI/Modal";
 export const interfaceSlice = createSlice({
     name: 'interface',
     initialState: {
-        theme: 'light',
+        // theme: 'light',
         fullplayer_is_expanded: false,
         sidebar_is_collapsed: true,
         header_is_filled: false,
@@ -18,10 +18,10 @@ export const interfaceSlice = createSlice({
         directory: basePage
     },
     reducers: {
-        setTheme: (state, action : {type: string, payload: string }) => {
-            lsSetItem({name: 'theme', value: action.payload});
-            state.theme = action.payload;
-        },
+        // setTheme: (state, action : {type: string, payload: string }) => {
+        //     lsSetItem({name: 'theme', value: action.payload});
+        //     return { ...state, theme: action.payload};
+        // },
         setSidebarCollapsed: (state, action: {type: string, payload: boolean}) => {
             lsSetItem({ name: 'sidebar_is_collapsed', value: action.payload });
             return {...state, sidebar_is_collapsed : action.payload};
@@ -42,7 +42,7 @@ export const interfaceSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { 
-    setTheme, 
+    // setTheme, 
     setSidebarCollapsed, 
     setDirectory, 
     setFullplayerExpanded, 

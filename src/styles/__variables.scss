@@ -33,4 +33,14 @@
     --gray-88: #888888;
 
     --player-height: 0px;
+
+    --app-background: white;
+    --app-text-primary: var(--black-36);
+    --app-text-secondary: black;
+}
+
+[data-theme='dark'] {
+    --app-background: #242625;
+    --app-text-primary: white;
+    --app-text-secondary: var(--gray-8e);
 }

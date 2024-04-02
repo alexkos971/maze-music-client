@@ -20,7 +20,7 @@ import { FilePicker } from "./file-picker";
 
 const FieldTitle : React.FC<{title: string | undefined}> = ({ title }) => (
     <>
-        {title ? <span className="field__title mb-[10px] mt-3 text-sm text-black-36">{title}</span> : <></>}
+        {title ? <span className="field__title mb-[10px] mt-3 text-sm text-app-text-primary">{title}</span> : <></>}
     </>
 );
 
