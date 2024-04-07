@@ -9,7 +9,7 @@ export type ToastProps = {
 
 const Toast = () => {
     const dispatch = useAppDispatch();
-    const [ { type, text } ] = useAppSelector(state => [ state.interface.toast ]);
+    const { type, text } = useAppSelector(state => state.interface.toast);
 
     let styles : {[key: string]: string} = {
         'success': 'bg-green-05',

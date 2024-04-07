@@ -4,8 +4,8 @@ export const profileSlice = createSlice({
     name: 'profile',
     initialState: null,
     reducers: {
-        setProfile: (state, action) => {
-            return {...action.payload};
+        setProfile: (state : ProfileDto, action) => {
+            return {...state, ...action.payload};
         },
     }
 });

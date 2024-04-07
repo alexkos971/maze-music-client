@@ -6,7 +6,7 @@ export const usersApi = createApi({
     reducerPath: 'usersApi',
     tagTypes:['Users'],
     baseQuery: fetchBaseQuery({ 
-        baseUrl: process.env.NEXT_PUBLIC_API_URL + 'users',
+        baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/users/`,
         credentials: 'include',
         prepareHeaders: (headers) => {
             headers.set('accept', 'application/json');

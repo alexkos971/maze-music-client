@@ -1,18 +1,17 @@
 'use client';
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useAppDispatch } from "@hooks";
 import { showToast } from "@store/reducers/interfaceReducer";
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { AppContext } from "@components/AppWrap";
 import { useTranslation } from "next-i18next";
-import AuthWrap from "@components/AuthWrap";
+import AuthLayout from "@containers/AuthLayout";
 import Form from "@components/UI/Form";
 import { Email, Password } from "@components/UI/Field";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
 import { basePage } from "@helpers/directory";
-import useProtectedPage from "@hooks/protectedPage"
+import ProtectedPage from "@hoks/protectedPage"
 
 import { useSignInMutation } from "@store/api/authApi";
 import { useRouter } from "next/router";
@@ -36,7 +35,7 @@ const SignIn = () => {
     }, [isSuccess, error]);
 
     return (
-        <AuthWrap>
+        <AuthLayout>
             <Title tag="h1">{t("pages.sign-in.title")}</Title>
 
             <Form 
@@ -65,11 +64,11 @@ const SignIn = () => {
             </Form>
 
             <span className="mt-12">{t("pages.sign-in.sign_up")} <Link href="/sign-up" className="underline">{t("pages.sign-up.title")}</Link></span>
-        </AuthWrap>
+        </AuthLayout>
     );
 }
 
-export default useProtectedPage(SignIn);
+export default ProtectedPage(SignIn);
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {

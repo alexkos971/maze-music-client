@@ -8,20 +8,15 @@ import { ModalProps } from "@components/UI/Modal";
 export const interfaceSlice = createSlice({
     name: 'interface',
     initialState: {
-        theme: 'light',
         fullplayer_is_expanded: false,
         sidebar_is_collapsed: true,
         header_is_filled: false,
         toast: <ToastProps>{ text: '', type: 'hidden' },
         modal: <ModalProps>{ isOpened: false, content: null },
         // Current directory
-        directory: basePage
+        directory: {title: basePage.title, path: basePage.path }
     },
     reducers: {
-        setTheme: (state, action : {type: string, payload: string }) => {
-            lsSetItem({name: 'theme', value: action.payload});
-            state.theme = action.payload;
-        },
         setSidebarCollapsed: (state, action: {type: string, payload: boolean}) => {
             lsSetItem({ name: 'sidebar_is_collapsed', value: action.payload });
             return {...state, sidebar_is_collapsed : action.payload};
@@ -36,13 +31,19 @@ export const interfaceSlice = createSlice({
             return { ...state, modal: { ...state.modal, ...action.payload} }
         },
         setHeaderIsFilled: (state, action : {type: string, payload: boolean}) => ({...state, header_is_filled: action.payload}),
-        setDirectory: (state, action : {type: string, payload: DirType}) => ({...state, directory: action.payload})
+        setDirectory: (state, action : {type: string, payload: DirType}) => ({
+            ...state, 
+            directory: {
+                title: action.payload.title, 
+                path: action.payload.path
+            }
+        })
     }
 });
 
 // Action creators are generated for each case reducer function
 export const { 
-    setTheme, 
+    // setTheme, 
     setSidebarCollapsed, 
     setDirectory, 
     setFullplayerExpanded, 

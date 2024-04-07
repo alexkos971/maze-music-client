@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useId, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./Field.module.scss";
 import { MainFieldProps } from "./index";
 import { FieldError, FieldTitle } from "./index";
@@ -32,7 +32,6 @@ const TextFieldTemplate = ({
 } : FieldTemplateProps) => {    
 
     const formContext = useContext(ValidationContext) as ValidationContextType;
-    const field_id = id ? id : useId();
 
     const [ error, setError ] = useState<string>('');
     const [val, setVal] = useState<TextFieldProps['value']>(value);
@@ -75,7 +74,7 @@ const TextFieldTemplate = ({
                                 className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' ) + ` resize-none`} 
                                 name={name} 
                                 placeholder={placeholder ?? ''}
-                                id={field_id}
+                                id={id ?? undefined}
                                 required={required ?? false}
                                 rows={3}
                                 value={val}
@@ -96,7 +95,7 @@ const TextFieldTemplate = ({
                                         required={required ?? false}
                                         placeholder={placeholder ?? ''}
                                         onChange={handleInput}
-                                        id={field_id}/>
+                                        id={id ?? undefined}/>
 
                                     <div
                                         onClick={() => setIsVisible(!isVisible)} 
@@ -116,7 +115,7 @@ const TextFieldTemplate = ({
                                 required={required ?? false}
                                 placeholder={placeholder ?? ''}
                                 onChange={handleInput}
-                                id={field_id}/>
+                                id={id ?? undefined}/>
                         );      
                     }
                 })()}    

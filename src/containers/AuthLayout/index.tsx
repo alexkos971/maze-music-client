@@ -1,16 +1,18 @@
 import { ReactNode, useEffect, useState } from "react";
-import styles from "./AuthWrap.module.scss";
+import styles from "./AuthLayout.module.scss";
 
-import { Logo } from "@helpers/images";
+import { Logo, LogoForDark } from "@helpers/images";
+import { useTheme } from "next-themes";
 
 interface Props {
     children?: ReactNode,
     size?: 'small' | 'large'
 }
 
-const AuthWrap = ({ children, size = 'small' } : Props) => {
+const AuthLayout = ({ children, size = 'small' } : Props) => {
     let cardWrapClass = size == 'large' ? 'col-sm-10 offset-sm-1' : 'col-lg-6 offset-lg-3 col-sm-8 offset-sm-2'
     let [ isLoaded, setIsLoaded ] = useState(false);
+    const { theme } = useTheme()
 
     useEffect(() => {
         setTimeout(() => {
@@ -25,7 +27,7 @@ const AuthWrap = ({ children, size = 'small' } : Props) => {
                     <div className={cardWrapClass}>
                         <div className={styles.auth__card}>
                             <div className={styles.auth__logo}>
-                                <Logo/>
+                                {theme == 'dark' ? <LogoForDark/> :  <Logo/>}
                             </div>
 
                             <div className={styles.auth__content}>
@@ -39,4 +41,4 @@ const AuthWrap = ({ children, size = 'small' } : Props) => {
     );
 }
 
-export default AuthWrap;
+export default AuthLayout;

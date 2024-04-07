@@ -1,28 +1,11 @@
 'use client';
-
-import { useEffect } from "react";
-import { usePathname  } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@hooks/index";
-import { setDirectory } from "@store/reducers/interfaceReducer";
-import { lsGetItem } from "@helpers/localstorage";
-import { directories } from "@helpers/directory";
+import { useAppSelector } from "@hooks/index";
 import { useTranslation } from "next-i18next";
 import Head from "next/head";
 
-export const MetaTitle = () => {
-    const pathname = usePathname();
-    let current_locale = lsGetItem('i18nLanguage');  
-    const {t} = useTranslation();
-    const dispatch = useAppDispatch();
-    const [ directory ] = useAppSelector(state => [state.interface.directory]);
-  
-    useEffect(() => {
-      for (let val in directories) {
-        if (pathname?.includes(directories[val].path)) {
-          dispatch(setDirectory(directories[val]))
-        }
-      }
-    }, [pathname, current_locale]);
+export const MetaTitle = () => {    
+    const {t} = useTranslation();    
+    const directory = useAppSelector(state => state.interface.directory); 
   
     return (
         <Head>

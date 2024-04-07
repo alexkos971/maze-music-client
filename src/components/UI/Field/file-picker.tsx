@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState, useRef, useContext, ChangeEvent, SetStateAction } from "react";
+import React, { useEffect, useState, useRef, useContext, ChangeEvent, SetStateAction } from "react";
 import styles from "./Field.module.scss";
 import { MainFieldProps } from "./index";
 import { FieldError, FieldTitle } from "./index";
@@ -26,7 +26,6 @@ const FilePicker = ({
 	const {t} = useTranslation('common');
 
     const context = useContext(ValidationContext) as ValidationContextType;
-    const field_id = id ? id : useId();
 
     const [ error, setError ] = useState<string>('');
     const [file, setFile] = useState<FileFieldProps['value']>(null);
@@ -98,7 +97,7 @@ const FilePicker = ({
             <FieldTitle title={title}/>
 
             <label className={styles.field__label} ref={fileRef}>
-                <input type="file" name={name} id={field_id} onChange={setFileHandler} {...{ required }} accept={accept}/>
+                <input type="file" name={name} id={id ?? undefined} onChange={setFileHandler} {...{ required }} accept={accept}/>
 
                 <div className={styles.field__image}>
                     <CloudArrowUpGreen/>

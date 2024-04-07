@@ -1,12 +1,12 @@
-import useProtectedPage from "@hooks/protectedPage";
-import MainWrap from "@components/MainWrap";
+import ProtectedPage from "@hoks/protectedPage";
+import MainWrap from "@containers/MainWrap";
 import ProfileHero from "@components/ProfileHero";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-export default useProtectedPage(function Profile() {
+export default ProtectedPage(function Profile() {
 
     return (
-        <MainWrap canReturnBack={true}>
+        <MainWrap canReturnBack={true} overlapHeader={true}>
             <ProfileHero/>
         </MainWrap>
     );

@@ -100,3 +100,9 @@
         }
     }
 }
+
+[data-theme="dark"] {
+    .modal__content {
+        background-color: var(--app-background-secondary);
+    }
+}

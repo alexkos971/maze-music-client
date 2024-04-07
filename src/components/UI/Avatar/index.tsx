@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 import Image from "next/image";
 import styles from "./Avatar.module.scss";
 import { useTranslation } from "next-i18next";
-import { classnames } from "@helpers/classnames";
+import classNames from "classnames";
 
 interface AvatarProps {
     img: string,
@@ -17,7 +17,7 @@ export default function Avatar({ img, previewText, size = '40px', onChange, clas
 
     return (
         <div 
-            className={classnames(styles.avatar, onChange ? styles.avatar_can_change : null, className ?? '')} 
+            className={classNames(styles.avatar, onChange ? styles.avatar_can_change : null, className ?? '')} 
             data-text={previewText.length ? previewText.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
             style={{'--avatar-size': size} as CSSProperties}
             onClick={onChange}

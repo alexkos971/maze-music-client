@@ -1,7 +1,7 @@
 import React from "react";
-import useProtectedPage from "@hooks/protectedPage";
+import ProtectedPage from "@hoks/protectedPage";
 
-import MainWrap from "@components/MainWrap";
+import MainWrap from "@containers/MainWrap";
 import Artists from "@components/Artists";
 import TrackList from "@components/TrackList";
 
@@ -102,7 +102,7 @@ const ForYou = () => {
     );
 }
 
-export default useProtectedPage(ForYou);
+export default ProtectedPage(ForYou);
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {

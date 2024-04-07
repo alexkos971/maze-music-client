@@ -1,12 +1,11 @@
 "use client";
 import { useAppDispatch } from "@hooks";
 import { showToast } from "@store/reducers/interfaceReducer";
-import { useContext, useEffect } from "react";
-import { AppContext } from "@components/AppWrap";
+import { useEffect } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import useProtectedPage from "@hooks/protectedPage";
+import ProtectedPage from "@hoks/protectedPage";
 import LanguageSwitcher from "@components/LanguageSwitcher";
-import MainWrap from "@components/MainWrap";
+import MainWrap from "@containers/MainWrap";
 import Button from "@components/UI/Button";
 
 import { useSignOutMutation } from "@store/api/authApi";
@@ -14,7 +13,7 @@ import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { authPage } from "@helpers/directory";
 
-export default useProtectedPage(function Settings() {    
+export default ProtectedPage(function Settings() {    
   const dispatch = useAppDispatch();
   const [signOut, { isSuccess, isLoading }] = useSignOutMutation();
   const {t} = useTranslation('common');

@@ -88,7 +88,7 @@ export const Select = ({
                             
         const MenuItem : React.FC<{option_slug: string | number, option_title: string | number}> = ({option_slug, option_title}) => (
             <li 
-                className={`cursor-pointer text-base text-gray-4a py-2 px-4 duration-300 hover:bg-gray-f8 ${(val == option_title || (val && typeof val == 'object' && val.slug == option_slug)) ? 'text-green-05 font-medium' : ''}`} 
+                className={`cursor-pointer text-base text-gray-4a py-2 px-4 duration-300 hover:bg-gray-f8 ${(val == option_title || (val && typeof val == 'object' && val.slug == option_slug)) ? 'text-green-05 font-medium' : 'dark:text-white'}`} 
                 data-item={option_slug}
                 onClick={() => selectHandle(option_slug, option_title)}>                                
                     {option_title}
@@ -130,7 +130,7 @@ export const Select = ({
                         <ChevronDownBlack />
                     </div>
 
-                    <div className={`field__options absolute z-10 bg-white border-[0.5px] border-gray-e5 rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
+                    <div className={`field__options absolute z-10 bg-white dark:bg-app-background-secondary border-[0.5px] border-gray-e5 dark:border-gray-3e rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
                         <ul>
                             {Object.keys(options).map((key: any) => <MenuItem key={key} option_slug={ Array.isArray(options) ? options[key] : key } option_title={options[key]}/>)}
                         </ul>

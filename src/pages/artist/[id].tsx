@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
-import useProtectedPage from "@hooks/protectedPage";
+import ProtectedPage from "@hoks/protectedPage";
 import { GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 import ArtistHero from "@components/ArtistHero";
-import MainWrap from "@components/MainWrap";
-import TrackList from "@components/TrackList";
-import Playlists from "@components/Playlists";
-import Artists from "@components/Artists";
+import MainWrap from "@containers/MainWrap";
 import { useGetUserQuery } from "@store/api/usersApi";
 
 function Artist() {
@@ -49,7 +46,7 @@ function Artist() {
   );
 }
 
-export default useProtectedPage(Artist);
+export default ProtectedPage(Artist);
 
 export async function getStaticProps({ locale } : { locale: string }) {
   return {

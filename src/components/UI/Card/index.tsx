@@ -24,8 +24,8 @@ const CardContent = ({ options, title, subtitle, link } : CardContent) => {
 
     return (
         <div className={`card__content flex flex-col z-[1] w-full ${options?.size === 'small' ? 'w-full px-4 py-2' : 'absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]'}`}>
-            <Title className={`font-secondary ${options?.size === 'small' ? 'text-left text-xl font-semibold text-black-36' : 'text-center text-3xl text-white'}`}>{title}</Title>
-            <p className={`${options?.size === 'small' ? 'text-left mt-1 text-sm text-black' : 'text-center mt-2 text-gray-ee text-sm'} ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
+            <Title className={`font-secondary ${options?.size === 'small' ? 'text-left text-xl font-semibold text-app-text-primary' : 'text-center text-3xl text-white'}`}>{title}</Title>
+            <p className={`${options?.size === 'small' ? 'text-left mt-1 text-sm text-app-text-secondary' : 'text-center mt-2 text-gray-ee text-sm'} ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
         </div>
     );
 }
@@ -33,7 +33,7 @@ const CardContent = ({ options, title, subtitle, link } : CardContent) => {
 const Card = ({ image, link, title, subtitle, options = { size: 'small', playButton: false } } : CardProps) => {
     return (
         <>
-            <div className={`${styles.card} ${styles[`card_${options.size}`]} rounded-lg bg-white relative flex flex-col justify-center items-center overflow-hidden w-full`}>
+            <div className={`${styles.card} ${styles[`card_${options.size}`]} relative flex flex-col justify-center items-center overflow-hidden w-full`}>
                 <Link href={link} className={`${styles.card__image} absolute top-0 left-0 w-full h-full block bg-black-36`}>
                     {image ?
                         <Image src={image} width={0} height={0} alt="Image" className="w-full h-full object-cover select-none"/>

@@ -1,4 +1,4 @@
-import { classnames } from "@helpers/classnames";
+import classNames from "classnames";
 import styles from "./Modal.module.scss";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { toggleModal } from "@store/reducers/interfaceReducer";
@@ -13,7 +13,7 @@ const Modal = () => {
     const [ { content, isOpened } ] = useAppSelector(state => [ state.interface.modal ]);
 
     return (
-        <div className={classnames(styles.modal, isOpened ? styles.modal_opened : '')}>
+        <div className={classNames(styles.modal, isOpened ? styles.modal_opened : '')}>
             <div className={styles.modal__background} onClick={() => dispatch(toggleModal({isOpened: false}))}></div>
             
             <div className={styles.modal__content}>
