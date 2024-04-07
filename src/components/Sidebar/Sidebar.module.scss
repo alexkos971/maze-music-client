@@ -1,4 +1,6 @@
 .sidebar {
+    transition: .5s width;
+
     &__logo {
         width: 100%;
         height: auto;
@@ -149,7 +151,7 @@
                     }
 
                     &__wrap:hover {
-                        background-color: var(--gray-4a);
+                        background-color: var(--gray-3e);
                     }
                 }
             }

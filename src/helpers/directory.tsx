@@ -3,27 +3,27 @@ import { BoxBlackIcon, ExploreBlackIcon, SettingsGrayIcon, UploadBlackIcon } fro
 export interface DirType {
     path: string;
     title: string;
-    icon?: undefined | Element
+    icon?: any
 };
 
-export const directories : Record<string, DirType>  = {
+export const directories : any  = {
     for_you: {
-        icon: ExploreBlackIcon,
         path: '/for-you', 
-        title: 'pages.for-you.header_title'
+        title: 'pages.for-you.header_title',
+        icon: <ExploreBlackIcon />
     },
     library: {
-        icon: BoxBlackIcon,
+        icon: <BoxBlackIcon/>,
         path: '/library',
         title: "pages.library.header_title",
     },
     upload: {
-        icon: UploadBlackIcon,
+        icon: <UploadBlackIcon/>,
         path: '/upload',
         title: "pages.upload.header_title"
     },
     settings: {
-        icon: SettingsGrayIcon,
+        icon: <SettingsGrayIcon/>,
         path: '/settings',
         title: "pages.settings.header_title"
     },

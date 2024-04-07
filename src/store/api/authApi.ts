@@ -6,7 +6,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes:['Auth'],
     baseQuery: fetchBaseQuery({ 
-        baseUrl: process.env.NEXT_PUBLIC_API_URL + 'auth',
+        baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/auth/`,
         credentials: 'include',
         prepareHeaders: (headers) => {
             headers.set('accept', 'application/json');

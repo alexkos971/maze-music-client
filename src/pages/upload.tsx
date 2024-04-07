@@ -1,5 +1,5 @@
-import useProtectedPage from "@hooks/protectedPage";
-import MainWrap from "@components/MainWrap";
+import ProtectedPage from "@hoks/protectedPage";
+import MainWrap from "@containers/MainWrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { useState, useEffect } from "react";
@@ -12,7 +12,7 @@ import { useAppDispatch } from "@hooks";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useUploadTrackMutation } from "@store/api/tracksApi";
 
-export default useProtectedPage(function Upload() {
+export default ProtectedPage(function Upload() {
   const {t} = useTranslation('common');
   let [fields, setFields] = useState({});
   let [validFields, setValidFields] = useState({});

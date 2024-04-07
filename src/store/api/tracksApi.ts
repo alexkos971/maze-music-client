@@ -7,7 +7,7 @@ export const tracksApi = createApi({
     reducerPath: 'tracksApi',
     tagTypes:['Tracks'],
     baseQuery: fetchBaseQuery({ 
-        baseUrl: process.env.NEXT_PUBLIC_API_URL + 'tracks',
+        baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/tracks/`,
         credentials: 'include',
         prepareHeaders: (headers) => {
             headers.set('accept', 'application/json');

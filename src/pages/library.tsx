@@ -1,8 +1,8 @@
-import useProtectedPage from "@hooks/protectedPage";
-import MainWrap from "@components/MainWrap";
+import ProtectedPage from "@hoks/protectedPage";
+import MainWrap from "@containers/MainWrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-export default useProtectedPage(function Library() {
+export default ProtectedPage(function Library() {
   return (
     <MainWrap>
       <div className="container-fluid">

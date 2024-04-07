@@ -9,14 +9,14 @@ import Button from '@components/UI/Button';
 import EditButton from '@components/UI/EditButton';
 import DottedRow from '@components/UI/DottedRow';
 import Avatar from '@components/UI/Avatar';
-import { classnames } from '@helpers/classnames';
+import classNames from 'classnames';
 
 const ProfileHero = () => {
     const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
-    const profile : ProfileDto = useAppSelector(state => state.profile);
+    let profile : ProfileDto = useAppSelector<ProfileDto>(state => state.profile);
 
-    if (!profile || !Object.keys(profile).length) {
+    if (!profile) {
         return <></>;
     }
 
@@ -49,7 +49,7 @@ const ProfileHero = () => {
                             <h1>{profile.full_name}</h1>
 
                             <EditButton 
-                                className={classnames(styles['profile-hero__title'], styles['edit-button'])} 
+                                className={classNames(styles['profile-hero__title'], styles['edit-button'])} 
                                 onClick={() => {
                                     dispatch(toggleModal({ 
                                         isOpened: true, 
@@ -66,7 +66,7 @@ const ProfileHero = () => {
                         </div>
 
                         <p className={styles['profile-hero__description']}>
-                            {profile.description?.length ? profile.description : "You don't have a description..."}
+                            {profile.description ??  "You don't have a description..."}
                             
                             <EditButton 
                                 className={styles['profile-hero__description-edit']} 
@@ -77,7 +77,7 @@ const ProfileHero = () => {
                                             <UpdateProfileForm 
                                                 title={t('pages.profile.change_description_title')}
                                                 name="description"
-                                                value={profile.description} 
+                                                value={profile?.description ?? ''} 
                                                 type="textarea"/>
                                         )
                                     })) 

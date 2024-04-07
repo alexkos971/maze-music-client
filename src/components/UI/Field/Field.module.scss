@@ -13,7 +13,8 @@
     border-gray-e5 
     placeholder:text-gray-8e
     text-app-text-primary 
-    border-[0.5px];
+    border-[0.5px]
+    bg-app-field-background;
 
     &.typeable-input_error {
         @apply border-red-fc placeholder:text-red-fc text-red-fc opacity-60;
@@ -26,7 +27,7 @@
 
 [data-theme="dark"] {
     .typeable-input {
-        @apply border-gray-7a;
+        @apply border-gray-3e;
     }
 }
 
@@ -91,7 +92,7 @@
                         position: relative;
                         width: 100%;
                         height: 100%;
-                        object-fit: contain;
+                        object-fit: cover;
                         object-position: bottom;
                     }
 
@@ -129,7 +130,7 @@
                     margin-top: 6px;
                     margin-left: 4px;
                     font-size: 14px;
-                    color: var(--black-36);
+                    color: var(--app-text-secondary);
                     font-weight: 700;
                 }
             }

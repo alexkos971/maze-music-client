@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, UIEvent } from "react";
+import React, { useEffect, useRef, UIEvent, memo } from "react";
 import { useThrottle } from "@hooks/listeners";
 import { useRouter } from "next/router";
-import { 
-  // setTheme, 
-  setHeaderIsFilled } from "@store/reducers/interfaceReducer";
+import { setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 import {store} from '@store/rootReducer';
 import styles from './Header.module.scss';
 
@@ -16,7 +14,7 @@ import { directories } from "@helpers/directory";
 import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon, ChevronDownBlack } from "@helpers/images";
 
 import { useTranslation } from "next-i18next";
-import { useAppDispatch, useAppSelector } from "@hooks/index";
+import { useAppSelector } from "@hooks/index";
 import Avatar from "@components/UI/Avatar";
 
 interface Props {
@@ -25,16 +23,13 @@ interface Props {
 }
 
 const Header = ({canReturnBack = false, overlap = false} : Props) => {
-  const dispatch = useAppDispatch();
   const {pathname, back} = useRouter();
   
-  const [
-    // theme, 
-    title, profile, header_is_filled, fullplayer_is_expanded
-  ] = useAppSelector((state) => [
-    // state.interface.theme, 
-    state.interface.directory.title, state.profile, state.interface.header_is_filled, state.interface.fullplayer_is_expanded
-  ]);
+  let title = useAppSelector(state => state.interface.directory.title), 
+    header_is_filled = useAppSelector(state => state.interface.header_is_filled), 
+    fullplayer_is_expanded = useAppSelector(state => state.interface.fullplayer_is_expanded); 
+
+  let profile = useAppSelector<ProfileDto>(state => state.profile);
 
   const { theme, setTheme } = useTheme();
 
@@ -93,9 +88,6 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                   // Next-Theme
                   let newState = theme == 'dark' ? 'light' : 'dark'; 
                   setTheme(newState);
-
-                  // Store theme
-                  // dispatch(setTheme(theme == 'dark' ? 'light' : 'dark'))
                 }}>
                 {theme === "light" ? <MoonBlackIcon /> : <SunGrayIcon/>}
               </button>
@@ -106,8 +98,8 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                 <Link href={'/profile'} className="cursor-pointer flex items-center">
                   <Avatar 
                     size="40px"                            
-                    img={profile.avatar?.length ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : ''}
-                    previewText={profile.full_name ?? ''}
+                    img={profile?.avatar?.length ? process.env.NEXT_PUBLIC_STATIC + profile?.avatar : ''}
+                    previewText={profile?.full_name ?? ''}
                   />
                                   
                   {

@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import useProtectedPage from "@hooks/protectedPage";
+import ProtectedPage from "@hoks/protectedPage";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useAppDispatch } from "@hooks";
 import { basePage } from "@helpers/directory";
@@ -9,7 +9,7 @@ import { basePage } from "@helpers/directory";
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import AuthWrap from "@components/AuthWrap";
+import AuthWrap from "@containers/AuthLayout";
 import Form from "@components/UI/Form";
 import { useTranslation } from "next-i18next";
 
@@ -173,7 +173,7 @@ const SignUp = () => {
     );
 }
 
-export default useProtectedPage(SignUp);
+export default ProtectedPage(SignUp);
 
 export async function getStaticProps({ locale } : { locale: string }) {
     return {

@@ -39,14 +39,15 @@
     
     --app-text-primary: var(--black-36);
     --app-text-secondary: black;
+
+    --app-field-background: white;
 }
 
 [data-theme='dark'] {
-    // --app-background: #242625;
-    --app-background: #1a1a1a;
+    --app-background: #121317;
 
-    --app-background-secondary: #252525;
-    // --app-background-secondary: var(--gray-28);
+    --app-background-secondary: #1A1C23;
+    --app-field-background: #1A1C23;
 
     --app-text-primary: white;
     --app-text-secondary: var(--gray-8e);

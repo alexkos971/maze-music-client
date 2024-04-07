@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useLazyGetSessionInfoQuery } from "@store/api/authApi";
 import { basePage, authPage } from "@helpers/directory";
 
-export default function useProtectedPage (Component: any) {
+export default function ProtectedPage (Component: any) {
     
     return function useProtectedPage(props: any) {
         let [trigger] = useLazyGetSessionInfoQuery();

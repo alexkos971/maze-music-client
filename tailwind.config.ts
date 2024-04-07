@@ -4,6 +4,8 @@ const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/containers/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/hoks/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
@@ -18,6 +20,7 @@ const config: Config = {
       'red-fc': '#F44C4C',
       'yellow-fa': '#F4E15A',
       'gray-de': '#DEDEDE',
+      'gray-3e': '#3c424e',
       'gray-4a': '#4A4A4A',
       'gray-40': '#404040',
       'gray-f5': '#F5F5F5',
@@ -31,7 +34,8 @@ const config: Config = {
       'app-background': 'var(--app-background)',
       'app-background-secondary': 'var(--app-background-secondary)',
       'app-text-primary': 'var(--app-text-primary)',
-      'app-text-secondary': 'var(--app-text-secondary)'
+      'app-text-secondary': 'var(--app-text-secondary)',
+      'app-field-background': 'var(--app-field-background)'
     }, 
     extend: {
       backgroundImage: {
@@ -55,6 +59,7 @@ const config: Config = {
   plugins: [
     function ({ addVariant }: { addVariant: any }) {
         addVariant('child', '& > *');
+        addVariant('child-[selector]', '& > [selector]');
         addVariant('child-img', '& > svg, & > img');
         addVariant('child-hover', '& > *:hover');
     }
