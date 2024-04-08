@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import {formatTime} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
@@ -5,10 +6,13 @@ import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerR
 import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 
 import styles from "./Player.module.scss";
-import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, VolumeGray, ChevronUpGray } from "@helpers/images";
+import VolumeGray from "@icons/volume-gray.svg";
+import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, ChevronUpGray } from "@helpers/images";
+
 import FullPlayer from "./FullPlayer";
 import Range from "@components/UI/Range";
 import { useThrottle } from "@hooks/listeners";
+import classNames from "classnames";
 
 const Player = () => {
     
@@ -222,7 +226,7 @@ const Player = () => {
                         }                
                         
                         {/* Prev - Play - Next */}
-                        <div className="flex items-center">
+                        <div className="flex items-center mr-20">
                             <button 
                                 onClick={previousMusicClickHandler}
                                 className={`${styles['player-nav-button']} ${styles['player-nav-button_prev-track']}`}
@@ -244,28 +248,32 @@ const Player = () => {
                             </button>
                         </div>
 
-                        {/* Show/Hide  Full Player */}
-                        { 
-                            track ? 
-                                <button 
-                                    onClick={() => {
+
+                        <div className={`flex items-center justify-center relative w-full max-w-[550px]`}>                            
+                            <button 
+                                onClick={() => {
+                                    if (track) {
                                         dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
                                         dispatch( setHeaderIsFilled(false) );                        
-                                    }} 
-                                    type="button" 
-                                    className={`player-expand ml-16 duration-200 ${styles['player-nav-button']} ${fullplayer_is_expanded ? 'scale-y-[-1]' : ''}`}>
-                                    <ChevronUpGray/>
-                                </button>
-                            : <></>
-                        }
-
-                        {/* Progress */}
-                        <div className={`player-progress mx-auto flex items-center justify-center w-full`}>
+                                    } 
+                                }} 
+                                type="button" 
+                                className={classNames(
+                                    "absolute right-full mr-10",
+                                    !track && 'opacity-0',
+                                    styles['player-nav-button'],
+                                    fullplayer_is_expanded ? 'scale-y-[-1]' : ''
+                                    )}>
+                                <ChevronUpGray/>
+                            </button>
+                            
+                            {/* Show/Hide  Full Player */}
                             <span className="text-white text-xs">{formatTime(currentTime)}</span>
 
+                            {/* Progress */}
                             <Range
                                 value={currentTime}
-                                className={'mx-4 max-w-[480px]'}
+                                className={'mx-4 w-full'}
                                 onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
                                 max={duration} />
                             
@@ -273,13 +281,13 @@ const Player = () => {
                         </div>
 
                         {/* Navigation - Volume/Save/Repeat */}
-                        <div className={styles['player__nav']}>
+                        <div className={classNames(styles['player__nav'], 'ml-10')}>
                             <span className={styles['player-volume']}>
                                 <button
                                     className={`${styles['player-nav-button']}`} 
                                     type="button">                    
                                     
-                                    <VolumeGray alt="Volume"/>                    
+                                    <VolumeGray/>
                                 </button>
                                 
                                 <Range

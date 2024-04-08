@@ -1,5 +1,5 @@
 .sidebar {
-    transition: .5s max-width;
+    transition: .3s;
 
     &__logo {
         width: 100%;
@@ -118,23 +118,23 @@
 
                 .sidebar-button {
                     &__wrap {
-                        // background-color: transparent;
                         position: relative;
 
-                        &::before {
-                            content: "";
+                        .sidebar-button__icon {
                             width: 24px;
                             height: 24px;
-                            background-image: url(../../assets/images/icons/chevron-left-gray.svg);
-                            background-repeat: no-repeat;
-                            background-size: contain;
-                            background-position: center;
+                            
+                            img, svg {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;
+                            }
                         }
                     }
                 }
 
                 &.sidebar-button_only_icon {
-                    .sidebar-button__wrap::before {
+                    .sidebar-button__icon {
                         transform: scale(-1, 1);
                     }
                 }

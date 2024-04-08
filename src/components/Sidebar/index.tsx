@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import styles from "./Sidebar.module.scss";
 
@@ -11,6 +11,7 @@ import { useTranslation } from "next-i18next";
 import { useAppSelector, useAppDispatch } from "@hooks/index";
 import { setSidebarCollapsed } from "@store/reducers/interfaceReducer";
 import { Logo, LogoForDark, LogoIcon } from "@helpers/images";
+import ChevronLeft from "@icons/chevron-left-gray.svg";
 import { directories } from "@helpers/directory";
 import { useTheme } from "next-themes";
 import classNames from "classnames";
@@ -30,8 +31,15 @@ const Sidebar : React.FC = () => {
         dispatch(setSidebarCollapsed( typeof sidebarState === 'boolean' ? sidebarState : false ));
     }, []);
 
+    const sidebarRef = useRef<HTMLElement>(null);    
+
+    useEffect(() => {
+        sidebarRef?.current?.clientWidth ? document.documentElement.style.setProperty('--sidebar-width', (isCollapsed ? 250 : 90) + 'px') : false;
+    }, [isCollapsed]);
+
     return (
         <aside 
+            ref={sidebarRef}
             className={`${styles.sidebar} w-full shrink-0 flex flex-col items-center pt-[26px] ${isCollapsed ? 'sidebar_collapsed' : ''} pb-2 border-r border-r-gray-de dark:border-r-gray-4a dark:bg-app-background-secondary`}
             style={{maxWidth: isCollapsed ? 250: 90 }}>
 
@@ -73,6 +81,7 @@ const Sidebar : React.FC = () => {
                     className={styles['sidebar-button__wrap']} 
                     onClick={() => dispatch(setSidebarCollapsed(!isCollapsed))}>
                     
+                    <span className={styles['sidebar-button__icon']}><ChevronLeft/></span>
                     <span className={styles['sidebar-button__title']}>{t("sidebar.collapse")}</span>
                 </div>
             </div>

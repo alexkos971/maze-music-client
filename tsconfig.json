@@ -29,6 +29,12 @@
       "@helpers/*": [
         "./src/helpers/*"
       ],
+      "@images/*": [
+        "./src/assets/images/*"
+      ],
+      "@icons/*": [
+        "./src/assets/images/icons/*"
+      ],
       "@store/*": [
         "./src/store/*"
       ]
@@ -38,7 +44,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    "**/*.svg",
+    ".next/types/**/*.ts",
   ],
   "exclude": [
     "node_modules"

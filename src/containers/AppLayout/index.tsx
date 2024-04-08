@@ -52,7 +52,7 @@ export default function AppLayout({ children } : AppWrapProps) {
             enableSystem 
             storageKey={'theme'}>
             <AppContext.Provider value={{}}>            
-                <div className="app-wrap overflow-hidden h-screen flex flex-col justify-end bg-app-background">
+                <div className="app-wrap overflow-hidden h-screen flex flex-col justify-end bg-app-background duration-300">
                     {children}
                     
                     <Toast />

@@ -17,6 +17,8 @@
         width: 100%;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        position: relative;
     }
 
     &-nav-button {
@@ -64,8 +66,8 @@
         flex-shrink: 0;
 
         .player-nav-button {
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 24px;
         }
     }
 
@@ -103,8 +105,8 @@
 .fullplayer {
     position: absolute;
     bottom: calc(var(--player-height) - 1px);
-    left: 0;
-    width: 100%;
+    right: 0;
+    width: calc(100% - var(--sidebar-width));
     height: 0;
     transition: .4s;
     background-color: var(--black-06);    
