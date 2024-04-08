@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { showToast } from "@store/reducers/interfaceReducer";
 import { setProfile } from "@store/reducers/profileReducer";
 
 export const authApi = createApi({
@@ -56,8 +55,11 @@ export const authApi = createApi({
                     dispatch(setProfile( null ));
                 }
             },
+        }),
+        verifyEmail: build.query({
+            query: (email: string) => ({ url: `/verify-email/${email}`, method: 'GET' })
         })
     })
 });
 
-export const { useSignInMutation, useSignUpMutation, useLazyGetSessionInfoQuery, useSignOutMutation } = authApi;
+export const { useSignInMutation, useSignUpMutation, useLazyGetSessionInfoQuery, useSignOutMutation, useLazyVerifyEmailQuery } = authApi;

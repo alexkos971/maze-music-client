@@ -19,20 +19,27 @@ import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
 import {Steps, Step } from "@components/UI/Steps";
 
-import { useSignUpMutation } from "@store/api/authApi";
+import { useSignUpMutation, useLazyVerifyEmailQuery } from "@store/api/authApi";
 
 const ButtonsNav = ({ 
-    buttonText = 'Next', canSkip = false, goToStep, disabled = false 
-} : { buttonText?: string, canSkip?: boolean, goToStep: () => void, disabled?: boolean}) => {
+    buttonText = 'Next', canSkip = false, goToStep, disabled = false,loading = false 
+} : { buttonText?: string, canSkip?: boolean, goToStep: () => void, disabled?: boolean, loading?: boolean}) => {
     const {t} = useTranslation('common');
 
     return (        
         <div className="flex items-center mt-6">
-            <Button disabled={disabled} className={canSkip ? 'w-1/2' : 'w-full'} onClick={goToStep}>{buttonText}</Button>
+            <Button 
+                disabled={disabled} 
+                className={canSkip ? 'w-1/2' : 'w-full'} 
+                isLoading={loading}
+                onClick={goToStep}>{buttonText}</Button>
 
             {
                 canSkip ? 
-                    <button onClick={goToStep} type="button" className="text-base text-center text-gray-c4 w-1/2">{t('pages.sign-up.skip')}</button> 
+                    <button 
+                        onClick={goToStep} 
+                        type="button" 
+                        className="text-base text-center text-gray-c4 w-1/2">{t('pages.sign-up.skip')}</button> 
                 : ''
             }
         </div>
@@ -48,6 +55,7 @@ const SignUp = () => {
 
     const { push } = useRouter();
     let [signUp, { error, isSuccess, isLoading}] = useSignUpMutation();
+    let [verifyEmail, verify] = useLazyVerifyEmailQuery();
 
     useEffect(() => {
         if (error) {
@@ -59,6 +67,18 @@ const SignUp = () => {
         }
     }, [isSuccess, error]);
 
+    const verifyEmailHandle = async() => {
+        const {data} = await verifyEmail(fields.email);
+        if (data.is_exist) {
+            dispatch(showToast({
+                type: 'error',
+                text: t('pages.sign-up.errors.email_is_exist')
+            }))
+        }
+        else {
+            goToStep(activeStep + 1);
+        }
+    }
 
     return (
         <AuthWrap size="large">
@@ -122,9 +142,9 @@ const SignUp = () => {
 
                         <ButtonsNav 
                             buttonText={t('pages.sign-up.btn_next')}
-                            disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password']}
+                            disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password'] || verify.isLoading}
                             canSkip={false} 
-                            goToStep={() => goToStep(activeStep + 1)} 
+                            goToStep={verifyEmailHandle} 
                         />
                     </Step>
 

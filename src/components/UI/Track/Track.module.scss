@@ -83,10 +83,10 @@
     }
 }
 
-[data-theme="dark"] {
+[data-theme="dark"], .dark {
     .track {
         &:hover {
-            background-color: var(--gray-3e);
+            background-color: var(--black-36);
         }
     }
 }

@@ -54,7 +54,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
 
   return (
     <header className={`header z-20 sticky ${overlap ? 'h-0' : ''} top-0 left-0`}>
-      <div className={`header__wrap py-5 duration-300 ${header_is_filled ? 'bg-app-background' : ''}`} ref={headerRef}>
+      <div className={`header__wrap py-5 duration-300 ${header_is_filled ? 'bg-app-background dark:bg-app-background-secondary' : ''}`} ref={headerRef}>
         <div className="container-fluid">
           <div className="header__wrap flex items-center justify-end relative">
 

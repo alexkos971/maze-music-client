@@ -101,8 +101,13 @@
     }
 }
 
-[data-theme="dark"] {
+[data-theme="dark"], .dark {
     .modal__content {
         background-color: var(--app-background-secondary);
+    }
+
+    .modal__close-btn::after,
+    .modal__close-btn::before {
+        background-color: white;
     }
 }
