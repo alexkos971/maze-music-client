@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, UIEvent, memo } from "react";
-import { useThrottle } from "@hooks/listeners";
+import React, { useEffect, useRef, UIEvent } from "react";
+import useThrottle from "@hooks/throttle";
 import { useRouter } from "next/router";
 import { setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 import {store} from '@store/rootReducer';

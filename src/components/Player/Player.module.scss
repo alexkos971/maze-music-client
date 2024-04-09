@@ -181,6 +181,10 @@
             color: var(--gray-c4);
             font-size: 24px;
             font-weight: 400;
+        
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         &-description {

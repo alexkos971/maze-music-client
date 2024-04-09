@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import {formatTime} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
@@ -11,7 +10,7 @@ import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, 
 
 import FullPlayer from "./FullPlayer";
 import Range from "@components/UI/Range";
-import { useThrottle } from "@hooks/listeners";
+import useThrottle from "@hooks/throttle";
 import classNames from "classnames";
 
 const Player = () => {
@@ -26,8 +25,8 @@ const Player = () => {
 
     const [repeatType, setRepeat] = useState('all');
     const [disableKeydown, setDisableKeydown] = useState(false);
+    const [ isDragged, setIsDragged ] = useState(false);
     
-
     const [duration, setDuration] = useState<number>(0);
     const [repeatOnce, setRepeatOnce] = useState<boolean | null>(false);
     const ref = useRef<HTMLAudioElement>(null);
@@ -42,6 +41,7 @@ const Player = () => {
     }
 
 
+    // Keyboard events for player
     useEffect(() => {
         const handler = (e: KeyboardEventInit) => {
             const keyPressedCode : string = e.code ? e.code.toLowerCase() : ""
@@ -93,11 +93,14 @@ const Player = () => {
         }
     }, [isPlaying, currentTime, volume, disableKeydown])
 
+
+    // Trigger Audio instance - Change track or start, when src is not empty or changed
     useEffect(() => {
         if ( track && track.src && ref.current) {
             ref.current.src = process.env.NEXT_PUBLIC_STATIC + track.src;
             ref.current.currentTime = currentTime;
             ref.current.volume = volume;
+
             if ( !isPlaying ) {
                 ref.current.pause();
             } else {
@@ -107,21 +110,38 @@ const Player = () => {
         }
     }, [track, isPlaying]);
 
-    const musicTimeUpdateHandler = () => {
-        if ( ref.current && ref.current.currentTime === duration ) changeTrack("next", true);
 
-        else if (ref.current) dispatch(setCurrentTime(ref.current.currentTime)); 
+    const onAudioUpdate = () => {
+        if (!ref.current) {
+            return false
+        }
+        
+        if ( ref.current.currentTime == duration && ref.current.duration) {
+            // Doing some anoother logic later (for example move to the next)
+            dispatch(setIsPlaying(false))
+            dispatch(setCurrentTime(0));
+            ref.current.pause();
+            setIsDragged(false);
+        }
+        
+        else if (!isDragged) dispatch(setCurrentTime(ref.current.currentTime)); 
+        
     }
 
     const playClickHandler = () => {
         if ( track ) {
-            if ( !isPlaying ) dispatch(setIsPlaying(true));
-            else dispatch(setIsPlaying(false));
+            dispatch(setIsPlaying(!isPlaying));
         }
     }
 
     const musicTimeChangeHandler = (time: number) => {
-        ref.current && (ref.current.currentTime = time);
+        if (track && ref.current) {
+            dispatch(setCurrentTime(time));
+
+            if (!isDragged) {
+                ref.current.currentTime = time;
+            }
+        } 
     }
 
     const metadataLoadHandler = () => {
@@ -218,7 +238,7 @@ const Player = () => {
                             track && 
                             <audio 
                                 ref={ref} 
-                                onTimeUpdate={musicTimeUpdateHandler} 
+                                onTimeUpdate={onAudioUpdate} 
                                 onLoadedMetadata={metadataLoadHandler} >
                                 <source src={process.env.NEXT_PUBLIC_STATIC + track.src} type="audio/mpeg" />
                                 Your browser does not support the audio element.
@@ -272,8 +292,16 @@ const Player = () => {
 
                             {/* Progress */}
                             <Range
-                                value={currentTime}
+                                value={currentTime}                                
                                 className={'mx-4 w-full'}
+                                onMouseUp={() => {
+                                    setIsDragged(false);
+                                    
+                                    if ( ref?.current && ref.current.currentTime != currentTime ) {
+                                        ref.current.currentTime = currentTime;
+                                    }
+                                }}
+                                onMouseDown={() => setIsDragged(true)}
                                 onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
                                 max={duration} />
                             

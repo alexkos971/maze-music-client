@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from './Track.module.scss';
+import { formatTime } from "@helpers/formated";
 import { setTrack, setIsPlaying } from "@store/reducers/playerReducer";
 import { PlayBlack, PauseBlack, HeartOutlineGray,HeartSolidGreen, MusicNoteGray } from "@helpers/images";
 import { useAppSelector, useAppDispatch } from "@hooks";
@@ -63,7 +64,7 @@ const Track = ({
                     {true ? <HeartOutlineGray/> : <HeartSolidGreen/>}
                 </button>
 
-                <span className="time text-gray-8e text-sm">{track.duration ?? '0:00'}</span>
+                <span className="time text-gray-8e text-sm">{track.duration ? formatTime(track.duration) : '0:00'}</span>
             </div>
         </div>
     );

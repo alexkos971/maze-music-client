@@ -1,4 +1,4 @@
-export const useThrottle = (f : Function, t: number) => {
+const useThrottle = (f : Function, t: number) => {
   return function (args) {
     let previousCall = this.lastCall;
     this.lastCall = Date.now();
@@ -8,3 +8,5 @@ export const useThrottle = (f : Function, t: number) => {
     }
   }
 }
+
+export default useThrottle;

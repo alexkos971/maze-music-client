@@ -40,6 +40,7 @@ export default ProtectedPage(function Upload() {
                 title="Track name"
                 name="name"            
                 required={true}
+                className="bg-whtie"
               />
 
               <MultiSelect

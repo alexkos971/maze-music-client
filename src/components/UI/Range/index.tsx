@@ -4,6 +4,8 @@ import styles from "./Range.module.scss";
 interface RangeProps {
     value: number, 
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => any, 
+    onMouseUp?: (e: React.MouseEvent<HTMLInputElement>) => any,
+    onMouseDown?: (e: React.MouseEvent<HTMLInputElement>) => any,
     max: number, 
     min?: number | null,
     step?: number | null,
@@ -12,7 +14,7 @@ interface RangeProps {
     className?: React.HTMLAttributes<HTMLDivElement> | string 
 };
 
-const Range = ({ value, onChange, className, max, min, step, name, color = 'green' } : RangeProps) => {
+const Range = ({ value, onChange, onMouseUp, onMouseDown, className, max, min, step, name, color = 'green' } : RangeProps) => {
     let classes = [
         styles['range'],
         styles[`range_${color}`],
@@ -34,6 +36,8 @@ const Range = ({ value, onChange, className, max, min, step, name, color = 'gree
                 step={step ?? undefined} 
                 className={styles['range__input']} 
                 type="range" 
+                onMouseUp={onMouseUp}
+                onMouseDown={onMouseDown}
                 name={name ?? 'track-progress'} />
             
             <span className={styles['range__track']}>
