@@ -15,10 +15,10 @@ interface Track {
     };
     genres: [string];
     album: null | string;
-    duration: string;
+    duration: number;
     date: Date;
     type: 'single' | 'album';
-    playedCount: number
+    played_count: number
 };
 
 interface Player {

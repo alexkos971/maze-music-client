@@ -99,7 +99,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                   <Avatar 
                     size="40px"                            
                     img={profile?.avatar?.length ? process.env.NEXT_PUBLIC_STATIC + profile?.avatar : ''}
-                    previewText={profile?.full_name ?? ''}
+                    previewText={profile?.full_name ? profile?.full_name.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
                   />
                                   
                   {

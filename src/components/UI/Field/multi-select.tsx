@@ -26,7 +26,7 @@ export const MultiSelect = ({
     const fieldContext = useContext(ValidationContext) as ValidationContextType | null;
 
     const [ error, setError ] = useState<string>('');
-    const [val, setVal] = useState<MultiSelectProps['value']>(value ?? []);
+    const [val, setVal] = useState(value ?? []);
     const [inputVal, setInputVal] = useState<string>('');
     const [is_valid, setIsValid] = useState(!error.length && ( (required && val?.length) || !required ) ? true : false);
 

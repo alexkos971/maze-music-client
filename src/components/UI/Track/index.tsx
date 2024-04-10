@@ -23,7 +23,7 @@ const Track = ({
 
     return (
         <div className={`${styles.track} ${ is_current_track ? styles.track__current : ''}`}>
-            <span className="block w-[18px] h-[18px] relative flex items-center justify-start">
+            <span className="w-[18px] h-[18px] relative flex items-center justify-start">
 
                 {(!is_current_track && index !== undefined) ?
                     <span className={`${styles.track__index} text-sm text-app-text-secondary`}>

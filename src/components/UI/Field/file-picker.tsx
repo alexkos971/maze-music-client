@@ -4,14 +4,17 @@ import { MainFieldProps } from "./index";
 import { FieldError, FieldTitle } from "./index";
 import { CloudArrowUpGreen } from "@helpers/images";
 import { useTranslation } from "next-i18next";
+import Avatar from "@components/UI/Avatar";
 
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
+import classNames from "classnames";
 
 interface FileFieldProps extends MainFieldProps {    
 	accept?: string;
 	style?: 'default' | 'avatar' | 'cover';
     value?: File | SetStateAction<EventTarget> | EventTarget | null | undefined;    
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+	preview?: string
 };
 
 const FilePicker = ({ 
@@ -21,7 +24,8 @@ const FilePicker = ({
     name,
 	style = "default",
     required = false,
-	accept = '*'
+	accept = '*',
+	preview
 } : FileFieldProps) => {    
 	const {t} = useTranslation('common');
 
@@ -30,10 +34,16 @@ const FilePicker = ({
     const [ error, setError ] = useState<string>('');
     const [file, setFile] = useState<FileFieldProps['value']>(null);
     const [is_valid, setIsValid] = useState(!error.length && ( (required  && file) || !required ) ? true : false);
+	const [imgPreview, setImgPreview] = useState(preview ?? '');
 
     useEffect(() => {
         if (context?.registerField) {
 			context.registerField(name, file);
+		}
+		
+		if (file && style == 'avatar') {
+			let url = URL.createObjectURL(file);
+			setImgPreview(url);
 		}
     }, [file]);
 	
@@ -93,30 +103,65 @@ const FilePicker = ({
 	}
 
     return (
-        <div className={`field ${styles.field_file} ${isDragged ? styles.field_file_dragged : ''} ${file?.name ? styles.field_file_filled : ''} flex flex-col mt-3 w-full ${className}`}>
+        <div className={
+			classNames(
+				"field flex flex-col mt-3 w-full", 
+				styles.field_file, 
+				styles[`field_file_${style}`],
+				isDragged && styles.field_file_dragged, 
+				(file?.name || imgPreview) && styles.field_file_filled, 
+				className
+			)}
+		>
             <FieldTitle title={title}/>
 
-            <label className={styles.field__label} ref={fileRef}>
-                <input type="file" name={name} id={id ?? undefined} onChange={setFileHandler} {...{ required }} accept={accept}/>
+			<label className={styles.field__label} ref={fileRef}>
+				<input type="file" name={name} id={id ?? undefined} onChange={setFileHandler} {...{ required }} accept={accept}/>
 
-                <div className={styles.field__image}>
-                    <CloudArrowUpGreen/>
-                </div>
+				{
+					style == 'avatar'
+					?
+						<Avatar
+							size='min(100%, 150px)'
+							textSize="18px"
+							previewText="Upload"
+							img={imgPreview ?? ''}
+							className={styles.field__avatar}
+							additionalEditContent={imgPreview ?
+								<span className="mt-2 !text-red-fc text-xs" onClick={(e) => {
+									e.preventDefault();
+									setImgPreview('');
+									setFile(null);
+								}}>Remove</span>
+								: <></>
+							}
+							onChange={() => {}}
+						/>
+					: (
+						<>
+							<div className={styles.field__image}>
+								<CloudArrowUpGreen/>
+							</div>
 
-				<div className={styles.field__info}>
-					<span className={styles.field__text}>
-						{ !file?.name 
-							? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} />
-							: file.name	
-						}
-						
-					</span>
-					
-					{file?.name ?
-						<button onClick={() => setFile(null)} type="button" className={styles['field__clear-button']}></button>				
-					: ''}
-				</div>
-            </label>
+							<div className={styles.field__info}>
+								<span className={styles.field__text}>
+									{ !file?.name 
+										? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} />
+										: file.name	
+									}
+									
+								</span>
+								
+								{file?.name ?
+									<button onClick={() => setFile(null)} type="button" className={styles['field__clear-button']}></button>				
+								: ''}
+							</div>
+						</>
+					)
+				}
+
+
+			</label>				
 
             <FieldError error={error}/>            
         </div>

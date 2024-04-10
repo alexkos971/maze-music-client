@@ -10,7 +10,7 @@ interface UpdateProps {
     title?: string, 
     name: string, 
     value?: any, 
-    type: 'text' | 'textarea' | 'file'
+    type: 'text' | 'textarea' | 'avatar'
 }
 
 const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
@@ -40,11 +40,12 @@ const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
                                 name={name} 
                                 required={true}
                                 value={value}/>
-                        case 'file':
+                        case 'avatar':
                             return <FilePicker
-                                style=""
                                 accept="image/jpeg, image/png"                                
                                 name={name} 
+                                style="avatar"
+                                preview={value}
                                 required={true}/>
                         case "text":
                         default:

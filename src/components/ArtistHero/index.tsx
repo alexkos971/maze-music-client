@@ -19,7 +19,7 @@ const ArtistHero = ({ artist } : ArtistProps ) => {
     const [profile] = useAppSelector(state => [state.profile]);
     const [follow, { isSuccess, isUninitialized, data }] = useFollowUserMutation();
     
-    const [ isFollowing, setIsFollowing ] = useState(profile?.savedArtists?.includes(artist._id));
+    const [ isFollowing, setIsFollowing ] = useState(profile?.saved_artists?.includes(artist._id));
     
     useEffect(() => {
         if (isUninitialized) return;

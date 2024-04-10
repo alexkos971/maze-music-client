@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import styles from "./Avatar.module.scss";
 import { useTranslation } from "next-i18next";
@@ -8,18 +8,20 @@ interface AvatarProps {
     img: string,
     previewText: string,
     size: string,
+    textSize?: string,
     onChange?: () => void,
-    className?: string
+    className?: string,
+    additionalEditContent?: ReactNode
 }
 
-export default function Avatar({ img, previewText, size = '40px', onChange, className } : AvatarProps) {
+export default function Avatar({ img, previewText, size = '40px', textSize = '12px', onChange, className, additionalEditContent } : AvatarProps) {
     const {t} = useTranslation('common');
 
     return (
         <div 
             className={classNames(styles.avatar, onChange ? styles.avatar_can_change : null, className ?? '')} 
-            data-text={previewText.length ? previewText.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
-            style={{'--avatar-size': size} as CSSProperties}
+            data-text={previewText ?? ''}
+            style={{'--avatar-size': size, '--text-size': textSize} as CSSProperties}
             onClick={onChange}
         >
 
@@ -34,6 +36,7 @@ export default function Avatar({ img, previewText, size = '40px', onChange, clas
 
             <div className={styles.avatar__edit}>                                        
                 <span>{t('interface.change')}</span>
+                {additionalEditContent ?? <></>}
             </div>
         </div>
     );

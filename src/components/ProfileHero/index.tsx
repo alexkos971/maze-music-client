@@ -26,9 +26,9 @@ const ProfileHero = () => {
                 <div className="row">
                     <div className="col-lg-2">
                         <Avatar
-                            previewText={profile.full_name}
+                            previewText={profile?.full_name ? profile?.full_name.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
                             img={ profile.avatar ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : '' }
-                            size='100%'
+                            size='min(100%, 150px)'
                             className={styles['profile-hero__avatar']}
                             onChange={() => {
                                 dispatch(toggleModal({ 
@@ -37,7 +37,8 @@ const ProfileHero = () => {
                                         <UpdateProfileForm 
                                             title={t('pages.profile.change_avatar_title')}
                                             name="avatar" 
-                                            type="file"/>
+                                            value={profile.avatar ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : '' }
+                                            type="avatar"/>
                                     )
                                 })) 
                             }}
@@ -88,7 +89,7 @@ const ProfileHero = () => {
                         <DottedRow className={styles['profile-hero__info']} dotColor='var(--black-36)'>
                             <Button color='gray' size='small'>{t(`profile.${profile.role}`)}</Button>
                             <span><strong>{profile?.followers}</strong> {t('interface.followers')}</span>
-                            <span><strong>{profile?.savedArtists.length}</strong> {t('interface.subscriptions')}</span>
+                            <span><strong>{profile?.saved_artists?.length}</strong> {t('interface.subscriptions')}</span>
                         </DottedRow>
                     </div>
                 </div>
