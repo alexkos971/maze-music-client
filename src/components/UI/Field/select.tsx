@@ -88,7 +88,7 @@ export const Select = ({
                             
         const MenuItem : React.FC<{option_slug: string | number, option_title: string | number}> = ({option_slug, option_title}) => (
             <li 
-                className={`cursor-pointer text-base text-gray-4a py-2 px-4 duration-300 hover:bg-gray-f8 ${(val == option_title || (val && typeof val == 'object' && val.slug == option_slug)) ? 'text-green-05 font-medium' : 'dark:text-white'}`} 
+                className={`cursor-pointer text-base text-gray-4a py-2 px-4 duration-300 hover:bg-gray-f8 dark:hover:bg-black-36 ${(val == option_title || (val && typeof val == 'object' && val.slug == option_slug)) ? 'text-green-05 font-medium' : 'dark:text-white'}`} 
                 data-item={option_slug}
                 onClick={() => selectHandle(option_slug, option_title)}>                                
                     {option_title}

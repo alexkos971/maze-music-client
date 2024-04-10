@@ -25,9 +25,9 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
     const btn_colors = {
         'white': 'bg-white text-black-36 hover:opacity-70',
-        'gray': 'bg-black-36 text-white hover:opacity-70',
-        'green': 'bg-green-05 text-white hover:opacity-70',
+        'gray': 'bg-gray-f8 text-black-36 hover:opacity-70',
         'black' : 'bg-black-36 text-white hover:opacity-70',
+        'green': 'bg-green-05 text-white hover:opacity-70',
         'disabled' : 'bg-red-fc cursor-not-allowed opacity-80 text-white'
     };
 

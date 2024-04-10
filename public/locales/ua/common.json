@@ -44,7 +44,8 @@
             "header_title": "Для тебе"
         },
         "library": {
-            "header_title": "Бібліотека"
+            "header_title": "Бібліотека",
+            "title": "Твоя бібліотека"
         },
         "upload": {
             "header_title": "Загрузити",

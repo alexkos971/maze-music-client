@@ -50,7 +50,7 @@ const ArtistHero = ({ artist } : ArtistProps ) => {
                                 <Button color="white"><PlayBlack/> {t('interface.listen')}</Button>
                                 
                                 <Button 
-                                    color="gray" 
+                                    color="black" 
                                     type="button" 
                                     className="hover:opacity-100"
                                     onClick={() => follow(artist._id)}>

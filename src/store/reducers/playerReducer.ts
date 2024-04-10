@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { lsSetItem, lsGetItem } from "@helpers/localstorage";
 
 let initialState : Player = {
-    // track: lsGetItem('maze-music-last-track') ?? null,
-    track: null,
+    track: lsGetItem('maze-music-last-track') ?? null,
     isPlaying: false,
     currentTime: 0,
     // playList: {

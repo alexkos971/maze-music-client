@@ -44,7 +44,8 @@
             "header_title": "For you"
         },
         "library": {
-            "header_title": "Library"
+            "header_title": "Library",
+            "title": "Your library"
         },
         "upload": {
             "header_title": "Upload",        
