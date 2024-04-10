@@ -5,6 +5,7 @@ import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
 import { useUpdateProfileMutation } from "@store/api/usersApi";
 import { useTranslation } from "next-i18next";
+import { useAppSelector } from "@hooks";
 
 interface UpdateProps {
     title?: string, 
@@ -17,15 +18,18 @@ const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
     const [fields, setFields] = useState({});
     const [validFields, setValidFields] = useState({});
     let [update, { isLoading, isSuccess }] = useUpdateProfileMutation();
+    const modal = useAppSelector(state => state.interface.modal);
 
     const {t} = useTranslation('common');
 
+    const clearForm = () => {
+        setFields({});
+        setValidFields({});
+    }
+
     useEffect(() => {
-        if (isSuccess) {
-            setFields({});
-            setValidFields({});
-        }
-    }, [isSuccess])
+        if (isSuccess || !modal.isOpened) clearForm();
+    }, [isSuccess, modal]);
 
     return (
         <>

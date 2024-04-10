@@ -12,7 +12,7 @@ export const interfaceSlice = createSlice({
         sidebar_is_collapsed: true,
         header_is_filled: false,
         toast: <ToastProps>{ text: '', type: 'hidden' },
-        modal: <ModalProps>{ isOpened: false, content: null },
+        modal: <ModalProps>{ isOpened: false, content: null, onClose: undefined },
         // Current directory
         directory: {title: basePage.title, path: basePage.path }
     },

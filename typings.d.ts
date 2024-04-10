@@ -81,9 +81,9 @@ type ProfileDto = null | {
     playlists: string[];
     tracks: string[];
     
-    savedTracks: number[],
-    savedPlaylists: number[],
-    savedAlbums: number[],    
-    savedArtists: number[],    
+    saved_tracks: number[],
+    saved_playlists: number[],
+    saved_albums: number[],    
+    saved_artists: number[],    
     __v: number
 };
