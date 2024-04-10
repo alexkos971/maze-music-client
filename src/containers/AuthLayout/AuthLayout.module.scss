@@ -16,12 +16,11 @@
         position: fixed;
         left: 0;
         top: 0;
-        // z-index: -1;
         transition: .3s;
     }
 
     &__card {
-        background: var(--app-background-secondary);
+        background: var(--app-background);
         width: 100%;
         border-radius: 8px;
         padding: 100px 90px 64px;
@@ -99,6 +98,10 @@
     .auth::before {
         background-color: var(--gray-3e);
     }   
+
+    .auth__card {
+        background: var(--app-background-secondary);
+    }
 }
 
 @keyframes logoAppear {

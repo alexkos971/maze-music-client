@@ -240,6 +240,7 @@
 
             &:not(.field_file_filled) {
                 .field__avatar {
+                    box-sizing: content-box;
                     border: 2px dashed var(--gray-de);
                 }            
             }

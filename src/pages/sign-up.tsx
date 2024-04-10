@@ -59,7 +59,11 @@ const SignUp = () => {
 
     useEffect(() => {
         if (error) {
-            dispatch(showToast({type: 'error', text: t(`pages.sign-up.errors.${error.data.message}`)}))
+            console.log(error);
+            dispatch(showToast({
+                type: 'error', 
+                text: t(`pages.sign-up.errors.${error?.data?.message}`)
+            }));
         } 
         else if (isSuccess)  {
             push(basePage.path);
@@ -152,6 +156,7 @@ const SignUp = () => {
                         <Title tag="h2">{t('pages.sign-up.steps.profile.title')}</Title>
 
                         <FilePicker
+                            style="avatar"
                             title={t('pages.sign-up.steps.profile.avatar.title')}
                             accept="image/jpeg, image/png"
                             name="avatar"                      

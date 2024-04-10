@@ -67,7 +67,7 @@ const ProfileHero = () => {
                         </div>
 
                         <p className={styles['profile-hero__description']}>
-                            {profile.description ??  "You don't have a description..."}
+                            {profile.description?.length ? profile.description :  "You don't have a description..."}
                             
                             <EditButton 
                                 className={styles['profile-hero__description-edit']} 

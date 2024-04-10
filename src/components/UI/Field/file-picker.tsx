@@ -128,7 +128,7 @@ const FilePicker = ({
 							img={imgPreview ?? ''}
 							className={styles.field__avatar}
 							additionalEditContent={imgPreview ?
-								<span className="mt-2 mb-2 !text-red-fc text-xs" onClick={(e) => {
+								<span className="mt-1 mb-1 !text-red-fc text-xs" onClick={(e) => {
 									e.preventDefault();
 									setImgPreview('');
 									setFile(null);
