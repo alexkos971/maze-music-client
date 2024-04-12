@@ -6,7 +6,7 @@ export const profileSlice = createSlice({
     reducers: {
         setProfile: (state : ProfileDto, action) => {
             return {...state, ...action.payload};
-        },
+        }
     }
 });
 

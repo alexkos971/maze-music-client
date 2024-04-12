@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {formatTime} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
-import { setFullplayerExpanded, setHeaderIsFilled, toggleModal } from "@store/reducers/interfaceReducer";
+import { setFullplayerExpanded, setHeaderIsFilled, showToast } from "@store/reducers/interfaceReducer";
 
 import styles from "./Player.module.scss";
 import VolumeGray from "@icons/volume-gray.svg";
@@ -14,23 +14,48 @@ import useThrottle from "@hooks/throttle";
 import classNames from "classnames";
 import { useSaveTrackMutation } from "@store/api/tracksApi";
 import { useTranslation } from "next-i18next";
+import { setProfile } from "@store/reducers/profileReducer";
 
 const Player = () => {
     
-    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded, savedTracks] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track, state.interface.fullplayer_is_expanded, state.profile?.saved_tracks]);
+    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
+        state.player.currentTime, 
+        state.player.isPlaying, 
+        state.player.volume, 
+        state.player.track, 
+        state.interface.fullplayer_is_expanded
+    ]);
+
+    let profile : ProfileDto = useAppSelector(state => state.profile);
+ 
     const dispatch = useAppDispatch(); 
     const {t} = useTranslation('common');
-    const [saveTrack, { isSuccess, data }] = useSaveTrackMutation();
 
-    const [ isSaved, setIsSaved ] = useState(savedTracks?.includes(track?._id));
+    const [saveTrack, { isSuccess, data }] = useSaveTrackMutation();
+    const [ isSaved, setIsSaved ] = useState(false);
+    
+    useEffect(() => {
+        if (profile && profile?.saved_tracks) {
+            setIsSaved(profile?.saved_tracks.includes(track?._id));
+        }
+    }, [profile, track]);
      
     useEffect(() => {
         if (isSuccess) {
             let is_saved = data.is_saved;
-            dispatch(toggleModal({
-                type: 'succes',
+
+            dispatch(showToast({
+                type: 'success',
                 text: is_saved ? t('interface.saved') : t('interface.unsaved') 
             }));
+
+            if (profile) {
+                let savedTracks = is_saved 
+                    ? [...profile.saved_tracks, track._id]
+                    : profile.saved_tracks.filter(el => el != track._id );
+    
+                dispatch(setProfile({ ...profile, saved_tracks: savedTracks }));
+            }
 
             setIsSaved(is_saved);
         }
@@ -328,48 +353,41 @@ const Player = () => {
 
 
                         {/* Navigation - Volume/Save/Repeat */}
-                        {
-                            track ?
-                                <div className={classNames(styles['player__nav'], 'ml-10')}>
-                                    <span className={styles['player-volume']}>
-                                        <button
-                                            className={`${styles['player-nav-button']}`} 
-                                            type="button">                    
-                                            
-                                            <VolumeGray/>
-                                        </button>
-                                        
-                                        <Range
-                                            value={volume * 100}
-                                            min={0}
-                                            color="gray"
-                                            max={100}
-                                            onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
-                                            className={styles['player-volume__range']}
-                                            />
-                                    </span>
+                        <div className={classNames(styles['player__nav'], 'ml-10')}>
+                            <span className={styles['player-volume']}>
+                                <button
+                                    className={`${styles['player-nav-button']}`} 
+                                    type="button">                    
+                                    
+                                    <VolumeGray/>
+                                </button>
+                                
+                                <Range
+                                    value={volume * 100}
+                                    min={0}
+                                    color="gray"
+                                    max={100}
+                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
+                                    className={styles['player-volume__range']}
+                                    />
+                            </span>
 
-                                    {
-                                        Array.isArray(savedTracks) ? 
-                                        <button 
-                                            type="button" 
-                                            className={`${styles['player-nav-button']}`}
-                                            onClick={() => saveTrack({
-                                                track_id: track?._id, 
-                                                action: isSaved ? "unsave" : "save"
-                                            })}    
-                                        > 
-                                            {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
-                                        </button>
-                                        : <></>
-                                    }
+                            <button 
+                                type="button" 
+                                disabled={!track}
+                                className={`${styles['player-nav-button']}`}
+                                onClick={() => saveTrack({
+                                    track_id: track?._id, 
+                                    action: isSaved ? "unsave" : "save"
+                                })}    
+                            > 
+                                {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
+                            </button>
 
-                                    <button type="button" onClick={repeatClickHandler} className={styles['player-nav-button']}>
-                                        <RepeatGray/>
-                                    </button>
-                                </div>
-                            : <></>
-                        }
+                            <button type="button" onClick={repeatClickHandler} className={styles['player-nav-button']}>
+                                <RepeatGray/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

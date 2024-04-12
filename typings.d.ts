@@ -66,7 +66,7 @@ interface ArtistDto {
     tracks: string[];
 }
 
-type ProfileDto = null | {
+type ProfileDto = {
     _id: string;
     role: "Listener" | "Artist";
     full_name: string;
@@ -81,9 +81,9 @@ type ProfileDto = null | {
     playlists: string[];
     tracks: string[];
     
-    saved_tracks: number[],
-    saved_playlists: number[],
-    saved_albums: number[],    
-    saved_artists: number[],    
+    saved_tracks: string[],
+    saved_playlists: string[],
+    saved_albums: string[],    
+    saved_artists: string[],    
     __v: number
-};
+} | null;

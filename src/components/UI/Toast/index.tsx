@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useAppDispatch, useAppSelector } from "@hooks";
+import classNames from "classnames";
 
 export type ToastProps = {
     type: 'success' | 'error' | 'warning' | 'info' | 'hidden';
@@ -44,7 +45,7 @@ const Toast = () => {
     }, [type]);
 
     return (
-        <div className="fixed bottom-6 right-3 flex flex-col items-end z-50">
+        <div className={classNames("fixed bottom-10 right-3 flex flex-col items-end z-50", type == 'hidden' && 'pointer-events-none select-none')}>
         {
             Array.isArray(text) ? 
                 text.map(item => (

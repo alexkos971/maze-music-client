@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from './Track.module.scss';
@@ -18,8 +18,16 @@ const Track = ({
 }: TrackProps) => {
     const dispatch = useAppDispatch();
     let [currentTrack, isPlaying ] = useAppSelector(store => [store.player.track, store.player.isPlaying]);
-
     const is_current_track = track && currentTrack && track._id == currentTrack._id;
+    
+    let profile : ProfileDto = useAppSelector(state => state.profile);
+    const [ isSaved, setIsSaved ] = useState(false);
+
+    useEffect(() => {
+        if (profile && profile?.saved_tracks) {
+            setIsSaved(profile?.saved_tracks.includes(track?._id));
+        }
+    }, [profile, track]);
 
     return (
         <div className={`${styles.track} ${ is_current_track ? styles.track__current : ''}`}>
@@ -61,7 +69,7 @@ const Track = ({
 
             <div className={styles['track__right-nav']}>
                 <button type="button">
-                    {true ? <HeartOutlineGray/> : <HeartSolidGreen/>}
+                    {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
                 </button>
 
                 <span className="time text-gray-8e text-sm">{track.duration ? formatTime(track.duration) : '0:00'}</span>
