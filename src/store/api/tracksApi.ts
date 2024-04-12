@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { showToast } from "@store/reducers/interfaceReducer";
-// import { setProfile } from "@store/reducers/profileReducer";
+import { setProfile } from "@store/reducers/profileReducer";
 // import { toggleModal } from "@store/reducers/interfaceReducer";
 
 export const tracksApi = createApi({
@@ -46,7 +46,39 @@ export const tracksApi = createApi({
             query: ({ track_id, action } : { track_id: string, action: "save" | "unsave" }) => ({
                 url: `${track_id}/${action}`,
                 method: 'PUT'
-            })
+            }),
+            
+            async onQueryStarted(arg, { queryFulfilled, dispatch, getState }) {
+                try {
+                    const response = await queryFulfilled;
+
+                    if (response.data) {
+                        // @ts-ignore 
+                        let profile = getState()?.profile;
+
+                        let is_saved = response.data.is_saved;
+                        let track_id = arg.track_id; 
+
+                        dispatch(showToast({
+                            type: 'success',
+                            text: is_saved ? 'interface.saved' : 'interface.unsaved' 
+                        }));
+
+                        if (profile) {
+                            let savedTracks = is_saved 
+                                ? [...profile.saved_tracks, track_id]
+                                : profile.saved_tracks.filter((el: string) => el != track_id );
+                
+                            dispatch(setProfile({ ...profile, saved_tracks: savedTracks }));
+                        }
+                    }
+                } catch (e) {
+                    dispatch(showToast({
+                        type: 'error',
+                        text: 'server_error'
+                    }));
+                }
+            },
         })
     })
 });

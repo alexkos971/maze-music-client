@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import classNames from "classnames";
+import { useTranslation } from "next-i18next";
 
 export type ToastProps = {
     type: 'success' | 'error' | 'warning' | 'info' | 'hidden';
@@ -21,6 +22,7 @@ const ToastContent = ({ className, text, onClose } : { className: string, text?:
 
 const Toast = () => {
     const dispatch = useAppDispatch();
+    const {t} = useTranslation('common');
     const { type, text } = useAppSelector(state => state.interface.toast);
 
     let styles : {[key: string]: string} = {
@@ -49,9 +51,11 @@ const Toast = () => {
         {
             Array.isArray(text) ? 
                 text.map(item => (
-                    <ToastContent className={styles[type]} key={item} text={item} onClose={() => dispatch(showToast({ text, type: 'hidden' }))}/>
-                ))
-            : <ToastContent className={styles[type]} text={text} onClose={() => dispatch(showToast({ text, type: 'hidden' }))}/>
+                    <ToastContent className={styles[type]} key={item} text={t(item)} onClose={() => dispatch(showToast({ text: t(item), type: 'hidden' }))}/>
+                ))                
+            : (typeof text == 'string')
+                ? <ToastContent className={styles[type]} text={t(text)} onClose={() => dispatch(showToast({ text: t(text), type: 'hidden' }))}/>
+                : <></>
         }
         </div>
     );

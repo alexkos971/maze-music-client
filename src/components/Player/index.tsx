@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {formatTime} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
-import { setFullplayerExpanded, setHeaderIsFilled, showToast } from "@store/reducers/interfaceReducer";
+import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 
 import styles from "./Player.module.scss";
 import VolumeGray from "@icons/volume-gray.svg";
@@ -13,8 +13,6 @@ import Range from "@components/UI/Range";
 import useThrottle from "@hooks/throttle";
 import classNames from "classnames";
 import { useSaveTrackMutation } from "@store/api/tracksApi";
-import { useTranslation } from "next-i18next";
-import { setProfile } from "@store/reducers/profileReducer";
 
 const Player = () => {
     
@@ -29,37 +27,15 @@ const Player = () => {
     let profile : ProfileDto = useAppSelector(state => state.profile);
  
     const dispatch = useAppDispatch(); 
-    const {t} = useTranslation('common');
 
-    const [saveTrack, { isSuccess, data }] = useSaveTrackMutation();
+    const [saveTrack] = useSaveTrackMutation();
     const [ isSaved, setIsSaved ] = useState(false);
     
     useEffect(() => {
         if (profile && profile?.saved_tracks) {
             setIsSaved(profile?.saved_tracks.includes(track?._id));
         }
-    }, [profile, track]);
-     
-    useEffect(() => {
-        if (isSuccess) {
-            let is_saved = data.is_saved;
-
-            dispatch(showToast({
-                type: 'success',
-                text: is_saved ? t('interface.saved') : t('interface.unsaved') 
-            }));
-
-            if (profile) {
-                let savedTracks = is_saved 
-                    ? [...profile.saved_tracks, track._id]
-                    : profile.saved_tracks.filter(el => el != track._id );
-    
-                dispatch(setProfile({ ...profile, saved_tracks: savedTracks }));
-            }
-
-            setIsSaved(is_saved);
-        }
-    }, [ isSuccess ]);    
+    }, [profile, track]);     
 
     // move to redux
     const changeTrack = (direction : 'next' | 'prev', auto?: boolean ) => {

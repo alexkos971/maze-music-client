@@ -9,25 +9,20 @@ import { useAppSelector, useAppDispatch } from "@hooks";
 
 interface TrackProps {
     track: Track;
-    index?: number
+    index?: number,
+    onSave: () => void,
+    isSaved: boolean
 }
 
 const Track = ({ 
     track,
-    index
+    index,
+    isSaved,
+    onSave
 }: TrackProps) => {
     const dispatch = useAppDispatch();
     let [currentTrack, isPlaying ] = useAppSelector(store => [store.player.track, store.player.isPlaying]);
-    const is_current_track = track && currentTrack && track._id == currentTrack._id;
-    
-    let profile : ProfileDto = useAppSelector(state => state.profile);
-    const [ isSaved, setIsSaved ] = useState(false);
-
-    useEffect(() => {
-        if (profile && profile?.saved_tracks) {
-            setIsSaved(profile?.saved_tracks.includes(track?._id));
-        }
-    }, [profile, track]);
+    const is_current_track = track && currentTrack && track._id == currentTrack._id;    
 
     return (
         <div className={`${styles.track} ${ is_current_track ? styles.track__current : ''}`}>
@@ -68,7 +63,7 @@ const Track = ({
             { track.album ? <span className={`track__name text-sm font-normal text-gray-8e ml-auto`}>{track.album}</span> : ''}
 
             <div className={styles['track__right-nav']}>
-                <button type="button">
+                <button type="button" onClick={onSave}>
                     {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
                 </button>
 
