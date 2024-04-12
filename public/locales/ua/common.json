@@ -37,6 +37,8 @@
         "logged_out": "Ви вийшли !",
         "registered": "Успешно зарегистрировано",
         "submit": "Відправити",
+        "saved": "Збережено!",
+        "unsaved": "Видалено!",
         "server_error": "Помилка на сервері..."
     },
     "pages": {
@@ -45,11 +47,24 @@
         },
         "library": {
             "header_title": "Бібліотека",
-            "title": "Твоя бібліотека"
+            "title": "Твоя бібліотека",
+            "tabs": {
+                "all": "Все",
+                "playlists": "Плейлісти",
+                "artists": "Виконавці",
+                "albums": "Альбоми"
+            },
+            "saved": "Збережені"
+        },
+        "playlist": {
+            "header_title": "Плейліст"
         },
         "upload": {
             "header_title": "Загрузити",
-            "success": "Успішно завантажено!"
+            "success": "Успішно завантажено!",
+            "errors": {
+                "no_track": "Ви повинні додати файл треку!"
+            }
         },
         "settings": {
             "header_title": "Налаштування"

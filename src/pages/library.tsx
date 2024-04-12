@@ -7,12 +7,18 @@ import Title from "@components/UI/Title";
 import { useTranslation } from "next-i18next";
 import Playlists from "@components/Playlists";
 import Artists from "@components/Artists";
-import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@helpers/images";
+import { WeekndAvatar, ClassicalHitsCover } from "@helpers/images";
 
 export default ProtectedPage(function Library() {
   const {t} = useTranslation('common');
 
-  const tabs = ['All', 'Playlists', 'Artists', 'Albums'];
+  const tabs = [
+    t("pages.library.tabs.all"), 
+    t("pages.library.tabs.playlists"), 
+    t("pages.library.tabs.artists"), 
+    t("pages.library.tabs.albums")
+  ];
+
   const [currentTab, setCurrentTab] = useState(tabs[0]);
 
   return (
@@ -33,36 +39,22 @@ export default ProtectedPage(function Library() {
           }
         </div>
 
-        { currentTab == 'All' || currentTab == 'Playlists' ?
+        { currentTab == t("pages.library.tabs.all") || currentTab == t("pages.library.tabs.playlists") ?
           <Playlists
             title={t('title.popular_playlists')}
             data={[
                 {
-                    id: 'q11',
-                    name: 'Classical Hits',
-                    feature: ClassicalHitsCover,
-                    author: "Alex Kos",                    
-                    tracks: [123, 3453, 23232, 34534, 345343]
-                },
-                {
-                    id: 'q1ds1',
-                    name: 'Rock',
-                    author: "Alex Kos",
-                    feature: RockCover,
-                    tracks: [123, 3453, 23232, 34534, 345343]
-                },
-                {
-                    id: 'busuu',
-                    name: 'Bass House',
-                    feature: ElectronicCover,
-                    author: "Alex Kos",
-                    tracks: [123, 3453, 23232, 34534, 345343]
-                },
+                  id: '',
+                  name: t('pages.library.saved'),
+                  feature: ClassicalHitsCover,
+                  author: "Alex Kos",                    
+                  tracks: [123, 3453, 23232, 34534, 345343]
+                }
             ]}
           /> 
           : <></> }
 
-        { currentTab == 'All' || currentTab == 'Artists' ?
+        { currentTab == t("pages.library.tabs.all") || currentTab == t("pages.library.tabs.artists") ?
           <Artists 
               title={t('title.artists_for_you')}
               data={[

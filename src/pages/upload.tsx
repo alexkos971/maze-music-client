@@ -16,8 +16,9 @@ export default ProtectedPage(function Upload() {
   const {t} = useTranslation('common');
   let [fields, setFields] = useState({});
   let [validFields, setValidFields] = useState({});
-  let [uploadTrack, { isSuccess, isLoading }] = useUploadTrackMutation();
+  let [uploadTrack, { isSuccess, isLoading, error }] = useUploadTrackMutation();
   const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     if (isSuccess) {
@@ -25,7 +26,18 @@ export default ProtectedPage(function Upload() {
       setValidFields({});
       dispatch(showToast({type: 'success', text: t('pages.upload.success')}));
     }
-  }, [isSuccess])
+    else if (error) {
+      let errors = error?.data?.message;
+
+      if (Array.isArray(errors)) {
+        errors = errors.map(item => t(`pages.upload.errors.${item}`));
+      } else {
+        errors = t(`pages.upload.errors.${errors}`);
+      }
+
+      dispatch(showToast({type: 'success', text: errors}));
+    }
+  }, [isSuccess, error])
 
   return (
     <MainWrap>

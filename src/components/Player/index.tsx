@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {formatTime} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
-import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
+import { setFullplayerExpanded, setHeaderIsFilled, toggleModal } from "@store/reducers/interfaceReducer";
 
 import styles from "./Player.module.scss";
 import VolumeGray from "@icons/volume-gray.svg";
@@ -12,12 +12,30 @@ import FullPlayer from "./FullPlayer";
 import Range from "@components/UI/Range";
 import useThrottle from "@hooks/throttle";
 import classNames from "classnames";
+import { useSaveTrackMutation } from "@store/api/tracksApi";
+import { useTranslation } from "next-i18next";
 
 const Player = () => {
     
-    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track, state.interface.fullplayer_is_expanded, state.interface.header_is_filled]);
+    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded, savedTracks] = useAppSelector(state => [state.player.currentTime, state.player.isPlaying, state.player.volume, state.player.track, state.interface.fullplayer_is_expanded, state.profile?.saved_tracks]);
     const dispatch = useAppDispatch(); 
-    
+    const {t} = useTranslation('common');
+    const [saveTrack, { isSuccess, data }] = useSaveTrackMutation();
+
+    const [ isSaved, setIsSaved ] = useState(savedTracks?.includes(track?._id));
+     
+    useEffect(() => {
+        if (isSuccess) {
+            let is_saved = data.is_saved;
+            dispatch(toggleModal({
+                type: 'succes',
+                text: is_saved ? t('interface.saved') : t('interface.unsaved') 
+            }));
+
+            setIsSaved(is_saved);
+        }
+    }, [ isSuccess ]);    
+
     // move to redux
     const changeTrack = (direction : 'next' | 'prev', auto?: boolean ) => {
         return 'sdsds';
@@ -308,34 +326,50 @@ const Player = () => {
                             <span className="text-white text-xs">{formatTime(duration) ?? "00:00"}</span>
                         </div>
 
+
                         {/* Navigation - Volume/Save/Repeat */}
-                        <div className={classNames(styles['player__nav'], 'ml-10')}>
-                            <span className={styles['player-volume']}>
-                                <button
-                                    className={`${styles['player-nav-button']}`} 
-                                    type="button">                    
-                                    
-                                    <VolumeGray/>
-                                </button>
-                                
-                                <Range
-                                    value={volume * 100}
-                                    min={0}
-                                    color="gray"
-                                    max={100}
-                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
-                                    className={styles['player-volume__range']}
-                                    />
-                            </span>
+                        {
+                            track ?
+                                <div className={classNames(styles['player__nav'], 'ml-10')}>
+                                    <span className={styles['player-volume']}>
+                                        <button
+                                            className={`${styles['player-nav-button']}`} 
+                                            type="button">                    
+                                            
+                                            <VolumeGray/>
+                                        </button>
+                                        
+                                        <Range
+                                            value={volume * 100}
+                                            min={0}
+                                            color="gray"
+                                            max={100}
+                                            onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
+                                            className={styles['player-volume__range']}
+                                            />
+                                    </span>
 
-                            <button type="button" className={`${styles['player-nav-button']}`}> 
-                                {true ? <HeartOutlineGray/> : <HeartSolidGreen/>}
-                            </button>
+                                    {
+                                        Array.isArray(savedTracks) ? 
+                                        <button 
+                                            type="button" 
+                                            className={`${styles['player-nav-button']}`}
+                                            onClick={() => saveTrack({
+                                                track_id: track?._id, 
+                                                action: isSaved ? "unsave" : "save"
+                                            })}    
+                                        > 
+                                            {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
+                                        </button>
+                                        : <></>
+                                    }
 
-                            <button type="button" onClick={repeatClickHandler} className={styles['player-nav-button']}>
-                                <RepeatGray/>
-                            </button>
-                        </div>
+                                    <button type="button" onClick={repeatClickHandler} className={styles['player-nav-button']}>
+                                        <RepeatGray/>
+                                    </button>
+                                </div>
+                            : <></>
+                        }
                     </div>
                 </div>
             </div>

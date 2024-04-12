@@ -19,16 +19,8 @@ export const tracksApi = createApi({
             query: (body) => {          
                 let formData = new FormData();
 
-                for (let key in body) {                    
-                    if ( Array.isArray(body[key]) ) {
-                        body[key].forEach((_ : any, array_index : number) => {
-                            formData.append(key, body[key][array_index])
-                        })
-                    }
-
-                    else {
-                        formData.append(key, body[key]);
-                    }
+                for (let key in body) {
+                    formData.append(key, body[key]);
                 }            
 
                 return {
@@ -42,18 +34,21 @@ export const tracksApi = createApi({
                 try {
                     let response = await queryFulfilled;
                     if (response.data) {
-                        // dispatch(setProfile( response.data ))
-                    }
-                    
-                    // dispatch(toggleModal({isOpened: false}));
+                    }                    
 
                 } catch {}
             }
         }),
         getAllTracks: build.query({
             query: (arg: any) => ({ url: '/', method: 'GET'})
+        }),
+        saveTrack: build.mutation({
+            query: ({ track_id, action } : { track_id: string, action: "save" | "unsave" }) => ({
+                url: `${track_id}/${action}`,
+                method: 'PUT'
+            })
         })
     })
 });
 
-export const { useUploadTrackMutation, useGetAllTracksQuery } = tracksApi;
+export const { useUploadTrackMutation, useGetAllTracksQuery, useSaveTrackMutation } = tracksApi;

@@ -37,6 +37,8 @@
         "logged_out": "Logged Out !",
         "registered": "Succesfully registered",
         "submit": "Submit",
+        "saved": "Saved!",
+        "unsaved": "Unsaved!",
         "server_error": "Some error on the server..."
     },
     "pages": {
@@ -45,11 +47,24 @@
         },
         "library": {
             "header_title": "Library",
-            "title": "Your library"
+            "title": "Your library",
+            "tabs": {
+                "all": "All",
+                "playlists": "Playlists",
+                "artists": "Artists",
+                "albums": "Albums"
+            },
+            "saved": "Saved"
+        },
+        "playlist": {
+            "header_title": "Playlist"
         },
         "upload": {
             "header_title": "Upload",        
-            "success": "Succesfully uploaded!"
+            "success": "Succesfully uploaded!",
+            "errors": {
+                "no_track": "You must to attach a track file!"
+            }
         },
         "settings": {
             "header_title": "Settings"
