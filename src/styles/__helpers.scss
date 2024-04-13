@@ -48,3 +48,13 @@ $screen-sizes: (
 @function opacity($color, $opacity) {
     @return rgba($color, $opacity); 
 }
+
+@mixin svg-reset-color() {
+    *[fill] {
+        fill: currentColor;
+    }
+
+    *[stroke] {
+        stroke: currentColor;
+    }
+}

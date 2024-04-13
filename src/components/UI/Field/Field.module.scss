@@ -25,12 +25,6 @@
     }
 }
 
-[data-theme="dark"] {
-    .typeable-input {
-        @apply border-gray-3e;
-    }
-}
-
 .field {
     position: relative;
     
@@ -252,6 +246,13 @@
             }
         }
     }
+
+    &_password {
+        svg {
+            @include svg-reset-color();
+            color: var(--app-text-secondary);
+        }
+    }
 }
 
 // Groups
@@ -260,5 +261,11 @@
         display: flex;
         margin-left: -10px;
         margin-right: -10px;
+    }
+}
+
+[data-theme="dark"], .class {
+    .typeable-input {
+        @apply border-gray-3e;
     }
 }

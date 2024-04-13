@@ -47,7 +47,7 @@ const Toast = () => {
     }, [type]);
 
     return (
-        <div className={classNames("fixed bottom-10 right-3 flex flex-col items-end z-50", type == 'hidden' && 'pointer-events-none select-none')}>
+        <div className={classNames("fixed bottom-16 right-6 flex flex-col items-end z-50", type == 'hidden' && 'pointer-events-none select-none')}>
         {
             Array.isArray(text) ? 
                 text.map(item => (

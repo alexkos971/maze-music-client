@@ -62,7 +62,7 @@ const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
                 
 
                 <Button 
-                    className="mt-3 w-full" 
+                    className="mt-4 w-full" 
                     type="submit"
                     isLoading={isLoading}
                     disabled={!Object.keys(validFields).some(key  => validFields[key] == false )}

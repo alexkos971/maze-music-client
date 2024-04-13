@@ -7,6 +7,7 @@ import { ValidationContext, ValidationContextType } from "@components/UI/Form/va
 import { useFieldValidation } from "@hooks";
 
 import { EyeIcon, EyeClosedIcon } from "@helpers/images";
+import classNames from "classnames";
 
 interface TextFieldProps extends MainFieldProps {    
     value?: string | number;    
@@ -63,7 +64,12 @@ const TextFieldTemplate = ({
     }, [val, is_valid]);
 
     return (
-        <div className={`field field_${type} flex flex-col mt-3 w-full ${className}`}>
+        <div className={classNames(
+            styles.field,
+            styles[`field_${type}`],
+            'flex flex-col mt-3 w-full',
+            className
+        )}>
             <FieldTitle title={title}/>
 
             <label className="field__label relative" htmlFor={name}>
