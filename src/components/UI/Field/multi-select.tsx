@@ -4,10 +4,11 @@ import styles from "./Field.module.scss";
 import { useFieldValidation } from "@hooks";
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
 import { FieldError, FieldTitle } from "./index";
+import classNames from "classnames";
 
 interface MultiSelectProps extends MainFieldProps {
     value?: Array<string>;
-    onChange?: (val: string) => void;
+    onChange?: (val: string[]) => void;
 };
 
 export const MultiSelect = ({
@@ -20,24 +21,23 @@ export const MultiSelect = ({
     required = false,
     title
 } : MultiSelectProps) => {
-    const field_id = id ? id : useId();
     const multiSelectRef = useRef(null);
-    const [ selectIsOpened, setSelectIsOpened ] = useState(false);
     const fieldContext = useContext(ValidationContext) as ValidationContextType | null;
 
     const [ error, setError ] = useState<string>('');
     const [val, setVal] = useState(value ?? []);
     const [inputVal, setInputVal] = useState<string>('');
     const [is_valid, setIsValid] = useState(!error.length && ( (required && val?.length) || !required ) ? true : false);
+    const [ current_valid, current_error ] = useFieldValidation(val, 'multi-select', required);
+
+    const [firstEnter, setFirstEnter] = useState(true);
 
     // Set Field Validation in Form Parent
-    useEffect(() => {
-        if ( fieldContext?.registerField ) {
-            fieldContext.registerField(name, val, is_valid);
+    useEffect(() => {    
+        if (firstEnter) {
+            return;
         }
 
-        const [ current_valid, current_error ] = useFieldValidation(val, 'multi-select', required);
-    
         if (error !== current_error) {
             setError(current_error);
         }
@@ -45,7 +45,17 @@ export const MultiSelect = ({
         if (current_valid !== is_valid) {
             setIsValid(current_valid);
         }
-    }, [val, is_valid]);
+
+        if (onChange) {
+            onChange([...val, inputVal]);
+        }
+    }, [val]);
+
+    useEffect(() => {
+        if ( fieldContext?.registerField ) {
+            fieldContext.registerField(name, val, is_valid);
+        }
+    }, [is_valid, val])
 
     const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && inputVal.length) {
@@ -53,12 +63,20 @@ export const MultiSelect = ({
                 return [...val, inputVal];
             });            
 
+            if (firstEnter) setFirstEnter(false);
+
             setInputVal('');
         }
     }
 
     return (
-        <div className={`${styles.field} ${styles.field_text} ${styles.field_multiselect} flex flex-col mt-3 ${className}`}>
+        <div className={classNames(
+            styles.field,
+            styles.field_text,
+            styles.field_multiselect,
+            'flex flex-col mt-3',
+            className
+        )}>
             <FieldTitle title={title}/>
         
             <label 
@@ -85,7 +103,10 @@ export const MultiSelect = ({
                 </div>
 
                 <input 
-                    className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' )} 
+                    className={classNames(
+                        styles['typeable-input'],
+                        error.length && styles['typeable-input_error']
+                    )} 
                     type={'text'} 
                     name={name} 
                     value={inputVal}
@@ -93,7 +114,7 @@ export const MultiSelect = ({
                     placeholder={placeholder ?? ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputVal(e.target.value)}
                     onKeyDown={onEnter}
-                    id={field_id}/>
+                    id={id ?? undefined}/>
             </label>
 
             <FieldError error={error}/>

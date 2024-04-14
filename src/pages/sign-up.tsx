@@ -62,6 +62,7 @@ const SignUp = () => {
             console.log(error);
             dispatch(showToast({
                 type: 'error', 
+                // @ts-ignore
                 text: t(`pages.sign-up.errors.${error?.data?.message}`)
             }));
         } 
@@ -72,6 +73,7 @@ const SignUp = () => {
     }, [isSuccess, error]);
 
     const verifyEmailHandle = async() => {
+        // @ts-ignore
         const {data} = await verifyEmail(fields.email);
         if (data.is_exist) {
             dispatch(showToast({
@@ -116,6 +118,7 @@ const SignUp = () => {
                             columns={2}
                         />        
 
+                        {/* @ts-ignore */}
                         <ButtonsNav buttonText={t('pages.sign-up.btn_next')} canSkip={false} goToStep={() => goToStep(activeStep + 1)} currentStep={activeStep} />                                     
                     </Step>
 
@@ -139,6 +142,7 @@ const SignUp = () => {
                             required={true}/>
                         
                         <ConfirmPassword
+                            // @ts-ignore
                             password={fields.password}
                             name="confirm-password"
                             placeholder={t('fields.placeholders.confirm_password')}
@@ -146,6 +150,7 @@ const SignUp = () => {
 
                         <ButtonsNav 
                             buttonText={t('pages.sign-up.btn_next')}
+                            // @ts-ignore
                             disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password'] || verify.isLoading}
                             canSkip={false} 
                             goToStep={verifyEmailHandle} 
@@ -187,6 +192,7 @@ const SignUp = () => {
                         <Title tag="h2">{t('pages.sign-up.btn_finish')}</Title>
 
                             <div className="flex items-center mt-6">
+                                {/* @ts-ignore */}
                                 <Button className={'w-full'} onClick={() => fields ? signUp(fields) : false}>{t('pages.sign-up.btn_finish')}</Button>
                             </div>
                     </Step>

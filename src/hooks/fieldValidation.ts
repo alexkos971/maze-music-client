@@ -18,7 +18,7 @@ export const useFieldValidation = (
   isRequired: boolean,
   password?: string | undefined
 ) : [boolean, string] => {
-    if (isRequired && (value === '' || value === undefined || value === null)) {
+    if (isRequired && (value === '' || value === undefined || value === null || !value.length)) {
       return [false, "fields.errors.empty"];
     }
   
@@ -38,9 +38,9 @@ export const useFieldValidation = (
       return [false, "fields.errors.confirm_password"];
     }
 
-    if (type === 'multi-select' && !value.length) {
-      return [false, "fields.errors.empty_multiselect"];
-    }
+    // if (type === 'multi-select' && !value.length) {
+    //   return [false, "fields.errors.empty_multiselect"];
+    // }
   
     // Additional validations for other field types can be added here
   

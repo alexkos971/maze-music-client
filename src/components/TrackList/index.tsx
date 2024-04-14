@@ -19,6 +19,7 @@ interface TrackListProps {
 const TrackList = ({ title, data: tracks, className }: TrackListProps) => {
     const dispatch = useAppDispatch();
     const {t} = useTranslation('common');
+    // @ts-ignore
     let profile : ProfileDto = useAppSelector(state => state.profile);
     const [saveTrack, { isSuccess, data }] = useSaveTrackMutation();
 

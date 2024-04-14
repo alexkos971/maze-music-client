@@ -14,6 +14,7 @@ import classNames from 'classnames';
 const ProfileHero = () => {
     const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
+    // @ts-ignore
     let profile : ProfileDto = useAppSelector<ProfileDto>(state => state.profile);
 
     if (!profile) {

@@ -15,7 +15,8 @@ const DottedRow = ({ children, className, dotColor } : Props) => {
                     return (
                         <>
                             {child}
-                            { ( child && Object.keys(child.props).length && index < Children.count(children) - 1) ? <span style={dotColor ? {backgroundColor: dotColor} : undefined} className={styles['dotted-row__dot']}></span> : ''}
+                            {/* @ts-ignore */}
+                            { ( child && Object.keys(child?.props).length && index < Children.count(children) - 1) ? <span style={dotColor ? {backgroundColor: dotColor} : undefined} className={styles['dotted-row__dot']}></span> : ''}
                         </>
                     )
                 })

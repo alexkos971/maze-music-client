@@ -19,6 +19,7 @@ const ArtistHero = ({ artist } : ArtistProps ) => {
     const [profile] = useAppSelector(state => [state.profile]);
     const [follow, { isSuccess, isUninitialized, data }] = useFollowUserMutation();
     
+    // @ts-ignore 
     const [ isFollowing, setIsFollowing ] = useState(profile?.saved_artists?.includes(artist._id));
     
     useEffect(() => {

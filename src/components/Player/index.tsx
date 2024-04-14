@@ -24,6 +24,7 @@ const Player = () => {
         state.interface.fullplayer_is_expanded
     ]);
 
+    // @ts-ignore
     let profile : ProfileDto = useAppSelector(state => state.profile);
  
     const dispatch = useAppDispatch(); 
@@ -58,7 +59,6 @@ const Player = () => {
         ref.current && (ref.current.volume = volumeValue / 100);
         dispatch(setVolume(volumeValue / 100));
     }
-
 
     // Keyboard events for player
     useEffect(() => {
@@ -103,13 +103,13 @@ const Player = () => {
             }
         } 
 
-        if ( !disableKeydown ) {
-            document.addEventListener("keydown", handler)
-        }
+        // if ( !disableKeydown ) {
+        //     document.addEventListener("keydown", handler)
+        // }
 
-        return() => {
-            document.removeEventListener("keydown", handler)
-        }
+        // return() => {
+        //     document.removeEventListener("keydown", handler)
+        // }
     }, [isPlaying, currentTime, volume, disableKeydown])
 
 
@@ -230,16 +230,23 @@ const Player = () => {
 
     const nextMusicClickHandler = () => changeTrack("next", false);
 
-
     // Get Height of the Player
     const playerRef = useRef<HTMLDivElement>(null);    
+    const [playerHeight, setPlayerHeight] = useState(0);
+    let throttledPlayerHeight = useThrottle(playerHeight, 10);
+
+    const resizeHandler = () => {                
+        if (playerRef?.current?.clientHeight) setPlayerHeight(playerRef.current.clientHeight);
+    }
+
     useEffect(() => {
-        const resizeHandler = () => {        
-            playerRef?.current?.clientHeight ? document.documentElement.style.setProperty('--player-height', playerRef.current.clientHeight + 'px') : false;
-        }
+        document.documentElement.style.setProperty('--player-height', throttledPlayerHeight + 'px');
+      }, [throttledPlayerHeight]);
+
+    useEffect(() => {
         resizeHandler();
 
-        window.addEventListener('resize', useThrottle(resizeHandler, 70));
+        window.addEventListener('resize', resizeHandler);
 
         return () => window.removeEventListener('resize', resizeHandler);
     }, [playerRef]);

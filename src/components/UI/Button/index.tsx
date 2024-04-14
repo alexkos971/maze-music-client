@@ -37,9 +37,9 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     let isDisabled = typeof disabled == "boolean"  ? disabled : false;
+    const buttonContext = useContext(ValidationContext) as ValidationContextType;
     
     if (type == 'submit') {
-        const buttonContext = useContext(ValidationContext) as ValidationContextType;
         
         if (buttonContext) {
             isDisabled = !buttonContext.isFormValid();

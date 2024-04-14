@@ -48,28 +48,7 @@ const FullPlayer = () => {
                             <h3>{t("player.lyrics")}:</h3>
 
                             <div className={styles['fullplayer__lyrics-text']}>
-                                <p>We found each other<br/>
-                                    I helped you out of a broken place<br/>
-                                    You gave me comfort<br/>
-                                    But falling for you was my mistake<br/>
-                                    <br/>
-                                    I put you on top,<br/> 
-                                    I put you on top <br/>
-                                    I claimed you so proud and openly<br/>
-                                    And when times were rough, when times were rough<br/>
-                                    <br/>
-                                    I made sure I held you close to me<br/>
-                                    <br/>
-                                    So call out my name (call out my name)<br/>
-                                    Call out my name when<br/>
-                                    I kiss you so gently<br/>
-                                    I want you to stay (I want you to stay)<br/>
-                                    I want you to stay, even though you don't want me<br/>
-                                    <br/>
-                                    Girl, why can't you wait? (why can't you wait, baby?)<br/>
-                                    Girl, why can't you wait 'til I fall out of love?<br/>
-                                    Won't you call out my name? (call out my name)<br/>
-                                    Girl, call out my name, and I'll be on my way and I'll be on my</p>
+                                {/* There is must be lyrics */}
                             </div>
                         </div>
                     </div>

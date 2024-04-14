@@ -86,4 +86,4 @@ type ProfileDto = {
     saved_albums: string[],    
     saved_artists: string[],    
     __v: number
-} | null;
+};

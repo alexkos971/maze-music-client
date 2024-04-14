@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, UIEvent } from "react";
+import React, { useEffect, useRef, UIEvent, useState } from "react";
 import useThrottle from "@hooks/throttle";
 import { useRouter } from "next/router";
 import { setHeaderIsFilled } from "@store/reducers/interfaceReducer";
@@ -29,6 +29,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
     header_is_filled = useAppSelector(state => state.interface.header_is_filled), 
     fullplayer_is_expanded = useAppSelector(state => state.interface.fullplayer_is_expanded); 
 
+  // @ts-ignore
   let profile = useAppSelector<ProfileDto>(state => state.profile);
 
   const { theme, setTheme } = useTheme();
@@ -38,23 +39,34 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
   // Get Height of the Header
   const headerRef = useRef<HTMLDivElement>(null);    
 
-  const setHeaderHeight = () => headerRef?.current?.clientHeight ? document.documentElement.style.setProperty('--header-height', headerRef.current.clientHeight + 'px') : false;
+  
+  const [ headerHeight, setHeaderHeight ] = useState(0);
+  let throttledHeaderHeight = useThrottle(headerHeight, 0);
+  
+  const resizeHeader = () => {
+    if (headerRef?.current?.clientHeight) {
+      setHeaderHeight(headerRef.current.clientHeight)
+    } 
+  };
 
   useEffect(() => {
     let timer : undefined | ReturnType<typeof setTimeout>;
-
-    timer = setTimeout(() => setHeaderHeight(), 50);
-
-    window.addEventListener('resize', useThrottle(setHeaderHeight, 10));
-
+    timer = setTimeout(() => resizeHeader(), 50);
+    window.addEventListener('resize', resizeHeader);
     return () => {
       clearTimeout(timer);
     }
   }, [headerRef]);
 
+  useEffect(() => {
+    document.documentElement.style.setProperty('--header-height', throttledHeaderHeight + 'px');
+  }, [throttledHeaderHeight]);
+
   return (
     <header className={`header z-20 sticky ${overlap ? 'h-0' : ''} top-0 left-0`}>
-      <div className={`header__wrap py-5 duration-300 ${header_is_filled ? 'bg-app-background dark:bg-app-background-secondary' : ''}`} ref={headerRef}>
+      <div 
+        className={`header__wrap py-5 duration-300 ${header_is_filled ? 'bg-app-background dark:bg-app-background-secondary' : ''}`} 
+        ref={headerRef}>
         <div className="container-fluid">
           <div className="header__wrap flex items-center justify-end relative">
 

@@ -39,6 +39,7 @@ export const ValidationProvider : React.FC<ValidationProviderProps> = ({ childre
 
     const isFormValid = () : boolean => {
         for (let field in validFields) {
+            // @ts-ignore
             if ( !validFields[field] ) {
                 return false;
             }

@@ -1,7 +1,6 @@
 import React, { ReactNode, createContext, useState, useRef, useEffect } from "react";
 import Dots from "@components/UI/Slider/dots";
 import styles from "./Slider.module.scss";
-import { useThrottle } from "@hooks/listeners";
 
 interface SliderOptions {
     slidesToShow?: number | 1,
@@ -98,5 +97,7 @@ Slider.Item = ({
         </SliderContext.Consumer>
     );
 };
+
+Slider.Item.displayName = 'Slider.Item'
 
 export default Slider;

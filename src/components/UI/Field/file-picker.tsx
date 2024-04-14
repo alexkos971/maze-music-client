@@ -42,6 +42,7 @@ const FilePicker = ({
 		}
 		
 		if (file && style == 'avatar') {
+			// @ts-ignore
 			let url = URL.createObjectURL(file);
 			setImgPreview(url);
 		}
@@ -59,16 +60,24 @@ const FilePicker = ({
 	useEffect(() => {
 	    if (!fileRef.current) return;
 		
+		// @ts-ignore
 		fileRef.current.addEventListener('dragenter', handleDragIn)
+		// @ts-ignore
 		fileRef.current.addEventListener('dragleave', handleDragOut)
+		// @ts-ignore
 		fileRef.current.addEventListener('dragover', handleDrag)
+		// @ts-ignore
 		fileRef.current.addEventListener('drop', handleDrop)
 		
 		return () => {
 			if (fileRef.current) {
+				// @ts-ignore
 				fileRef.current.removeEventListener('dragenter', handleDragIn)
+				// @ts-ignore
 				fileRef.current.removeEventListener('dragleave', handleDragOut)
+				// @ts-ignore
 				fileRef.current.removeEventListener('dragover', handleDrag)
+				// @ts-ignore
 				fileRef.current.removeEventListener('drop', handleDrop)
 			}
 		}
@@ -96,8 +105,10 @@ const FilePicker = ({
 	    e.preventDefault();
 	    e.stopPropagation();
 
+		// @ts-ignore
 	    if (e.dataTransfer.files.length > 0) {
-	        setDraged(false);
+			setDraged(false);
+			// @ts-ignore
 	        setFile(e.dataTransfer.files[0]);
 	    }
 	}
@@ -109,6 +120,7 @@ const FilePicker = ({
 				styles.field_file, 
 				styles[`field_file_${style}`],
 				isDragged && styles.field_file_dragged, 
+				// @ts-ignore
 				(file?.name || imgPreview) && styles.field_file_filled, 
 				className
 			)}
@@ -145,14 +157,20 @@ const FilePicker = ({
 
 							<div className={styles.field__info}>
 								<span className={styles.field__text}>
-									{ !file?.name 
-										? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} />
+									
+									{ 
+									// @ts-ignore
+									!file?.name 
+									? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} />
+										// @ts-ignore
 										: file.name	
 									}
 									
 								</span>
 								
-								{file?.name ?
+								{
+								// @ts-ignore
+								file?.name ?
 									<button onClick={() => setFile(null)} type="button" className={styles['field__clear-button']}></button>				
 								: ''}
 							</div>

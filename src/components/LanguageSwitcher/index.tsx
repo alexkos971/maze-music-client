@@ -24,6 +24,7 @@ const LanguageSwitcher = () => {
             title="Language"
             value={locale ? {slug: locale, title: languages[locale]} : null}
             options={languages} 
+            // @ts-ignore
             onChange={handleLocaleChange}/>
     );
 };

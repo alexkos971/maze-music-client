@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import styles from "./Field.module.scss";
 import { MainFieldProps } from "./index";
 import { FieldError, FieldTitle } from "./index";
@@ -34,14 +34,27 @@ const TextFieldTemplate = ({
 
     const formContext = useContext(ValidationContext) as ValidationContextType;
 
-    const [ error, setError ] = useState<string>('');
+    const inputRef = useRef(null);
+
     const [val, setVal] = useState<TextFieldProps['value']>(value);
+    const [current_valid, current_error] = useFieldValidation(
+        val, 
+        type, 
+        required, 
+        (type == 'confirm-password' && password) 
+            ? password 
+            : undefined
+    );
+
+    const [ error, setError ] = useState<string>('');
     const [is_valid, setIsValid] = useState(!error.length && ( (required && val) || !required ) ? true : false);
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) : void => {
-        setVal(e.currentTarget.value);
+    const [firstEnter, setFirstEnter] = useState(true);
 
-        const [ current_valid, current_error ] = useFieldValidation(e.currentTarget.value, type, required, (type == 'confirm-password' && password) ? password : undefined);
+    useEffect(() => {        
+        if (firstEnter) {
+            return;
+        }
 
         if (error !== current_error) {
             setError(current_error);
@@ -51,17 +64,27 @@ const TextFieldTemplate = ({
             setIsValid(current_valid);
         }
 
-        // Call side on change
-        if (onChange) {
-            onChange(e);
-        }
-    }
+        // Call side on change        
+    }, [val]);
 
     useEffect(() => {
         if (formContext?.registerField) {
             formContext.registerField(name, val, is_valid);
+        }  
+    }, [is_valid, val])
+
+
+    const [passIsVisible, setPassIsVisible] = useState<boolean>(false);    
+
+    const handleInput = (e : ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setVal(e.currentTarget.value);
+
+        if (firstEnter) setFirstEnter(false);
+
+        if (onChange && !firstEnter) {
+            onChange(e);
         }
-    }, [val, is_valid]);
+    }
 
     return (
         <div className={classNames(
@@ -77,36 +100,42 @@ const TextFieldTemplate = ({
                     if (type == 'textarea') {
                         return (                        
                             <textarea 
-                                className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' ) + ` resize-none`} 
+                                className={classNames(
+                                    styles['typeable-input'],
+                                    error.length && styles['typeable-input_error'],   
+                                    'resize-none'
+                                )} 
+                                ref={inputRef}
                                 name={name} 
                                 placeholder={placeholder ?? ''}
                                 id={id ?? undefined}
                                 required={required ?? false}
                                 rows={3}
                                 value={val}
-                                onChange={handleInput} >
+                                onChange={handleInput}>
                             </textarea>
                         );
                     }
-                    else if ( type == 'password' || type == 'confirm-password' ) {
-                        const [isVisible, setIsVisible] = useState<boolean>(false);
-
+                    else if ( type == 'password' || type == 'confirm-password' ) {                        
                             return (
                                 <>
                                     <input 
-                                        className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' )} 
-                                        type={isVisible ? 'text' : 'password'} 
+                                        className={classNames(
+                                            styles['typeable-input'],
+                                            error.length && styles['typeable-input_error']   
+                                        )}
+                                        ref={inputRef}
+                                        type={passIsVisible ? 'text' : 'password'} 
                                         name={name} 
                                         value={val}
                                         required={required ?? false}
                                         placeholder={placeholder ?? ''}
                                         onChange={handleInput}
                                         id={id ?? undefined}/>
-
                                     <div
-                                        onClick={() => setIsVisible(!isVisible)} 
+                                        onClick={() => setPassIsVisible(!passIsVisible)} 
                                         className="block absolute right-[18px] top-1/2 translate-y-[-50%] cursor-pointer">
-                                        {isVisible ?  <EyeIcon/> : <EyeClosedIcon/>}
+                                        {passIsVisible ?  <EyeIcon/> : <EyeClosedIcon/>}
                                     </div>
                                 </>
                             );
@@ -114,7 +143,11 @@ const TextFieldTemplate = ({
                     else {
                         return (
                             <input 
-                                className={styles['typeable-input'] + ( error.length ? ' ' + styles['typeable-input_error'] : '' )} 
+                                className={classNames(
+                                    styles['typeable-input'],
+                                    error.length && styles['typeable-input_error']   
+                                )} 
+                                ref={inputRef}
                                 type={type} 
                                 name={name} 
                                 value={val}

@@ -4,7 +4,7 @@ export const profileSlice = createSlice({
     name: 'profile',
     initialState: null,
     reducers: {
-        setProfile: (state : ProfileDto, action) => {
+        setProfile: (state : ProfileDto | null, action) => {
             return {...state, ...action.payload};
         }
     }
@@ -12,5 +12,6 @@ export const profileSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { setProfile } = profileSlice.actions;
+// export type ProfileState = ReturnType<typeof profileSlice.getInitialState>;
 
 export default profileSlice.reducer;

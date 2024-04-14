@@ -18,7 +18,9 @@ import { useRouter } from "next/router";
 
 const SignIn = () => {
     const dispatch = useAppDispatch();
+    // @ts-ignore
     let [ fields, setFields ] = useState<SignInDto>({});
+    let [ validFields, setValidFields ] = useState({});
     
     let [signIn, { error, isSuccess, isLoading}] = useSignInMutation();
     const { push } = useRouter();
@@ -26,6 +28,7 @@ const SignIn = () => {
     
     useEffect(() => {
         if (error) {
+            // @ts-ignore
             dispatch(showToast({type: 'error', text: error?.data?.message ?? 'Error'}))
         } 
         else if (isSuccess)  {
@@ -38,20 +41,23 @@ const SignIn = () => {
         <AuthLayout>
             <Title tag="h1">{t("pages.sign-in.title")}</Title>
 
+            {/* @ts-ignore */} 
             <Form 
                 className="flex flex-col items-center max-w-sm" 
-                fields={fields} 
-                setFields={setFields}
+                {...{ fields, setFields, validFields, setValidFields }}
             >
                 
-                <Email name="email" placeholder={t("fields.placeholders.email")} required={true}/>
+                <Email 
+                    name="email" 
+                    placeholder={t("fields.placeholders.email")} required={true}/>
                 <Password name="password" placeholder={t("fields.placeholders.password")} required={true}/>
 
                 <div className="flex items-center justify-between mt-6 w-full flex-col sm:flex-row items-stretch gap-5">
                     <Button 
                         type="submit" 
                         color="green"
-                        disabled={isLoading}
+                        // @ts-ignore
+                        disabled={isLoading || !validFields.email || !validFields.password}
                         isLoading={isLoading} 
                         onClick={() => signIn(fields)}
                         className="sm:w-1/2"

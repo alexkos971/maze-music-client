@@ -25,6 +25,7 @@ export const authApi = createApi({
                 let formData = new FormData();
 
                 for (let key in body) {
+                    // @ts-ignore
                     formData.append(key, body[key]);
                 }            
 

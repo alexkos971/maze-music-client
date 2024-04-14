@@ -27,6 +27,7 @@ export default ProtectedPage(function Upload() {
       dispatch(showToast({type: 'success', text: t('pages.upload.success')}));
     }
     else if (error) {
+      // @ts-ignore
       let errors = error?.data?.message;
 
       if (Array.isArray(errors)) {
@@ -59,7 +60,7 @@ export default ProtectedPage(function Upload() {
                 title="Choose the genres of track"
                 name="genres"
                 placeholder="Type genre and press enter..."
-                required={true}
+                required={true}                
               />
 
               <FilePicker
@@ -80,6 +81,7 @@ export default ProtectedPage(function Upload() {
                 type="submit" 
                 onClick={() => uploadTrack(fields)} 
                 isLoading={isLoading}
+                // @ts-ignore
                 disabled={!Object.keys(validFields).some(key => validFields[key] == false )}
                 className="w-full mt-10">{t("interface.submit")}</Button>
             </Form>

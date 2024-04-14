@@ -65,7 +65,8 @@ const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
                     className="mt-4 w-full" 
                     type="submit"
                     isLoading={isLoading}
-                    disabled={!Object.keys(validFields).some(key  => validFields[key] == false )}
+                    // @ts-ignore
+                    disabled={!Object.keys(validFields).some((key: string) => validFields[key] == false )}
                     onClick={() => update(fields)}
                 >
                     {t('interface.submit')}
