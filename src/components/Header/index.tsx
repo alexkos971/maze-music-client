@@ -110,7 +110,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                 <Link href={'/profile'} className="cursor-pointer flex items-center">
                   <Avatar 
                     size="40px"                            
-                    img={profile?.avatar?.length ? process.env.NEXT_PUBLIC_STATIC + profile?.avatar : ''}
+                    img={profile?.avatar ?? ''}
                     previewText={profile?.full_name ? profile?.full_name.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
                   />
                                   

@@ -138,7 +138,7 @@
 
         &.field_file_default {
             .field__label {
-                padding: 28px 18px;
+                padding: 28px 18px 16px;
                 border-radius: 5px;
                 display: flex;
                 flex-direction: column;
@@ -147,6 +147,7 @@
                 border: .5px dashed var(--green-05);
                 cursor: pointer;
                 transition: .5s;
+                position: relative;
     
                 &:active {
                     background: transparentize(#00ADB5, .8);
@@ -163,10 +164,10 @@
             }
     
             .field__info {
-                margin-top: 4px;
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-between;                
+                padding: 8px 0px;
             }
     
             .field__text {
@@ -184,7 +185,9 @@
             }
     
             .field__clear-button {
-                position: relative;
+                position: absolute;
+                right: 10px;
+                top: 10px;
                 margin-left: auto;
                 width: 20px;
                 height: 20px;
@@ -192,8 +195,8 @@
     
                 &::before, &::after {
                     content: "";
-                    width: 16px;
-                    height: 2px;
+                    width: 14px;
+                    height: 1px;
                     background-color: var(--black-36);
                     position: absolute;
                     left: 50%;
@@ -206,22 +209,20 @@
                 }
             }
     
-            &_dragged {
+            &.field_file_dragged {
                 .field__label {
                     background: transparentize(#00ADB5, .8);
                     border-width: 2px;
                 }
             }
     
-            &_filled {
+            &.field_file_filled {
                 transition: 0s;
     
                 .field__info {
-                    gap: 0px 24px;
-                }
-    
-                .field__text {
-                    max-width: 160px;
+                    width: 100%;
+                    justify-content: space-between;
+                    border-bottom: 1px solid var(--gray-c4);
                 }
             }
         }

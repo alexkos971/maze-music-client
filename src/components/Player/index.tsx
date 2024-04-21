@@ -116,7 +116,7 @@ const Player = () => {
     // Trigger Audio instance - Change track or start, when src is not empty or changed
     useEffect(() => {
         if ( track && track.src && ref.current) {
-            ref.current.src = process.env.NEXT_PUBLIC_STATIC + track.src;
+            ref.current.src = track.src;
             ref.current.currentTime = currentTime;
             ref.current.volume = volume;
 
@@ -266,7 +266,7 @@ const Player = () => {
                                 ref={ref} 
                                 onTimeUpdate={onAudioUpdate} 
                                 onLoadedMetadata={metadataLoadHandler} >
-                                <source src={process.env.NEXT_PUBLIC_STATIC + track.src} type="audio/mpeg" />
+                                <source src={track.src} type="audio/mpeg" />
                                 Your browser does not support the audio element.
                             </audio>
                         }                

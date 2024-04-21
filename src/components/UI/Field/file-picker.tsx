@@ -151,6 +151,13 @@ const FilePicker = ({
 						/>
 					: (
 						<>
+							{
+							// @ts-ignore
+							file?.name ?
+								<button onClick={() => setFile(null)} type="button" className={styles['field__clear-button']}></button>				
+							: ''
+							}
+
 							<div className={styles.field__image}>
 								<CloudArrowUpGreen/>
 							</div>
@@ -166,13 +173,7 @@ const FilePicker = ({
 										: file.name	
 									}
 									
-								</span>
-								
-								{
-								// @ts-ignore
-								file?.name ?
-									<button onClick={() => setFile(null)} type="button" className={styles['field__clear-button']}></button>				
-								: ''}
+								</span>								
 							</div>
 						</>
 					)

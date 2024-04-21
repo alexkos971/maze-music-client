@@ -28,7 +28,7 @@ const ProfileHero = () => {
                     <div className="col-lg-2">
                         <Avatar
                             previewText={profile?.full_name ? profile?.full_name.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
-                            img={ profile.avatar ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : '' }
+                            img={ profile.avatar ?? '' }
                             size='min(100%, 150px)'
                             className={styles['profile-hero__avatar']}
                             onChange={() => {
@@ -38,7 +38,7 @@ const ProfileHero = () => {
                                         <UpdateProfileForm 
                                             title={t('pages.profile.change_avatar_title')}
                                             name="avatar" 
-                                            value={profile.avatar ? process.env.NEXT_PUBLIC_STATIC + profile.avatar : '' }
+                                            value={profile?.avatar ?? '' }
                                             type="avatar"/>
                                     )
                                 })) 

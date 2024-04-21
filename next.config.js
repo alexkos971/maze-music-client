@@ -5,10 +5,14 @@ const nextConfig = {
     i18n,
     images: {
         remotePatterns: [
-            {
-                protocol: 'http',
-                hostname: 'localhost',
-            }
+          {
+            protocol: 'http',
+            hostname: 'localhost',
+          },
+          {
+            protocol: 'https',
+            hostname: 'firebasestorage.googleapis.com',
+          },
         ]
     },
     webpack(config) {

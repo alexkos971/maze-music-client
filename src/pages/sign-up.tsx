@@ -74,8 +74,8 @@ const SignUp = () => {
 
     const verifyEmailHandle = async() => {
         // @ts-ignore
-        const {data} = await verifyEmail(fields.email);
-        if (data.is_exist) {
+        await verifyEmail(fields.email);
+        if (verify?.data?.is_exist) {
             dispatch(showToast({
                 type: 'error',
                 text: t('pages.sign-up.errors.email_is_exist')

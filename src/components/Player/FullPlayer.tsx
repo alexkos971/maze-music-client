@@ -24,7 +24,7 @@ const FullPlayer = () => {
                     <div className="col-lg-5">
                         <div className={classNames(styles.fullplayer__cover, !track?.cover?.length ? styles.fullplayer__cover_default : null )}>
                                 { track?.cover?.length ?
-                                    <Image src={process.env.NEXT_PUBLIC_STATIC + track.cover} alt="Track Cover" width={400} height={400}/>
+                                    <Image src={track.cover} alt="Track Cover" width={400} height={400}/>
                                     : <MusicNoteGray/>
                                 }
                         </div>

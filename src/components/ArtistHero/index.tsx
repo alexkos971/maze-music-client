@@ -70,7 +70,7 @@ const ArtistHero = ({ artist } : ArtistProps ) => {
             <div className={styles['artist-hero__avatar']}>
                 { 
                     artist.avatar?.length ?
-                        <Image src={process.env.NEXT_PUBLIC_STATIC + artist.avatar} width={400} height={400} alt="Artist Avatar" className="skeleton-image"/>
+                        <Image src={artist.avatar} width={400} height={400} alt="Artist Avatar" className="skeleton-image"/>
                     : <></>
                 }
             </div>
