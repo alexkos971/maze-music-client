@@ -79,8 +79,11 @@ export const tracksApi = createApi({
                     }));
                 }
             },
+        }),
+        getSavedTracks: build.query({
+            query: (arg: any) => ({ url: 'saved', method: 'GET' })
         })
     })
 });
 
-export const { useUploadTrackMutation, useGetAllTracksQuery, useSaveTrackMutation } = tracksApi;
+export const { useUploadTrackMutation, useGetAllTracksQuery, useSaveTrackMutation, useGetSavedTracksQuery } = tracksApi;

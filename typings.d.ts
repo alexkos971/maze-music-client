@@ -36,6 +36,18 @@ interface Player {
     volume: number;    
 };
 
+interface PlaylistDto {
+    _id: string;
+    __v: number
+    date: Date,
+    name: string,
+    description: string | null;
+    cover: string | null;
+    owner: string;
+    is_public: boolean,
+    tracks: Track[]
+}
+
 interface SignUpDto {
     role: 'listener' | 'artist' | 'admin',
     name: string;

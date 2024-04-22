@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface Title {
     children: ReactNode,
@@ -18,7 +19,7 @@ const Title = ({ children, className, tag = 'h2'} : Title) => {
         h6: 'text-xl'
     }
 
-    return <Tag className={`${styles[tag]} mb-5 font-bold ${className ?? ''}`}>{children}</Tag>
+    return <Tag className={twMerge(`${styles[tag]} mb-5 font-bold`, className ?? '')}>{children}</Tag>
 }
 
 export default Title;

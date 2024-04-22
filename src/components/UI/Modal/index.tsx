@@ -5,7 +5,7 @@ import { toggleModal } from "@store/reducers/interfaceReducer";
 
 export interface ModalProps {
     isOpened: boolean,
-    content: JSX.Element | null,
+    content: JSX.Element | React.FC | null,
     onClose?: () => void
 }
 

@@ -7,6 +7,7 @@ import playerReducer from "./reducers/playerReducer";
 import { authApi } from "./api/authApi";
 import { usersApi } from "./api/usersApi";
 import { tracksApi } from "./api/tracksApi";
+import { playlistsApi } from "./api/playlistsApi";
 
 export const store = configureStore({
     reducer: {
@@ -18,11 +19,13 @@ export const store = configureStore({
         [authApi.reducerPath]: authApi.reducer,
         [usersApi.reducerPath]: usersApi.reducer,
         [tracksApi.reducerPath]: tracksApi.reducer,
+        [playlistsApi.reducerPath]: playlistsApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         authApi.middleware,  
         usersApi.middleware,
-        tracksApi.middleware
+        tracksApi.middleware,
+        playlistsApi.middleware
     )
 });
 

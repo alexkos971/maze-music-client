@@ -7,10 +7,17 @@ import Title from "@components/UI/Title";
 import { useTranslation } from "next-i18next";
 import Playlists from "@components/Playlists";
 import Artists from "@components/Artists";
-import { WeekndAvatar, ClassicalHitsCover } from "@helpers/images";
+import Card from "@containers/Card";
+
+import { WeekndAvatar } from "@helpers/images";
+
+import { useAppDispatch } from "@hooks";
+import { toggleModal } from "@store/reducers/interfaceReducer";
+import { FilePicker } from "@components/UI/Field";
 
 export default ProtectedPage(function Library() {
   const {t} = useTranslation('common');
+  const dispatch = useAppDispatch()
 
   const tabs = [
     t("pages.library.tabs.all"), 
@@ -40,18 +47,51 @@ export default ProtectedPage(function Library() {
         </div>
 
         { currentTab == t("pages.library.tabs.all") || currentTab == t("pages.library.tabs.playlists") ?
-          <Playlists
-            title={t('title.popular_playlists')}
-            data={[
-                {
-                  id: '',
-                  name: t('pages.library.saved'),
-                  feature: ClassicalHitsCover,
-                  author: "Alex Kos",                    
-                  tracks: [123, 3453, 23232, 34534, 345343]
-                }
-            ]}
-          /> 
+          <>
+          
+          {
+            currentTab == t("pages.library.tabs.playlists") ?
+              <Card onClick={() => {
+                  dispatch(toggleModal({ 
+                    isOpened: true, 
+                    content: (
+                      <div className="relative">
+                        <Title tag="h3" className="text-center">{t("pages.library.create_playlist.title")}</Title>
+                        {/* <FilePicker title="Avatar"/> */}
+                      </div>
+                    )
+                  }))
+                }}
+                className="mt-8">
+
+                <div className="flex items-center">
+                  <span className="w-11 h-11 rounded-full bg-black-36 flex items-center justify-center relative
+                    before:w-4 before:h-[2px] before:bg-white before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 
+                    after:h-4 after:w-[2px] after:bg-white after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 
+                    "></span>
+
+                    <div className="flex flex-col ml-4">
+                      <Title tag="h5" className="mb-1">{t("pages.library.create_playlist.title")}</Title>
+                      <p className="text-sm">{t("pages.library.create_playlist.subtitle")}</p>
+                    </div>
+                </div>
+              </Card>
+              : <></>
+          }
+            
+            <Playlists
+              title={t('title.popular_playlists')}
+              data={[
+                  {
+                    id: '',
+                    link: '/playlist/saved',
+                    name: t('pages.library.saved'),
+                    owner: "Alex Kos",                    
+                    tracks: [123, 3453, 23232, 34534, 345343]
+                  }
+              ]}
+            /> 
+          </>
           : <></> }
 
         { currentTab == t("pages.library.tabs.all") || currentTab == t("pages.library.tabs.artists") ?

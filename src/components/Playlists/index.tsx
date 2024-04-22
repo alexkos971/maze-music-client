@@ -12,9 +12,10 @@ type PlaylistsProps = {
     slidesToShow?: number | undefined,
     data: {
         id: string;
+        link?: string,
         feature?: string | StaticImageData | undefined | null,
         name:string,
-        author: string,
+        owner: string,
         tracks: Array<Identifier | number | string>
     }[]
 };
@@ -36,7 +37,7 @@ const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {
                         return (
                             <Slider.Item key={item.id}>
                                 <Card                                    
-                                    link={`/artist/${item.id}`}
+                                    link={item.link ?? `/playlist/${item.id}`}
                                     image={item.feature ?? null}
                                     title={item.name}
                                     options={{size: "small", playButton: true}}

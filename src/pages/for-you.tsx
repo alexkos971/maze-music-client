@@ -67,13 +67,13 @@ const ForYou = () => {
                             id: 'q11',
                             name: 'Classical Hits',
                             feature: ClassicalHitsCover,
-                            author: "Alex Kos",                    
+                            owner: "Alex Kos",                    
                             tracks: [123, 3453, 23232, 34534, 345343]
                         },
                         {
                             id: 'q1ds1',
                             name: 'Rock',
-                            author: "Alex Kos",
+                            owner: "Alex Kos",
                             feature: RockCover,
                             tracks: [123, 3453, 23232, 34534, 345343]
                         },
@@ -81,7 +81,7 @@ const ForYou = () => {
                             id: 'busuu',
                             name: 'Bass House',
                             feature: ElectronicCover,
-                            author: "Alex Kos",
+                            owner: "Alex Kos",
                             tracks: [123, 3453, 23232, 34534, 345343]
                         },
                     ]}
@@ -90,11 +90,9 @@ const ForYou = () => {
                 {
                     data ? 
                         <TrackList
-                        title={t('title.popular_songs')}
-                        data={{
-                            name: 'Some Name',
-                            tracks: data
-                        }} />
+                            title={t('title.popular_songs')}
+                            data={data} 
+                        />
                     : <></>
                 } 
             </div>

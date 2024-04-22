@@ -47,7 +47,11 @@
         },
         "library": {
             "header_title": "Library",
-            "title": "Your library",
+            "title": "Your library",        
+            "create_playlist": {
+                "title": "Create playlist",
+                "subtitle": "You can create your own playlist" 
+            },
             "tabs": {
                 "all": "All",
                 "playlists": "Playlists",

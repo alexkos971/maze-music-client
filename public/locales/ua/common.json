@@ -10,7 +10,7 @@
         "artists": "Виконавці",
         "tracks": "Треки",
         "artists_for_you": "Виконавці для тебе",
-        "popular_playlists": "Популярні виконавці",
+        "popular_playlists": "Популярні плейлісти",
         "popular_songs": "Популярні треки",
         "similar_artists": "Схожі виконавці",
         "top_tracks_this_month": "Топ треків цього місяця"
@@ -48,6 +48,10 @@
         "library": {
             "header_title": "Бібліотека",
             "title": "Твоя бібліотека",
+            "create_playlist": {
+                "title": "Створити плейліст",
+                "subtitle": "Ви можете створити свій власний плейліст" 
+            },
             "tabs": {
                 "all": "Все",
                 "playlists": "Плейлісти",
