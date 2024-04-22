@@ -36,7 +36,7 @@ const Card = ({ image, link, title, subtitle, options = { size: 'small', playBut
             <div className={`${styles.card} ${styles[`card_${options.size}`]} relative flex flex-col justify-center items-center overflow-hidden w-full`}>
                 <Link href={link} className={`${styles.card__image} absolute top-0 left-0 w-full h-full block bg-black-36`}>
                     {image ?
-                        <Image src={image} width={0} height={0} alt="Image" className="w-full h-full object-cover select-none"/>
+                        <Image src={image} width={options.size == 'large' ? 450 : 300} height={300} alt="Image" className="w-full h-full object-cover select-none"/>
                         : ''
                     }            
 

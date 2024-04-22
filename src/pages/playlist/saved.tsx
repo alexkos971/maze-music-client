@@ -1,19 +1,26 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProtectedPage from "@hoks/protectedPage";
 import MainWrap from "@containers/MainWrap";
-import { useGetSavedTracksQuery } from "@store/api/tracksApi";
+import { useGetSavedTracksMutation } from "@store/api/tracksApi";
+import { setSavedTracks } from "@store/reducers/tracksReducer";
 import { useEffect, useState } from "react";
 import TrackList from "@components/TrackList";
+import { useAppDispatch, useAppSelector } from "@hooks";
 
 function SavedTracks() {
-    const savedTracksResponse = useGetSavedTracksQuery('');
-    const [savedTracks, setSavedTracks] = useState<Track[] | null>(null);
+    const dispatch = useAppDispatch();
+    const [getSavedTracks, { isSuccess, data }] = useGetSavedTracksMutation();
+    const savedTracks = useAppSelector(state => state.tracks.savedTracks)
     
-    useEffect(() => {        
-        if (savedTracksResponse.isSuccess && savedTracksResponse.data) {
-            setSavedTracks(savedTracksResponse.data);
+    useEffect(() => {
+        if (isSuccess && data) {
+            dispatch(setSavedTracks(data));
         }
-    }, [savedTracksResponse.data]);
+    }, [isSuccess])
+
+    useEffect(() => { 
+        getSavedTracks('');
+    }, []);
 
     return (
         <MainWrap>

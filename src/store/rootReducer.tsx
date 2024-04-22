@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import interfaceReducer from "./reducers/interfaceReducer";
 import profileReducer from "./reducers/profileReducer";
 import playerReducer from "./reducers/playerReducer";
+import tracksReducer from "./reducers/tracksReducer";
 
 // API
 import { authApi } from "./api/authApi";
@@ -14,6 +15,7 @@ export const store = configureStore({
         interface: interfaceReducer,
         profile: profileReducer,
         player: playerReducer,
+        tracks: tracksReducer,
         
         // Connect API
         [authApi.reducerPath]: authApi.reducer,

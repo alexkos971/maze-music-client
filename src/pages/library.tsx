@@ -9,7 +9,8 @@ import Playlists from "@components/Playlists";
 import Artists from "@components/Artists";
 import Card from "@containers/Card";
 
-import { WeekndAvatar } from "@helpers/images";
+import SavedTracksCover from "@assets/images/saved-tracks-cover.png";
+import WeekndAvatar from "@assets/images/uploads/weeknd.png";
 
 import { useAppDispatch } from "@hooks";
 import { toggleModal } from "@store/reducers/interfaceReducer";
@@ -86,6 +87,7 @@ export default ProtectedPage(function Library() {
                     id: '',
                     link: '/playlist/saved',
                     name: t('pages.library.saved'),
+                    cover: SavedTracksCover,
                     owner: "Alex Kos",                    
                     tracks: [123, 3453, 23232, 34534, 345343]
                   }

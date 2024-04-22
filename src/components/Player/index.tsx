@@ -360,7 +360,7 @@ const Player = () => {
                                 disabled={!track}
                                 className={`${styles['player-nav-button']}`}
                                 onClick={() => saveTrack({
-                                    track_id: track?._id, 
+                                    track: track, 
                                     action: isSaved ? "unsave" : "save"
                                 })}    
                             > 

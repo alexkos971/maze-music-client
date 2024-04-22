@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { setProfile } from "@store/reducers/profileReducer";
+import { setSavedTracks } from "@store/reducers/tracksReducer";
 // import { toggleModal } from "@store/reducers/interfaceReducer";
 
 export const tracksApi = createApi({
@@ -43,8 +44,8 @@ export const tracksApi = createApi({
             query: (arg: any) => ({ url: '/', method: 'GET'})
         }),
         saveTrack: build.mutation({
-            query: ({ track_id, action } : { track_id: string, action: "save" | "unsave" }) => ({
-                url: `${track_id}/${action}`,
+            query: ({ track, action } : { track: Track, action: "save" | "unsave" }) => ({
+                url: `${track._id}/${action}`,
                 method: 'PUT'
             }),
             
@@ -55,9 +56,10 @@ export const tracksApi = createApi({
                     if (response.data) {
                         // @ts-ignore 
                         let profile = getState()?.profile;
+                        let savedTracks = getState()?.tracks.savedTracks;
 
                         let is_saved = response.data.is_saved;
-                        let track_id = arg.track_id; 
+                        let track_id = arg.track._id; 
 
                         dispatch(showToast({
                             type: 'success',
@@ -65,11 +67,17 @@ export const tracksApi = createApi({
                         }));
 
                         if (profile) {
-                            let savedTracks = is_saved 
-                                ? [...profile.saved_tracks, track_id]
+                            let profileSavedTracks = is_saved 
+                                ? [track_id, ...profile.saved_tracks]
                                 : profile.saved_tracks.filter((el: string) => el != track_id );
+                            
+                            dispatch(setProfile({ ...profile, saved_tracks: profileSavedTracks }));
+                            
+                            savedTracks = is_saved 
+                                ? [arg.track, ...savedTracks]
+                                : savedTracks.filter((el: Track) => el._id != arg.track._id );
                 
-                            dispatch(setProfile({ ...profile, saved_tracks: savedTracks }));
+                            dispatch(setSavedTracks(savedTracks));
                         }
                     }
                 } catch (e) {
@@ -80,10 +88,10 @@ export const tracksApi = createApi({
                 }
             },
         }),
-        getSavedTracks: build.query({
+        getSavedTracks: build.mutation({
             query: (arg: any) => ({ url: 'saved', method: 'GET' })
         })
     })
 });
 
-export const { useUploadTrackMutation, useGetAllTracksQuery, useSaveTrackMutation, useGetSavedTracksQuery } = tracksApi;
+export const { useUploadTrackMutation, useGetAllTracksQuery, useSaveTrackMutation, useGetSavedTracksMutation } = tracksApi;

@@ -5,6 +5,7 @@ import { showToast } from "@store/reducers/interfaceReducer";
 import Track from "@components/UI/Track";
 import Title from "@components/UI/Title";
 import { useTranslation } from "next-i18next";
+import { twMerge } from "tailwind-merge";
 
 interface TrackListProps {
     title?: string;
@@ -31,7 +32,7 @@ const TrackList = ({ title, data: tracks, className }: TrackListProps) => {
     }, [ isSuccess ]);   
 
     return (
-        <div className={`block track-list mt-16 ${className}`}>
+        <div className={twMerge(`block track-list mt-16`, className)}>
             { title ? <Title>{title}</Title> : '' }
 
             <div className="track-list__wrap mt-6">
@@ -42,7 +43,7 @@ const TrackList = ({ title, data: tracks, className }: TrackListProps) => {
                             track={item}
                             isSaved={profile ? profile?.saved_tracks.includes(item._id) : false}
                             onSave={() => saveTrack({
-                                track_id: item._id, 
+                                track: item, 
                                 action: profile?.saved_tracks.includes(item._id) ? 'unsave' : 'save'
                             })}
                             key={`${index}${item}`} />;
