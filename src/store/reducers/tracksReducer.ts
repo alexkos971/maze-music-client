@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
-    savedTracks: [],
+    savedTracks: null,
 };
 
 export const tracksSlice = createSlice({

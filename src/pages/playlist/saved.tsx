@@ -3,7 +3,7 @@ import ProtectedPage from "@hoks/protectedPage";
 import MainWrap from "@containers/MainWrap";
 import { useGetSavedTracksMutation } from "@store/api/tracksApi";
 import { setSavedTracks } from "@store/reducers/tracksReducer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import TrackList from "@components/TrackList";
 import { useAppDispatch, useAppSelector } from "@hooks";
 
@@ -19,14 +19,16 @@ function SavedTracks() {
     }, [isSuccess])
 
     useEffect(() => { 
-        getSavedTracks('');
+        if (!savedTracks) {
+            getSavedTracks('');
+        }
     }, []);
 
     return (
         <MainWrap>
             <div className="container-fluid">
                 {
-                    savedTracks?.length ?
+                    savedTracks ?
                         <TrackList
                             className="mt-0"
                             title="Saved Tracks"

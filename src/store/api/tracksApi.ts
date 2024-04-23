@@ -54,12 +54,23 @@ export const tracksApi = createApi({
                     const response = await queryFulfilled;
 
                     if (response.data) {
+                        let is_saved = response.data.is_saved;
+                        
                         // @ts-ignore 
                         let profile = getState()?.profile;
-                        let savedTracks = getState()?.tracks.savedTracks;
-
-                        let is_saved = response.data.is_saved;
-                        let track_id = arg.track._id; 
+                        // @ts-ignore 
+                        let savedTracks = getState()?.tracks?.savedTracks;
+                        
+                        if (!savedTracks) {
+                            const savedTracksPromise = await dispatch(tracksApi.endpoints.getSavedTracks.initiate(''))
+                            
+                            // @ts-ignore 
+                            const { data } = savedTracksPromise;
+                        
+                            if (data?.length) {
+                                savedTracks = data;
+                            }
+                        }
 
                         dispatch(showToast({
                             type: 'success',
@@ -67,17 +78,18 @@ export const tracksApi = createApi({
                         }));
 
                         if (profile) {
-                            let profileSavedTracks = is_saved 
-                                ? [track_id, ...profile.saved_tracks]
-                                : profile.saved_tracks.filter((el: string) => el != track_id );
-                            
-                            dispatch(setProfile({ ...profile, saved_tracks: profileSavedTracks }));
-                            
                             savedTracks = is_saved 
-                                ? [arg.track, ...savedTracks]
+                                ? [...savedTracks, arg.track]
                                 : savedTracks.filter((el: Track) => el._id != arg.track._id );
-                
+                            
                             dispatch(setSavedTracks(savedTracks));
+                            
+                            let profileSavedTracks = savedTracks.map((item: Track) => item._id);
+                            
+                            dispatch(setProfile({ 
+                                ...profile, 
+                                saved_tracks: profileSavedTracks 
+                            }));                                    
                         }
                     }
                 } catch (e) {
