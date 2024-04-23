@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
-import { PlayBlack, PauseBlack } from "@helpers/images";
+import { PlayBlack } from "@helpers/images";
 import styles from "./Card.module.scss";
 
 interface CardContent {
