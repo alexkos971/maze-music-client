@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useAppSelector } from '@hooks';
 
-import { MusicNoteGray } from "@helpers/images";
+import MusicNoteGray from "@assets/images/icons/note-gray.svg";
 import { fillHeaderByScroll } from '@components/Header';
 
 import styles from './Player.module.scss';

@@ -9,6 +9,7 @@
         "albums": "Albums",
         "artists": "Artists",
         "tracks": "Songs",
+        "playlists": "Playlists",
         "artists_for_you": "Artists for you",
         "popular_playlists": "Popular playlists",
         "popular_songs": "Popular songs",
@@ -28,15 +29,18 @@
         "albums": "albums",
         "followers": "followers",
         "artists": "artists",
-        "tracks": "songs",
+        "tracks": "tracks",
         "see_all": "See All",
         "subscriptions": "subscriptions",
         "change": "Change",
         "remove": "Remove",
+        "play": "Play",
         "authorized": "Authorized !",
         "logged_out": "Logged Out !",
         "registered": "Succesfully registered",
         "submit": "Submit",
+        "save": "Save",
+        "unsave": "Unsave",
         "saved": "Saved!",
         "unsaved": "Unsaved!",
         "server_error": "Some error on the server..."
@@ -119,6 +123,9 @@
                 "email_is_exist": "User with this email is already exist",
                 "server_error": "Some error on the server..."
             }
+        },
+        "saved_tracks": {
+            "title": "Saved tracks"
         }
     },
     "fields" : {

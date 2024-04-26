@@ -26,7 +26,7 @@ const Track = ({
 
     return (
         <div className={`${styles.track} ${ is_current_track ? styles.track__current : ''}`}>
-            <span className="w-[18px] h-[18px] relative flex items-center justify-start">
+            <span className="w-[18px] h-[18px] relative hidden md:flex items-center justify-start">
 
                 {(!is_current_track && index !== undefined) ?
                     <span className={`${styles.track__index} text-sm text-app-text-secondary`}>
@@ -48,10 +48,10 @@ const Track = ({
                 </button>
             </span>
         
-            <div className={`w-7 h-7 relative rounded block overflow-hidden ml-3 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
+            <div className={`w-11 h-11 md:w-7 md:h-7 relative md:rounded block overflow-hidden md:ml-3 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
                 {
                     track.cover?.length 
-                        ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center"/> 
+                        ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center w-full h-full"/> 
                         : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
                 }
             </div>

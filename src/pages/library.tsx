@@ -81,7 +81,7 @@ export default ProtectedPage(function Library() {
           }
             
             <Playlists
-              title={t('title.popular_playlists')}
+              title={t('title.playlists')}
               data={[
                   {
                     id: '',

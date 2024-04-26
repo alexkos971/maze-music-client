@@ -6,8 +6,11 @@ import { setSavedTracks } from "@store/reducers/tracksReducer";
 import { useEffect } from "react";
 import TrackList from "@components/TrackList";
 import { useAppDispatch, useAppSelector } from "@hooks";
+import PlaylistHero from "@components/PlaylistHero";
+import { useTranslation } from "next-i18next";
 
 function SavedTracks() {
+    const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
     const [getSavedTracks, { isSuccess, data }] = useGetSavedTracksMutation();
     const savedTracks = useAppSelector(state => state.tracks.savedTracks)
@@ -26,11 +29,19 @@ function SavedTracks() {
 
     return (
         <MainWrap>
+            <PlaylistHero
+                isSaved={true}
+                data={{
+                    _id: 'saved',
+                    name: t("pages.saved_tracks.title"),
+                    owner: null,
+                    tracks: savedTracks ?? []
+                }}
+            />
             <div className="container-fluid">
                 {
                     savedTracks ?
                         <TrackList
-                            className="mt-0"
                             title="Saved Tracks"
                             data={savedTracks}
                         />

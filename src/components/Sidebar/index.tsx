@@ -37,17 +37,27 @@ const Sidebar : React.FC = () => {
         sidebarRef?.current?.clientWidth ? document.documentElement.style.setProperty('--sidebar-width', (isCollapsed ? 250 : 90) + 'px') : false;
     }, [isCollapsed]);
 
+    let logoStyle = 'w-auto h-full';
+
     return (
         <aside 
             ref={sidebarRef}
-            className={`${styles.sidebar} w-full shrink-0 flex flex-col items-center pt-[26px] ${isCollapsed ? 'sidebar_collapsed' : ''} pb-2 border-r border-r-gray-de dark:border-r-gray-4a dark:bg-app-background-secondary`}
-            style={{maxWidth: isCollapsed ? 250: 90 }}>
+            className={
+                classNames(
+                    `w-full shrink-0 flex md:flex-col items-center pt-[26px] pb-2 border-r border-r-gray-de relative overflow-hidden dark:border-r-gray-4a dark:bg-app-background-secondary duration-300`,
+                    'max-md:fixed max-md:w-full max-md:left-0 max-md:bottom-0 max-md:z-20 max-md:bg-white',
+                    isCollapsed ? 'sidebar_collapsed lg:max-w-[250px] md:max-w-[90px]' : 'md:max-w-[90px]'
+                )
+            }>
 
-            <div className={`${styles['sidebar__logo']} ${isCollapsed ? 'pr-8 pl-5' : 'px-6'}`}>
-                {isCollapsed ? ( theme == 'dark' ? <LogoForDark/> : <Logo/>) : <LogoIcon/>}
+            <div className={classNames(
+                'w-full h-auto max-h-7 flex justify-center max-md:hidden',
+                isCollapsed ? 'lg:pr-8 lg:pl-5' : 'px-6'
+            )}>
+                {isCollapsed ? ( theme == 'dark' ? <LogoForDark className={logoStyle}/> : <Logo className={logoStyle}/>) : <LogoIcon className={logoStyle}/>}
             </div>
 
-            <ul className="sidebar__menu flex flex-col w-full mt-8">
+            <ul className="sidebar__menu flex md:flex-col w-full mt-8">
                 {
                     menu_pages.map((item, index) => (
                         <li 

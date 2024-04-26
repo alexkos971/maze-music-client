@@ -58,3 +58,9 @@ $screen-sizes: (
         stroke: currentColor;
     }
 }
+
+.svg-current-color {
+    svg {
+        @include svg-reset-color();
+    }
+}

@@ -6,6 +6,10 @@
     bottom: 0;
     right: 0;
     z-index: 30;
+
+    @include media-breakpoint-down(sm) {
+        bottom: 58px;
+    }
     
     &__wrap {
         background-color: var(--black-06);

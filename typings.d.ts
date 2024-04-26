@@ -78,6 +78,17 @@ interface ArtistDto {
     tracks: string[];
 }
 
+interface PlaylistDto {
+    _id: string;
+    name: string;
+    owner: null | {
+        name: string,
+        avatar: string,
+        _id: string
+    };
+    tracks: Track[]
+}
+
 type ProfileDto = {
     _id: string;
     role: "Listener" | "Artist";

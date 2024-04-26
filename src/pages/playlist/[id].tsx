@@ -26,7 +26,6 @@ function Playlist() {
         <MainWrap>
             <div className="container-fluid">
                 <h1>{router.query.id}</h1>
-
                 {
                     playlist?.tracks?.length ?
                         playlist.tracks.map(item => {

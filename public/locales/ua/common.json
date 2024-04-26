@@ -9,6 +9,7 @@
         "albums": "Альбоми",
         "artists": "Виконавці",
         "tracks": "Треки",
+        "playlists": "Плейлісти",
         "artists_for_you": "Виконавці для тебе",
         "popular_playlists": "Популярні плейлісти",
         "popular_songs": "Популярні треки",
@@ -33,10 +34,13 @@
         "subscriptions": "підписники",
         "change": "Змінити",
         "remove": "Видалити",
+        "play": "Грати",
         "authorized": "Авторизовано !",
         "logged_out": "Ви вийшли !",
         "registered": "Успешно зарегистрировано",
         "submit": "Відправити",
+        "save": "Зберегти",
+        "unsave": "Забути",
         "saved": "Збережено!",
         "unsaved": "Видалено!",
         "server_error": "Помилка на сервері..."
@@ -119,6 +123,9 @@
                 "email_is_exist": "Користувач з таким імейлом вже існує",
                 "server_error": "Помилка на сервері..."
             }
+        },
+        "saved_tracks": {
+            "title": "Збережені"
         }
     },
     "fields" : {

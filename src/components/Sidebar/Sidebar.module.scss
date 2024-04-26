@@ -1,18 +1,7 @@
+@import "../../styles/_helpers";
+
 .sidebar {
-    transition: .3s;
-
-    &__logo {
-        width: 100%;
-        height: auto;
-        max-height: 30px;
-        display: flex;
-        justify-content: center;
-
-        svg, img {
-            width: auto;
-            height: 100%;        
-        }
-    }
+    transition: .3s;    
 
     &-button {
         display: flex;
@@ -115,6 +104,10 @@
 
             &_collapse {
                 margin-top: auto;
+
+                @include media-breakpoint-down(sm) {
+                    display: none;
+                }
 
                 .sidebar-button {
                     &__wrap {

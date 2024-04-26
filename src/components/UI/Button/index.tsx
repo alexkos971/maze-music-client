@@ -1,6 +1,7 @@
 import React, { ReactNode, useContext } from "react";
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
 import { LoadSpin } from "@helpers/images";
+import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
     type?: 'button' | 'submit',
@@ -33,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
 
     const btn_sizes = {
         'small' : 'py-[6px] px-[10px] min-w-[100px] text-sm',
-        'normal' : 'py-[10px] px-6 min-w-[160px] text-base'
+        'normal' : 'py-[10px] px-6 min-w-[120px] text-base'
     };
 
     let isDisabled = typeof disabled == "boolean"  ? disabled : false;
@@ -51,17 +52,11 @@ const Button: React.FC<ButtonProps> = ({
             type={'button'} 
             disabled={isDisabled}     
             onClick={onClick ?? undefined}        
-            className={`
-                duration-300 
-                rounded-md  
-                flex 
-                items-center 
-                justify-center 
-                gap-2 
-                ${btn_sizes[size]} ${isDisabled ? btn_colors['disabled'] : btn_colors[color] + ' cursor-pointer'}
-                ${className ?? ''}`}>
-            
-            
+            className={twMerge(`duration-300 rounded-md inline-flex items-center justify-center gap-2`, 
+                btn_sizes[size], 
+                isDisabled ? btn_colors['disabled'] : (btn_colors[color] + ' cursor-pointer'),
+                className
+            )}>            
             {
                 !isLoading
                     ? children
