@@ -12,6 +12,7 @@ import { useAppDispatch } from "@hooks";
 import { directories } from "@helpers/directory";
 import { setDirectory } from "@store/reducers/interfaceReducer";
 import { lsGetItem } from "@helpers/localstorage";
+import classNames from "classnames";
 
 export interface AppContextType {};
 
@@ -52,7 +53,10 @@ export default function AppLayout({ children } : AppWrapProps) {
             enableSystem 
             storageKey={'theme'}>
             <AppContext.Provider value={{}}>            
-                <div className="app-wrap overflow-hidden h-screen flex flex-col justify-end bg-app-background duration-300">
+                <div className={classNames(
+                    "app-wrap bg-app-background duration-300",
+                    "max-md:overflow-clip relative h-screen"
+                )}>
                     {children}
                     
                     <Toast />

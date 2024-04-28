@@ -65,7 +65,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
   return (
     <header className={`header z-20 sticky ${overlap ? 'h-0' : ''} top-0 left-0`}>
       <div 
-        className={`header__wrap py-5 duration-300 ${header_is_filled ? 'bg-app-background dark:bg-app-background-secondary' : ''}`} 
+        className={`header__wrap py-3 md:py-5 duration-300 ${header_is_filled ? 'bg-app-background dark:bg-app-background-secondary' : ''}`} 
         ref={headerRef}>
         <div className="container-fluid">
           <div className="header__wrap flex items-center justify-end relative">
@@ -73,9 +73,9 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
             {/* Go Back Arrow */}
             {canReturnBack === true ? <button type="button" onClick={back} className={styles.header__back}><ChevronDownBlack/></button> : ''}
 
-            <span className="header__title font-semibold text-lg text-green-05 mr-auto">{t(title)}</span>
+            <span className="header__title font-secondary md:font-primary font-bold text-2xl md:font-semibold md:text-lg md:text-green-05 mr-auto">{t(title)}</span>
 
-            <div className="header__nav flex items-center mr-16">
+            <div className="header__nav flex items-center mr-16 max-md:hidden">
               {/* Settings */}
               <Link 
                 href={'/settings'} 
@@ -117,7 +117,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                   {
                     profile.full_name 
                       ? <span 
-                          className={`font-normal text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-app-text-primary'}`}>
+                          className={`font-normal max-md:font-secondary text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-app-text-primary'}`}>
                           {profile.full_name}
                         </span>
                       : <></>

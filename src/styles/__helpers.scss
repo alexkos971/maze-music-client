@@ -17,7 +17,7 @@ $screen-sizes: (
     'lg': '1200',
     'md': '992',
     'sm': '768',
-    'xs': '576'
+    'xs': '640'
 );
 
 @mixin media-breakpoint-down($breakpoint) {

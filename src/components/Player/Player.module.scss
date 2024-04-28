@@ -8,8 +8,8 @@
     z-index: 30;
 
     @include media-breakpoint-down(sm) {
-        bottom: 58px;
-    }
+        bottom: 64px;
+    }    
     
     &__wrap {
         background-color: var(--black-06);
@@ -111,12 +111,16 @@
     position: absolute;
     bottom: calc(var(--player-height) - 1px);
     right: 0;
-    width: calc(100% - var(--sidebar-width));
     height: 0;
     transition: .4s;
     background-color: var(--black-06);    
     z-index: -1;
     overflow-y: auto;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+        width: calc(100% - var(--sidebar-width));
+    }
 
     &::before {
         content: "";
