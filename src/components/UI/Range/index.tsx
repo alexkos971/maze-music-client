@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Range.module.scss";
+import classNames from "classnames";
 
 interface RangeProps {
     value: number, 
@@ -15,11 +16,11 @@ interface RangeProps {
 };
 
 const Range = ({ value, onChange, onMouseUp, onMouseDown, className, max, min, step, name, color = 'green' } : RangeProps) => {
-    let classes = [
+    let classes = classNames(
+        className,
         styles['range'],
         styles[`range_${color}`],
-        className ?? ''
-    ].join(' ');
+    );
 
     return (
         <div 

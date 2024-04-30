@@ -1,27 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import {formatTime} from "@helpers/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
-import { setCurrentTime, setVolume, setIsPlaying } from "@store/reducers/playerReducer";
-import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
-
-import styles from "./Player.module.scss";
-import VolumeGray from "@icons/volume-gray.svg";
-import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, ChevronUpGray } from "@helpers/images";
-
-import FullPlayer from "./FullPlayer";
-import Range from "@components/UI/Range";
-import useThrottle from "@hooks/throttle";
-import classNames from "classnames";
+import { setCurrentTime, setIsPlaying } from "@store/reducers/playerReducer";
 import { useSaveTrackMutation } from "@store/api/tracksApi";
 
-const Player = () => {
-    
-    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
+import DesktopPlayer from "./DesktopPlayer";
+import MobilePlayer from "./MobilePlayer";
+import { screenIsGreater } from "@hooks/useScreen";
+
+const Player = () => {    
+    const [currentTime, isPlaying, volume, track] = useAppSelector((state : any) => [
         state.player.currentTime, 
         state.player.isPlaying, 
         state.player.volume, 
-        state.player.track, 
-        state.interface.fullplayer_is_expanded
+        state.player.track
     ]);
 
     // @ts-ignore
@@ -31,6 +22,8 @@ const Player = () => {
 
     const [saveTrack] = useSaveTrackMutation();
     const [ isSaved, setIsSaved ] = useState(false);
+
+    const IsGreaterSm = screenIsGreater('sm');
     
     useEffect(() => {
         if (profile && profile?.saved_tracks) {
@@ -43,8 +36,7 @@ const Player = () => {
         return 'sdsds';
     };
 
-    const [repeatType, setRepeat] = useState('all');
-    const [disableKeydown, setDisableKeydown] = useState(false);
+    const [repeatType, setRepeat] = useState('all');    
     const [ isDragged, setIsDragged ] = useState(false);
     
     const [duration, setDuration] = useState<number>(0);
@@ -52,66 +44,6 @@ const Player = () => {
     const ref = useRef<HTMLAudioElement>(null);
 
     // const [messageApi, contextHolder] = message.useMessage()
-
-    const changeVolumeHandler = (volumeValue: number) => {
-        ref.current && (ref.current.volume = volumeValue / 100);
-        dispatch(setVolume(volumeValue / 100));
-        ref.current && (ref.current.volume = volumeValue / 100);
-        dispatch(setVolume(volumeValue / 100));
-    }
-
-    // Keyboard events for player
-    useEffect(() => {
-        const handler = (e: KeyboardEventInit) => {
-            const keyPressedCode : string = e.code ? e.code.toLowerCase() : ""
-
-            const event = e as any;
-            if ( !["f5", "keyr", "keyj"].includes(keyPressedCode) ) event.preventDefault();
-
-            if ( keyPressedCode === "space" ) {
-                if ( isPlaying ) {
-                    dispatch(setIsPlaying(false));
-                } else {
-                    dispatch(setIsPlaying(true));
-                }
-            } else if ( keyPressedCode === "arrowleft" ) {
-                const newCurrentTime = currentTime - 5
-
-                if ( newCurrentTime < 0 ) {
-                    changeTrack("prev");
-                } else {
-                    ref.current && (ref.current.currentTime = newCurrentTime);
-                    setCurrentTime(newCurrentTime)
-                }
-            } else if ( keyPressedCode === "arrowright" ) {
-                const newCurrentTime = currentTime + 5
-
-                if ( newCurrentTime > duration ) {
-                    changeTrack("next", true);
-                } else {
-                    ref.current && (ref.current.currentTime = newCurrentTime);
-                    dispatch(setCurrentTime(newCurrentTime));
-                }
-            } else if ( keyPressedCode === "arrowup" ) {
-                const newVal = volume + 0.2 > 1 ? 1 : volume + 0.2
-                ref.current && (ref.current.volume = newVal);
-                dispatch(setVolume(newVal));
-            } else if ( keyPressedCode === "arrowdown" ) {
-                const newVal = volume - 0.2 < 0 ? 0 : volume - 0.2
-                ref.current && (ref.current.volume = newVal);
-                dispatch(setVolume(newVal));
-            }
-        } 
-
-        // if ( !disableKeydown ) {
-        //     document.addEventListener("keydown", handler)
-        // }
-
-        // return() => {
-        //     document.removeEventListener("keydown", handler)
-        // }
-    }, [isPlaying, currentTime, volume, disableKeydown])
-
 
     // Trigger Audio instance - Change track or start, when src is not empty or changed
     useEffect(() => {
@@ -230,151 +162,34 @@ const Player = () => {
 
     const nextMusicClickHandler = () => changeTrack("next", false);
 
-    // Get Height of the Player
-    const playerRef = useRef<HTMLDivElement>(null);    
-    const [playerHeight, setPlayerHeight] = useState(0);
-    let throttledPlayerHeight = useThrottle(playerHeight, 10);
-
-    const resizeHandler = () => {                
-        if (playerRef?.current?.clientHeight) setPlayerHeight(playerRef.current.clientHeight);
+    if (IsGreaterSm) {
+        return (
+            <DesktopPlayer 
+                {...{  
+                    ref, 
+                    duration,
+                    isSaved,
+                    setIsDragged,
+                    saveTrack,
+                    musicTimeChangeHandler,
+                    metadataLoadHandler, onAudioUpdate, repeatClickHandler, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, shuffleRepeatClickHandler
+                }}
+            />
+        );
     }
-
-    useEffect(() => {
-        document.documentElement.style.setProperty('--player-height', throttledPlayerHeight + 'px');
-      }, [throttledPlayerHeight]);
-
-    useEffect(() => {
-        resizeHandler();
-
-        window.addEventListener('resize', resizeHandler);
-
-        return () => window.removeEventListener('resize', resizeHandler);
-    }, [playerRef]);
-
+    
     return (
-        <div className={styles.player}>
-
-            { track ? <FullPlayer/> : <></> }            
-
-            <div className={styles.player__wrap} ref={playerRef}>
-                <div className="container-fluid">
-                    <div className={styles.player__inner}>
-
-                        {
-                            track && 
-                            <audio 
-                                ref={ref} 
-                                onTimeUpdate={onAudioUpdate} 
-                                onLoadedMetadata={metadataLoadHandler} >
-                                <source src={track.src} type="audio/mpeg" />
-                                Your browser does not support the audio element.
-                            </audio>
-                        }                
-                        
-                        {/* Prev - Play - Next */}
-                        <div className="flex items-center mr-20">
-                            <button 
-                                onClick={previousMusicClickHandler}
-                                className={`${styles['player-nav-button']} ${styles['player-nav-button_prev-track']}`}
-                                type="button">
-                                    <DoubleArrowsGray/>
-                            </button>
-
-                            <button 
-                                className={styles['player-play-button']} 
-                                onClick={playClickHandler}>
-                                {isPlaying ? <PauseBlack/> : <PlayBlack/>}                                
-                            </button>
-
-                            <button 
-                                onClick={nextMusicClickHandler}
-                                className={styles['player-nav-button']}
-                                type="button">
-                                <DoubleArrowsGray />
-                            </button>
-                        </div>
-
-
-                        <div className={`flex items-center justify-center relative w-full max-w-[550px]`}>                            
-                            <button 
-                                onClick={() => {
-                                    if (track) {
-                                        dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
-                                        dispatch( setHeaderIsFilled(false) );                        
-                                    } 
-                                }} 
-                                type="button" 
-                                className={classNames(
-                                    "absolute right-full mr-10",
-                                    !track && 'opacity-0',
-                                    styles['player-nav-button'],
-                                    fullplayer_is_expanded ? 'scale-y-[-1]' : ''
-                                    )}>
-                                <ChevronUpGray/>
-                            </button>
-                            
-                            {/* Show/Hide  Full Player */}
-                            <span className="text-white text-xs">{formatTime(currentTime)}</span>
-
-                            {/* Progress */}
-                            <Range
-                                value={currentTime}                                
-                                className={'mx-4 w-full'}
-                                onMouseUp={() => {
-                                    setIsDragged(false);
-                                    
-                                    if ( ref?.current && ref.current.currentTime != currentTime ) {
-                                        ref.current.currentTime = currentTime;
-                                    }
-                                }}
-                                onMouseDown={() => setIsDragged(true)}
-                                onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
-                                max={duration} />
-                            
-                            <span className="text-white text-xs">{formatTime(duration) ?? "00:00"}</span>
-                        </div>
-
-
-                        {/* Navigation - Volume/Save/Repeat */}
-                        <div className={classNames(styles['player__nav'], 'ml-10')}>
-                            <span className={styles['player-volume']}>
-                                <button
-                                    className={`${styles['player-nav-button']}`} 
-                                    type="button">                    
-                                    
-                                    <VolumeGray/>
-                                </button>
-                                
-                                <Range
-                                    value={volume * 100}
-                                    min={0}
-                                    color="gray"
-                                    max={100}
-                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
-                                    className={styles['player-volume__range']}
-                                    />
-                            </span>
-
-                            <button 
-                                type="button" 
-                                disabled={!track}
-                                className={`${styles['player-nav-button']}`}
-                                onClick={() => saveTrack({
-                                    track: track, 
-                                    action: isSaved ? "unsave" : "save"
-                                })}    
-                            > 
-                                {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
-                            </button>
-
-                            <button type="button" onClick={repeatClickHandler} className={styles['player-nav-button']}>
-                                <RepeatGray/>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <MobilePlayer 
+            {...{  
+                ref, 
+                duration,
+                isSaved,
+                setIsDragged,
+                saveTrack,
+                musicTimeChangeHandler,
+                metadataLoadHandler, onAudioUpdate, repeatClickHandler, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, shuffleRepeatClickHandler
+            }}
+        />
     );
 }
 

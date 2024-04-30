@@ -4,6 +4,7 @@
     --range-progress: 0;
     --range-height: 4px;
     height: var(--range-height);
+    --background-range-color: var(--black-36);
 
     &__track, &__current-time {
         position: absolute;
@@ -13,7 +14,7 @@
         width: 100%;
         height: var(--range-height);
         // border-radius: 6px;
-        background-color: var(--black-36);
+        background-color: var(--background-range-color);
         user-select: none;              
         -webkit-user-select: none;               
         -moz-user-select: none;               

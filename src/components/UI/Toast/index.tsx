@@ -10,10 +10,11 @@ export type ToastProps = {
 };
 
 const ToastContent = ({ className, text, onClose } : { className: string, text?: string; onClose: () => void }) => (
-    <div className={`${className} duration-300 px-4 py-3 flex items-center gap-4 mb-3`}>
+    <div className={`${className} duration-300 px-4 py-3 inline-flex items-center gap-4 mb-3 max-md:w-full`}>
         <span className="text-white text-lg">{text}</span> 
         
         <button type="button" onClick={onClose} className="relative w-6 h-6 block 
+            max-md:ml-auto
             before:w-5 before:h-[2px] before:bg-white before:absolute before:left-1/2 before:top-1/2 before:translate-x-[-50%] before:translate-y-[-50%] before:-rotate-45
             after:w-5 after:h-[2px] after:bg-white after:absolute after:left-1/2 after:top-1/2 after:translate-x-[-50%] after:translate-y-[-50%] after:rotate-45
         "></button>
@@ -47,16 +48,19 @@ const Toast = () => {
     }, [type]);
 
     return (
-        <div className={classNames("fixed bottom-16 right-6 flex flex-col items-end z-50", type == 'hidden' && 'pointer-events-none select-none')}>
-        {
-            Array.isArray(text) ? 
-                text.map(item => (
-                    <ToastContent className={styles[type]} key={item} text={t(item)} onClose={() => dispatch(showToast({ text: t(item), type: 'hidden' }))}/>
-                ))                
-            : (typeof text == 'string')
-                ? <ToastContent className={styles[type]} text={t(text)} onClose={() => dispatch(showToast({ text: t(text), type: 'hidden' }))}/>
-                : <></>
-        }
+        <div className={classNames(
+            "fixed container w-full bottom-28 md:bottom-16 right-0 flex flex-col items-end z-50", 
+            type == 'hidden' && 'pointer-events-none select-none'
+        )}>
+            {
+                Array.isArray(text) ? 
+                    text.map(item => (
+                        <ToastContent className={styles[type]} key={item} text={t(item)} onClose={() => dispatch(showToast({ text: t(item), type: 'hidden' }))}/>
+                    ))                
+                : (typeof text == 'string')
+                    ? <ToastContent className={styles[type]} text={t(text)} onClose={() => dispatch(showToast({ text: t(text), type: 'hidden' }))}/>
+                    : <></>
+            }
         </div>
     );
 }
