@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next';
 import { useAppSelector } from '@hooks';
 
 import MusicNoteGray from "@assets/images/icons/note-gray.svg";
-import { fillHeaderByScroll } from '@components/Header';
 
 import styles from './Player.module.scss';
 import Image from 'next/image';
@@ -18,7 +17,7 @@ const FullPlayer = () => {
     }
 
     return (
-        <div className={`${styles.fullplayer} ${fullplayer_is_expanded ? styles.fullplayer_expanded : ''}`} onScroll={fillHeaderByScroll}>
+        <div className={`${styles.fullplayer} ${fullplayer_is_expanded ? styles.fullplayer_expanded : ''}`}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-5">

@@ -67,7 +67,7 @@ export const tracksApi = createApi({
                             // @ts-ignore 
                             const { data } = savedTracksPromise;
                         
-                            if (data?.length) {
+                            if (data) {
                                 savedTracks = data;
                             }
                         }

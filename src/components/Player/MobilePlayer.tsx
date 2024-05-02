@@ -90,7 +90,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                             <source src={track.src} type="audio/mpeg" />
                             Your browser does not support the audio element.
                         </audio>
-                    }               
+                    }     
 
                     <div className="w-12 h-12 flex-shrink-0 overflow-hidden">
                         {!track?.cover 

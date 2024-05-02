@@ -16,6 +16,7 @@ import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon, Che
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "@hooks/index";
 import Avatar from "@components/UI/Avatar";
+import { formatNick } from "@helpers/formated";
 
 interface Props {
   canReturnBack?: boolean,
@@ -111,7 +112,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                   <Avatar 
                     size="40px"                            
                     img={profile?.avatar ?? ''}
-                    previewText={profile?.full_name ? profile?.full_name.split(" ").reduce((item, acc) => item[0] + acc[0]) : ''}
+                    previewText={profile?.full_name ? formatNick(profile.full_name) : ''}
                   />
                                   
                   {

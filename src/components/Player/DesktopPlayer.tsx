@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef, ForwardedRef, MutableRefObject } from "react";
+import { useEffect, useRef, useState, forwardRef } from "react";
 import styles from "./Player.module.scss";
 import useThrottle from "@hooks/throttle";
 import FullPlayer from "./FullPlayer";
@@ -8,7 +8,7 @@ import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, 
 import VolumeGray from "@icons/volume-gray.svg";
 import Range from "@components/UI/Range";
 import { useAppDispatch, useAppSelector } from "@hooks";
-import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
+import { setFullplayerExpanded } from "@store/reducers/interfaceReducer";
 import { setIsPlaying, setVolume, setCurrentTime } from "@store/reducers/playerReducer";
 
 interface DesktopPlayerProps {
@@ -175,8 +175,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                             <button 
                                 onClick={() => {
                                     if (track) {
-                                        dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
-                                        dispatch( setHeaderIsFilled(false) );                        
+                                        dispatch( setFullplayerExpanded(!fullplayer_is_expanded) );                    
                                     } 
                                 }} 
                                 type="button" 

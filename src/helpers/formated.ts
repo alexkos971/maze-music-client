@@ -1,4 +1,4 @@
-const formatTime = (totalSeconds: number) => {
+export const formatTime = (totalSeconds: number) => {
     const seconds: number = Math.ceil(totalSeconds)
     const minutes = Math.floor(seconds / 60);
     const secondsRemaining = seconds % 60;
@@ -7,7 +7,7 @@ const formatTime = (totalSeconds: number) => {
     return `${minutes}:${secondsFormatted}`;
 };
 
-const formatNumber = (num: number) : string => {
+export const formatNumber = (num: number) : string => {
     const suffixes = ["", "K", "M", "B", "T"];
 
     const magnitude = Math.floor(Math.log10(Math.abs(num)) / 3);
@@ -16,6 +16,11 @@ const formatNumber = (num: number) : string => {
     return `${num}${magnitude > 0 ? suffixes[magnitude] : ''}`;
 } 
 
-export {
-    formatTime, formatNumber
-};
+export const formatNick = (val : string): string => {
+    let nameArr = val.split(" ");
+
+    if (nameArr.length == 1) {
+        return val[0];
+    }
+    return nameArr.reduce((item, acc, index) => (index == 1 ? item[0] : item) + acc[0]);
+}

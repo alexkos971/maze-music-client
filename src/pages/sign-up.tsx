@@ -54,12 +54,11 @@ const SignUp = () => {
     const dispatch = useAppDispatch();
 
     const { push } = useRouter();
-    let [signUp, { error, isSuccess, isLoading}] = useSignUpMutation();
-    let [verifyEmail, verify] = useLazyVerifyEmailQuery();
+    let [signUp, { error, isSuccess}] = useSignUpMutation();
+    let [verifyEmail, verifyRes] = useLazyVerifyEmailQuery();
 
     useEffect(() => {
         if (error) {
-            console.log(error);
             dispatch(showToast({
                 type: 'error', 
                 // @ts-ignore
@@ -72,19 +71,23 @@ const SignUp = () => {
         }
     }, [isSuccess, error]);
 
-    const verifyEmailHandle = async() => {
-        // @ts-ignore
-        await verifyEmail(fields.email);
-        if (verify?.data?.is_exist) {
+
+    // Verify Email
+    useEffect(() => {    
+        if (!verifyRes.isSuccess) {
+            return;
+        }
+        
+        if (!verifyRes.data.is_exist) {
+            goToStep(activeStep + 1);
+        }
+        else {
             dispatch(showToast({
                 type: 'error',
                 text: t('pages.sign-up.errors.email_is_exist')
-            }))
+            }));
         }
-        else {
-            goToStep(activeStep + 1);
-        }
-    }
+    }, [verifyRes.data]);
 
     return (
         <AuthWrap size="large">
@@ -151,9 +154,9 @@ const SignUp = () => {
                         <ButtonsNav 
                             buttonText={t('pages.sign-up.btn_next')}
                             // @ts-ignore
-                            disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password'] || verify.isLoading}
+                            disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password'] || verifyRes.isLoading}
                             canSkip={false} 
-                            goToStep={verifyEmailHandle} 
+                            goToStep={() => verifyEmail(fields.email)} 
                         />
                     </Step>
 

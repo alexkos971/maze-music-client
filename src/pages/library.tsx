@@ -12,13 +12,13 @@ import CardWrap from "@components/UI/CardWrap";
 import SavedTracksCover from "@assets/images/saved-tracks-cover.png";
 import WeekndAvatar from "@assets/images/uploads/weeknd.png";
 
-import { useAppDispatch } from "@hooks";
+import { useAppDispatch, useAppSelector } from "@hooks";
 import { toggleModal } from "@store/reducers/interfaceReducer";
-import { FilePicker } from "@components/UI/Field";
 
 export default ProtectedPage(function Library() {
   const {t} = useTranslation('common');
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const profile = useAppSelector(state => state.profile);
 
   const tabs = [
     t("pages.library.tabs.all"), 
@@ -89,7 +89,7 @@ export default ProtectedPage(function Library() {
                     name: t('pages.library.saved'),
                     cover: SavedTracksCover,
                     owner: "Alex Kos",                    
-                    tracks: [123, 3453, 23232, 34534, 345343]
+                    tracks: profile?.saved_tracks ?? []
                   }
               ]}
             /> 

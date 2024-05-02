@@ -31,13 +31,13 @@ let SidebarButton = ({
                 !mobileMenu && `after:h-7 after:w-[1.5px] after:bg-gray-4a after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 ${!isCurrent ? 'after:opacity-0' : ''}`    
             )}>
             <div className={classNames(
-                "sidebar-button__wrap flex items-center max-md:flex-col md:justify-start rounded-lg py-3 px-4 duration-300 w-full cursor-pointer md:hover:bg-gray-f5",
+                "sidebar-button__wrap flex items-center max-md:flex-col md:justify-start rounded-lg py-3 px-4 duration-300 w-full cursor-pointer md:hover:bg-gray-f5 dark:md:hover:bg-gray-3e",
 
             )}>
-                <div className={`w-6 h-6 duration-300 ${!isCurrent ? 'opacity-50' : 'opacity-100'} flex-shrink-0 text-black-36 svg-current-color`}>
+                <div className={`w-6 h-6 duration-300 ${!isCurrent ? 'opacity-50' : 'opacity-100'} flex-shrink-0 text-black-36 dark:text-white svg-current-color`}>
                     {icon ?? <></>}
                 </div>
-                <span className={`md:ml-4 md:mt-[2px] max-md:font-secondary text-black-36 text-base max-md:text-xs font-medium md:font-semibold leading-5 ${!isCurrent ? 'opacity-50' : 'opacity-100'} duration-300 whitespace-nowrap overflow-hidden text-ellipsis`}>{text}</span>
+                <span className={`md:ml-4 md:mt-[2px] max-md:font-secondary text-black-36 dark:text-gray-f5 text-base max-md:text-xs font-medium md:font-semibold leading-5 ${!isCurrent ? 'opacity-50' : 'opacity-100'} duration-300 whitespace-nowrap overflow-hidden text-ellipsis`}>{text}</span>
             </div>
         </div>
     )
@@ -62,7 +62,7 @@ const Sidebar : React.FC = () => {
         let sidebarState = lsGetItem('sidebar_is_collapsed');
         
         if (screenIsGreaterLg && typeof sidebarState === 'boolean') {
-            newState = sidebarState
+            newState = sidebarState;
         }
         
         dispatch(setSidebarCollapsed( newState ));

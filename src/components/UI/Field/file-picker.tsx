@@ -163,17 +163,13 @@ const FilePicker = ({
 							</div>
 
 							<div className={styles.field__info}>
-								<span className={styles.field__text}>
-									
-									{ 
+								{ 
 									// @ts-ignore
 									!file?.name 
 									? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} />
 										// @ts-ignore
 										: file.name	
-									}
-									
-								</span>								
+								}								
 							</div>
 						</>
 					)
