@@ -198,7 +198,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                                 onMouseUp={() => {
                                     setIsDragged(false);
                                     
-                                    if ( ref?.current && ref.current.currentTime != currentTime ) {
+                                    if ( ref?.current && ref?.current?.currentTime != currentTime ) {
                                         ref.current.currentTime = currentTime;
                                     }
                                 }}
@@ -252,5 +252,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
         </div>
     )
 });
+
+DesktopPlayer.displayName = 'DesktopPlayer';
 
 export default DesktopPlayer;

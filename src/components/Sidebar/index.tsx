@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { screenIsGreater } from "@hooks/useScreen";
+import { useIsGreater } from "@hooks/useScreen";
 
 import { lsGetItem } from "@helpers/localstorage";
 import Link from "next/link";
@@ -51,8 +51,8 @@ const Sidebar : React.FC = () => {
     const isCollapsed = useAppSelector(state => state.interface.sidebar_is_collapsed);
     const directory = useRouter().pathname;
 
-    let screenIsGreaterSm = screenIsGreater('sm');
-    let screenIsGreaterLg = screenIsGreater('lg');
+    let screenIsGreaterSm = useIsGreater('sm');
+    let screenIsGreaterLg = useIsGreater('lg');
 
     const menu_pages = ['for_you', "library", 'upload'];
 

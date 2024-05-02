@@ -5,7 +5,7 @@ import { useSaveTrackMutation } from "@store/api/tracksApi";
 
 import DesktopPlayer from "./DesktopPlayer";
 import MobilePlayer from "./MobilePlayer";
-import { screenIsGreater } from "@hooks/useScreen";
+import { useIsGreater } from "@hooks/useScreen";
 
 const Player = () => {    
     const [currentTime, isPlaying, volume, track] = useAppSelector((state : any) => [
@@ -23,7 +23,7 @@ const Player = () => {
     const [saveTrack] = useSaveTrackMutation();
     const [ isSaved, setIsSaved ] = useState(false);
 
-    const IsGreaterSm = screenIsGreater('sm');
+    const IsGreaterSm = useIsGreater('sm');
     
     useEffect(() => {
         if (profile && profile?.saved_tracks) {

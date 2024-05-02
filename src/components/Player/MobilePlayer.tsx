@@ -150,4 +150,6 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
     )
 });
 
+MobilePlayer.displayName = 'MobilePlayer';
+
 export default MobilePlayer;

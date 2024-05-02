@@ -26,7 +26,7 @@ function getDimension() {
     }
 };
 
-export const screenIsGreater = (dimension: string) : boolean | Error => {
+export const useIsGreater = (dimension: string) : boolean | Error => {
     if (!screenSizes[dimension]) {
         return new Error('Unknown screen type');
     }
@@ -44,7 +44,7 @@ export const screenIsGreater = (dimension: string) : boolean | Error => {
     return throttledValue;
 }
 
-export const screenIsSmaller = (dimension: string) : boolean | Error => {
+export const useIsSmaller = (dimension: string) : boolean | Error => {
     if (!screenSizes[dimension]) {
         return new Error('Unknown screen type');
     }

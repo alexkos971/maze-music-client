@@ -28,8 +28,8 @@ function Playlist() {
                 <h1>{router.query.id}</h1>
                 {
                     playlist?.tracks?.length ?
-                        playlist.tracks.map(item => {
-                            return <p>some</p>
+                        playlist.tracks.map((item, index) => {
+                            return <p key={item._id + index}>some</p>
                         })
                     : <></>
                 }
