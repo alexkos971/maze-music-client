@@ -27,10 +27,6 @@ function getDimension() {
 };
 
 export const useIsGreater = (dimension: string) : boolean | Error => {
-    if (!screenSizes[dimension]) {
-        return new Error('Unknown screen type');
-    }
-
     let [isGreater, setIsGreater] = useState(window.innerWidth >= screenSizes[dimension]);
     let throttledValue = useThrottle(isGreater, 50);
 
@@ -41,14 +37,14 @@ export const useIsGreater = (dimension: string) : boolean | Error => {
         return () => window.removeEventListener('resize', resizeHandle, false);
     }, []);
 
-    return throttledValue;
-}
-
-export const useIsSmaller = (dimension: string) : boolean | Error => {
     if (!screenSizes[dimension]) {
         return new Error('Unknown screen type');
     }
 
+    return throttledValue;
+}
+
+export const useIsSmaller = (dimension: string) : boolean | Error => {    
     let [isSmaller, setIsSmaller] = useState(window.innerWidth < screenSizes[dimension]);
     let throttledValue = useThrottle(isSmaller, 50)
 
@@ -59,9 +55,12 @@ export const useIsSmaller = (dimension: string) : boolean | Error => {
         return () => window.removeEventListener('resize', resizeHandle, false);
     }, []);
 
+    if (!screenSizes[dimension]) {
+        return new Error('Unknown screen type');
+    }
+
     return throttledValue;
 }
-
 
 export const useScreen = () => {
     const [dimension, setDimension] = useState(getDimension());
