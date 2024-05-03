@@ -13,7 +13,7 @@ function SavedTracks() {
     const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
     const [getSavedTracks, { isSuccess, data }] = useGetSavedTracksMutation();
-    const savedTracks = useAppSelector(state => state.tracks.savedTracks)
+    const [savedTracks, profile] = useAppSelector(state => [state.tracks.savedTracks, state.profile])
     
     useEffect(() => {
         if (isSuccess && data) {
@@ -33,8 +33,14 @@ function SavedTracks() {
                 isSaved={true}
                 data={{
                     _id: 'saved',
+                    __v: 1,
+                    date: new Date(),
+                    cover: null,
+                    description: null,
+                    is_public: false,
                     name: t("pages.saved_tracks.title"),
-                    owner: null,
+                    // @ts-ignore
+                    owner: profile?._id,
                     tracks: savedTracks ?? []
                 }}
             />

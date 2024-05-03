@@ -43,7 +43,13 @@ interface PlaylistDto {
     name: string,
     description: string | null;
     cover: string | null;
-    owner: string;
+    owner: any;
+    // owner: string;
+    // owner: null | {
+    //         name: string,
+    //         avatar: string,
+    //         _id: string
+    //     };
     is_public: boolean,
     tracks: Track[]
 }
@@ -78,16 +84,16 @@ interface ArtistDto {
     tracks: string[];
 }
 
-interface PlaylistDto {
-    _id: string;
-    name: string;
-    owner: null | {
-        name: string,
-        avatar: string,
-        _id: string
-    };
-    tracks: Track[]
-}
+// interface PlaylistDto {
+//     _id: string;
+//     name: string;
+//     owner: null | {
+//         name: string,
+//         avatar: string,
+//         _id: string
+//     };
+//     tracks: Track[]
+// }
 
 type ProfileDto = {
     _id: string;
