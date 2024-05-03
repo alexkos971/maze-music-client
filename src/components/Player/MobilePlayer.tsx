@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef } from "react";
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
 import styles from "./Player.module.scss";
 import useThrottle from "@hooks/throttle";
@@ -34,6 +34,13 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
     musicTimeChangeHandler,
     metadataLoadHandler, onAudioUpdate, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, repeatClickHandler, shuffleRepeatClickHandler
 }, ref) {
+    
+    const internalRef = useRef<HTMLAudioElement>(null)
+    useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
+        ref,
+        () => internalRef.current
+    );
+
     const dispatch = useAppDispatch();
 
     const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
@@ -84,7 +91,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                     {
                         track && 
                         <audio 
-                            ref={ref} 
+                            ref={internalRef} 
                             onTimeUpdate={onAudioUpdate} 
                             onLoadedMetadata={metadataLoadHandler} >
                             <source src={track.src} type="audio/mpeg" />
@@ -137,8 +144,8 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                         onMouseUp={() => {
                             setIsDragged(false);
                             
-                            if ( ref?.current && ref.current.currentTime != currentTime ) {
-                                ref.current.currentTime = currentTime;
+                            if ( internalRef?.current && internalRef.current.currentTime != currentTime ) {
+                                internalRef.current.currentTime = currentTime;
                             }
                         }}
                         onMouseDown={() => setIsDragged(true)}

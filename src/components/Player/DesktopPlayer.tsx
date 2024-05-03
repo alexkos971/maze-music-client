@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef } from "react";
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import styles from "./Player.module.scss";
 import useThrottle from "@hooks/throttle";
 import FullPlayer from "./FullPlayer";
@@ -37,6 +37,12 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
 }, ref) {
     const dispatch = useAppDispatch();
 
+    const internalRef = useRef<HTMLAudioElement>(null)
+    useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
+        ref,
+        () => internalRef.current
+      )
+
     const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
         state.player.currentTime, 
         state.player.isPlaying, 
@@ -46,9 +52,13 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
     ]);
 
     const changeVolumeHandler = (volumeValue: number) => {
-        ref.current && (ref.current.volume = volumeValue / 100);
+        if (!internalRef) {
+            return;
+        }
+        
+        internalRef.current && (internalRef.current.volume = volumeValue / 100);
         dispatch(setVolume(volumeValue / 100));
-        ref.current && (ref.current.volume = volumeValue / 100);
+        internalRef.current && (internalRef.current.volume = volumeValue / 100);
         dispatch(setVolume(volumeValue / 100));
     }
 
@@ -139,7 +149,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                         {
                             track && 
                             <audio 
-                                ref={ref} 
+                                ref={internalRef} 
                                 onTimeUpdate={onAudioUpdate} 
                                 onLoadedMetadata={metadataLoadHandler} >
                                 <source src={track.src} type="audio/mpeg" />
@@ -198,8 +208,8 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                                 onMouseUp={() => {
                                     setIsDragged(false);
                                     
-                                    if ( ref?.current && ref?.current?.currentTime != currentTime ) {
-                                        ref.current.currentTime = currentTime;
+                                    if ( internalRef?.current && internalRef?.current?.currentTime != currentTime ) {
+                                        internalRef.current.currentTime = currentTime;
                                     }
                                 }}
                                 onMouseDown={() => setIsDragged(true)}
