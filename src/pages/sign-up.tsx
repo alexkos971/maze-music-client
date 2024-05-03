@@ -156,6 +156,7 @@ const SignUp = () => {
                             // @ts-ignore
                             disabled={!validFields.full_name || !validFields.email || !validFields.password || !validFields['confirm-password'] || verifyRes.isLoading}
                             canSkip={false} 
+                            // @ts-ignore
                             goToStep={() => verifyEmail(fields.email)} 
                         />
                     </Step>

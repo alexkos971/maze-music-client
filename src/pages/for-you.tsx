@@ -15,7 +15,7 @@ import { useTranslation } from "next-i18next";
 
 const ForYou = () => {    
     const {t} = useTranslation('common');
-    const { isSuccess, isError, data } = useGetAllTracksQuery('');
+    const { data } = useGetAllTracksQuery('');
 
     return (        
         <MainWrap>
@@ -66,7 +66,7 @@ const ForYou = () => {
                         {
                             id: 'q11',
                             name: 'Classical Hits',
-                            feature: ClassicalHitsCover,
+                            cover: ClassicalHitsCover,
                             owner: "Alex Kos",                    
                             tracks: [123, 3453, 23232, 34534, 345343]
                         },
@@ -74,13 +74,13 @@ const ForYou = () => {
                             id: 'q1ds1',
                             name: 'Rock',
                             owner: "Alex Kos",
-                            feature: RockCover,
+                            cover: RockCover,
                             tracks: [123, 3453, 23232, 34534, 345343]
                         },
                         {
                             id: 'busuu',
                             name: 'Bass House',
-                            feature: ElectronicCover,
+                            cover: ElectronicCover,
                             owner: "Alex Kos",
                             tracks: [123, 3453, 23232, 34534, 345343]
                         },

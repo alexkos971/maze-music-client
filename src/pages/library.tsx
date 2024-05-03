@@ -87,7 +87,8 @@ export default ProtectedPage(function Library() {
                     link: '/playlist/saved',
                     name: t('pages.library.saved'),
                     cover: SavedTracksCover,
-                    owner: "Alex Kos",                    
+                    owner: "Alex Kos",  
+                    // @ts-ignore                  
                     tracks: profile?.saved_tracks ?? []
                   }
               ]}
