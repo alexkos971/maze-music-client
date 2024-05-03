@@ -78,8 +78,7 @@ export default ProtectedPage(function Library() {
                 </div>
               </CardWrap>
               : <></>
-          }
-            
+          }            
             <Playlists
               title={t('title.playlists')}
               data={[

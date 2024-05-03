@@ -62,60 +62,6 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
         dispatch(setVolume(volumeValue / 100));
     }
 
-    const [disableKeydown, setDisableKeydown] = useState(false);
-
-    // Keyboard events for player
-    useEffect(() => {
-        // const handler = (e: KeyboardEventInit) => {
-        //     const keyPressedCode : string = e.code ? e.code.toLowerCase() : ""
-
-        //     const event = e as any;
-        //     if ( !["f5", "keyr", "keyj"].includes(keyPressedCode) ) event.preventDefault();
-
-        //     if ( keyPressedCode === "space" ) {
-        //         if ( isPlaying ) {
-        //             dispatch(setIsPlaying(false));
-        //         } else {
-        //             dispatch(setIsPlaying(true));
-        //         }
-        //     } else if ( keyPressedCode === "arrowleft" ) {
-        //         const newCurrentTime = currentTime - 5
-
-        //         if ( newCurrentTime < 0 ) {
-        //             changeTrack("prev");
-        //         } else {
-        //             internalRef.current && (internalRef.current.currentTime = newCurrentTime);
-        //             setCurrentTime(newCurrentTime)
-        //         }
-        //     } else if ( keyPressedCode === "arrowright" ) {
-        //         const newCurrentTime = currentTime + 5
-
-        //         if ( newCurrentTime > duration ) {
-        //             changeTrack("next", true);
-        //         } else {
-        //             internalRef.current && (internalRef.current.currentTime = newCurrentTime);
-        //             dispatch(setCurrentTime(newCurrentTime));
-        //         }
-        //     } else if ( keyPressedCode === "arrowup" ) {
-        //         const newVal = volume + 0.2 > 1 ? 1 : volume + 0.2
-        //         internalRef.current && (internalRef.current.volume = newVal);
-        //         dispatch(setVolume(newVal));
-        //     } else if ( keyPressedCode === "arrowdown" ) {
-        //         const newVal = volume - 0.2 < 0 ? 0 : volume - 0.2
-        //         internalRef.current && (internalRef.current.volume = newVal);
-        //         dispatch(setVolume(newVal));
-        //     }
-        // } 
-
-        // if ( !disableKeydown ) {
-        //     document.addEventListener("keydown", handler)
-        // }
-
-        // return() => {
-        //     document.removeEventListener("keydown", handler)
-        // }
-    }, [isPlaying, currentTime, volume, disableKeydown])
-
     // Get Height of the Player
     const playerRef = useRef<HTMLDivElement>(null);    
     const [playerHeight, setPlayerHeight] = useState(0);

@@ -2,10 +2,12 @@ import classNames from "classnames";
 import styles from "./Modal.module.scss";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { toggleModal } from "@store/reducers/interfaceReducer";
+// import { FC } from "react";
 
 export interface ModalProps {
     isOpened: boolean,
-    content: JSX.Element | React.FC | null,
+    // content: JSX.Element | FC<any> | string | Element | boolean | null,
+    content: any,
     onClose?: () => void
 }
 
@@ -23,8 +25,7 @@ const Modal = () => {
             <div className={styles.modal__background} onClick={closeModal}></div>
             
             <div className={styles.modal__content}>
-                <button onClick={closeModal} className={styles['modal__close-btn']}></button>
-                
+                <button onClick={closeModal} className={styles['modal__close-btn']}></button>            
                 {content ?? <></>}
             </div>
         </div>
