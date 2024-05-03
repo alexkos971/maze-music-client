@@ -41,7 +41,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
     useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
         ref,
         () => internalRef.current
-      )
+    );
 
     const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
         state.player.currentTime, 
@@ -66,46 +66,46 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
 
     // Keyboard events for player
     useEffect(() => {
-        const handler = (e: KeyboardEventInit) => {
-            const keyPressedCode : string = e.code ? e.code.toLowerCase() : ""
+        // const handler = (e: KeyboardEventInit) => {
+        //     const keyPressedCode : string = e.code ? e.code.toLowerCase() : ""
 
-            const event = e as any;
-            if ( !["f5", "keyr", "keyj"].includes(keyPressedCode) ) event.preventDefault();
+        //     const event = e as any;
+        //     if ( !["f5", "keyr", "keyj"].includes(keyPressedCode) ) event.preventDefault();
 
-            if ( keyPressedCode === "space" ) {
-                if ( isPlaying ) {
-                    dispatch(setIsPlaying(false));
-                } else {
-                    dispatch(setIsPlaying(true));
-                }
-            } else if ( keyPressedCode === "arrowleft" ) {
-                const newCurrentTime = currentTime - 5
+        //     if ( keyPressedCode === "space" ) {
+        //         if ( isPlaying ) {
+        //             dispatch(setIsPlaying(false));
+        //         } else {
+        //             dispatch(setIsPlaying(true));
+        //         }
+        //     } else if ( keyPressedCode === "arrowleft" ) {
+        //         const newCurrentTime = currentTime - 5
 
-                if ( newCurrentTime < 0 ) {
-                    changeTrack("prev");
-                } else {
-                    ref.current && (ref.current.currentTime = newCurrentTime);
-                    setCurrentTime(newCurrentTime)
-                }
-            } else if ( keyPressedCode === "arrowright" ) {
-                const newCurrentTime = currentTime + 5
+        //         if ( newCurrentTime < 0 ) {
+        //             changeTrack("prev");
+        //         } else {
+        //             internalRef.current && (internalRef.current.currentTime = newCurrentTime);
+        //             setCurrentTime(newCurrentTime)
+        //         }
+        //     } else if ( keyPressedCode === "arrowright" ) {
+        //         const newCurrentTime = currentTime + 5
 
-                if ( newCurrentTime > duration ) {
-                    changeTrack("next", true);
-                } else {
-                    ref.current && (ref.current.currentTime = newCurrentTime);
-                    dispatch(setCurrentTime(newCurrentTime));
-                }
-            } else if ( keyPressedCode === "arrowup" ) {
-                const newVal = volume + 0.2 > 1 ? 1 : volume + 0.2
-                ref.current && (ref.current.volume = newVal);
-                dispatch(setVolume(newVal));
-            } else if ( keyPressedCode === "arrowdown" ) {
-                const newVal = volume - 0.2 < 0 ? 0 : volume - 0.2
-                ref.current && (ref.current.volume = newVal);
-                dispatch(setVolume(newVal));
-            }
-        } 
+        //         if ( newCurrentTime > duration ) {
+        //             changeTrack("next", true);
+        //         } else {
+        //             internalRef.current && (internalRef.current.currentTime = newCurrentTime);
+        //             dispatch(setCurrentTime(newCurrentTime));
+        //         }
+        //     } else if ( keyPressedCode === "arrowup" ) {
+        //         const newVal = volume + 0.2 > 1 ? 1 : volume + 0.2
+        //         internalRef.current && (internalRef.current.volume = newVal);
+        //         dispatch(setVolume(newVal));
+        //     } else if ( keyPressedCode === "arrowdown" ) {
+        //         const newVal = volume - 0.2 < 0 ? 0 : volume - 0.2
+        //         internalRef.current && (internalRef.current.volume = newVal);
+        //         dispatch(setVolume(newVal));
+        //     }
+        // } 
 
         // if ( !disableKeydown ) {
         //     document.addEventListener("keydown", handler)
