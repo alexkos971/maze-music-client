@@ -1,6 +1,6 @@
 import styles from "./Field.module.scss";
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { ChevronDownBlack } from "@helpers/images";
+import { ChevronDownBlack } from "@utils/images";
 import { useOutsideClick } from "@hooks/interface";
 import { MainFieldProps } from "./index";
 import { useFieldValidation } from "@hooks";
@@ -144,7 +144,7 @@ export const Select = ({
                     <ChevronDownBlack />
                 </div>
 
-                <div className={`field__options absolute z-10 bg-white dark:bg-app-background-secondary border-[0.5px] border-gray-e5 dark:border-gray-3e rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
+                <div className={`field__options absolute z-10 bg-white dark:bg-gray-500 border-[0.5px] border-gray-100 dark:border-gray-400 rounded-[5px] w-full top-[calc(100%+6px)] duration-300 py-2 ${!selectIsOpened ? 'opacity-0 invisible' : ''}`}>
                     <ul>
                         {Object.keys(options).map((key: any) => {
                             let slug = Array.isArray(options) ? options[key] : key,
@@ -152,7 +152,7 @@ export const Select = ({
                             return (
                                 <li 
                                     key={key}
-                                    className={`cursor-pointer text-base text-gray-4a py-2 px-4 duration-300 hover:bg-gray-f8 dark:hover:bg-black-36 ${(val == title || (val && typeof val == 'object' && val.slug == slug)) ? 'text-green-05 font-medium' : 'dark:text-white'}`} 
+                                    className={`cursor-pointer text-base text-gray-300 py-2 px-4 duration-300 hover:bg-gray-50 dark:hover:bg-gray-400 ${(val == title || (val && typeof val == 'object' && val.slug == slug)) ? 'text-green-100 font-medium' : 'dark:text-white'}`} 
                                     data-item={slug}
                                     onClick={() => selectHandle(slug, title)}>                                
                                     {title}

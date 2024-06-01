@@ -1,4 +1,4 @@
-import { BoxBlackIcon, ExploreBlackIcon, SettingsGrayIcon, UploadBlackIcon } from "@helpers/images";
+import { BoxBlackIcon, ExploreBlackIcon, SettingsGrayIcon, UploadBlackIcon } from "@utils/images";
 
 export interface DirType {
     path: string;

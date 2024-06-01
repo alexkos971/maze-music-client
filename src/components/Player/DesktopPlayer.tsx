@@ -3,8 +3,8 @@ import styles from "./Player.module.scss";
 import useThrottle from "@hooks/throttle";
 import FullPlayer from "./FullPlayer";
 import classNames from "classnames";
-import { formatTime } from "@helpers/formated";
-import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, ChevronUpGray } from "@helpers/images";
+import { formatTime } from "@utils/formated";
+import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, ChevronUpGray } from "@utils/images";
 import VolumeGray from "@icons/volume-gray.svg";
 import Range from "@components/UI/Range";
 import { useAppDispatch, useAppSelector } from "@hooks";
@@ -176,14 +176,16 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                                     <VolumeGray/>
                                 </button>
                                 
-                                <Range
-                                    value={volume * 100}
-                                    min={0}
-                                    color="gray"
-                                    max={100}
-                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
-                                    className={styles['player-volume__range']}
-                                    />
+                                <div className={styles['player-volume__wrap']}>
+                                    <Range
+                                        value={volume * 100}
+                                        min={0}
+                                        color="gray"
+                                        max={100}
+                                        onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
+                                        className={styles['player-volume__range']}
+                                        />
+                                </div>
                             </span>
 
                             <button 

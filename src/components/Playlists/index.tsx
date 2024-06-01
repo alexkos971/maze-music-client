@@ -1,8 +1,7 @@
 import React from "react";
-import Card from "@components/UI/Card";
+import PlaylistCard from "./PlaylistCard";
 import { StaticImageData } from "next/image";
 import { Identifier } from "typescript";
-import Slider from "@components/UI/Slider";
 import { useTranslation } from "next-i18next";
 import Title from "@components/UI/Title";
 
@@ -25,30 +24,27 @@ const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {
     const tracks_title = t('interface.tracks');
 
     return( 
-        <div className={`block cards mt-8 ${className}`}>
-            { title ? <Title>{title}</Title> : '' }
+        <div className={`block cards my-16 ${className}`}>
+            { title ? <Title className="md:mb-2 mb-0">{title}</Title> : '' }
 
-            <Slider options={{
-                slidesToShow: 4,
-                withDots: false
-            }}>
+
+            <div className="row">
                 {
                     data.map((item) => {
                         return (
-                            <Slider.Item key={item.id}>
-                                <Card                                    
+                            <div className="col-lg-3 col-md-4 col-sm-6">
+                                <PlaylistCard     
+                                    className="mt-3"                               
                                     link={item.link ?? `/playlist/${item.id}`}
                                     image={item.cover ?? null}
                                     title={item.name}
-                                    options={{size: "small", playButton: true}}
                                     subtitle={`${item.tracks.length} ${tracks_title}`}
                                 />
-
-                            </Slider.Item>
+                            </div>
                         )
                     })
                 }
-            </Slider>
+            </div>
         </div>
     );
 };

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useLazyGetSessionInfoQuery } from "@store/api/authApi";
-import { basePage, authPage } from "@helpers/directory";
+import { basePage, authPage } from "@utils/directory";
 
 export default function ProtectedPage (Component: any) {
     

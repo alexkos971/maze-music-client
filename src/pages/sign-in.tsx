@@ -10,8 +10,8 @@ import Form from "@components/UI/Form";
 import { Email, Password } from "@components/UI/Field";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
-import { basePage } from "@helpers/directory";
-import ProtectedPage from "@hoks/protectedPage"
+import { basePage } from "@utils/directory";
+import ProtectedPage from "@hocs/protectedPage"
 
 import { useSignInMutation } from "@store/api/authApi";
 import { useRouter } from "next/router";
@@ -52,7 +52,7 @@ const SignIn = () => {
                     placeholder={t("fields.placeholders.email")} required={true}/>
                 <Password name="password" placeholder={t("fields.placeholders.password")} required={true}/>
 
-                <div className="flex items-center justify-between mt-6 w-full flex-col sm:flex-row items-stretch gap-5">
+                <div className="flex items-center justify-between mt-6 w-full flex-col sm:flex-row gap-5">
                     <Button 
                         type="submit" 
                         color="green"
@@ -63,13 +63,13 @@ const SignIn = () => {
                         className="sm:w-1/2"
                         size="normal">{t("pages.sign-in.title")}</Button>
 
-                    <span className="flex items-center gap-3 justify-center text-sm">
+                    <span className="flex items-center gap-3 justify-center text-sm dark:text-gray-300">
                         Sign In with google
                     </span>
                 </div>
             </Form>
 
-            <span className="mt-12">{t("pages.sign-in.sign_up")} <Link href="/sign-up" className="underline">{t("pages.sign-up.title")}</Link></span>
+            <span className="mt-12 dark:text-gray-300">{t("pages.sign-in.sign_up")} <Link href="/sign-up" className="underline">{t("pages.sign-up.title")}</Link></span>
         </AuthLayout>
     );
 }

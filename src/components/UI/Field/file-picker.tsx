@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useContext, ChangeEvent, SetStateAc
 import styles from "./Field.module.scss";
 import { MainFieldProps } from "./index";
 import { FieldError, FieldTitle } from "./index";
-import { CloudArrowUpGreen } from "@helpers/images";
+import { CloudArrowUpGreen } from "@utils/images";
 import { useTranslation } from "next-i18next";
 import Avatar from "@components/UI/Avatar";
 
@@ -140,7 +140,7 @@ const FilePicker = ({
 							img={imgPreview ?? ''}
 							className={styles.field__avatar}
 							additionalEditContent={imgPreview ?
-								<span className="mt-1 mb-1 !text-red-fc text-xs" onClick={(e) => {
+								<span className="mt-1 mb-1 !text-red-100 text-xs" onClick={(e) => {
 									e.preventDefault();
 									setImgPreview('');
 									setFile(null);

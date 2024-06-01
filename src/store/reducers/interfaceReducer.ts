@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { lsSetItem } from "@helpers/localstorage";
-import { basePage, DirType } from "@helpers/directory";
+import { lsSetItem } from "@utils/localstorage";
+import { basePage, DirType } from "@utils/directory";
 
 import { ToastProps } from "@components/UI/Toast";
 import { ModalProps } from "@components/UI/Modal";

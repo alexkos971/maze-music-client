@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import MainWrap from "@containers/MainWrap";
 import Button from "@components/UI/Button";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -66,14 +66,14 @@ export default ProtectedPage(function Library() {
                 className="mt-8">
 
                 <div className="flex items-center">
-                  <span className="w-11 h-11 rounded-full bg-black-36 flex items-center justify-center relative
+                  <span className="w-11 h-11 rounded-full bg-gray-400 flex items-center justify-center relative
                     before:w-4 before:h-[2px] before:bg-white before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 
                     after:h-4 after:w-[2px] after:bg-white after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 
                     "></span>
 
                     <div className="flex flex-col ml-4">
                       <Title tag="h5" className="mb-1">{t("pages.library.create_playlist.title")}</Title>
-                      <p className="text-sm">{t("pages.library.create_playlist.subtitle")}</p>
+                      <p className="text-sm text-gray-400 dark:text-gray-200">{t("pages.library.create_playlist.subtitle")}</p>
                     </div>
                 </div>
               </CardWrap>

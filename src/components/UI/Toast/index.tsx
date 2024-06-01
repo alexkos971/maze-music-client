@@ -11,7 +11,7 @@ export type ToastProps = {
 
 const ToastContent = ({ className, text, onClose } : { className: string, text?: string; onClose: () => void }) => (
     <div className={`${className} duration-300 px-4 py-3 inline-flex items-center gap-4 mb-3 max-md:w-full`}>
-        <span className="text-white text-lg">{text}</span> 
+        <span className="text-white dark:text-white text-lg">{text}</span> 
         
         <button type="button" onClick={onClose} className="relative w-6 h-6 block 
             max-md:ml-auto
@@ -27,8 +27,8 @@ const Toast = () => {
     const { type, text } = useAppSelector(state => state.interface.toast);
 
     let styles : {[key: string]: string} = {
-        'success': 'bg-green-05',
-        'error': 'bg-red-fc',
+        'success': 'bg-green-100',
+        'error': 'bg-red-100',
         'warning': 'bg-yellow-F4E15A',
         'info': 'bg-blue-75',
         'hidden': 'opacity-0 scale-75 pointer-events-none'

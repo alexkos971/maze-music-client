@@ -1,4 +1,4 @@
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import MainWrap from "@containers/MainWrap";
 import ProfileHero from "@components/ProfileHero";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";

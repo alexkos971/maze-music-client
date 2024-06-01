@@ -1,6 +1,6 @@
 import { Select } from "@components/UI/Field";
 import { useRouter } from "next/router";
-import { lsSetItem } from "@helpers/localstorage";
+import { lsSetItem } from "@utils/localstorage";
 
 const LanguageSwitcher = () => {
     const router = useRouter();

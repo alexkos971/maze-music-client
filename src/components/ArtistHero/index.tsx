@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Button from "@components/UI/Button";
 import Image from "next/image";
-import { formatNumber } from "@helpers/formated";
-import { PlayBlack, BookMarkPlusWhite, BookMarkFilledWhite } from "@helpers/images";
+import { formatNumber } from "@utils/formated";
+import { PlayBlack, BookMarkPlusWhite, BookMarkFilledWhite } from "@utils/images";
 import { useTranslation } from "next-i18next";
 import DottedRow from "@components/UI/DottedRow";
 import { useAppDispatch, useAppSelector } from "@hooks";
@@ -41,7 +41,7 @@ const ArtistHero = ({ artist } : ArtistProps ) => {
                         <div className={'pt-24 pb-16 min-h-[432px] relative flex flex-col z-1'}>
 
                             <h1 className={`text-6xl font-bold text-white tracking-wide`}>{artist.full_name}</h1>
-                            <p className={`mt-6 text-sm font-normal leading-4 text-gray-8e`}>{artist.description}</p>
+                            <p className={`mt-6 text-sm font-normal leading-4 text-gray-300`}>{artist.description}</p>
                         
                             <DottedRow className={'mb-9 [&>*]:text-white'}>
                                 {artist.genres.length ? <Button color="gray" size="small">{artist.genres[0]}</Button> : <></>}        

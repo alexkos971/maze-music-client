@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import {EditBlack} from "@helpers/images";
+import {EditBlack} from "@utils/images";
 import styles from './EditButton.module.scss';
 
 interface Props {    

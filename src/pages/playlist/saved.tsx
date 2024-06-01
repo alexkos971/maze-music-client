@@ -1,5 +1,5 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import MainWrap from "@containers/MainWrap";
 import { useGetSavedTracksMutation } from "@store/api/tracksApi";
 import { setSavedTracks } from "@store/reducers/tracksReducer";

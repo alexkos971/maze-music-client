@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { basePage } from "@helpers/directory"
+import { basePage } from "@utils/directory"
 
 export default function Home() {    
     const router = useRouter();

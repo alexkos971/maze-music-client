@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext } from "react";
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
-import { LoadSpin } from "@helpers/images";
+import { LoadSpin } from "@utils/images";
 import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
@@ -25,11 +25,11 @@ const Button: React.FC<ButtonProps> = ({
     onClick
 }) => {
     const btn_colors = {
-        'white': 'bg-white text-black-36 hover:opacity-70',
-        'gray': 'bg-gray-f8 text-black-36 hover:opacity-70',
-        'black' : 'bg-black-36 text-white hover:opacity-70',
-        'green': 'bg-green-05 text-white hover:opacity-70',
-        'disabled' : 'bg-red-fc cursor-not-allowed opacity-80 text-white'
+        'white': 'bg-white text-gray-400 hover:opacity-70',
+        'gray': 'bg-gray-50 text-gray-400 hover:opacity-70',
+        'black' : 'bg-gray-400 text-white hover:opacity-70',
+        'green': 'bg-green-100 text-white hover:opacity-70',
+        'disabled' : 'bg-red-100 cursor-not-allowed opacity-80 text-white'
     };
 
     const btn_sizes = {

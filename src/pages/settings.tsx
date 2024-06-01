@@ -3,7 +3,7 @@ import { useAppDispatch } from "@hooks";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useEffect } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import LanguageSwitcher from "@components/LanguageSwitcher";
 import MainWrap from "@containers/MainWrap";
 import Button from "@components/UI/Button";
@@ -11,7 +11,7 @@ import Button from "@components/UI/Button";
 import { useSignOutMutation } from "@store/api/authApi";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { authPage } from "@helpers/directory";
+import { authPage } from "@utils/directory";
 
 export default ProtectedPage(function Settings() {    
   const dispatch = useAppDispatch();

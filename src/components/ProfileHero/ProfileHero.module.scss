@@ -1,8 +1,10 @@
+@import '../../styles/_helpers';
+
 .profile-hero {
     position: relative;
     overflow: hidden;
     width: 100%;
-    background-color: var(--green-a3);
+    background-color: var(--gray-50);
     padding-top: var(--header-height);
     padding-bottom: 65px;
 
@@ -11,6 +13,7 @@
         display: flex;
         align-items: flex-end;
         gap: 16px;
+        color: var(--gray-400);
 
         h1 {
             font-size: 40px;
@@ -20,18 +23,8 @@
 
         .edit-button {
             margin-bottom: 6px;
-
-            svg {
-                color: var(--app-text-primary);
-
-                *[fill] {
-                    fill: currentColor;
-                }
-
-                *[stroke] {
-                    stroke: currentColor;
-                }
-            }
+            // color: white;
+            @include svg-reset-color();
         }
     }
 
@@ -41,6 +34,7 @@
         line-height: 137%;
         font-weight: 400;      
         letter-spacing: 0.16px;
+        color: var(--gray-300);
 
         .profile-hero__description-edit {
             width: 16px;
@@ -69,6 +63,10 @@
 
 [data-theme="dark"] {
     .profile-hero {
-        background-color: var(--app-background-secondary);
+        background-color: transparent;
+
+        &__title {
+            color: white;
+        }
     }
 }

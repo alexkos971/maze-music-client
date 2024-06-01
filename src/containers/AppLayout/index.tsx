@@ -9,10 +9,11 @@ import Toast from "@components/UI/Toast";
 import Modal from "@components/UI/Modal";
 import { usePathname } from "next/navigation";
 import { useAppDispatch } from "@hooks";
-import { directories } from "@helpers/directory";
+import { directories } from "@utils/directory";
 import { setDirectory } from "@store/reducers/interfaceReducer";
-import { lsGetItem } from "@helpers/localstorage";
+import { lsGetItem } from "@utils/localstorage";
 import classNames from "classnames";
+import {THEME_COLORS} from "@utils/colors";
 
 export interface AppContextType {};
 
@@ -31,18 +32,26 @@ export default function AppLayout({ children } : AppWrapProps) {
 
     let isAuthPage = router.pathname == '/sign-in' || router.pathname == '/sign-up'; 
 
+    // Keep current path in store with additional props
     useEffect(() => {
-    for (let val in directories) {
-        if (pathname?.includes(directories[val].path)) {
-        dispatch(setDirectory({
-            title: directories[val].title,
-            path: directories[val].path,
-        }))
+        for (let val in directories) {
+            if (pathname?.includes(directories[val].path)) {
+            dispatch(setDirectory({
+                title: directories[val].title,
+                path: directories[val].path,
+            }))
+            }
         }
-    }
     }, [pathname, current_locale]);
 
-    useEffect(() => setHasMounted(true));
+    useEffect(() => {
+        setHasMounted(true);
+        
+        // Set global colors variables
+        Object.keys(THEME_COLORS).forEach((item) => {
+            document.documentElement.style.setProperty(`--${item}`, THEME_COLORS[item]);
+        });
+    });
   
     // this line is the key to avoid the error.
     if (!hasMounted) return null;
@@ -50,13 +59,15 @@ export default function AppLayout({ children } : AppWrapProps) {
     return (                
         <ThemeProvider 
             defaultTheme={'light'} 
-            enableSystem 
+            enableSystem         
             storageKey={'theme'}>
+
             <AppContext.Provider value={{}}>            
-                <div className={classNames(
-                    "app-wrap bg-app-background duration-300",
-                    "max-md:overflow-clip relative h-screen"
-                )}>
+                <div 
+                    className={classNames(
+                        "app bg-white dark:bg-gray-700 duration-300"
+                    )}>
+
                     {children}
                     
                     <Toast />

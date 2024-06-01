@@ -1,6 +1,6 @@
 import { GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import MainWrap from "@containers/MainWrap";
 import { useRouter } from 'next/router';
 import { useLazyGetPlaylistQuery } from "@store/api/playlistsApi";

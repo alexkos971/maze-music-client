@@ -1,10 +1,12 @@
 import React, { ReactNode, createContext, useState, useRef, useEffect } from "react";
 import Dots from "@components/UI/Slider/dots";
+import Arrows from "@components/UI/Slider/arrows";
 import styles from "./Slider.module.scss";
 
 interface SliderOptions {
     slidesToShow?: number | 1,
-    withDots?: boolean
+    withDots?: boolean,
+    withArrows?: boolean
 };
 
 type ItemComponent = React.FC<{ children: ReactNode }>;
@@ -18,7 +20,8 @@ const Slider: SliderComponent = ({
     options
 }) => {
     let settings = {
-        withDots: true,
+        withDots: false,
+        withArrows: true,
         slidesToShow: 1,
         ...options
     };
@@ -67,9 +70,16 @@ const Slider: SliderComponent = ({
             <div className={styles.slider}>
                 <div className={`${styles.slider__wrap} hide-scrollbar`} ref={sliderRef} onScroll={handleScroll}>{children}</div>               
 
-                { settings.withDots ?
+                { settings.withArrows ?
+                    <Arrows 
+                        sliderRef={sliderRef}
+                        slideWidth={childWidth}                        
+                        />
+                : <></> }
+
+                {/* { settings.withDots ?
                     <Dots count={Array.isArray(children) ? children.length : 0} active={active} setActive={scrollTo}/>
-                : '' }
+                : <></> } */}
             </div>       
         </SliderContext.Provider>
     )

@@ -14,13 +14,13 @@
     }
 
     &.track__current {
-        .track__play svg {
-            color: var(--green-05);
+        .track__play {
+            color: var(--green-100);
         }
     }
 
     &:hover {
-        background-color: var(--gray-f8);
+        background-color: var(--gray-50);
 
         .track__index {
             opacity: 0;
@@ -45,6 +45,7 @@
         width: 18px;
         height: 18px;
         transition: .3s;
+        color: var(--gray-400);
 
         svg {
             width: 100%;
@@ -80,7 +81,7 @@
 [data-theme="dark"], .dark {
     .track {
         &:hover {
-            background-color: var(--black-36);
+            background-color: var(--gray-400);
         }
     }
 }

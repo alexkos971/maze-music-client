@@ -11,7 +11,7 @@ interface CardProps {
 
 const CardWrap = ({ children, onClick, link, className } : CardProps) => {
     let classes = twMerge(
-        "relative rounded-md overflow-hidden p-4 bg-app-background-secondary min-w-0 inline-flex flex-col",
+        "relative rounded-md overflow-hidden p-4 bg-gray-50 dark:bg-gray-500 min-w-0 inline-flex flex-col",
         (className || link) ? "cursor-pointer" : "",        
         className
     );

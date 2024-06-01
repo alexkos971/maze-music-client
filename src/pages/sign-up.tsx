@@ -1,10 +1,10 @@
 'use client';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useAppDispatch } from "@hooks";
-import { basePage } from "@helpers/directory";
+import { basePage } from "@utils/directory";
 
 import Link from "next/link";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -14,7 +14,7 @@ import Form from "@components/UI/Form";
 import { useTranslation } from "next-i18next";
 
 import { Text, Email, Password, RadiosWithImages, TextArea, FilePicker, ConfirmPassword } from "@components/UI/Field";
-import { ListenerRadio, ArtistRadio } from "@helpers/images";
+import { ListenerRadio, ArtistRadio } from "@utils/images";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
 import {Steps, Step } from "@components/UI/Steps";
@@ -203,7 +203,7 @@ const SignUp = () => {
                 </Steps>
             </Form>
 
-            <span className="mt-12">{t('pages.sign-up.sign_in')} <Link href="/sign-in" className="underline">{t('pages.sign-in.title')}</Link></span>
+            <span className="mt-12 dark:text-gray-300">{t('pages.sign-up.sign_in')} <Link href="/sign-in" className="underline">{t('pages.sign-in.title')}</Link></span>
         </AuthWrap>
     );
 }

@@ -1,11 +1,12 @@
 import type { Config } from 'tailwindcss';
+import {THEME_COLORS} from './src/utils/colors';
 
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/containers/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/hoks/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/hocs/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {    
@@ -28,34 +29,7 @@ const config: Config = {
       height: theme => ({
         'screen': '100dvh'
       }),
-      colors: {
-        'white': '#fff',
-        'black' : '#000',
-        'black-36': '#393E46',
-        'black-06': '#0F1626',
-        'green-05': '#00ADB5',
-        'green-a3': '#AAD8D3',
-        'blue-75': '#72B0E5',
-        'red-fc': '#F44C4C',
-        'yellow-fa': '#F4E15A',
-        'gray-de': '#DEDEDE',
-        'gray-3e': '#3c424e',
-        'gray-4a': '#4A4A4A',
-        'gray-40': '#404040',
-        'gray-f5': '#F5F5F5',
-        'gray-28': '#263238',
-        'gray-7a': '#7C7C7A',
-        'gray-c4': '#C4C4C4',
-        'gray-ee': '#EEEEEE',
-        'gray-8e': '#8E8E8E',
-        'gray-f8': '#F4F6F8',
-        'gray-e5': '#E5E5E5',
-        'app-background': 'var(--app-background)',
-        'app-background-secondary': 'var(--app-background-secondary)',
-        'app-text-primary': 'var(--app-text-primary)',
-        'app-text-secondary': 'var(--app-text-secondary)',
-        'app-field-background': 'var(--app-field-background)'
-      } 
+      colors: THEME_COLORS
     }
   },
   darkMode: ['class', '[data-theme="dark"]'],

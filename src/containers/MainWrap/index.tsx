@@ -28,7 +28,7 @@ const MainWrap = ( { canReturnBack, overlapHeader, ...props } : PropsWithChildre
 
     return (
         <>
-            <div className={'flex items-stretch text-black_36 relative h-screen md:h-[calc(100dvh-var(--player-height))]'}>
+            <div className={'flex items-stretch text-gray-400 relative h-screen md:h-[calc(100dvh-var(--player-height))]'}>
                 <Sidebar />
 
                 <div className={classNames(

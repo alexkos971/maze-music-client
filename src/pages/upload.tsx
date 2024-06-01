@@ -1,4 +1,4 @@
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import MainWrap from "@containers/MainWrap";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -11,6 +11,7 @@ import { useTranslation } from "next-i18next";
 import { useAppDispatch } from "@hooks";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useUploadTrackMutation } from "@store/api/tracksApi";
+import CardWrap from "@components/UI/CardWrap";
 
 export default ProtectedPage(function Upload() {
   const {t} = useTranslation('common');
@@ -42,49 +43,51 @@ export default ProtectedPage(function Upload() {
 
   return (
     <MainWrap>
-      <div className="container-fluid">
+      <div className="container">
 
         <div className="row">
           <div className="col-lg-6 offset-lg-3">            
-            <Form {...{ fields, setFields, validFields, setValidFields }} className="max-w-4 p-8 rounded-lg bg-app-background-secondary duration-300">
-              <Title tag="h3" className="text-center">Upload your track</Title>
-              
-              <Text
-                title="Track name"
-                name="name"            
-                required={true}
-                className="bg-whtie"
-              />
+            <CardWrap className="w-full mt-6">
+              <Form {...{ fields, setFields, validFields, setValidFields }}>
+                <Title tag="h3" className="text-center">Upload your track</Title>
+                
+                <Text
+                  title="Track name"
+                  name="name"            
+                  required={true}
+                  className="bg-whtie"
+                />
 
-              <MultiSelect
-                title="Choose the genres of track"
-                name="genres"
-                placeholder="Type genre and press enter..."
-                required={true}                
-              />
+                <MultiSelect
+                  title="Choose the genres of track"
+                  name="genres"
+                  placeholder="Type genre and press enter..."
+                  required={true}                
+                />
 
-              <FilePicker
-                title="Track file"
-                name="track"
-                accept="audio/mp3, audio/wav, audio/flac"
-                required={true}
-              />
+                <FilePicker
+                  title="Track file"
+                  name="track"
+                  accept="audio/mp3, audio/wav, audio/flac"
+                  required={true}
+                />
 
-              <FilePicker
-                title="Track Cover"
-                name="cover"
-                accept="image/png, image/jpg, image/webp"
-                required={true}
-              />
+                <FilePicker
+                  title="Track Cover"
+                  name="cover"
+                  accept="image/png, image/jpg, image/webp"
+                  required={true}
+                />
 
-              <Button 
-                type="submit" 
-                onClick={() => uploadTrack(fields)} 
-                isLoading={isLoading}
-                // @ts-ignore
-                disabled={!Object.keys(validFields).some(key => validFields[key] == false )}
-                className="w-full mt-10">{t("interface.submit")}</Button>
-            </Form>
+                <Button 
+                  type="submit" 
+                  onClick={() => uploadTrack(fields)} 
+                  isLoading={isLoading}
+                  // @ts-ignore
+                  disabled={!Object.keys(validFields).some(key => validFields[key] == false )}
+                  className="w-full mt-10">{t("interface.submit")}</Button>
+              </Form>
+            </CardWrap>
           </div>
         </div>
       </div>

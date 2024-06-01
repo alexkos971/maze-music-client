@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import styles from "./AuthLayout.module.scss";
 
-import { Logo, LogoForDark } from "@helpers/images";
+import { Logo, LogoForDark } from "@utils/images";
 import { useTheme } from "next-themes";
 
 interface Props {

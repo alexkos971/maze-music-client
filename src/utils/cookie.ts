@@ -1,4 +1,4 @@
-import { check_env } from "@helpers";
+import { check_env } from "@utils";
 
 export const cookieGetItem = (cookie_name: string) : string | null  => {
   return check_env(() : any => {

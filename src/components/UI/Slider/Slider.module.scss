@@ -16,6 +16,8 @@
         padding-left: 10px;
         padding-right: 10px;
         width: 100%;
+        max-width: calc(100% - var(--container-padding));
+        flex: 0 0 calc(100% - var(--container-padding));
         
         @screen sm {
             max-width: min(440px, var(--max-w));
@@ -28,6 +30,47 @@
     
         &-item {
             @apply mx-2 shrink-0 p-1 block after:block after:w-2 after:h-2 after:rounded-lg;
+        }
+    }
+
+    &__arrows {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: calc(var(--container-padding));
+        width: calc(100% - var(--container-padding));
+        z-index: 1;
+        pointer-events: none;
+        
+        &-item {
+            height: 56px;
+            width: 56px;
+            border-radius: 50%;
+            background-color: black;
+            opacity: 0.8;
+            pointer-events: all;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.slider__arrows-item_next {
+                left: auto;
+                right: 20px;
+
+                svg {
+                    transform: scaleX(-1);
+                }
+            }
+
+
+            svg {
+                width: 50px;
+                height: 50px;
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
-import ProtectedPage from "@hoks/protectedPage";
+import ProtectedPage from "@hocs/protectedPage";
 import { GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";

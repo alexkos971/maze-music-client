@@ -1,64 +1,38 @@
-import React from "react";
-import ProtectedPage from "@hoks/protectedPage";
+import React, { useEffect } from "react";
+import ProtectedPage from "@hocs/protectedPage";
 
 import MainWrap from "@containers/MainWrap";
 import Artists from "@components/Artists";
 import TrackList from "@components/TrackList";
 
 import { useGetAllTracksQuery } from "@store/api/tracksApi";
-
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@helpers/images";
+import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@utils/images";
 import Playlists from "@components/Playlists";
 import { useTranslation } from "next-i18next";
+import { useGetAllUsersQuery } from "@store/api/usersApi";
 
 const ForYou = () => {    
     const {t} = useTranslation('common');
     const { data } = useGetAllTracksQuery('');
+    const usersRes = useGetAllUsersQuery('');
+
+    useEffect(() => {
+        console.log(usersRes);
+    }, [usersRes])
 
     return (        
         <MainWrap>
             <div className="container-fluid">
-                <Artists 
-                    className='mt-[0px]'
-                    title={t('title.artists_for_you')}
-                    data={[
-                    {
-                        id: 'a1',
-                        name: 'The',
-                        followers: [],
-                        albums: [],
-                    },
-                    {
-                        id: 'b2',
-                        name: 'Dua Lipa',
-                        avatar: WeekndAvatar,
-                        albums: [123, 2342, 234, 3434],
-                        followers: [123, 2342, 234, 3434]
-                    },
-                    {
-                        id: 'c3',
-                        name: 'The Weeknd',
-                        avatar: WeekndAvatar,
-                        albums: [],
-                        followers: []
-                    },
-                    {
-                        id: 'd4',
-                        name: 'Dua Lipa',
-                        avatar: WeekndAvatar,
-                        albums: [123, 2342, 234, 3434],
-                        followers: [123, 2342, 234, 3434]
-                    },
-                    {
-                        id: 'e5',
-                        name: 'Dua Lipa',
-                        avatar: WeekndAvatar,
-                        albums: [123, 2342, 234, 3434],
-                        followers: [123, 2342, 234, 3434]
-                    },
-                ]}/>
+                {
+                    usersRes.data?.length ?
+                    <Artists 
+                        className='mt-[0px]'
+                        title={t('title.artists_for_you')}
+                        data={usersRes.data}/>
+                    : <></>
+                }
 
                 <Playlists
                     title={t('title.popular_playlists')}

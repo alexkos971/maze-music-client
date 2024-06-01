@@ -10,13 +10,13 @@ import styles from './Header.module.scss';
 import { useTheme } from "next-themes";
 
 import Link from "next/link";
-import { directories } from "@helpers/directory";
-import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon, ChevronDownBlack } from "@helpers/images";
+import { directories } from "@utils/directory";
+import { SettingsGrayIcon, NotificationGrayIcon, SunGrayIcon, MoonBlackIcon, ChevronDownBlack } from "@utils/images";
 
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "@hooks/index";
 import Avatar from "@components/UI/Avatar";
-import { formatNick } from "@helpers/formated";
+import { formatNick } from "@utils/formated";
 
 interface Props {
   canReturnBack?: boolean,
@@ -66,7 +66,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
   return (
     <header className={`header z-20 sticky ${overlap ? 'h-0' : ''} top-0 left-0`}>
       <div 
-        className={`header__wrap py-3 md:py-5 duration-300 ${header_is_filled ? 'bg-app-background dark:bg-app-background-secondary' : ''}`} 
+        className={`header__wrap py-3 md:py-5 duration-300 ${header_is_filled ? 'bg-white dark:bg-gray-500' : ''}`} 
         ref={headerRef}>
         <div className="container-fluid">
           <div className="header__wrap flex items-center justify-end relative">
@@ -74,7 +74,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
             {/* Go Back Arrow */}
             {canReturnBack === true ? <button type="button" onClick={back} className={styles.header__back}><ChevronDownBlack/></button> : ''}
 
-            <span className="header__title font-secondary md:font-primary font-bold text-2xl md:font-semibold md:text-lg md:text-green-05 mr-auto">{t(title)}</span>
+            <span className="header__title font-secondary md:font-primary font-bold text-2xl md:font-semibold md:text-lg md:text-green-100 mr-auto">{t(title)}</span>
 
             <div className="header__nav flex items-center mr-16 max-md:hidden">
               {/* Settings */}
@@ -88,7 +88,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
               <span  
                 className={`header__nav-item notification-icon notification-icon_new 
                 cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6
-                relative before:absolute before:right-[6px] before:top-[6px] before:w-[9px] before:h-[9px] before:rounded-xl before:bg-green-05 
+                relative before:absolute before:right-[6px] before:top-[6px] before:w-[9px] before:h-[9px] before:rounded-xl before:bg-green-100 
               `}>            
                 <NotificationGrayIcon alt="Notifications Icon" className="w-full h-full object-contain"/>
               </span>
@@ -118,7 +118,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                   {
                     profile.full_name 
                       ? <span 
-                          className={`font-normal max-md:font-secondary text-base ml-4 ${ (fullplayer_is_expanded && !header_is_filled) ? 'text-white' : 'text-app-text-primary'}`}>
+                          className={`font-normal max-md:font-secondary text-base ml-4 text-gray-500 dark:text-gray-300`}>
                           {profile.full_name}
                         </span>
                       : <></>

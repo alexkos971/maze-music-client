@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { lsSetItem, lsGetItem } from "@helpers/localstorage";
+import { lsSetItem, lsGetItem } from "@utils/localstorage";
 
 let initialState : Player = {
     track: lsGetItem('maze-music-last-track') ?? null,

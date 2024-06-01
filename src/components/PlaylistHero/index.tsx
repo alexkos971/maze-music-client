@@ -15,11 +15,11 @@ const PlaylistHero = ({ data, isSaved = false } : PlaylistHeroProps) => {
     const {t} = useTranslation('common');
 
     return (
-        <div className="playlist-hero relative overflow-hidden w-full bg-gray-f8 mt-[calc(0px-var(--header-height))] pt-20 pb-16">
+        <div className="playlist-hero relative overflow-hidden w-full bg-gray-50 dark:bg-black mt-[calc(0px-var(--header-height))] pt-20 pb-16">
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-4 col-md-5">
-                        <div className="relative w-full h-0 pb-[100%] bg-black-36 flex items-center justify-center">
+                        <div className="relative w-full h-0 pb-[100%] bg-gray-400 flex items-center justify-center">
                             <MusicNoteGray className="w-2/5 h-auto absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"/>
                         </div>
                     </div>

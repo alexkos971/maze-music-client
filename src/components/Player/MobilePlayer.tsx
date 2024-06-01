@@ -4,7 +4,7 @@ import styles from "./Player.module.scss";
 import useThrottle from "@hooks/throttle";
 import FullPlayer from "./FullPlayer";
 import classNames from "classnames";
-import { PauseBlack, PlayBlack, HeartOutlineGray, HeartSolidGreen } from "@helpers/images";
+import { PauseBlack, PlayBlack, HeartOutlineGray, HeartSolidGreen } from "@utils/images";
 import MusicNoteGray from "@icons/note-gray.svg";
 import Range from "@components/UI/Range";
 import { useAppDispatch, useAppSelector } from "@hooks";

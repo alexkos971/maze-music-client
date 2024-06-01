@@ -87,15 +87,15 @@ export const MultiSelect = ({
                 <div className="flex items-center mx-[-4px] mb-4 flex-wrap">
                     {val?.length
                         ? val.map((item, index) => (
-                            <span className="p-2 text-xs bg-gray-e5 rounded-r-sm mx-1 my-1 flex items-center relative" key={item + index}>
+                            <span className="p-2 text-xs bg-gray-100 rounded-r-sm mx-1 my-1 flex items-center relative" key={item + index}>
                                 {item}
 
                                 <button 
                                     type="button" 
                                     onClick={() => setVal(prev => prev?.filter(el => el !== item))}
                                     className="ml-1 w-4 h-4 block relative rotate-45
-                                        before:h-3 before:w-[1px] before:bg-black-36 before:block before:absolute before:top-1/2 before:left-1/2 before:translate-x-[-50%] before:translate-y-[-50%]
-                                        after:w-3 after:h-[1px] after:bg-black-36 after:block after:absolute after:top-1/2 after:left-1/2 after:translate-y-[-50%] after:translate-x-[-50%]
+                                        before:h-3 before:w-[1px] before:bg-gray-400 before:block before:absolute before:top-1/2 before:left-1/2 before:translate-x-[-50%] before:translate-y-[-50%]
+                                        after:w-3 after:h-[1px] after:bg-gray-400 after:block after:absolute after:top-1/2 after:left-1/2 after:translate-y-[-50%] after:translate-x-[-50%]
                                     "></button>
                             </span>
                         )) : <></>

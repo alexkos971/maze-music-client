@@ -1,4 +1,4 @@
-import { check_env } from "@helpers";
+import { check_env } from "@utils";
 
 export const lsGetItem = (name: string): any => {
     return check_env(() : any => {

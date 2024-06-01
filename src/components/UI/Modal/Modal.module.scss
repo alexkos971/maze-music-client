@@ -74,7 +74,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        background: var(--white);
+        background: white;
         width: auto;
         border-radius: 8px;
         padding: 64px 48px 48px;
@@ -103,7 +103,7 @@
 
 [data-theme="dark"], .dark {
     .modal__content {
-        background-color: var(--app-background-secondary);
+        background-color: var(--gray-500);
     }
 
     .modal__close-btn::after,

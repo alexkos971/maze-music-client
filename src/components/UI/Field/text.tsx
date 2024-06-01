@@ -6,7 +6,7 @@ import { FieldError, FieldTitle } from "./index";
 import { ValidationContext, ValidationContextType } from "@components/UI/Form/validation";
 import { useFieldValidation } from "@hooks";
 
-import { EyeIcon, EyeClosedIcon } from "@helpers/images";
+import { EyeIcon, EyeClosedIcon } from "@utils/images";
 import classNames from "classnames";
 
 interface TextFieldProps extends MainFieldProps {    
@@ -89,7 +89,7 @@ const TextFieldTemplate = ({
     return (
         <div className={classNames(
             styles.field,
-            styles[`field_${type}`],
+            styles[`field_${type == 'confirm-password' ? 'password' : type}`],
             'flex flex-col mt-3 w-full',
             className
         )}>

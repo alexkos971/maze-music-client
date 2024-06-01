@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next';
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { toggleModal } from '@store/reducers/interfaceReducer';
 import UpdateProfileForm from './updateProfileForm';
-import { formatNick } from '@helpers/formated';
+import { formatNick } from '@utils/formated';
 
 import Button from '@components/UI/Button';
 import EditButton from '@components/UI/EditButton';
@@ -88,7 +88,7 @@ const ProfileHero = () => {
                             />
                         </p>
 
-                        <DottedRow className={styles['profile-hero__info']} dotColor='var(--black-36)'>
+                        <DottedRow className={classNames(styles['profile-hero__info'], 'text-gray-400 dark:text-gray-300')} dotColor='var(--gray-400)'>
                             <Button color='black' size='small'>{t(`profile.${profile.role}`)}</Button>
                             <span><strong>{profile?.followers}</strong> {t('interface.followers')}</span>
                             <span><strong>{profile?.saved_artists?.length}</strong> {t('interface.subscriptions')}</span>

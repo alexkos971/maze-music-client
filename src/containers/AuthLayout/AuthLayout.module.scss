@@ -10,7 +10,7 @@
         content: "";
         width: 100%;
         height: min(75%, 750px);
-        background-color: var(--gray-f8);
+        background-color: var(--gray-50);
         clip-path: polygon(0 0, 100% 0, 100% 62%, 0% 100%);
         -webkit-clip-path: polygon(0 0, 100% 0, 100% 62%, 0% 100%);
         position: fixed;
@@ -20,7 +20,7 @@
     }
 
     &__card {
-        background: var(--app-background);
+        background: white;
         width: 100%;
         border-radius: 8px;
         padding: 100px 90px 64px;
@@ -28,7 +28,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin: 3rem auto;
+        margin: 5rem auto;
         transition: .3s; 
         transition-delay: .5s;
 
@@ -96,11 +96,11 @@
 
 [data-theme="dark"] {
     .auth::before {
-        background-color: var(--gray-3e);
+        background-color: var(--gray-400);
     }   
 
     .auth__card {
-        background: var(--app-background-secondary);
+        background: var(--gray-500);
     }
 }
 

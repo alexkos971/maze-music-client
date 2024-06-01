@@ -19,7 +19,7 @@ import { FilePicker } from "./file-picker";
 
 const FieldTitle : React.FC<{title: string | undefined}> = ({ title }) => (
     <>
-        {title ? <span className="field__title mb-[10px] mt-3 text-sm text-app-text-primary">{title}</span> : <></>}
+        {title ? <span className="field__title mb-[10px] mt-3 text-sm text-gray-400 dark:text-gray-300">{title}</span> : <></>}
     </>
 );
 
@@ -28,7 +28,7 @@ const FieldError : React.FC<{error: string | undefined}> = ({ error }) => {
     
     return (
         <>
-            {error ? <span className="field__error text-red-fc text-xs mt-2">{t(error)}</span> : ''}
+            {error ? <span className="field__error text-red-100 text-xs mt-2">{t(error)}</span> : ''}
         </>
     );
 }

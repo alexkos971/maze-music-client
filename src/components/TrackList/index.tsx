@@ -41,7 +41,7 @@ const TrackList = ({ title, data: tracks, className }: TrackListProps) => {
                         return <Track
                             index={index}
                             track={item}
-                            isSaved={profile ? profile?.saved_tracks.includes(item._id) : false}
+                            isSaved={profile?.saved_tracks?.includes(item._id) ?? false}
                             onSave={() => saveTrack({
                                 track: item, 
                                 action: profile?.saved_tracks.includes(item._id) ? 'unsave' : 'save'
