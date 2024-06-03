@@ -32,10 +32,10 @@ const TrackList = ({ title, data: tracks, className }: TrackListProps) => {
     }, [ isSuccess ]);   
 
     return (
-        <div className={twMerge(`block track-list mt-16`, className)}>
-            { title ? <Title>{title}</Title> : '' }
+        <div className={twMerge(`block track-list max-md:my-8 my-16`, className)}>
+            { title ? <Title className="max-md:mb-2">{title}</Title> : '' }
 
-            <div className="track-list__wrap mt-6">
+            <div className="track-list__wrap md:mt-6">
                 {
                     tracks ? tracks.map((item, index) => {                        
                         return <Track

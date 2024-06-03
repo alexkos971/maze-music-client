@@ -4,6 +4,7 @@ import Slider from "@components/UI/Slider";
 import { useTranslation } from "next-i18next";
 import Title from "@components/UI/Title";
 import { useIsGreater } from "@hooks/useScreen";
+import { twMerge } from "tailwind-merge";
 
 type ArtistsProps = {
     title?: string,
@@ -19,7 +20,7 @@ const Artists = ({title, data, slidesToShow, className}: ArtistsProps) => {
     let desktopScreen = useIsGreater('sm');
 
     return( 
-        <div className={`cards block my-16 ${className}`}>
+        <div className={twMerge(`cards block max-md:my-8 my-16`, className)}>
             { title ? <Title>{title}</Title> : '' }
 
             <Slider options={{

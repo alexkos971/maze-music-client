@@ -1,3 +1,5 @@
+@import "../../../styles/_helpers";
+
 .track {
     display: flex;
     align-items: center;
@@ -5,6 +7,15 @@
     border-radius: 6px;
     padding: 10px 24px 10px 14px;
     margin-top: 6px;
+
+    @include media-breakpoint-down(sm) {
+        width: auto;
+        padding: 8px 8px;
+        margin-top: 0;
+        margin-left: -8px;
+        margin-right: -8px;
+        border-radius: 0px;
+    }
 
     &:not(.track__current) {
         .track__play {

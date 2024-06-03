@@ -4,8 +4,8 @@ import { showToast } from "@store/reducers/interfaceReducer";
 import { useEffect } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProtectedPage from "@hocs/protectedPage";
-import LanguageSwitcher from "@components/LanguageSwitcher";
 import MainWrap from "@containers/MainWrap";
+import LanguageSwitcher from "@components/LanguageSwitcher";
 import Button from "@components/UI/Button";
 
 import { useSignOutMutation } from "@store/api/authApi";

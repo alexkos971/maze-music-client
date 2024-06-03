@@ -4,7 +4,7 @@
     --range-progress: 0;
     --range-height: 4px;
     height: var(--range-height);
-    --background-range-color: var(--black-36);
+    --background-range-color: var(--gray-400);
 
     &__track, &__current-time {
         position: absolute;
@@ -55,17 +55,17 @@
 
     &_green {
         .range__current-time {
-            background-color: var(--green-05);
+            background-color: var(--green-100);
         }
     }
 
     &_gray {
         .range__track {
-            background-color: var(--gray-4a); 
+            background-color: var(--gray-400); 
         }
 
         .range__current-time {
-            background-color: var(--gray-c4);
+            background-color: var(--gray-200);
         }
     }
 }

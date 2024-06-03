@@ -26,6 +26,14 @@ const config: Config = {
       width: theme => ({
         'screen': '100dvw'
       }),
+      padding: theme => ({
+        'container': 'var(--container-padding)',
+        'col': 'var(--col-padding)'
+      }),
+      margin: theme => ({
+        'container': 'var(--container-padding)',
+        'col': 'var(--col-padding)'
+      }),
       height: theme => ({
         'screen': '100dvh'
       }),

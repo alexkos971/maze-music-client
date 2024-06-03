@@ -48,7 +48,7 @@ const Track = ({
                 </button>
             </span>
         
-            <div className={`w-11 h-11 md:w-7 md:h-7 relative md:rounded block overflow-hidden text-gray-400 dark:text-gray-200 md:ml-3 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
+            <div className={`w-11 h-11 md:w-7 md:h-7 relative shrink-0 md:rounded block overflow-hidden text-gray-400 dark:text-gray-200 md:ml-3 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
                 {
                     track.cover?.length 
                         ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center w-full h-full"/> 
@@ -56,9 +56,14 @@ const Track = ({
                 }
             </div>
 
-            <h4 className={`track__name text-sm font-primary font-semibold ${is_current_track ? "text-green-100" : "text-gray-400 dark:text-gray-200"} ml-4`}>
-                {track.name} - <Link href={'/artist/' + track.artist._id} className="hover:underline">{track.artist.full_name}</Link>
-            </h4>
+            <span className={`flex md:items-center max-md:flex-col font-primary font-semibold ${is_current_track ? "text-green-100" : "text-gray-400 dark:text-gray-200"} ml-3 md:ml-4`}>
+                <h4 className="track__name font-normal whitespace-nowrap text-base md:text-sm">{track.name}</h4> 
+                <span className="mx-1 max-md:hidden">-</span>
+                <Link 
+                    href={'/artist/' + track.artist._id} 
+                    className="track__artist hover:underline whitespace-nowrap text-xs md:text-sm max-md:text-gray-300 max-md:font-secondary max-md:font-light"
+                    >{track.artist.full_name}</Link>
+            </span>
             
             { track.album ? <span className={`track__name text-sm font-normal text-gray-400 dark:text-gray-200 ml-auto`}>{track.album}</span> : ''}
 

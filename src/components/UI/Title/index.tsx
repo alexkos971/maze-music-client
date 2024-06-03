@@ -19,7 +19,7 @@ const Title = ({ children, className, tag = 'h2'} : Title) => {
         h6: 'text-xl'
     }
 
-    return <Tag className={twMerge(`${styles[tag]} mb-5 font-bold text-gray-400 dark:text-white`, className ?? '')}>{children}</Tag>
+    return <Tag className={twMerge(`${styles[tag]} mb-3 md:mb-5 font-bold text-gray-400 dark:text-white`, className ?? '')}>{children}</Tag>
 }
 
 export default Title;

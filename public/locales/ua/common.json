@@ -84,7 +84,9 @@
             "header_title": "Профіль",
             "change_avatar_title": "Змінити аватар",
             "change_name_title": "Змінити ім'я",
-            "change_description_title": "Змінити опис"
+            "change_description_title": "Змінити опис",
+            "settings": "Налаштування",
+            "sign-out": "Вийти"
         },
         "sign-in": {
             "title": "Увійти",

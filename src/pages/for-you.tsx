@@ -19,7 +19,7 @@ const ForYou = () => {
     const usersRes = useGetAllUsersQuery('');
 
     useEffect(() => {
-        console.log(usersRes);
+        // console.log(usersRes);
     }, [usersRes])
 
     return (        
@@ -28,7 +28,7 @@ const ForYou = () => {
                 {
                     usersRes.data?.length ?
                     <Artists 
-                        className='mt-[0px]'
+                        className='!mt-[0px]'
                         title={t('title.artists_for_you')}
                         data={usersRes.data}/>
                     : <></>

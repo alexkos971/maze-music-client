@@ -17,6 +17,7 @@ import { useTranslation } from "next-i18next";
 import { useAppSelector } from "@hooks/index";
 import Avatar from "@components/UI/Avatar";
 import { formatNick } from "@utils/formated";
+import { useIsSmaller } from "@hooks/useScreen";
 
 interface Props {
   canReturnBack?: boolean,
@@ -25,6 +26,7 @@ interface Props {
 
 const Header = ({canReturnBack = false, overlap = false} : Props) => {
   const {pathname, back} = useRouter();
+  const smallerSm = useIsSmaller('sm');
   
   let title = useAppSelector(state => state.interface.directory.title), 
     header_is_filled = useAppSelector(state => state.interface.header_is_filled), 
@@ -74,20 +76,20 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
             {/* Go Back Arrow */}
             {canReturnBack === true ? <button type="button" onClick={back} className={styles.header__back}><ChevronDownBlack/></button> : ''}
 
-            <span className="header__title font-secondary md:font-primary font-bold text-2xl md:font-semibold md:text-lg md:text-green-100 mr-auto">{t(title)}</span>
+            <span className="header__title font-secondary md:font-primary font-bold text-2xl md:font-semibold md:text-lg max-md:dark:text-white max-md:text-gray-400 text-green-100 mr-auto">{t(title)}</span>
 
-            <div className="header__nav flex items-center mr-16 max-md:hidden">
+            <div className="header__nav flex items-center gap-3 md:gap-6 mr-4 md:mr-16">
               {/* Settings */}
               <Link 
                 href={'/settings'} 
-                className={`header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6 ${pathname == directories['settings']['path'] ? 'brightness-50' : ''}`}>
+                className={`header__nav-item cursor-pointer w-8 h-8 hidden md:flex shrink-0 p-1 ${pathname == directories['settings']['path'] ? 'brightness-50' : ''}`}>
                 <SettingsGrayIcon className="w-full h-full object-contain"/>
               </Link>
 
               {/* Notification Tooltip */}
               <span  
                 className={`header__nav-item notification-icon notification-icon_new 
-                cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6
+                cursor-pointer w-8 h-8 flex shrink-0 p-1
                 relative before:absolute before:right-[6px] before:top-[6px] before:w-[9px] before:h-[9px] before:rounded-xl before:bg-green-100 
               `}>            
                 <NotificationGrayIcon alt="Notifications Icon" className="w-full h-full object-contain"/>
@@ -96,7 +98,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
               {/* Switch Theme */}
               <button 
                 type="button" 
-                className="header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1 ml-6" 
+                className="header__nav-item cursor-pointer w-8 h-8 flex shrink-0 p-1" 
                 onClick={() => {
                   // Next-Theme
                   let newState = theme == 'dark' ? 'light' : 'dark'; 
@@ -110,7 +112,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
               profile ?                        
                 <Link href={'/profile'} className="cursor-pointer flex items-center">
                   <Avatar 
-                    size="40px"                            
+                    size={smallerSm ? "32px" : "40px"}                            
                     img={profile?.avatar ?? ''}
                     previewText={profile?.full_name ? formatNick(profile.full_name) : ''}
                   />
@@ -118,7 +120,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                   {
                     profile.full_name 
                       ? <span 
-                          className={`font-normal max-md:font-secondary text-base ml-4 text-gray-500 dark:text-gray-300`}>
+                          className={`font-normal max-md:font-secondary text-sm max-md:hidden md:text-base ml-2 md:ml-4 text-gray-500 dark:text-gray-300`}>
                           {profile.full_name}
                         </span>
                       : <></>

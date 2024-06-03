@@ -99,6 +99,10 @@ $col-sizes: (
     @include col-styles('lg');
 }
 
+@include media-breakpoint-up(lg) {
+    @include col-styles('xl');
+}
+
 .col-auto {
     flex: 0 0 auto;
     width: auto;

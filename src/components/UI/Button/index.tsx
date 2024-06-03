@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 interface ButtonProps {
     type?: 'button' | 'submit',
     children: ReactNode,
-    color?: 'green' | 'black' | 'gray' | 'white',
+    color?: 'green' | 'black' | 'gray' | 'white' | 'red',
     disabled?: boolean | undefined,
     size?: 'normal' | 'small',
     className?: string,
@@ -29,6 +29,7 @@ const Button: React.FC<ButtonProps> = ({
         'gray': 'bg-gray-50 text-gray-400 hover:opacity-70',
         'black' : 'bg-gray-400 text-white hover:opacity-70',
         'green': 'bg-green-100 text-white hover:opacity-70',
+        'red': 'bg-red-100 text-white hover:opacity-70',
         'disabled' : 'bg-red-100 cursor-not-allowed opacity-80 text-white'
     };
 

@@ -43,8 +43,6 @@
         pointer-events: none;
         
         &-item {
-            height: 56px;
-            width: 56px;
             border-radius: 50%;
             background-color: black;
             opacity: 0.8;
@@ -56,6 +54,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            left: 20px;
+
+            @screen sm {
+                height: 56px;
+                width: 56px;
+            }
+            
 
             &.slider__arrows-item_next {
                 left: auto;
@@ -68,8 +76,13 @@
 
 
             svg {
-                width: 50px;
-                height: 50px;
+                width: 28px;
+                height: 28px;
+                
+                @screen sm {
+                    width: 50px;
+                    height: 50px;
+                }
             }
         }
     }

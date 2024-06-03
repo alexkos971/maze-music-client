@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
@@ -22,7 +22,14 @@ const ArtistCard = ({ image, link, title, subtitle } : CardProps) => {
                     after:absolute after:bottom-0 after:left-0 after:w-full after:opacity-0 group-hover:after:opacity-100 after:h-full after:duration-300 after:bg-gradient-to-t after:from-black after:to-transparent    
                 `}>
                     {image ?
-                        <Image src={image} width={450} height={300} alt="Image" className={`w-full h-full object-cover select-none duration-300 group-hover:scale-105`}/>
+                        <Image 
+                            // Hide default image appearence, when not loaded
+                            // onError={(e: SyntheticEvent<HTMLImageElement, Event>) => e.currentTarget.style.display = 'none'} 
+                            src={image} 
+                            width={450} 
+                            height={300} 
+                            alt="Image" 
+                            className={`w-full h-full object-cover select-none duration-300 group-hover:scale-105`}/>
                         : ''
                     }            
 

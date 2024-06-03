@@ -19,7 +19,7 @@ interface CardProps extends CardContent {
 const PlaylistCard = ({ image, link, title, subtitle, className } : CardProps) => {
     return (
         <>
-            <div className={twMerge(`h-0 pb-56 max-h-56 rounded-lg relative flex flex-col justify-center items-center overflow-hidden w-full group`, className ?? '')}>
+            <div className={twMerge(`h-0 pb-[100%] md:pb-56 md:max-h-56 rounded-md md:rounded-lg relative flex flex-col justify-center items-center overflow-hidden w-full group`, className ?? '')}>
                 <Link href={link} className={`
                     absolute top-0 left-0 w-full h-full block bg-gray-400
                     after:absolute after:z-1 after:bottom-0 after:left-0 after:w-full after:h-full after:block after:opacity-0 group-hover:after:opacity-100 after:duration-300 after:bg-gradient-to-t after:from-black after:to-transparent    
@@ -35,11 +35,11 @@ const PlaylistCard = ({ image, link, title, subtitle, className } : CardProps) =
                 </span> */}
             </div>
 
-            <div className={`card__content flex flex-col z-[1] w-full px-4 py-2`}>
+            <div className={`card__content flex flex-col z-[1] w-full px-1 md:px-4 py-2`}>
                 <Link 
                     href={link}
-                    className={`font-secondary text-left text-xl font-semibold text-gray-500 dark:text-white`}>{title}</Link>
-                <p className={`text-left mt-1 text-sm text-gray-300 ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
+                    className={`font-secondary text-left text-sm md:text-xl font-semibold text-gray-500 dark:text-white`}>{title}</Link>
+                <p className={`text-left md:mt-1 text-xs md:text-sm text-gray-300 ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
             </div>
         </>
     );

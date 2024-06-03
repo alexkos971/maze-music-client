@@ -84,7 +84,9 @@
             "header_title": "Profile",
             "change_avatar_title": "Change avatar",
             "change_name_title": "Change name",
-            "change_description_title": "Change description"
+            "change_description_title": "Change description",
+            "settings": "Settings",
+            "sign-out": "Sign out"
         },
         "sign-in": {
             "title": "Sign In",

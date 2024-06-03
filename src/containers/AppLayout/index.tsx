@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, SyntheticEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "next-themes";
 
@@ -51,6 +51,11 @@ export default function AppLayout({ children } : AppWrapProps) {
         Object.keys(THEME_COLORS).forEach((item) => {
             document.documentElement.style.setProperty(`--${item}`, THEME_COLORS[item]);
         });
+
+        // Hide images, which not loaded correctly
+        // document.addEventListener('error', (e : SyntheticEvent<Document, Event>) => {
+            // console.log(e);
+        // })
     });
   
     // this line is the key to avoid the error.
@@ -65,7 +70,7 @@ export default function AppLayout({ children } : AppWrapProps) {
             <AppContext.Provider value={{}}>            
                 <div 
                     className={classNames(
-                        "app bg-white dark:bg-gray-700 duration-300"
+                        "app-layout bg-white dark:bg-gray-700 duration-300 min-h-screen flex flex-col"
                     )}>
 
                     {children}

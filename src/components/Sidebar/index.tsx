@@ -81,8 +81,8 @@ const Sidebar : React.FC = () => {
             ref={sidebarRef}
             className={
                 classNames(
-                    `w-full shrink-0 flex md:flex-col items-center md:pt-[26px] md:pb-2 border-r border-r-gray-100 dark:border-r-gray-400 dark:bg-gray-500 relative overflow-hidden dark:border-r-gray-4a dark:bg-app-background-secondary duration-300`,
-                    'max-md:fixed max-md:w-full max-md:left-0 max-md:bottom-0 max-md:z-20 max-md:bg-[linear-gradient(180deg,rgba(255,255,255,0.82)0%,rgba(255,255,255,1)66%)]',
+                    `w-full shrink-0 flex md:flex-col items-center md:pt-[26px] md:pb-2 border-r border-r-gray-100 dark:border-r-gray-400 dark:bg-gray-500 relative overflow-hidden dark:border-r-gray-4a duration-300`,
+                    'max-md:fixed max-md:w-full max-md:left-0 max-md:bottom-0 max-md:z-20 max-md:bg-[linear-gradient(180deg,rgba(255,255,255,0.82)0%,rgba(255,255,255,1)66%)] dark:max-md:bg-[linear-gradient(180deg,rgba(0,0,0,0)0%,var(--gray-700)66%)]',
                     isCollapsed ? 'sidebar_collapsed lg:max-w-[250px] md:max-w-[90px]' : 'md:max-w-[90px]'
                 )
             }>
