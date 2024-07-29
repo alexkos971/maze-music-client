@@ -9,7 +9,7 @@ interface CardProps {
     className?: string;
 }
 
-const CardWrap = ({ children, onClick, link, className } : CardProps) => {
+const Card = ({ children, onClick, link, className } : CardProps) => {
     let classes = twMerge(
         "relative rounded-md overflow-hidden p-4 bg-gray-50 dark:bg-gray-500 min-w-0 inline-flex flex-col",
         (className || link) ? "cursor-pointer" : "",        
@@ -27,4 +27,4 @@ const CardWrap = ({ children, onClick, link, className } : CardProps) => {
     return <div className={classes}>{children}</div>
 }
 
-export default CardWrap;
+export default Card;

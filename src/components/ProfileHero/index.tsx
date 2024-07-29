@@ -1,5 +1,3 @@
-import styles from './ProfileHero.module.scss';
-
 import { useTranslation } from 'next-i18next';
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { toggleModal } from '@store/reducers/interfaceReducer';
@@ -23,36 +21,34 @@ const ProfileHero = () => {
     }
 
     return (
-        <section className={styles['profile-hero']}>
+        <section className={`profile-hero overflow-hidden w-full bg-gray-50 dark:bg-gray-500 pt-[var(--header-height)] pb-16`}>
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-lg-2">
-                        <Avatar
-                            previewText={profile?.full_name ? formatNick(profile.full_name) : ''}
-                            img={ profile.avatar ?? '' }
-                            size='min(100%, 150px)'
-                            className={styles['profile-hero__avatar']}
-                            onChange={() => {
-                                dispatch(toggleModal({ 
-                                    isOpened: true, 
-                                    content: (
-                                        <UpdateProfileForm 
-                                            title={t('pages.profile.change_avatar_title')}
-                                            name="avatar" 
-                                            value={profile?.avatar ?? '' }
-                                            type="avatar"/>
-                                    )
-                                })) 
-                            }}
-                        />
-                    </div>
+                <div className="flex items-start max-sm:flex-col">
+                    <Avatar
+                        previewText={profile?.full_name ? formatNick(profile.full_name) : ''}
+                        img={ profile.avatar ?? '' }
+                        size='min(100%, 150px)'
+                        className={'flex-shrink-0 max-sm:mb-6'}
+                        onChange={() => {
+                            dispatch(toggleModal({ 
+                                isOpened: true, 
+                                content: (
+                                    <UpdateProfileForm 
+                                        title={t('pages.profile.change_avatar_title')}
+                                        name="avatar" 
+                                        value={profile?.avatar ?? '' }
+                                        type="avatar"/>
+                                )
+                            })) 
+                        }}
+                    />
 
-                    <div className="col-lg-7">
-                        <div className={styles['profile-hero__title']}>
-                            <h1>{profile.full_name}</h1>
+                    <div className="profile-hero__layout flex flex-col sm:ml-8 sm:pt-8 md:max-w-3xl">
+                        <div className={'flex items-end gap-4 text-gray-400 mb-5'}>
+                            <h1 className='text-4xl dark:text-white'>{profile.full_name}</h1>
 
                             <EditButton 
-                                className={classNames(styles['profile-hero__title'], styles['edit-button'])} 
+                                className={'mb-[6px] text-gray-400 dark:text-white'} 
                                 onClick={() => {
                                     dispatch(toggleModal({ 
                                         isOpened: true, 
@@ -68,11 +64,11 @@ const ProfileHero = () => {
                             />
                         </div>
 
-                        <p className={styles['profile-hero__description']}>
+                        <p className={'flex text-gray-300 text-base'}>
                             {profile.description?.length ? profile.description :  "You don't have a description..."}
                             
                             <EditButton 
-                                className={styles['profile-hero__description-edit']} 
+                                className={'w-4 h-4 ml-2 translate-y-[2px]'} 
                                 onClick={() => {
                                     dispatch(toggleModal({ 
                                         isOpened: true, 
@@ -88,13 +84,21 @@ const ProfileHero = () => {
                             />
                         </p>
 
-                        <DottedRow className={classNames(styles['profile-hero__info'], 'text-gray-400 dark:text-gray-300')} dotColor='var(--gray-400)'>
+                        <DottedRow className={classNames('text-gray-400 dark:text-gray-300')} dotColor='var(--gray-400)'>
                             <Button color='black' size='small'>{t(`profile.${profile.role}`)}</Button>
                             <span><strong>{profile?.followers}</strong> {t('interface.followers')}</span>
                             <span><strong>{profile?.saved_artists?.length}</strong> {t('interface.subscriptions')}</span>
                         </DottedRow>
                     </div>
                 </div>
+                
+                {/* <div className="row">
+                    <div className="col-lg-2">
+                    </div>
+
+                    <div className="col-lg-7">
+                    </div>
+                </div> */}
             </div>
         </section>
     );

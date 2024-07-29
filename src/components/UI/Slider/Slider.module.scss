@@ -9,6 +9,7 @@
         scroll-behavior: smooth;
         padding: 0px calc(var(--container-padding) - 10px);
         overflow-x: auto;
+        cursor: grab;
     }
 
     &__slide {
@@ -22,6 +23,14 @@
         @screen sm {
             max-width: min(440px, var(--max-w));
             flex: 0 0 min(440px, var(--max-w));
+        }
+
+        img {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            pointer-events: none
         }
     }
 

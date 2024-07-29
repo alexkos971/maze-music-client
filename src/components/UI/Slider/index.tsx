@@ -1,5 +1,4 @@
 import React, { ReactNode, createContext, useState, useRef, useEffect } from "react";
-import Dots from "@components/UI/Slider/dots";
 import Arrows from "@components/UI/Slider/arrows";
 import styles from "./Slider.module.scss";
 
@@ -27,31 +26,51 @@ const Slider: SliderComponent = ({
     };
 
     let sliderRef = useRef<HTMLDivElement | null>(null);
-    let [active, setActive] = useState<number>(0);
-    let [childWidth, setChildWidth] = useState<number>(0);
-    let [ignoreScroll, setIgnoreScroll] = useState<boolean>(false)
-    
-    const scrollTo = (next: number) => {
-        setIgnoreScroll(true);
-        setActive(next);
-        
-        if (sliderRef?.current && childWidth > 0) {            
-            let scrollLeft = childWidth * next;
-            sliderRef.current.scrollLeft = scrollLeft;
-        }    
-        
-        setTimeout(() => {
-            setIgnoreScroll(false);
-        }, 1000);
-    };
+    let [childWidth, setChildWidth] = useState<number>(0);  
+    let [isMouseDown, setIsMouseDown] = useState<boolean>(false)
+    let [pos, setPos] = useState({
+        left: 0, x: 0 
+    });
 
-    const handleScroll = () => {
-        let scrollableValue = sliderRef.current?.scrollLeft ?? 0;        
-            
-        if (scrollableValue > 0 && childWidth > 0 && !ignoreScroll) {
-            setActive(Math.floor(scrollableValue / childWidth));
+    const mouseDownHandler = (e: React.MouseEvent) => {
+        setIsMouseDown(true);                                            
+                        
+        if ( sliderRef.current ) {
+            sliderRef.current.style.scrollBehavior = 'initial';
+
+            setPos({
+                left: sliderRef.current.scrollLeft,
+                x: e.clientX
+            });
         }
     }
+
+    const mouseUpHandler = (e: React.MouseEvent) => {
+        setIsMouseDown(false);
+        
+        if (sliderRef.current) {
+            sliderRef.current.style.scrollBehavior = 'smooth';
+        }
+    }
+
+    const mouseMoveHandler = (e: React.MouseEvent) => {
+        if ( !sliderRef?.current || !isMouseDown ) {
+            return;
+        }
+        
+        const dx = e.clientX - pos.x;
+
+        setPos({
+            left: pos.left - dx,
+            x: e.clientX
+        });        
+    };
+
+    useEffect(() => {
+        if (sliderRef.current) {
+            sliderRef.current.scrollLeft = pos.left;  
+        }
+    }, [pos]);
 
     // Initial Values
     useEffect(() => {
@@ -61,14 +80,21 @@ const Slider: SliderComponent = ({
         
         setTimeout(() => {            
             sliderRef && sliderRef.current && setChildWidth(parseInt(getComputedStyle(sliderRef.current.children[0]).width));
-        }, 2000)
-
+        }, 2000);
     }, []);
     
     return (
         <SliderContext.Provider value={{ ...settings }}>
             <div className={styles.slider}>
-                <div className={`${styles.slider__wrap} hide-scrollbar`} ref={sliderRef} onScroll={handleScroll}>{children}</div>               
+                <div 
+                    className={`${styles.slider__wrap} hide-scrollbar`} 
+                    ref={sliderRef}                     
+                    onMouseDown={mouseDownHandler}
+                    onMouseUp={mouseUpHandler}
+                    onMouseMove={mouseMoveHandler}
+                >
+                    {children}
+                </div>               
 
                 { settings.withArrows ?
                     <Arrows 
@@ -76,10 +102,6 @@ const Slider: SliderComponent = ({
                         slideWidth={childWidth}                        
                         />
                 : <></> }
-
-                {/* { settings.withDots ?
-                    <Dots count={Array.isArray(children) ? children.length : 0} active={active} setActive={scrollTo}/>
-                : <></> } */}
             </div>       
         </SliderContext.Provider>
     )

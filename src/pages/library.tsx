@@ -7,7 +7,7 @@ import Title from "@components/UI/Title";
 import { useTranslation } from "next-i18next";
 import Playlists from "@components/Playlists";
 import Artists from "@components/Artists";
-import CardWrap from "@components/UI/CardWrap";
+import Card from "@components/UI/Card";
 
 import SavedTracksCover from "@assets/images/saved-tracks-cover.png";
 import WeekndAvatar from "@assets/images/uploads/weeknd.png";
@@ -52,7 +52,7 @@ export default ProtectedPage(function Library() {
           
           {
             currentTab == t("pages.library.tabs.playlists") ?
-              <CardWrap onClick={() => {
+              <Card onClick={() => {
                   dispatch(toggleModal({ 
                     isOpened: true, 
                     content: (
@@ -72,11 +72,11 @@ export default ProtectedPage(function Library() {
                     "></span>
 
                     <div className="flex flex-col ml-4">
-                      <Title tag="h5" className="mb-1">{t("pages.library.create_playlist.title")}</Title>
+                      <Title tag="h5" className="md:mb-1">{t("pages.library.create_playlist.title")}</Title>
                       <p className="text-sm text-gray-400 dark:text-gray-200">{t("pages.library.create_playlist.subtitle")}</p>
                     </div>
                 </div>
-              </CardWrap>
+              </Card>
               : <></>
           }            
             <Playlists

@@ -11,7 +11,7 @@ import { useTranslation } from "next-i18next";
 import { useAppDispatch } from "@hooks";
 import { showToast } from "@store/reducers/interfaceReducer";
 import { useUploadTrackMutation } from "@store/api/tracksApi";
-import CardWrap from "@components/UI/CardWrap";
+import Card from "@components/UI/Card";
 
 export default ProtectedPage(function Upload() {
   const {t} = useTranslation('common');
@@ -47,7 +47,7 @@ export default ProtectedPage(function Upload() {
 
         <div className="row">
           <div className="col-lg-6 offset-lg-3">            
-            <CardWrap className="w-full mt-6">
+            <Card className="w-full mt-6">
               <Form {...{ fields, setFields, validFields, setValidFields }}>
                 <Title tag="h3" className="text-center">Upload your track</Title>
                 
@@ -87,7 +87,7 @@ export default ProtectedPage(function Upload() {
                   disabled={!Object.keys(validFields).some(key => validFields[key] == false )}
                   className="w-full mt-10">{t("interface.submit")}</Button>
               </Form>
-            </CardWrap>
+            </Card>
           </div>
         </div>
       </div>

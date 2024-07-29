@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
@@ -34,7 +34,7 @@ const ArtistCard = ({ image, link, title, subtitle } : CardProps) => {
                     }            
 
                     <div className={`card__content flex flex-col z-[1] w-full absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]`}>
-                        <h3 className={`font-secondary 'text-center text-3xl text-white text-center`}>{title}</h3>
+                        <h3 className={`font-secondary font-normal text-3xl text-white text-center`}>{title}</h3>
                         <p className={`text-center mt-2 text-gray-200 text-sm ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
                     </div>
                 </Link>
