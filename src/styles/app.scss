@@ -25,12 +25,30 @@ h1, h2, h3, h4, h5, h6 {
 //     color: black; 
 // }
 
-[data-theme='dark'] {
-    // h1, h2, h3, h4, h5, h6 {
-    //     color: white;
-    // }
+[data-theme='dark'] {}
 
-    // p, span {
-    //     color: var(--gray-200); 
-    // }
+.swipeView {
+    height: 100svh;
+    width: 100%;
+    overflow-y: auto;
+    scroll-snap-points-y: repeat(300px);
+    scroll-snap-type: y mandatory;
+    scroll-snap-type: mandatory;
+    overflow: auto;
+
+    section {
+        display: block;
+        width: 100%;
+        height: 100svh;
+        scroll-snap-align: start;
+        
+        &.green {
+            background-color: transparent;
+        }
+        
+        &.purple {
+            border-radius: 20px 20px 0px 0px;
+            background-color: purple;
+        }
+    }
 }

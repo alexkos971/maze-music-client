@@ -103,6 +103,10 @@ $col-sizes: (
     @include col-styles('xl');
 }
 
+@include media-breakpoint-up(xl) {
+    @include col-styles('2xl');
+}
+
 .col-auto {
     flex: 0 0 auto;
     width: auto;

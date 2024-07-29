@@ -31,7 +31,7 @@ let SidebarButton = ({
                 !mobileMenu && `after:h-7 after:w-[1.5px] after:bg-gray-400 dark:after:bg-white after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 ${!isCurrent ? 'after:opacity-0' : ''}`    
             )}>
             <div className={classNames(
-                "sidebar-button__wrap flex items-center max-md:flex-col md:justify-start rounded-lg py-3 px-4 duration-300 w-full cursor-pointer md:hover:bg-gray-50 dark:md:hover:bg-gray-400",
+                "sidebar-button__wrap flex items-center max-md:flex-col md:justify-start rounded-lg md:py-3 py-4 px-4 duration-300 w-full cursor-pointer md:hover:bg-gray-50 dark:md:hover:bg-gray-400",
 
             )}>
                 <div className={`w-6 h-6 duration-300 ${!isCurrent ? 'opacity-50' : 'opacity-100'} flex-shrink-0 text-gray-400 dark:text-white svg-current-color`}>

@@ -55,9 +55,12 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
   useEffect(() => {
     let timer : undefined | ReturnType<typeof setTimeout>;
     timer = setTimeout(() => resizeHeader(), 50);
+
     window.addEventListener('resize', resizeHeader);
+    
     return () => {
       clearTimeout(timer);
+      window.removeEventListener('resize', resizeHeader);
     }
   }, [headerRef]);
 

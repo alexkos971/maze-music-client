@@ -33,7 +33,7 @@ const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {
                 {
                     data.map((item) => {
                         return (
-                            <div className={IsSm ? "relative w-5/12 flex-shrink-0 px-2" : "col-lg-3 col-md-4 col-sm-6"}>
+                            <div className={IsSm ? "relative w-5/12 flex-shrink-0 px-2" : "col-2xl-2 col-xl-3 col-md-4 col-sm-6"}>
                                 <PlaylistCard     
                                     className="mt-3"                               
                                     link={item.link ?? `/playlist/${item.id}`}

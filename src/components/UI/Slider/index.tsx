@@ -33,8 +33,8 @@ const Slider: SliderComponent = ({
     });
 
     const mouseDownHandler = (e: React.MouseEvent) => {
-        setIsMouseDown(true);                                            
-                        
+        setIsMouseDown(true);              
+    
         if ( sliderRef.current ) {
             sliderRef.current.style.scrollBehavior = 'initial';
 
@@ -47,7 +47,7 @@ const Slider: SliderComponent = ({
 
     const mouseUpHandler = (e: React.MouseEvent) => {
         setIsMouseDown(false);
-        
+
         if (sliderRef.current) {
             sliderRef.current.style.scrollBehavior = 'smooth';
         }
@@ -81,6 +81,12 @@ const Slider: SliderComponent = ({
         setTimeout(() => {            
             sliderRef && sliderRef.current && setChildWidth(parseInt(getComputedStyle(sliderRef.current.children[0]).width));
         }, 2000);
+
+        document.addEventListener('mouseup', mouseUpHandler);
+
+        return () => {
+            document.removeEventListener('mouseup', mouseUpHandler);
+        }
     }, []);
     
     return (
@@ -90,7 +96,6 @@ const Slider: SliderComponent = ({
                     className={`${styles.slider__wrap} hide-scrollbar`} 
                     ref={sliderRef}                     
                     onMouseDown={mouseDownHandler}
-                    onMouseUp={mouseUpHandler}
                     onMouseMove={mouseMoveHandler}
                 >
                     {children}
@@ -100,8 +105,9 @@ const Slider: SliderComponent = ({
                     <Arrows 
                         sliderRef={sliderRef}
                         slideWidth={childWidth}                        
-                        />
-                : <></> }
+                    />
+                    : <></> 
+                }
             </div>       
         </SliderContext.Provider>
     )

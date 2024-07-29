@@ -74,8 +74,10 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
 
     return (
         <div className={styles['mobile-player']}>
-
-            { track ? <FullPlayer/> : <></> }            
+            { track ? 
+                <FullPlayer/> 
+                : <></> 
+            }            
 
             <div className="container">
                 <div 

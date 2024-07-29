@@ -34,11 +34,11 @@ const MainWrap = ( { canReturnBack, overlapHeader, ...props } : PropsWithChildre
                 <div className={classNames(
                     fullplayer_is_expanded ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden', 
                     // caclulate padding from player height and sidebar
-                    "w-screen max-md:pb-10"
+                    "w-screen"
                 )} onScroll={fillHeaderByScroll}>
                     <Header canReturnBack={canReturnBack} overlap={overlapHeader}/>
 
-                    <div className="main-wrap-content md:min-h-full md:pb-4">
+                    <div className="main-wrap-content md:min-h-full md:pb-4 pb-32">
                         {props.children}
                     </div>
                 </div>

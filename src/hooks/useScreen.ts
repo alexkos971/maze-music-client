@@ -2,6 +2,7 @@ import useThrottle from './throttle';
 import { useEffect, useState } from 'react';
 
 let screenSizes: {[key:string]: number} = {
+    'xl': 1440,
     'lg': 1200,
     'md': 992,
     'sm': 768,

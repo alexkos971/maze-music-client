@@ -1,15 +1,11 @@
 import MainWrap from "@containers/MainWrap"
+import React from "react";
 
 export default function Test() {    
 
     return (
         <MainWrap>        
-            <div>
-                <div className="swipeView">
-                    <section className="green"></section>
-                    <section className="purple"></section>
-                    <section className="orange"></section>    
-                </div> 
+            <div>                
             </div>
         </MainWrap>    
     );

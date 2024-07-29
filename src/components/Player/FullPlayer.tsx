@@ -1,15 +1,17 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
-import { useAppSelector } from '@hooks';
+import { useAppDispatch, useAppSelector } from '@hooks';
 
 import MusicNoteGray from "@assets/images/icons/note-gray.svg";
 
 import styles from './Player.module.scss';
 import Image from 'next/image';
 import classNames from 'classnames';
+import { setFullplayerExpanded } from '@store/reducers/interfaceReducer';
 
 const FullPlayer = () => {
     const {t} = useTranslation('common');
+    const dispatch = useAppDispatch();
     const [ fullplayer_is_expanded, track ] = useAppSelector(state => [state.interface.fullplayer_is_expanded, state.player.track]);
 
     if (!track) {
@@ -18,6 +20,13 @@ const FullPlayer = () => {
 
     return (
         <div className={`${styles.fullplayer} ${fullplayer_is_expanded ? styles.fullplayer_expanded : ''}`}>
+            
+            <div
+                onClick={() => dispatch(setFullplayerExpanded(false))}
+                className="fullplayer__dash cursor-pointer z-1 absolute left-0 top-0 w-full h-10 flex items-center justify-center">
+                <span className="rounded-sm w-10 h-1 bg-gray-300"></span>
+            </div>
+            
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-5">

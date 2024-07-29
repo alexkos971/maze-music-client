@@ -33,7 +33,7 @@ export default ProtectedPage(function Profile() {
             <div className="container-fluid pt-16">
                 <Title>{t("pages.profile.settings")}</Title>
                 
-                <div className="max-w-sm">
+                <div className="sm:max-w-sm">
                     <LanguageSwitcher/>    
 
                     <Button 
