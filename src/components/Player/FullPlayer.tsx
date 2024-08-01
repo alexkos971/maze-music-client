@@ -1,3 +1,4 @@
+import { forwardRef, useRef, useImperativeHandle } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useAppDispatch, useAppSelector } from '@hooks';
@@ -8,8 +9,17 @@ import styles from './Player.module.scss';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { setFullplayerExpanded } from '@store/reducers/interfaceReducer';
+import ProgressBar from './controls/ProgressBar';
+import NavBar from './controls/NavBar';
 
-const FullPlayer = () => {
+
+const FullPlayer = forwardRef<HTMLAudioElement>(function({}, ref) {
+    const audioRef = useRef<HTMLAudioElement>(null)
+    useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
+        ref,
+        () => audioRef.current
+    );
+
     const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
     const [ fullplayer_is_expanded, track ] = useAppSelector(state => [state.interface.fullplayer_is_expanded, state.player.track]);
@@ -50,8 +60,12 @@ const FullPlayer = () => {
                         </div>
                     </div>
 
-                    <div className="col">
-                        
+                    <div className="col md:hidden">
+                        <ProgressBar ref={ref} className="mt-6"/>
+
+                        <div className="flex justify-center mt-6">
+                            <NavBar ref={ref}/>
+                        </div>
                     </div>
 
                     <div className="offset-lg-1 col-lg-5">
@@ -67,6 +81,6 @@ const FullPlayer = () => {
             </div>
         </div>
     );
-}
+});
 
 export default FullPlayer;

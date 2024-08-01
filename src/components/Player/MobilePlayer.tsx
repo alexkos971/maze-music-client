@@ -6,28 +6,21 @@ import FullPlayer from "./FullPlayer";
 import classNames from "classnames";
 import { PauseBlack, PlayBlack, HeartOutlineGray, HeartSolidGreen } from "@utils/images";
 import MusicNoteGray from "@icons/note-gray.svg";
-import Range from "@components/UI/Range";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
+import { setIsPlaying } from "@store/reducers/playerReducer";
 import Link from "next/link";
 
 interface MobilePlayerProps {
-    duration: number,
     isSaved: boolean,
     saveTrack: any,
-
-    previousMusicClickHandler: any, 
-    nextMusicClickHandler: any, 
     playClickHandler: any,
-    repeatClickHandler: any,
-    shuffleRepeatClickHandler: any
 }
 
 const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
-    duration,
     saveTrack,
     isSaved,
-    previousMusicClickHandler, nextMusicClickHandler, playClickHandler, repeatClickHandler, shuffleRepeatClickHandler
+    playClickHandler
 }, ref) {
     
     const internalRef = useRef<HTMLAudioElement>(null)
@@ -38,10 +31,8 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
 
     const dispatch = useAppDispatch();
 
-    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
-        state.player.currentTime, 
+    const [isPlaying, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
         state.player.isPlaying, 
-        state.player.volume, 
         state.player.track, 
         state.interface.fullplayer_is_expanded
     ]);
@@ -87,7 +78,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                             "mt-12 relative z-1 duration-300", 
                             !fullplayer_is_expanded && 'translate-y-full'
                         )}>
-                        <FullPlayer/> 
+                        <FullPlayer ref={internalRef}/> 
                     </div>
                 </div>
                 : <></> 
@@ -105,7 +96,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                         }}                    
                         className="absolute w-full h-full"></div>   
 
-                    <div className="w-12 h-12 flex-shrink-0 overflow-hidden">
+                    <div className="w-11 h-11 flex-shrink-0 overflow-hidden">
                         {!track?.cover 
                             ? <Image 
                                 className="w-full h-full object-cover"
@@ -121,14 +112,18 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                             }
                     </div> 
 
-                    <div className="flex flex-col ml-2">
-                        <span className={'text-black text-sm whitespace-nowrap'}>{track.name}</span>
+                    <div className="inline-flex flex-col items-start ml-2">
+                        <span className={'text-black font-secondary text-sm whitespace-nowrap'}>{track.name}</span>
                         <Link href={`/artist/${track.artist._id}`} className={'text-black text-xs whitespace-nowrap font-secondary font-light opacity-80 z-1'}>{track.artist.full_name}</Link>
                     </div>
                                         
                     <button 
                         className={'flex items-center justify-center w-6 h-6 ml-auto z-1'} 
-                        onClick={playClickHandler}>
+                        onClick={() => {
+                            if ( track ) {    
+                                dispatch(setIsPlaying(!isPlaying));
+                            }
+                        }}>
                         {isPlaying ? <PauseBlack/> : <PlayBlack/>}                                
                     </button>
 
@@ -143,20 +138,6 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                     > 
                         {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
                     </button>
-
-                    {/* <Range
-                        value={currentTime}                                
-                        className={classNames(styles['mobile-player__progress'], styles['progress'])}
-                        onMouseUp={() => {
-                            setIsDragged(false);
-                            
-                            if ( internalRef?.current && internalRef.current.currentTime != currentTime ) {
-                                internalRef.current.currentTime = currentTime;
-                            }
-                        }}
-                        onMouseDown={() => setIsDragged(true)}
-                        onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
-                        max={duration} /> */}
                 </div>
             </div>
         </div>

@@ -57,7 +57,7 @@ const Track = ({
             </div>
 
             <span className={`flex md:items-center max-md:flex-col font-primary font-semibold ${is_current_track ? "text-green-100" : "text-gray-400 dark:text-gray-200"} ml-3 md:ml-4`}>
-                <h4 className="track__name font-normal whitespace-nowrap text-base md:text-sm">{track.name}</h4> 
+                <h4 className="track__name font-normal whitespace-nowrap text-sm">{track.name}</h4> 
                 <span className="mx-1 max-md:hidden">-</span>
                 <Link 
                     href={'/artist/' + track.artist._id} 

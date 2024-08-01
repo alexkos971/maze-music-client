@@ -1,20 +1,18 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
-import styles from "./Player.module.scss";
 import useThrottle from "@hooks/throttle";
 import FullPlayer from "./FullPlayer";
 import classNames from "classnames";
-import { formatTime } from "@utils/formated";
-import { DoubleArrowsGray, PauseBlack, PlayBlack, RepeatGray, HeartOutlineGray, HeartSolidGreen, ChevronUpGray } from "@utils/images";
-import VolumeGray from "@icons/volume-gray.svg";
+import { RepeatGray, HeartOutlineGray, HeartSolidGreen, ChevronUpGray } from "@utils/images";
 import MusicNoteGray from "@icons/note-gray.svg";
-import Range from "@components/UI/Range";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setFullplayerExpanded } from "@store/reducers/interfaceReducer";
-import { setVolume } from "@store/reducers/playerReducer";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+
 import ProgressBar from "./controls/ProgressBar";
+import NavBar from "./controls/NavBar";
+import VolumeBar from "./controls/VolumeBar";
 
 interface DesktopPlayerProps {
     duration: number,
@@ -29,10 +27,9 @@ interface DesktopPlayerProps {
 }
 
 const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function ({
-    duration,
     saveTrack,
     isSaved,
-    previousMusicClickHandler, nextMusicClickHandler, playClickHandler, repeatClickHandler, shuffleRepeatClickHandler
+    repeatClickHandler
 }, ref) {
     const dispatch = useAppDispatch();
 
@@ -42,24 +39,10 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
         () => internalRef.current
     );
 
-    const [currentTime, isPlaying, volume, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
-        state.player.currentTime, 
-        state.player.isPlaying, 
-        state.player.volume, 
+    const [track, fullplayer_is_expanded] = useAppSelector((state : any) => [
         state.player.track, 
         state.interface.fullplayer_is_expanded
     ]);
-
-    const changeVolumeHandler = (volumeValue: number) => {
-        if (!internalRef) {
-            return;
-        }
-        
-        internalRef.current && (internalRef.current.volume = volumeValue / 100);
-        dispatch(setVolume(volumeValue / 100));
-        internalRef.current && (internalRef.current.volume = volumeValue / 100);
-        dispatch(setVolume(volumeValue / 100));
-    }
 
     // Get Height of the Player
     const playerRef = useRef<HTMLDivElement>(null);    
@@ -96,7 +79,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                     'absolute right-0 duration-300 w-[calc(100%-var(--sidebar-width))] bottom-[calc(var(--player-height)-1px)]',
                     fullplayer_is_expanded ? 'h-[calc(100dvh-var(--player-height)+2px)] z-1' : 'h-0 -z-1'
                 )}>
-                    <FullPlayer/> 
+                    <FullPlayer ref={internalRef}/> 
                 </div>
                 : <></> 
             }
@@ -119,32 +102,10 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                     </div>
                 </div>                
 
-                <div className="flex flex-col items-center w-full max-w-[550px]">
-                    {/* Prev - Play - Next */}
-                    <div className="flex items-center mb-2">
-                        <button 
-                            onClick={previousMusicClickHandler}
-                            className={twMerge(NavButtonStyles, '-scale-100')}
-                            type="button">
-                                <DoubleArrowsGray/>
-                        </button>
+                <div className="flex flex-col items-center w-full max-w-[520px] absolute left-1/2 -translate-x-1/2">
+                    {/* Prev - Play - Next */}        
+                    <NavBar ref={internalRef}/>
 
-                        <button 
-                            className={'w-8 h-8 bg-green-100 rounded-full flex justify-center items-center mx-4 shrink-0 duration-300 active:opacity-80'} 
-                            onClick={playClickHandler}>
-
-                            {isPlaying ? <PauseBlack className={'w-4 h-4'}/> : <PlayBlack className={'w-4 h-4'}/>}                                
-                        </button>
-
-                        <button 
-                            onClick={nextMusicClickHandler}
-                            className={NavButtonStyles}
-                            type="button">
-                            <DoubleArrowsGray />
-                        </button>
-                    </div>
-
-                    
                     <ProgressBar ref={internalRef}/>
                 </div>
 
@@ -160,28 +121,14 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                         }} 
                         type="button" 
                         className={twMerge(
-                            NavButtonStyles,
-                            "mr-10",
+                            NavButtonStyles,                        
                             !track && 'opacity-0',
                             fullplayer_is_expanded ? 'scale-y-[-1]' : ''
                         )}>
                         <ChevronUpGray/>
                     </button>
 
-                    <span className={'flex items-center w-28'}>
-                        <span className={NavButtonStyles}>                                                
-                            <VolumeGray/>
-                        </span>
-                        
-                        <Range
-                            value={volume * 100}
-                            min={0}
-                            color="gray"
-                            max={100}
-                            onChange={(e : React.ChangeEvent<HTMLInputElement>) => changeVolumeHandler(Number(e.target.value))} 
-                            className={'ml-2'}
-                            />
-                    </span>
+                    <VolumeBar ref={internalRef}/>
 
                     <button 
                         type="button" 

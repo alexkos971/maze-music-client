@@ -3,10 +3,14 @@ import { formatTime } from "@utils/formated";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setCurrentTime, setIsDragged } from "@store/reducers/playerReducer";
 import Range from "@components/UI/Range";
+import { twMerge } from "tailwind-merge";
 
+interface ProgressBarProps {
+    className?: string;
+}
 
-const ProgressBar = forwardRef<HTMLAudioElement>(function({
-
+const ProgressBar = forwardRef<HTMLAudioElement, ProgressBarProps>(function({
+    className
 }, ref) {
     const dispatch = useAppDispatch();
 
@@ -30,7 +34,7 @@ const ProgressBar = forwardRef<HTMLAudioElement>(function({
     }
 
     return (
-        <div className={`flex items-center justify-center relative w-full`}>
+        <div className={twMerge(`flex items-center justify-center relative w-full`, className)}>
             <span className="text-white text-xs">{formatTime(currentTime)}</span>
 
             {/* Progress */}
