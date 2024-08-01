@@ -14,30 +14,25 @@ import { setFullplayerExpanded } from "@store/reducers/interfaceReducer";
 import { setVolume } from "@store/reducers/playerReducer";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import ProgressBar from "./controls/ProgressBar";
 
 interface DesktopPlayerProps {
     duration: number,
-    setIsDragged: any,
     isSaved: boolean,
     saveTrack: any,
 
-    metadataLoadHandler: any, 
-    onAudioUpdate: any, 
     previousMusicClickHandler: any, 
     nextMusicClickHandler: any, 
     playClickHandler: any,
     repeatClickHandler: any,
-    shuffleRepeatClickHandler: any,
-    musicTimeChangeHandler: any
+    shuffleRepeatClickHandler: any
 }
 
 const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function ({
     duration,
     saveTrack,
-    setIsDragged,
     isSaved,
-    musicTimeChangeHandler,
-    metadataLoadHandler, onAudioUpdate, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, repeatClickHandler, shuffleRepeatClickHandler
+    previousMusicClickHandler, nextMusicClickHandler, playClickHandler, repeatClickHandler, shuffleRepeatClickHandler
 }, ref) {
     const dispatch = useAppDispatch();
 
@@ -95,20 +90,20 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
     }
 
     return (
-        <div className={'desktop-player w-full sticky bottom-0 right-0 z-30 mt-auto'}>
-            <FullPlayer/>
+        <div className={'desktop-player w-full sticky bottom-0 right-0 z-20 mt-auto'}>
+            {track ? 
+                <div className={classNames(
+                    'absolute right-0 duration-300 w-[calc(100%-var(--sidebar-width))] bottom-[calc(var(--player-height)-1px)]',
+                    fullplayer_is_expanded ? 'h-[calc(100dvh-var(--player-height)+2px)] z-1' : 'h-0 -z-1'
+                )}>
+                    <FullPlayer/> 
+                </div>
+                : <></> 
+            }
 
-            <div ref={playerRef} className="pr-container pl-4 py-3 bg-gray-600 flex items-center justify-between w-full">           
-                <audio 
-                    ref={internalRef} 
-                    onTimeUpdate={onAudioUpdate} 
-                    onLoadedMetadata={metadataLoadHandler} >
-                    <source src={track.src} type="audio/mpeg" />
-                    Your browser does not support the audio element.
-                </audio>
-            
+            <div ref={playerRef} className="pr-container pl-4 py-3 bg-gray-600 flex items-center justify-between w-full z-10">
                 <div className="flex items-center">
-                    <div className={`w-12 h-12 ml-1 shrink-0 relative rounded block overflow-hidden text-gray-400 dark:text-gray-200 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
+                    <div className={`w-12 h-12 ml-1 shrink-0 relative bg-red-100 rounded block overflow-hidden text-gray-400 dark:text-gray-200 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
                         { track.cover?.length 
                             ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center w-full h-full"/> 
                             : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
@@ -122,7 +117,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                                 {track.artist.full_name}
                         </Link>                             
                     </div>
-                </div>
+                </div>                
 
                 <div className="flex flex-col items-center w-full max-w-[550px]">
                     {/* Prev - Play - Next */}
@@ -150,48 +145,29 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                     </div>
 
                     
-                    <div className={`flex items-center justify-center relative w-full`}>
-                        <span className="text-white text-xs">{formatTime(currentTime)}</span>
-
-                        {/* Progress */}
-                        <Range
-                            value={currentTime}                                
-                            className={'mx-4 w-full'}
-                            onMouseUp={() => {
-                                setIsDragged(false);
-                                
-                                if ( internalRef?.current && internalRef?.current?.currentTime != currentTime ) {
-                                    internalRef.current.currentTime = currentTime;
-                                }
-                            }}
-                            onMouseDown={() => setIsDragged(true)}
-                            onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
-                            max={duration} />
-                        
-                        <span className="text-white text-xs">{formatTime(duration) ?? "00:00"}</span>
-                    </div>
+                    <ProgressBar ref={internalRef}/>
                 </div>
-
-                {/* Show/Hide  Full Player */}
-                <button 
-                    onClick={() => {
-                        if (track) {
-                            dispatch( setFullplayerExpanded(!fullplayer_is_expanded) );                    
-                        } 
-                    }} 
-                    type="button" 
-                    className={twMerge(
-                        NavButtonStyles,
-                        "absolute right-full mr-10",
-                        !track && 'opacity-0',
-                        fullplayer_is_expanded ? 'scale-y-[-1]' : ''
-                    )}>
-                    <ChevronUpGray/>
-                </button>
 
 
                 {/* Navigation - Volume/Save/Repeat */}
                 <div className={classNames('flex items-center gap-6 shrink-0 ml-10')}>
+                    {/* Show/Hide  Full Player */}
+                    <button 
+                        onClick={() => {
+                            if (track) {
+                                dispatch( setFullplayerExpanded(!fullplayer_is_expanded) );                    
+                            } 
+                        }} 
+                        type="button" 
+                        className={twMerge(
+                            NavButtonStyles,
+                            "mr-10",
+                            !track && 'opacity-0',
+                            fullplayer_is_expanded ? 'scale-y-[-1]' : ''
+                        )}>
+                        <ChevronUpGray/>
+                    </button>
+
                     <span className={'flex items-center w-28'}>
                         <span className={NavButtonStyles}>                                                
                             <VolumeGray/>

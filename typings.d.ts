@@ -24,6 +24,7 @@ interface Track {
 interface Player {
     track: Track | null;
     isPlaying: false;
+    isDragged: boolean,
     // duration: number;
     currentTime: number,
     // playList: {

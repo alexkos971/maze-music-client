@@ -18,7 +18,7 @@ const ArtistCard = ({ image, link, title, subtitle } : CardProps) => {
     let [imageLoaded, setImageLoaded] = useState(true);
     return (
         <>
-            <div className={`h-0 pb-72 max-h-72 rounded-lg relative flex flex-col justify-center items-center overflow-hidden w-full group`}>
+            <div className={`h-0 md:pb-72 md:max-h-72 pb-40 max-h-42 rounded-lg relative flex flex-col justify-center items-center overflow-hidden w-full group`}>
                 <Link href={link} className={twMerge(`
                     absolute top-0 left-0 w-full h-full block bg-gray-400
                     after:absolute after:bottom-0 after:left-0 after:w-full after:opacity-0 group-hover:after:opacity-100 after:h-full after:duration-300 after:bg-gradient-to-t after:from-black after:to-transparent    
@@ -37,8 +37,8 @@ const ArtistCard = ({ image, link, title, subtitle } : CardProps) => {
                     }            
 
                     <div className={`card__content flex flex-col z-[1] w-full absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]`}>
-                        <h3 className={`font-secondary font-normal text-3xl text-white text-center`}>{title}</h3>
-                        <p className={`text-center mt-2 text-gray-200 text-sm ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
+                        <h3 className={`md:mb-2 mb-1 font-secondary font-normal md:text-3xl text-2xl text-white text-center`}>{title}</h3>
+                        <p className={`text-center text-gray-200 md:text-sm text-xs ${!subtitle || !subtitle.length ? 'opacity-0' : ''}`}>{subtitle ? subtitle : 'empty'}</p>
                     </div>
                 </Link>
 

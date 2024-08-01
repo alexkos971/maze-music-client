@@ -9,30 +9,25 @@ import MusicNoteGray from "@icons/note-gray.svg";
 import Range from "@components/UI/Range";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
+import Link from "next/link";
 
 interface MobilePlayerProps {
     duration: number,
-    setIsDragged: any,
     isSaved: boolean,
     saveTrack: any,
 
-    metadataLoadHandler: any, 
-    onAudioUpdate: any, 
     previousMusicClickHandler: any, 
     nextMusicClickHandler: any, 
     playClickHandler: any,
     repeatClickHandler: any,
-    shuffleRepeatClickHandler: any,
-    musicTimeChangeHandler: any
+    shuffleRepeatClickHandler: any
 }
 
 const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
     duration,
     saveTrack,
-    setIsDragged,
     isSaved,
-    musicTimeChangeHandler,
-    metadataLoadHandler, onAudioUpdate, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, repeatClickHandler, shuffleRepeatClickHandler
+    previousMusicClickHandler, nextMusicClickHandler, playClickHandler, repeatClickHandler, shuffleRepeatClickHandler
 }, ref) {
     
     const internalRef = useRef<HTMLAudioElement>(null)
@@ -73,33 +68,42 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
     }, [playerRef]);
 
     return (
-        <div className={styles['mobile-player']}>
+        <div className={classNames(styles['mobile-player'], 'z-20')}>
             { track ? 
-                <FullPlayer/> 
+                // <div className="fixed top-0 left-0 w-screen h-screen">
+                <div className={classNames(
+                    'block fixed left-0 top-0 duration-100 w-screen h-screen overflow-y-auto overflow-x-hidden hide-scrollbar',
+                    !fullplayer_is_expanded ? 'opacity-0 -z-1 select-none pointer-events-none' : 'z-10'                    
+                )}>
+
+                    {/* Clicked Background */}
+                    <div 
+                        className="absolute left-0 top-0 w-full h-full bg-[rgba(0,0,0,.8)] block"
+                        onClick={() => dispatch( setFullplayerExpanded(false) )}
+                    ></div>
+                    
+                    <div 
+                        className={classNames(
+                            "mt-12 relative z-1 duration-300", 
+                            !fullplayer_is_expanded && 'translate-y-full'
+                        )}>
+                        <FullPlayer/> 
+                    </div>
+                </div>
                 : <></> 
             }            
 
             <div className="container">
-                <div 
-                    className={styles['mobile-player__wrap']} 
-                    ref={playerRef} 
-                    onClick={() => {
-                        if (track) {
-                            dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
-                            dispatch( setHeaderIsFilled(false) );                        
-                        } 
-                    }}>
-
-                    {
-                        track && 
-                        <audio 
-                            ref={internalRef} 
-                            onTimeUpdate={onAudioUpdate} 
-                            onLoadedMetadata={metadataLoadHandler} >
-                            <source src={track.src} type="audio/mpeg" />
-                            Your browser does not support the audio element.
-                        </audio>
-                    }     
+                <div className={styles['mobile-player__wrap']} ref={playerRef}>
+                    {/* Click on the background for open full player */}
+                    <div 
+                        onClick={() => {
+                            if (track) {
+                                dispatch( setFullplayerExpanded(!fullplayer_is_expanded) )
+                                dispatch( setHeaderIsFilled(false) );                        
+                            } 
+                        }}                    
+                        className="absolute w-full h-full"></div>   
 
                     <div className="w-12 h-12 flex-shrink-0 overflow-hidden">
                         {!track?.cover 
@@ -117,13 +121,13 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                             }
                     </div> 
 
-                    <div className="flex flex-col ml-3">
+                    <div className="flex flex-col ml-2">
                         <span className={'text-black text-sm whitespace-nowrap'}>{track.name}</span>
-                        <span className={'text-black text-xs whitespace-nowrap font-secondary font-light opacity-80'}>{track.artist.full_name}</span>
+                        <Link href={`/artist/${track.artist._id}`} className={'text-black text-xs whitespace-nowrap font-secondary font-light opacity-80 z-1'}>{track.artist.full_name}</Link>
                     </div>
                                         
                     <button 
-                        className={'flex items-center justify-center w-6 h-6 ml-auto'} 
+                        className={'flex items-center justify-center w-6 h-6 ml-auto z-1'} 
                         onClick={playClickHandler}>
                         {isPlaying ? <PauseBlack/> : <PlayBlack/>}                                
                     </button>
@@ -131,7 +135,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                     <button 
                         type="button" 
                         disabled={!track}
-                        className="w-6 h-6 ml-3 mr-4 flex items-center justify-center"
+                        className="w-6 h-6 ml-3 mr-4 flex items-center justify-center z-1"
                         onClick={() => saveTrack({
                             track: track, 
                             action: isSaved ? "unsave" : "save"
@@ -140,7 +144,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                         {isSaved ? <HeartSolidGreen/> : <HeartOutlineGray/>}
                     </button>
 
-                    <Range
+                    {/* <Range
                         value={currentTime}                                
                         className={classNames(styles['mobile-player__progress'], styles['progress'])}
                         onMouseUp={() => {
@@ -152,7 +156,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                         }}
                         onMouseDown={() => setIsDragged(true)}
                         onChange={(e : React.ChangeEvent<HTMLInputElement>) => musicTimeChangeHandler(Number(e.currentTarget.value))}  
-                        max={duration} />
+                        max={duration} /> */}
                 </div>
             </div>
         </div>

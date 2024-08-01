@@ -19,12 +19,11 @@ const FullPlayer = () => {
     }
 
     return (
-        <div className={`${styles.fullplayer} ${fullplayer_is_expanded ? styles.fullplayer_expanded : ''}`}>
-            
+        <div className={`${styles.fullplayer} ${fullplayer_is_expanded ? styles.fullplayer_expanded : ''} hide-scrollbar`}>            
             <div
                 onClick={() => dispatch(setFullplayerExpanded(false))}
-                className="fullplayer__dash cursor-pointer z-1 absolute left-0 top-0 w-full h-10 flex items-center justify-center">
-                <span className="rounded-sm w-10 h-1 bg-gray-300"></span>
+                className="fullplayer__dash md:hidden cursor-pointer z-1 absolute left-0 top-0 w-full h-10 flex items-center justify-center">
+                <span className="rounded-sm w-12 h-1 bg-white"></span>
             </div>
             
             <div className="container-fluid">
@@ -49,6 +48,10 @@ const FullPlayer = () => {
                                 : <></>
                             }
                         </div>
+                    </div>
+
+                    <div className="col">
+                        
                     </div>
 
                     <div className="offset-lg-1 col-lg-5">

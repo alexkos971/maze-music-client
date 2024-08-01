@@ -43,7 +43,8 @@
         "unsave": "Забути",
         "saved": "Збережено!",
         "unsaved": "Видалено!",
-        "server_error": "Помилка на сервері..."
+        "server_error": "Помилка на сервері...",
+        "track_error": "Неможливо прослухати трек"
     },
     "errors": {
         "email_or_password_is_empty": "Імейл або пароль пустий",
