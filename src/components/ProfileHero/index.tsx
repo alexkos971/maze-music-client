@@ -9,12 +9,14 @@ import EditButton from '@components/UI/EditButton';
 import DottedRow from '@components/UI/DottedRow';
 import Avatar from '@components/UI/Avatar';
 import classNames from 'classnames';
+import { useSession } from 'next-auth/react';
 
 const ProfileHero = () => {
     const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
     // @ts-ignore
     let profile : ProfileDto = useAppSelector<ProfileDto>(state => state.profile);
+    const { data: session } = useSession();
 
     if (!profile) {
         return <></>;
@@ -26,8 +28,9 @@ const ProfileHero = () => {
                 <div className="flex items-start max-sm:flex-col">
                     <Avatar
                         previewText={profile?.full_name ? formatNick(profile.full_name) : ''}
-                        img={ profile.avatar ?? '' }
+                        img={ profile.avatar ? profile.avatar : ( session?.user?.image ?? '' ) }
                         size='min(100%, 150px)'
+                        textSize='32px'
                         className={'flex-shrink-0 max-sm:mb-6'}
                         onChange={() => {
                             dispatch(toggleModal({ 

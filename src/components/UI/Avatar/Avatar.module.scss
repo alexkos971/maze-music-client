@@ -39,6 +39,12 @@
         }    
     }
 
+    &.avatar_error {
+        &:before {
+            z-index: 2;
+        }
+    }
+
     img {
         width: calc(100% + 6px);
         height: calc(100% + 6px);
@@ -64,8 +70,8 @@
         text-align: center;
         font-size: var(--text-size);
         z-index: 0;
-        color: var(--gray-100);
-        // background-color: var(--gray-ee);
+        color: var(--gray-400);
+        background-color: var(--gray-100);
     }
     
     &__edit {
@@ -100,6 +106,11 @@
     
         &__edit {
             background-color: var(--gray-600);
+        }
+
+        &::before {
+            color: var(--gray-50);
+            background-color: var(--gray-400);
         }
     }
 }

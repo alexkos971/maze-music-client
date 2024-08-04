@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import { CSSProperties, ReactNode, useState } from "react";
 import Image from "next/image";
 import styles from "./Avatar.module.scss";
 import { useTranslation } from "next-i18next";
@@ -16,10 +16,16 @@ interface AvatarProps {
 
 export default function Avatar({ img, previewText, size = '40px', textSize = '12px', onChange, className, additionalEditContent } : AvatarProps) {
     const {t} = useTranslation('common');
+    const [hasError, setHasError] = useState(false);
 
     return (
         <div 
-            className={classNames(styles.avatar, onChange ? styles.avatar_can_change : null, className ?? '')} 
+            className={classNames(
+                styles.avatar, 
+                hasError && styles.avatar_error,
+                onChange ? styles.avatar_can_change : null, 
+                className ?? ''
+            )} 
             data-text={previewText ?? ''}
             style={{'--avatar-size': size, '--text-size': textSize} as CSSProperties}
             onClick={onChange}
@@ -27,8 +33,9 @@ export default function Avatar({ img, previewText, size = '40px', textSize = '12
 
             {img && img.length ?            
                 <Image 
+                    onError={() => setHasError(true)}
                     src={img} 
-                    alt='Avatar'
+                    alt=''
                     width={600}
                     height={600}
                 /> : <></>

@@ -12,10 +12,11 @@ import { useSignOutMutation } from "@store/api/authApi";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { authPage } from "@utils/directory";
+import { signOut } from "next-auth/react";
 
 export default ProtectedPage(function Settings() {    
   const dispatch = useAppDispatch();
-  const [signOut, { isSuccess, isLoading }] = useSignOutMutation();
+  const [signOutHandler, { isSuccess, isLoading }] = useSignOutMutation();
   const {t} = useTranslation('common');
   const { push } = useRouter();
 
@@ -38,7 +39,14 @@ export default ProtectedPage(function Settings() {
             className="mt-6" 
             color="black" 
             isLoading={isLoading}
-            onClick={() => signOut('')}>Leave</Button>
+            onClick={() => {
+              signOutHandler('');
+
+              // Google SignOut
+              signOut({
+                redirect: false
+              })
+            }}>Leave</Button>
         </div>
       </div>
     </MainWrap>

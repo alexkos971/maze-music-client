@@ -48,14 +48,35 @@ interface PlaylistDto {
     tracks: Track[]
 }
 
+type LoginType = 'google' | 'local';
+
 interface SignUpDto {
     role: 'listener' | 'artist' | 'admin',
-    name: string;
+    full_name: string;
     email: string,
     password: string,
+    confirm_password: string,
+
+    // avatar: string;
     description: string;
-    avatar: string;
     genres: string[];
+}
+
+interface SignUpGoogleDto {
+    role: 'listener' | 'artist' | 'admin'
+    token: string;
+    // avatar: string;
+    description: string;
+    genres: string[];
+}
+
+interface SignInDto {
+    email: string,
+    password: string
+}
+
+interface SignInGoogleDto {
+    token: string
 }
 
 interface GetSessionInfoDto {
@@ -63,11 +84,6 @@ interface GetSessionInfoDto {
     email: string;
     iat: number;
     exp: number;
-}
-
-interface SignInDto {
-    email: string,
-    password: string,   
 }
 
 interface ArtistDto {

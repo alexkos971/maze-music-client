@@ -8,7 +8,7 @@ import TrackList from "@components/TrackList";
 import { useGetAllTracksQuery } from "@store/api/tracksApi";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { WeekndAvatar, RockCover, ElectronicCover, ClassicalHitsCover } from "@utils/images";
+import { RockCover, ElectronicCover, ClassicalHitsCover } from "@utils/images";
 import Playlists from "@components/Playlists";
 import { useTranslation } from "next-i18next";
 import { useGetAllUsersQuery } from "@store/api/usersApi";

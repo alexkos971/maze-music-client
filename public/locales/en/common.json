@@ -45,6 +45,22 @@
         "unsaved": "Unsaved!",
         "server_error": "Some error on the server..."
     },
+    "errors": {
+        "email_or_password_is_empty": "Email or password is empty",
+        "user_not_exist": "User with this email not exist. Please, sign up",
+        "user_is_exist": "User already exist",
+        "email_is_exist": "User with this email is already exist",
+        "server_error": "Some error on the server...",
+        "no_track": "You must to attach a track file!",    
+        "incorrect_password": "Password incorrect!",
+        "registered_with_google": "An account with this email is already registered through google",
+        "empty_field" : "This field must not be empty",
+        "invalid_phone": "Phone number is incorrect",
+        "invalid_email": "Email is incorrect",
+        "short_password": "Password must contain at least 8 characters",
+        "confirm_password": "Passwords do NOT match!",
+        "empty_multiselect": "Enter at least one value!"
+    },
     "pages": {
         "for-you": {
             "header_title": "For you"
@@ -69,10 +85,7 @@
         },
         "upload": {
             "header_title": "Upload",        
-            "success": "Succesfully uploaded!",
-            "errors": {
-                "no_track": "You must to attach a track file!"
-            }
+            "success": "Succesfully uploaded!"
         },
         "settings": {
             "header_title": "Settings"
@@ -119,11 +132,6 @@
                 "preferences": {
                     "title": "Preferences"
                 }
-            },
-            "errors": {
-                "user_is_exist": "User already exist",
-                "email_is_exist": "User with this email is already exist",
-                "server_error": "Some error on the server..."
             }
         },
         "saved_tracks": {

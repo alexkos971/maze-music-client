@@ -14,23 +14,30 @@ export const authApi = createApi({
     }),
     endpoints: (build) => ({
         signIn: build.mutation({
-            query: (body: SignInDto) => ({
-                url: 'sign-in',
+            query: (body) => ({
+                url: body.login_type == 'local' ? 'sign-in' : '/google/sign-in',
                 method: 'POST',
-                body
+                body: body.login_type == 'local' ? body.data : { token: body.token }
             })
         }),
         signUp: build.mutation({
-            query: (body: SignUpDto) => {          
+            query: ({ data, loginType } : { 
+                data: SignUpDto | SignInGoogleDto, loginType: LoginType 
+            }) => {          
                 let formData = new FormData();
 
-                for (let key in body) {
+                for (let key in data) {
                     // @ts-ignore
-                    formData.append(key, body[key]);
+                    if ( key == 'avatar' && !data[key] ) {
+                        continue;
+                    }
+
+                    // @ts-ignore 
+                    formData.append(key, data[key]);
                 }            
 
                 return {
-                    url: 'sign-up',
+                    url: loginType == 'local' ? 'sign-up' : 'google/sign-up',
                     method: 'POST',
                     body: formData,
                     formData: true
@@ -63,4 +70,11 @@ export const authApi = createApi({
     })
 });
 
-export const { useSignInMutation, useSignUpMutation, useLazyGetSessionInfoQuery, useSignOutMutation, useLazyVerifyEmailQuery } = authApi;
+export const { 
+    useSignInMutation, 
+    
+    useSignUpMutation, 
+    useLazyGetSessionInfoQuery, 
+    useSignOutMutation, 
+    useLazyVerifyEmailQuery 
+} = authApi;

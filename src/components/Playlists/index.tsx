@@ -31,9 +31,9 @@ const Playlists = ({title, data, slidesToShow, className}: PlaylistsProps) => {
 
             <div className={IsSm ? "flex items-stretch flex-nowrap -mx-container px-[calc(var(--container-padding)-8px)] overflow-auto" : "row"}>
                 {
-                    data.map((item) => {
+                    data.map((item, index) => {
                         return (
-                            <div className={IsSm ? "relative w-5/12 flex-shrink-0 px-2" : "col-2xl-2 col-xl-3 col-md-4 col-sm-6"}>
+                            <div key={item.name + index} className={IsSm ? "relative w-5/12 flex-shrink-0 px-2" : "col-2xl-2 col-xl-3 col-md-4 col-sm-6"}>
                                 <PlaylistCard     
                                     className="mt-3"                               
                                     link={item.link ?? `/playlist/${item.id}`}

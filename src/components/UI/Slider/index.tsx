@@ -45,7 +45,7 @@ const Slider: SliderComponent = ({
         }
     }
 
-    const mouseUpHandler = (e: React.MouseEvent) => {
+    const mouseUpHandler = (e: Event) => {
         setIsMouseDown(false);
 
         if (sliderRef.current) {

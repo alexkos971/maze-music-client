@@ -16,6 +16,7 @@ import {
 } from "./text";
 
 import { FilePicker } from "./file-picker";
+import { AvatarPicker } from "./avatar-picker";
 
 const FieldTitle : React.FC<{title: string | undefined}> = ({ title }) => (
     <>
@@ -52,7 +53,7 @@ export type FieldTypes =
 | 'multi-select' 
 | 'password' 
 | 'textarea' 
-| 'file' 
+| 'file'  
 | 'password'
 | 'confirm-password';
 
@@ -70,7 +71,8 @@ export {
     Tel,
     Search,
     RadiosWithImages,
-    FilePicker
+    FilePicker,
+    AvatarPicker
 };
 
 // export default Field;
