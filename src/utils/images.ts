@@ -9,6 +9,7 @@ import ExploreBlackIcon from "../assets/images/icons/explore-black.svg";
 import UploadBlackIcon from "../assets/images/icons/upload-black.svg";
 import ChevronLeftGrayIcon from "../assets/images/icons/chevron-left-gray.svg";
 import ChevronUpGray from "../assets/images/icons/chevron-up-gray.svg";
+import GoogleIcon from "../assets/images/icons/google.svg";
 import LogoIcon from "../assets/images/icons/logo-only-icon.svg";
 import Logo from "../assets/images/logo.svg";
 import LogoForDark from "../assets/images/logo-for-dark.svg";
@@ -56,6 +57,7 @@ export {
     LogoForDark,
     LogoIcon,
     EyeIcon,
+    GoogleIcon,
     ChevronUpGray,
     EyeClosedIcon,
     WeekndAvatar,

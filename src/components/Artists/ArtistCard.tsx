@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { twMerge } from "tailwind-merge";
 
 interface CardContent {
     title: string;
@@ -14,22 +15,24 @@ interface CardProps extends CardContent {
 };
 
 const ArtistCard = ({ image, link, title, subtitle } : CardProps) => {
+    let [imageLoaded, setImageLoaded] = useState(true);
     return (
         <>
             <div className={`h-0 pb-72 max-h-72 rounded-lg relative flex flex-col justify-center items-center overflow-hidden w-full group`}>
-                <Link href={link} className={`
+                <Link href={link} className={twMerge(`
                     absolute top-0 left-0 w-full h-full block bg-gray-400
                     after:absolute after:bottom-0 after:left-0 after:w-full after:opacity-0 group-hover:after:opacity-100 after:h-full after:duration-300 after:bg-gradient-to-t after:from-black after:to-transparent    
-                `}>
+                `)}>
                     {image ?
                         <Image 
                             // Hide default image appearence, when not loaded
                             // onError={(e: SyntheticEvent<HTMLImageElement, Event>) => e.currentTarget.style.display = 'none'} 
                             src={image} 
                             width={450} 
+                            onError={() => setImageLoaded(false)}
                             height={300} 
                             alt="Image" 
-                            className={`w-full h-full object-cover select-none duration-300 group-hover:scale-105`}/>
+                            className={twMerge(`w-full h-full object-cover select-none duration-300 group-hover:scale-105`, !imageLoaded && 'opacity-0')}/>
                         : ''
                     }            
 

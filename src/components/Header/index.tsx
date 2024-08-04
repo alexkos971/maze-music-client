@@ -18,6 +18,7 @@ import { useAppSelector } from "@hooks/index";
 import Avatar from "@components/UI/Avatar";
 import { formatNick } from "@utils/formated";
 import { useIsSmaller } from "@hooks/useScreen";
+import { useSession } from "next-auth/react";
 
 interface Props {
   canReturnBack?: boolean,
@@ -34,6 +35,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
 
   // @ts-ignore
   let profile = useAppSelector<ProfileDto>(state => state.profile);
+  const { data: session } = useSession();
 
   const { theme, setTheme } = useTheme();
 
@@ -116,7 +118,7 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
                 <Link href={'/profile'} className="cursor-pointer flex items-center">
                   <Avatar 
                     size={smallerSm ? "32px" : "40px"}                            
-                    img={profile?.avatar ?? ''}
+                    img={ profile.avatar ? profile.avatar : ( session?.user?.image ?? '' ) }
                     previewText={profile?.full_name ? formatNick(profile.full_name) : ''}
                   />
                                   

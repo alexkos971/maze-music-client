@@ -1,6 +1,6 @@
 import { ReactNode, useState, useEffect } from "react";
 import Form from "@components/UI/Form";
-import { Text, TextArea, FilePicker } from "@components/UI/Field";
+import { Text, TextArea, AvatarPicker } from "@components/UI/Field";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
 import { useUpdateProfileMutation } from "@store/api/usersApi";
@@ -45,11 +45,10 @@ const UpdateProfileForm = ({ name, value, title, type } : UpdateProps ) => {
                                 required={true}
                                 value={value}/>
                         case 'avatar':
-                            return <FilePicker
+                            return <AvatarPicker
                                 accept="image/jpeg, image/png"                                
                                 name={name} 
-                                style="avatar"
-                                preview={value}
+                                value={value}
                                 required={true}/>
                         case "text":
                         default:

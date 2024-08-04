@@ -12,19 +12,30 @@ import { authPage } from "@utils/directory";
 import LanguageSwitcher from "@components/LanguageSwitcher";
 import Button from "@components/UI/Button";
 import Title from "@components/UI/Title";
+import { signOut, useSession } from "next-auth/react";
 
 export default ProtectedPage(function Profile() {
     const dispatch = useAppDispatch();
-    const [signOut, { isSuccess, isLoading }] = useSignOutMutation();
+    const { data: session } = useSession();
+    const [signOutHandle, { isSuccess, isLoading }] = useSignOutMutation();
     const {t} = useTranslation('common');
     const { push } = useRouter();
 
     useEffect(() => {
         if (isSuccess) {
-            dispatch(showToast({type: 'info', text: t("interface.logged_out")}))
-            push(authPage.path);
+            
+            // Google Sign-Out
+            signOut({
+                redirect: false
+            });      
+            
+            // If google signed-out or not was sign-in in before
+            if ( !session ) {
+                dispatch(showToast({type: 'info', text: t("interface.logged_out")}))
+                push(authPage.path);
+            }
         }
-    }, [isSuccess]);
+    }, [isSuccess, session]);
 
     return (
         <MainWrap canReturnBack={true} overlapHeader={true}>
@@ -40,7 +51,7 @@ export default ProtectedPage(function Profile() {
                         className="mt-8" 
                         color="red" 
                         isLoading={isLoading}
-                        onClick={() => signOut('')}>{t("pages.profile.sign-out")}</Button>
+                        onClick={() => signOutHandle('')}>{t("pages.profile.sign-out")}</Button>
                 </div>
             </div>
         </MainWrap>

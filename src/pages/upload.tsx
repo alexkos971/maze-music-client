@@ -20,7 +20,6 @@ export default ProtectedPage(function Upload() {
   let [uploadTrack, { isSuccess, isLoading, error }] = useUploadTrackMutation();
   const dispatch = useAppDispatch();
 
-
   useEffect(() => {
     if (isSuccess) {
       setFields({});
@@ -32,9 +31,9 @@ export default ProtectedPage(function Upload() {
       let errors = error?.data?.message;
 
       if (Array.isArray(errors)) {
-        errors = errors.map(item => t(`pages.upload.errors.${item}`));
+        errors = errors.map(item => t(`errors.${item}`));
       } else {
-        errors = t(`pages.upload.errors.${errors}`);
+        errors = t(`errors.${errors}`);
       }
 
       dispatch(showToast({type: 'success', text: errors}));
