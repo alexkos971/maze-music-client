@@ -39,10 +39,10 @@ const SignIn = () => {
     // Local Auth
     useEffect(() => {
         if (error) {
-            // @ts-ignore
             signOut({
                 redirect: false
             });
+            // @ts-ignore
             dispatch(showToast({type: 'error', text: t(`errors.${error?.data?.message}`) ?? 'Error'}))
         } 
         else if (isSuccess) {
