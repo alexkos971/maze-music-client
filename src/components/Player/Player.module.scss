@@ -91,11 +91,8 @@
 
     @include media-breakpoint-down(sm) {
         z-index: 2;        
-        border-radius: 20px 20px 0px 0px;     
-        // background-color: var(--gray-400);
-        padding: 48px 0px 0px;
-        // border-radius: 8px 8px 0px 0px;     
-        // bottom: -64px;           
+        border-radius: 8px 8px 0px 0px;     
+        padding: 48px 0px 0px;       
     }
 
     &::before {
@@ -214,6 +211,14 @@
                 font-size: 18px;
                 font-weight: 400;
             }
+        }
+    }
+}
+
+[data-theme="dark"], .dark {
+    .mobile-player {
+        &__wrap {
+            background-color: var(--gray-500);
         }
     }
 }

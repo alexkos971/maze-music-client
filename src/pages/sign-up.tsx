@@ -57,7 +57,7 @@ const ButtonsNav = ({
                         type="button"
                         onClick={() => signIn('google')}>
                         <GoogleIcon/>
-                        <span className="ml-2 text-left font-secondary">Sign Up with google</span>
+                        <span className="ml-2 text-left font-secondary text-base md:text-sm">Sign Up with google</span>
                     </button>
                 : <></>
             }
@@ -67,7 +67,7 @@ const ButtonsNav = ({
                     <button 
                         onClick={goToStep} 
                         type="button" 
-                        className="text-base text-center text-gray-c4 w-1/2">{t('pages.sign-up.skip')}</button> 
+                        className="text-base text-center text-gray-c4 w-1/2 max-sm:mt-4">{t('pages.sign-up.skip')}</button> 
                 : ''
             }
         </div>

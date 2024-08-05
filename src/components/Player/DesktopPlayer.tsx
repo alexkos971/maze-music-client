@@ -84,34 +84,25 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                 : <></> 
             }
 
-            <div ref={playerRef} className="pr-container pl-4 py-3 bg-gray-600 flex items-center justify-between w-full z-10">
+            <div ref={playerRef} className="xl:pr-container pr-4 pl-4 py-3 bg-gray-600 flex items-center justify-between w-full z-10">
                 <div className="flex items-center">
-                    <div className={`w-12 h-12 ml-1 shrink-0 relative bg-red-100 rounded block overflow-hidden text-gray-400 dark:text-gray-200 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
-                        { track.cover?.length 
-                            ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center w-full h-full"/> 
-                            : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
-                        }
-                    </div>
-                    <div className="flex flex-col ml-5">
-                        <span className="text-sm text-white whitespace-nowrap line-clamp-1">{track.name}</span> 
-                        <Link 
-                            className="text-xs text-gray-300 hover:underline" 
-                            href={`/artist/${track.artist._id}`}>
-                                {track.artist.full_name}
-                        </Link>                             
-                    </div>
-                </div>                
+                    <div className="desktop-player__info flex items-center">
+                        <div className={`w-12 h-12 ml-1 shrink-0 relative rounded block overflow-hidden text-gray-400 dark:text-gray-200 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
+                            { track.cover?.length 
+                                ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center w-full h-full"/> 
+                                : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
+                            }
+                        </div>
+                        <div className="flex flex-col ml-5">
+                            <span className="text-sm text-white whitespace-nowrap line-clamp-1">{track.name}</span> 
+                            <Link 
+                                className="text-xs text-gray-300 hover:underline" 
+                                href={`/artist/${track.artist._id}`}>
+                                    {track.artist.full_name}
+                            </Link>                             
+                        </div>
+                    </div>                
 
-                <div className="flex flex-col items-center w-full max-w-[520px] absolute left-1/2 -translate-x-1/2">
-                    {/* Prev - Play - Next */}        
-                    <NavBar ref={internalRef}/>
-
-                    <ProgressBar ref={internalRef}/>
-                </div>
-
-
-                {/* Navigation - Volume/Save/Repeat */}
-                <div className={classNames('flex items-center gap-6 shrink-0 ml-10')}>
                     {/* Show/Hide  Full Player */}
                     <button 
                         onClick={() => {
@@ -121,13 +112,25 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                         }} 
                         type="button" 
                         className={twMerge(
-                            NavButtonStyles,                        
+                            NavButtonStyles,      
+                            'ml-4',                  
                             !track && 'opacity-0',
                             fullplayer_is_expanded ? 'scale-y-[-1]' : ''
                         )}>
                         <ChevronUpGray/>
                     </button>
+                </div>
 
+                <div className="flex flex-col items-center w-full max-w-[min(40vw,520px)] absolute left-1/2 -translate-x-1/2">
+                    {/* Prev - Play - Next */}        
+                    <NavBar ref={internalRef}/>
+
+                    <ProgressBar ref={internalRef}/>
+                </div>
+
+
+                {/* Navigation - Volume/Save/Repeat */}
+                <div className={classNames('flex items-center gap-6 shrink-0 ml-10')}>
                     <VolumeBar ref={internalRef}/>
 
                     <button 

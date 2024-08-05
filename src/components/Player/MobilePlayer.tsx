@@ -113,12 +113,12 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                     </div> 
 
                     <div className="inline-flex flex-col items-start ml-2">
-                        <span className={'text-black font-secondary text-sm whitespace-nowrap'}>{track.name}</span>
-                        <Link href={`/artist/${track.artist._id}`} className={'text-black text-xs whitespace-nowrap font-secondary font-light opacity-80 z-1'}>{track.artist.full_name}</Link>
+                        <span className={'text-black dark:text-white font-secondary text-sm whitespace-nowrap'}>{track.name}</span>
+                        <Link href={`/artist/${track.artist._id}`} className={'text-black dark:text-gray-300 text-xs whitespace-nowrap font-secondary font-light opacity-80 z-1'}>{track.artist.full_name}</Link>
                     </div>
                                         
                     <button 
-                        className={'flex items-center justify-center w-6 h-6 ml-auto z-1'} 
+                        className={'flex items-center justify-center w-6 h-6 ml-auto z-1 svg-current-color text-black dark:text-white'} 
                         onClick={() => {
                             if ( track ) {    
                                 dispatch(setIsPlaying(!isPlaying));

@@ -5,7 +5,6 @@ import useThrottle from "@hooks/throttle";
 import { useRouter } from "next/router";
 import { setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 import {store} from '@store/rootReducer';
-import styles from './Header.module.scss';
 
 import { useTheme } from "next-themes";
 
@@ -78,10 +77,16 @@ const Header = ({canReturnBack = false, overlap = false} : Props) => {
         <div className="container-fluid">
           <div className="header__wrap flex items-center justify-end relative">
 
-            {/* Go Back Arrow */}
-            {canReturnBack === true ? <button type="button" onClick={back} className={styles.header__back}><ChevronDownBlack/></button> : ''}
-
-            <span className="header__title font-secondary md:font-primary font-bold text-2xl md:font-semibold md:text-lg max-md:dark:text-white max-md:text-gray-400 text-green-100 mr-auto">{t(title)}</span>
+            <span className="flex items-center gap-4 mr-auto">
+              {/* Go Back Arrow */}
+              {canReturnBack === true ? 
+                <button type="button" onClick={back} className={'w-5 h-5 svg-current-color text-green-100 rotate-90 max-md:hidden'}>
+                  <ChevronDownBlack/>
+                </button> 
+                : <></>
+              }
+              <span className="header__title font-secondary md:font-primary font-bold text-2xl md:font-semibold md:text-lg max-md:dark:text-white max-md:text-gray-400 text-green-100">{t(title)}</span>
+            </span>  
 
             <div className="header__nav flex items-center gap-3 md:gap-6 mr-4 md:mr-16">
               {/* Settings */}
