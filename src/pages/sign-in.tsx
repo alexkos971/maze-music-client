@@ -16,7 +16,7 @@ import ProtectedPage from "@hocs/protectedPage";
 
 import { useSignInMutation } from "@store/api/authApi";
 import { useRouter } from "next/router";
-import {signIn, useSession} from "next-auth/react";
+import {signIn, signOut, useSession} from "next-auth/react";
 
 const SignIn = () => {
     const dispatch = useAppDispatch();
@@ -40,6 +40,9 @@ const SignIn = () => {
     useEffect(() => {
         if (error) {
             // @ts-ignore
+            signOut({
+                redirect: false
+            });
             dispatch(showToast({type: 'error', text: t(`errors.${error?.data?.message}`) ?? 'Error'}))
         } 
         else if (isSuccess) {
