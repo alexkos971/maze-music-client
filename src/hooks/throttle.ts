@@ -18,5 +18,5 @@ export default function useThrottle<T>(value: T, interval = 500): T {
     }
   }, [value, interval])
 
-  return throttledValue
+  return throttledValue;
 }

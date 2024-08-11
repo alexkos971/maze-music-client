@@ -23,7 +23,7 @@ const ProfileHero = () => {
     }
 
     return (
-        <section className={`profile-hero overflow-hidden w-full bg-gray-50 dark:bg-gray-500 pt-[var(--header-height)] pb-16`}>
+        <section className={`profile-hero overflow-hidden w-full bg-gray-50 dark:bg-gray-500 md:pt-20 pt-16 pb-16`}>
             <div className="container-fluid">
                 <div className="flex items-start max-sm:flex-col">
                     <Avatar

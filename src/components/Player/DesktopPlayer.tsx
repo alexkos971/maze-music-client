@@ -85,45 +85,44 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
         window.addEventListener('resize', resizeHandler);
 
         return () => window.removeEventListener('resize', resizeHandler);
-    }, [playerRef]);
+    }, [playerRef, track]);
 
 
     const NavButtonStyles = 'w-6 h-6 shrink-0 cursor-pointer child:w-6 child:h-6 child:object-contain';
 
+    if ( !track ) {
+        return;
+    }
+
     return (
         <div className={'desktop-player w-full sticky bottom-0 right-0 z-30 mt-auto'}>
-            { track ? <FullPlayer/> : <></> }
+            <FullPlayer/>
 
-            <div ref={playerRef} className="pr-container pl-4 py-3 bg-gray-600 flex items-center justify-between w-full">
-                {
-                    track && 
-                    <>
-                        <audio 
-                            ref={internalRef} 
-                            onTimeUpdate={onAudioUpdate} 
-                            onLoadedMetadata={metadataLoadHandler} >
-                            <source src={track.src} type="audio/mpeg" />
-                            Your browser does not support the audio element.
-                        </audio>
-                    
-                        <div className="flex items-center">
-                            <div className={`w-12 h-12 ml-1 shrink-0 relative bg-red-100 rounded block overflow-hidden text-gray-400 dark:text-gray-200 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
-                                { track.cover?.length 
-                                    ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center w-full h-full"/> 
-                                    : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
-                                }
-                            </div>
-                            <div className="flex flex-col ml-5">
-                                <span className="text-sm text-white whitespace-nowrap line-clamp-1">{track.name}</span> 
-                                <Link 
-                                    className="text-xs text-gray-300 hover:underline" 
-                                    href={`/artist/${track.artist._id}`}>
-                                        {track.artist.full_name}
-                                </Link>                             
-                            </div>
-                        </div>
-                    </>
-                }                
+            <div ref={playerRef} className="pr-container pl-4 py-3 bg-gray-600 flex items-center justify-between w-full">           
+                <audio 
+                    ref={internalRef} 
+                    onTimeUpdate={onAudioUpdate} 
+                    onLoadedMetadata={metadataLoadHandler} >
+                    <source src={track.src} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                </audio>
+            
+                <div className="flex items-center">
+                    <div className={`w-12 h-12 ml-1 shrink-0 relative rounded block overflow-hidden text-gray-400 dark:text-gray-200 ${!track.cover?.length ? 'bg-gray-28 ' : ''}`}>
+                        { track.cover?.length 
+                            ? <Image src={track.cover} alt="Track's Cover" width={28} height={28} className="relative object-cover object-center w-full h-full"/> 
+                            : <MusicNoteGray className={'w-3 h-3 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'}/>
+                        }
+                    </div>
+                    <div className="flex flex-col ml-5">
+                        <span className="text-sm text-white whitespace-nowrap line-clamp-1">{track.name}</span> 
+                        <Link 
+                            className="text-xs text-gray-300 hover:underline" 
+                            href={`/artist/${track.artist._id}`}>
+                                {track.artist.full_name}
+                        </Link>                             
+                    </div>
+                </div>
 
                 <div className="flex flex-col items-center w-full max-w-[550px]">
                     {/* Prev - Play - Next */}
