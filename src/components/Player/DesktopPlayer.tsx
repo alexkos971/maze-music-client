@@ -74,15 +74,12 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
 
     return (
         <div className={'desktop-player w-full sticky bottom-0 right-0 z-20 mt-auto'}>
-            {track ? 
-                <div className={classNames(
-                    'absolute right-0 duration-300 w-[calc(100%-var(--sidebar-width))] bottom-[calc(var(--player-height)-1px)]',
-                    fullplayer_is_expanded ? 'h-[calc(100dvh-var(--player-height)+2px)] z-1' : 'h-0 -z-1'
-                )}>
-                    <FullPlayer ref={internalRef}/> 
-                </div>
-                : <></> 
-            }
+            <div className={classNames(
+                'absolute right-0 duration-300 w-[calc(100%-var(--sidebar-width))] bottom-[calc(var(--player-height)-1px)]',
+                fullplayer_is_expanded ? 'h-[calc(100dvh-var(--player-height)+2px)] z-1' : 'h-0 -z-1'
+            )}>
+                <FullPlayer ref={internalRef}/> 
+            </div>
 
             <div ref={playerRef} className="xl:pr-container pr-4 pl-4 py-3 bg-gray-600 flex items-center justify-between w-full z-10">
                 <div className="flex items-center">
@@ -94,7 +91,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                             }
                         </div>
                         <div className="flex flex-col ml-5">
-                            <span className="text-sm text-white whitespace-nowrap line-clamp-1">{track.name}</span> 
+                            <span className="lg:text-sm text-xs max-lg:mb-1 text-white whitespace-nowrap line-clamp-1">{track.name}</span> 
                             <Link 
                                 className="text-xs text-gray-300 hover:underline" 
                                 href={`/artist/${track.artist._id}`}>
@@ -130,7 +127,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
 
 
                 {/* Navigation - Volume/Save/Repeat */}
-                <div className={classNames('flex items-center gap-6 shrink-0 ml-10')}>
+                <div className={classNames('flex items-center gap-5 shrink-0 ml-10')}>
                     <VolumeBar ref={internalRef}/>
 
                     <button 

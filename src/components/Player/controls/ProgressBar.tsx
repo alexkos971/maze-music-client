@@ -41,6 +41,7 @@ const ProgressBar = forwardRef<HTMLAudioElement, ProgressBarProps>(function({
             <Range
                 value={currentTime}                                
                 className={'mx-4 w-full'}
+                style={{'--range-height': '4px'} as React.CSSProperties}
                 onMouseUp={() => {
                     dispatch(setIsDragged(false));
                     

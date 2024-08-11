@@ -22,7 +22,7 @@ const NavBar = forwardRef<HTMLAudioElement, NavBarProps>(function({
     const NavButtonStyles = 'w-6 h-6 shrink-0 cursor-pointer child:w-6 child:h-6 child:object-contain';
 
     return (
-        <div className={ twMerge("flex items-center mb-2", className)}>
+        <div className={ twMerge("flex items-center my-1", className)}>
             <button 
                 // onClick={previousMusicClickHandler}
                 className={twMerge(NavButtonStyles, '-scale-100')}

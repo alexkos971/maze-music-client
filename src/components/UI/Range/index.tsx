@@ -12,10 +12,11 @@ interface RangeProps {
     step?: number | null,
     name?: string,
     color?: 'green' | 'gray';
+    style?: React.CSSProperties;
     className?: React.HTMLAttributes<HTMLDivElement> | string 
 };
 
-const Range = ({ value, onChange, onMouseUp, onMouseDown, className, max, min, step, name, color = 'green' } : RangeProps) => {
+const Range = ({ value, onChange, onMouseUp, onMouseDown, className, max, min, step, name, color = 'green', style = {} } : RangeProps) => {
     let classes = classNames(
         className,
         styles['range'],
@@ -27,6 +28,7 @@ const Range = ({ value, onChange, onMouseUp, onMouseDown, className, max, min, s
             className={classes} 
             style={{
                 '--range-progress': ((value !== 0 && max !== 0) ? ((value / max) * 100) : 0) + '%',
+                ...style
             } as React.CSSProperties}>
             
             <input 

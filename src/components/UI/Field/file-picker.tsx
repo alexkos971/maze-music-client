@@ -133,7 +133,7 @@ const FilePicker = ({
 					{ 
 						// @ts-ignore
 						!file?.name 
-						? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} />
+						? <div dangerouslySetInnerHTML={{ __html: t('fields.placeholders.file')}} className="text-gray-600 dark:text-gray-300"/>
 							// @ts-ignore
 							: file.name	
 					}								

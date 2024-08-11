@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@hooks";
 import { setFullplayerExpanded, setHeaderIsFilled } from "@store/reducers/interfaceReducer";
 import { setIsPlaying } from "@store/reducers/playerReducer";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
 
 interface MobilePlayerProps {
     isSaved: boolean,
@@ -57,6 +58,9 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
 
         return () => window.removeEventListener('resize', resizeHandler);
     }, [playerRef]);
+    // Get Height of the Player END
+
+    const [avatarIsLoaded, setAvatarIsLoaded] = useState(true);
 
     return (
         <div className={classNames(styles['mobile-player'], 'z-20')}>
@@ -97,11 +101,13 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                         className="absolute w-full h-full"></div>   
 
                     <div className="w-11 h-11 flex-shrink-0 overflow-hidden">
-                        {!track?.cover 
+                        {track?.cover?.length && avatarIsLoaded
                             ? <Image 
                                 className="w-full h-full object-cover"
                                 src={track.cover} 
-                                alt="Cover" 
+                                alt="Cover"
+                                onLoadingComplete={() => setAvatarIsLoaded(true)}
+                                onError={() => setAvatarIsLoaded(false)} 
                                 width={44} 
                                 height={44}
                                 /> 
@@ -112,7 +118,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                             }
                     </div> 
 
-                    <div className="inline-flex flex-col items-start ml-2">
+                    <div className={twMerge('inline-flex flex-col items-start', track?.cover && "ml-2")}>
                         <span className={'text-black dark:text-white font-secondary text-sm whitespace-nowrap'}>{track.name}</span>
                         <Link href={`/artist/${track.artist._id}`} className={'text-black dark:text-gray-300 text-xs whitespace-nowrap font-secondary font-light opacity-80 z-1'}>{track.artist.full_name}</Link>
                     </div>
