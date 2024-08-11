@@ -3,6 +3,10 @@ html {
     --container-padding: 60px;
     --container-max-width: 1190px;
 
+    @include media-breakpoint-down(md) {
+        --container-padding: 24px;
+    }
+
     @include media-breakpoint-down(sm) {
         --container-padding: 16px;
     }

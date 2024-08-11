@@ -26,7 +26,7 @@
                 top: 0;
                 height: 100%;
                 width: calc(100% - 16px);
-                background-color: var(--gray-600);   
+                background-color: var(--gray-500);   
                 box-shadow: 0px 1px 20px var(--gray-400);
                 border-radius: 4px;
             }
@@ -75,30 +75,25 @@
         position: absolute;
         bottom: 0;
         left: 6px;
+        z-index: 1;
         width: calc(100% - 12px);
         --background-range-color: transparent;
     }
 }
 
 .fullplayer {
-    position: absolute;
-    bottom: calc(var(--player-height) - 1px);
-    right: 0;
-    transition: .4s;
     background-color: var(--gray-600);    
-    z-index: -1;
     overflow-y: auto;
     width: 100%;
-    height: 0;
-    
-    @include media-breakpoint-up(sm) {
-        width: calc(100% - var(--sidebar-width));
-    }
+    height: 100%;
+    padding: 92px 0px 60px;
+    position: relative;
 
     @include media-breakpoint-down(sm) {
+        min-height: calc(100svh - 48px);
         z-index: 2;        
-        border-radius: 20px 20px 0px 0px;     
-        bottom: -64px;           
+        border-radius: 8px 8px 0px 0px;     
+        padding: 48px 0px 0px;       
     }
 
     &::before {
@@ -109,26 +104,14 @@
         width: 100%;
         height: 100%;
         background: linear-gradient(180deg, var(--gray-400) 10.6%, var(--gray-600) 35.91%);
-        opacity: 0;
-        transition: 1s;
+    
+        @include media-breakpoint-down(sm) {
+            display: none;
+        }
     }
     
     * {
-        color: var(--white);
-    }
-
-    &_expanded {
-        padding: 92px 0px 60px;
-        height: calc(100dvh - var(--player-height) + 2px);
-    
-        @include media-breakpoint-down(sm) {         
-            height: calc(100svh - 32px);   
-            // bottom: -64px;
-        }
-
-        &::before {
-            opacity: 1;
-        }
+        color: white;
     }
 
     &__cover {
@@ -137,6 +120,10 @@
         height: 0;
         padding-bottom: min(500px, 100%);
         
+        @include media-breakpoint-down(sm) {
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         img {
             width: 100%;
@@ -164,17 +151,32 @@
     &__info {
         margin-top: 60px;
 
+        @include media-breakpoint-down(sm) {
+            margin-top: 16px;
+        }
+
         &-title {
             font-size: 42px;
             font-weight: 700;
             color: white;
+            margin-bottom: 12px;
+            
+            @include media-breakpoint-down(sm) {
+                margin-bottom: 8px;
+                font-size: 24px;
+                line-height: 30px;
+            }
         }
 
         &-artist {
-            margin-top: 12px;
             color: var(--gray-200);
             font-size: 24px;
             font-weight: 400;
+
+            @include media-breakpoint-down(sm) {
+                font-size: 16px;
+                line-height: 24px;
+            }
         
             &:hover {
                 text-decoration: underline;
@@ -183,6 +185,14 @@
 
         &-description {
             margin-top: 32px;
+
+            @include media-breakpoint-down(lg) {
+                margin-top: 16px;
+            }
+
+            @include media-breakpoint-down(sm) {
+                display: none;
+            }
 
             p {
                 color: var(--gray-200);
@@ -193,12 +203,6 @@
     }
 
     &__lyrics {
-        h3 {
-            font-size: 32px;
-            font-weight: 600;
-            color: white;
-        }
-
         &-text {
             margin-top: 24px;
             
@@ -206,6 +210,14 @@
                 font-size: 18px;
                 font-weight: 400;
             }
+        }
+    }
+}
+
+[data-theme="dark"], .dark {
+    .mobile-player {
+        &__wrap {
+            background-color: var(--gray-500);
         }
     }
 }

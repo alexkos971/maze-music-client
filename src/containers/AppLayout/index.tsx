@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, SyntheticEvent, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "next-themes";
 

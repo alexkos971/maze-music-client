@@ -22,16 +22,18 @@ const AuthLayout = ({ children, size = 'small' } : Props) => {
 
     return (
         <div className={`${styles.auth} ${ isLoaded ? styles.auth_loaded : ''}`}>
-            <div className="container">
-                <div className="row">                    
-                    <div className={cardWrapClass}>
-                        <div className={styles.auth__card}>
-                            <div className={styles.auth__logo}>
-                                {theme == 'dark' ? <LogoForDark/> :  <Logo/>}
-                            </div>
+            <div className="min-h-screen w-full flex items-center my-6">
+                <div className="container">
+                    <div className="row">                    
+                        <div className={cardWrapClass}>
+                            <div className={styles.auth__card}>
+                                <div className={styles.auth__logo}>
+                                    {theme == 'dark' ? <LogoForDark/> :  <Logo/>}
+                                </div>
 
-                            <div className={styles.auth__content}>
-                                {children}
+                                <div className={styles.auth__content}>
+                                    {children}
+                                </div>
                             </div>
                         </div>
                     </div>

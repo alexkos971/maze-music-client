@@ -43,7 +43,8 @@
         "unsave": "Unsave",
         "saved": "Saved!",
         "unsaved": "Unsaved!",
-        "server_error": "Some error on the server..."
+        "server_error": "Some error on the server...",
+        "track_error": "Unable to listen to the track"
     },
     "errors": {
         "email_or_password_is_empty": "Email or password is empty",

@@ -31,7 +31,7 @@ const ProfileHero = () => {
                         img={ profile.avatar ? profile.avatar : ( session?.user?.image ?? '' ) }
                         size='min(100%, 150px)'
                         textSize='32px'
-                        className={'flex-shrink-0 max-sm:mb-6'}
+                        className={'flex-shrink-0 max-sm:mb-6 max-sm:mx-auto'}
                         onChange={() => {
                             dispatch(toggleModal({ 
                                 isOpened: true, 
@@ -48,7 +48,7 @@ const ProfileHero = () => {
 
                     <div className="profile-hero__layout flex flex-col sm:ml-8 sm:pt-8 md:max-w-3xl">
                         <div className={'flex items-end gap-4 text-gray-400 mb-5'}>
-                            <h1 className='text-4xl dark:text-white'>{profile.full_name}</h1>
+                            <h1 className='md:text-4xl text-3xl dark:text-white whitespace-normal'>{profile.full_name}</h1>
 
                             <EditButton 
                                 className={'mb-[6px] text-gray-400 dark:text-white'} 
@@ -87,7 +87,7 @@ const ProfileHero = () => {
                             />
                         </p>
 
-                        <DottedRow className={classNames('text-gray-400 dark:text-gray-300')} dotColor='var(--gray-400)'>
+                        <DottedRow className={classNames('text-gray-400 dark:text-gray-300 max-sm:flex-wrap max-sm:gap-4')} dotColor='var(--gray-400)'>
                             <Button color='black' size='small'>{t(`profile.${profile.role}`)}</Button>
                             <span><strong>{profile?.followers}</strong> {t('interface.followers')}</span>
                             <span><strong>{profile?.saved_artists?.length}</strong> {t('interface.subscriptions')}</span>

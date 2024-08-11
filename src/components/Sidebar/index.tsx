@@ -31,7 +31,7 @@ let SidebarButton = ({
                 !mobileMenu && `after:h-7 after:w-[1.5px] after:bg-gray-400 dark:after:bg-white after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 ${!isCurrent ? 'after:opacity-0' : ''}`    
             )}>
             <div className={classNames(
-                "sidebar-button__wrap flex items-center max-md:flex-col md:justify-start rounded-lg md:py-3 py-4 px-4 duration-300 w-full cursor-pointer md:hover:bg-gray-50 dark:md:hover:bg-gray-400",
+                "sidebar-button__wrap flex items-center max-md:flex-col md:justify-start rounded-lg py-3 px-4 duration-300 w-full cursor-pointer md:hover:bg-gray-50 dark:md:hover:bg-gray-400",
 
             )}>
                 <div className={`w-6 h-6 duration-300 ${!isCurrent ? 'opacity-50' : 'opacity-100'} flex-shrink-0 text-gray-400 dark:text-white svg-current-color`}>
@@ -81,8 +81,11 @@ const Sidebar : React.FC = () => {
             ref={sidebarRef}
             className={
                 classNames(
-                    `w-full shrink-0 flex md:flex-col items-center md:pt-[26px] md:pb-2 border-r border-r-gray-100 dark:border-r-gray-400 dark:bg-gray-500 relative overflow-hidden dark:border-r-gray-4a duration-300`,
-                    'max-md:fixed max-md:w-full max-md:left-0 max-md:bottom-0 max-md:z-20 max-md:bg-[linear-gradient(180deg,rgba(255,255,255,0.82)0%,rgba(255,255,255,1)66%)] dark:max-md:bg-[linear-gradient(180deg,rgba(0,0,0,0)0%,var(--gray-700)66%)]',
+                    `w-full shrink-0 flex md:flex-col items-center md:pt-[26px] md:pb-2 border-r border-r-gray-100 dark:border-r-gray-400 relative overflow-hidden dark:border-r-gray-4a duration-300`,
+                    'max-md:fixed max-md:w-full max-md:left-0 max-md:bottom-0 max-md:pt-3 max-md:z-20',
+                    // Background mobile haze
+                    'max-md:bg-[linear-gradient(180deg,rgba(255,255,255,0.82)0%,rgba(255,255,255,1)66%)]',
+                    'dark:max-md:bg-[linear-gradient(180deg,rgba(0,0,0,0)0%,var(--gray-700)66%)]',
                     isCollapsed ? 'sidebar_collapsed lg:max-w-[250px] md:max-w-[90px]' : 'md:max-w-[90px]'
                 )
             }>

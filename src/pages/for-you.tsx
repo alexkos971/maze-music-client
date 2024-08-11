@@ -18,10 +18,6 @@ const ForYou = () => {
     const { data } = useGetAllTracksQuery('');
     const usersRes = useGetAllUsersQuery('');
 
-    useEffect(() => {
-        // console.log(usersRes);
-    }, [usersRes])
-
     return (        
         <MainWrap>
             <div className="container-fluid">

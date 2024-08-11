@@ -101,7 +101,7 @@ const SignIn = () => {
                         type="button"
                         onClick={() => signIn('google')}>
                         <GoogleIcon/>
-                        <span className="ml-2 text-left font-secondary">Sign In with google</span>
+                        <span className="ml-2 text-left font-secondary text-base md:text-sm">Sign In with google</span>
                     </button>
                 </div>
             </Form>

@@ -5,6 +5,7 @@ let initialState : Player = {
     track: lsGetItem('maze-music-last-track') ?? null,
     isPlaying: false,
     currentTime: 0,
+    isDragged: false,
     // playList: {
     //     id: string,
     //     tracks: Track[]
@@ -34,6 +35,9 @@ export const playerSlice = createSlice({
         setVolume: (state, action) => {
             return {...state, volume: action.payload};
         },
+        setIsDragged: (state, action) => {
+            return {...state, isDragged: action.payload};
+        },
         setCurrentTime: (state, action) => {
             return {...state, currentTime: action.payload};
         },
@@ -41,6 +45,6 @@ export const playerSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setTrack, setIsPlaying, setVolume, setCurrentTime } = playerSlice.actions;
+export const { setTrack, setIsPlaying, setVolume, setCurrentTime, setIsDragged } = playerSlice.actions;
 
 export default playerSlice.reducer;

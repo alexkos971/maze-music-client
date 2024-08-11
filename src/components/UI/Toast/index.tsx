@@ -49,7 +49,7 @@ const Toast = () => {
 
     return (
         <div className={classNames(
-            "toasts-groups fixed container w-full bottom-28 md:bottom-16 right-0 flex flex-col items-end z-50", 
+            "toasts-groups fixed container w-full bottom-12 md:bottom-16 right-0 flex flex-col items-end z-50", 
             type == 'hidden' && 'pointer-events-none select-none'
         )}>
             {
