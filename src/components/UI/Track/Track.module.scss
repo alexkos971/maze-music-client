@@ -7,6 +7,7 @@
     border-radius: 6px;
     padding: 10px 24px 10px 14px;
     margin-top: 6px;
+    position: relative;
 
     @include media-breakpoint-down(sm) {
         width: auto;

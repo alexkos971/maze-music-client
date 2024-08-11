@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useImperativeHandle } from 'react';
+import { RefObject } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useAppDispatch, useAppSelector } from '@hooks';
@@ -11,15 +11,10 @@ import classNames from 'classnames';
 import { setFullplayerExpanded } from '@store/reducers/interfaceReducer';
 import ProgressBar from './controls/ProgressBar';
 import NavBar from './controls/NavBar';
+import Title from '@components/UI/Title';
 
 
-const FullPlayer = forwardRef<HTMLAudioElement>(function({}, ref) {
-    const audioRef = useRef<HTMLAudioElement>(null)
-    useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
-        ref,
-        () => audioRef.current
-    );
-
+const FullPlayer = ({ audioRef }: { audioRef: RefObject<HTMLAudioElement> }) => {
     const {t} = useTranslation('common');
     const dispatch = useAppDispatch();
     const [ fullplayer_is_expanded, track ] = useAppSelector(state => [state.interface.fullplayer_is_expanded, state.player.track]);
@@ -48,8 +43,8 @@ const FullPlayer = forwardRef<HTMLAudioElement>(function({}, ref) {
 
                         <div className={styles.fullplayer__info}>
                             <h2 className={styles['fullplayer__info-title']}>{track?.name}</h2>
-                            <Link href={`/artist/${track?.artist._id}`} className={styles['fullplayer__info-artist']}>{track?.artist.full_name}</Link>
 
+                            <Link href={`/artist/${track?.artist._id}`} className={styles['fullplayer__info-artist']}>{track?.artist.full_name}</Link>
                             {
                                 track.artist.description ?
                                     <div className={styles['fullplayer__info-description']}>
@@ -60,17 +55,14 @@ const FullPlayer = forwardRef<HTMLAudioElement>(function({}, ref) {
                         </div>
                     </div>
 
-                    <div className="col md:hidden">
-                        <ProgressBar ref={ref} className="mt-6"/>
-
-                        <div className="flex justify-center mt-6">
-                            <NavBar ref={ref}/>
-                        </div>
+                    <div className="col md:hidden flex flex-col items-center">
+                        <ProgressBar {...{ audioRef }} className="mt-6"/>
+                        <NavBar className='mt-6'/>
                     </div>
 
                     <div className="offset-lg-1 col-lg-5">
-                        <div className={styles.fullplayer__lyrics}>
-                            <h3>{t("player.lyrics")}:</h3>
+                        <div className={classNames(styles.fullplayer__lyrics, 'max-lg:mt-10')}>
+                            <Title tag='h2'>{t("player.lyrics")}:</Title>
 
                             <div className={styles['fullplayer__lyrics-text']}>
                                 {/* There is must be lyrics */}
@@ -81,6 +73,6 @@ const FullPlayer = forwardRef<HTMLAudioElement>(function({}, ref) {
             </div>
         </div>
     );
-});
+}
 
 export default FullPlayer;

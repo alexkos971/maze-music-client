@@ -90,6 +90,7 @@
     position: relative;
 
     @include media-breakpoint-down(sm) {
+        min-height: calc(100svh - 48px);
         z-index: 2;        
         border-radius: 8px 8px 0px 0px;     
         padding: 48px 0px 0px;       
@@ -110,7 +111,7 @@
     }
     
     * {
-        color: var(--white);
+        color: white;
     }
 
     &__cover {
@@ -185,6 +186,10 @@
         &-description {
             margin-top: 32px;
 
+            @include media-breakpoint-down(lg) {
+                margin-top: 16px;
+            }
+
             @include media-breakpoint-down(sm) {
                 display: none;
             }
@@ -198,12 +203,6 @@
     }
 
     &__lyrics {
-        h3 {
-            font-size: 32px;
-            font-weight: 600;
-            color: white;
-        }
-
         &-text {
             margin-top: 24px;
             

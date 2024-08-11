@@ -1,16 +1,10 @@
-import { forwardRef, useRef, useImperativeHandle } from "react";
+import { RefObject } from "react";
 import { VolumeGray } from "@utils/images";
 import { useAppSelector, useAppDispatch } from "@hooks";
 import Range from "@components/UI/Range";
 import { setVolume } from "@store/reducers/playerReducer";
 
-const VolumeBar = forwardRef<HTMLAudioElement>(function({}, ref) {
-    const audioRef = useRef<HTMLAudioElement>(null)
-    useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
-        ref,
-        () => audioRef.current
-    );
-
+const VolumeBar = ({ audioRef } : { audioRef: RefObject<HTMLAudioElement> }) => {
     const dispatch = useAppDispatch();
     const [volume] = useAppSelector(state => [ state.player.volume ]);
     const NavButtonStyles = 'w-6 h-6 shrink-0 cursor-pointer child:w-6 child:h-6 child:object-contain';
@@ -42,7 +36,7 @@ const VolumeBar = forwardRef<HTMLAudioElement>(function({}, ref) {
                 />
         </span>
     );
-});
+};
 
 VolumeBar.displayName = 'VolumeBar';
 export default VolumeBar;

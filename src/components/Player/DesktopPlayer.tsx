@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
+import { useEffect, useRef, useState, RefObject } from "react";
 import Image from "next/image";
 import useThrottle from "@hooks/throttle";
 import FullPlayer from "./FullPlayer";
@@ -22,21 +22,17 @@ interface DesktopPlayerProps {
     previousMusicClickHandler: any, 
     nextMusicClickHandler: any,
     repeatClickHandler: any,
-    shuffleRepeatClickHandler: any
+    shuffleRepeatClickHandler: any,
+    audioRef: RefObject<HTMLAudioElement> 
 }
 
-const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function ({
+const DesktopPlayer = ({
     saveTrack,
     isSaved,
-    repeatClickHandler
-}, ref) {
+    repeatClickHandler,
+    audioRef
+} : DesktopPlayerProps) => {
     const dispatch = useAppDispatch();
-
-    const internalRef = useRef<HTMLAudioElement>(null);
-    useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
-        ref,
-        () => internalRef.current
-    );
 
     const [track, fullplayer_is_expanded] = useAppSelector((state : any) => [
         state.player.track, 
@@ -77,7 +73,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                 'absolute right-0 duration-300 w-[calc(100%-var(--sidebar-width))] bottom-[calc(var(--player-height)-1px)]',
                 fullplayer_is_expanded ? 'h-[calc(100dvh-var(--player-height)+2px)] z-1' : 'h-0 -z-1'
             )}>
-                <FullPlayer ref={internalRef}/> 
+                <FullPlayer {...{audioRef}}/> 
             </div>
 
             <div ref={playerRef} className="xl:pr-container pr-4 pl-4 py-3 bg-gray-600 flex items-center justify-between w-full z-10">
@@ -119,16 +115,14 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
 
                 <div className="flex flex-col items-center w-full max-w-[min(40vw,520px)] absolute left-1/2 -translate-x-1/2">
                     {/* Prev - Play - Next */}        
-                    <NavBar 
-                        ref={internalRef} />
-
-                    <ProgressBar ref={internalRef}/>
+                    <NavBar />
+                    <ProgressBar audioRef={audioRef}/>
                 </div>
 
 
                 {/* Navigation - Volume/Save/Repeat */}
                 <div className={classNames('flex items-center gap-5 shrink-0 ml-10')}>
-                    <VolumeBar ref={internalRef}/>
+                    <VolumeBar {...{audioRef}} />
 
                     <button 
                         type="button" 
@@ -148,9 +142,8 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
                 </div>                
             </div>
         </div>
-    )
-});
+    );
+}
 
 DesktopPlayer.displayName = 'DesktopPlayer';
-
 export default DesktopPlayer;

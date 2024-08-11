@@ -43,52 +43,48 @@ const Player = () => {
     
     const [duration, setDuration] = useState<number>(0);
     const [repeatOnce, setRepeatOnce] = useState<boolean | null>(false);
-    const ref = useRef<HTMLAudioElement>(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
     const {t} = useTranslation('common');
 
     // const [messageApi, contextHolder] = message.useMessage()
 
     // Trigger Audio instance - Change track or start, when src is not empty or changed
-    useEffect(() => {
-        console.log('TRACK SRC - ', track.src);
-        console.log('REF - ', ref);
+    useEffect(() => {    
+        if ( track?.src && audioRef?.current) {            
+            audioRef.current.src = track.src;
+            audioRef.current.currentTime = currentTime;
+            audioRef.current.volume = volume;
 
-        if ( track?.src && ref?.current) {
-            ref.current.src = track.src;
-            ref.current.currentTime = currentTime;
-            ref.current.volume = volume;
-
-            if (!ref.current.duration) {
-                dispatch(showToast({
-                    type: 'error',
-                    text: t('interface.track_error')
-                }));
-            }
-            else {
+            // if (!ref.current.duration) {
+            //     dispatch(showToast({
+            //         type: 'error',
+            //         text: t('interface.track_error')
+            //     }));
+            // }
+            // else {
                 if ( !isPlaying ) {
-                    ref.current.pause();
+                    audioRef.current.pause();
                 } else {
-                    ref.current.play();
+                    audioRef.current.play();
                 }
-            }        
+            // }        
         }
     }, [track, isPlaying]);
 
-
     const onAudioUpdate = () => {
-        if (!ref.current) {
+        if (!audioRef.current) {
             return false;
         }
         
-        if ( ref.current.currentTime == duration && ref.current.duration) {
+        if ( audioRef.current.currentTime == duration && audioRef.current.duration) {
             // Doing some anoother logic later (for example move to the next)
             dispatch(setIsPlaying(false))
             dispatch(setCurrentTime(0));
-            ref.current.pause();
+            audioRef.current.pause();
             dispatch(setIsDragged(false));
         }
         
-        else if (!isDragged) dispatch(setCurrentTime(ref.current.currentTime)); 
+        else if (!isDragged) dispatch(setCurrentTime(audioRef.current.currentTime)); 
         
     }
 
@@ -99,7 +95,7 @@ const Player = () => {
     }
 
     const metadataLoadHandler = () => {
-        ref.current && setDuration(ref.current.duration);
+        audioRef.current && setDuration(audioRef.current.duration);
     }
 
     const repeatClickHandler = () => {
@@ -158,7 +154,7 @@ const Player = () => {
         if ( currentTime < 3 ) {
             changeTrack("prev");
         } else {
-            ref.current && (ref.current.currentTime = 0);
+            audioRef.current && (audioRef.current.currentTime = 0);
             dispatch(setCurrentTime(0));
         }
     }
@@ -172,38 +168,38 @@ const Player = () => {
     return (
         <>
             <audio 
-                ref={ref} 
+                ref={audioRef} 
                 onTimeUpdate={onAudioUpdate} 
-                onLoadedMetadata={metadataLoadHandler} >
+                onLoadedMetadata={metadataLoadHandler}>
                 <source src={track.src} type="audio/mpeg" />
                 Your browser does not support the audio element.
             </audio>
-    
-        {
-            IsGreaterSm ?
-                <DesktopPlayer 
-                    {...{  
-                        ref, 
-                        duration,
-                        isSaved,
-                        saveTrack, 
-                        repeatClickHandler, 
-                        previousMusicClickHandler, 
-                        nextMusicClickHandler, 
-                        shuffleRepeatClickHandler
-                    }}
-                />
-                :
-                <MobilePlayer 
-                    {...{  
-                        ref, 
-                        duration,
-                        isSaved,
-                        saveTrack,
-                        repeatClickHandler, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, shuffleRepeatClickHandler
-                    }}
-                />
-        }
+
+            {
+                IsGreaterSm ?
+                    <DesktopPlayer 
+                        {...{  
+                            audioRef, 
+                            duration,
+                            isSaved,
+                            saveTrack, 
+                            repeatClickHandler, 
+                            previousMusicClickHandler, 
+                            nextMusicClickHandler, 
+                            shuffleRepeatClickHandler
+                        }}
+                    />
+                    :
+                    <MobilePlayer                         
+                        {...{  
+                            audioRef, 
+                            duration,
+                            isSaved,
+                            saveTrack,
+                            repeatClickHandler, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, shuffleRepeatClickHandler
+                        }}
+                    />
+            }
         </>
     );
 }

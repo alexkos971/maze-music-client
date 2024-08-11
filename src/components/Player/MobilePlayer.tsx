@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle, RefObject } from "react";
 import Image from "next/image";
 import styles from "./Player.module.scss";
 import useThrottle from "@hooks/throttle";
@@ -15,21 +15,14 @@ import { twMerge } from "tailwind-merge";
 interface MobilePlayerProps {
     isSaved: boolean,
     saveTrack: any,
-    playClickHandler: any,
+    audioRef: RefObject<HTMLAudioElement>
 }
 
-const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
+const MobilePlayer = ({
     saveTrack,
     isSaved,
-    playClickHandler
-}, ref) {
-    
-    const internalRef = useRef<HTMLAudioElement>(null)
-    useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
-        ref,
-        () => internalRef.current
-    );
-
+    audioRef
+}: MobilePlayerProps) => {
     const dispatch = useAppDispatch();
 
     const [isPlaying, track, fullplayer_is_expanded] = useAppSelector((state : any) => [
@@ -65,7 +58,6 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
     return (
         <div className={classNames(styles['mobile-player'], 'z-20')}>
             { track ? 
-                // <div className="fixed top-0 left-0 w-screen h-screen">
                 <div className={classNames(
                     'block fixed left-0 top-0 duration-100 w-screen h-screen overflow-y-auto overflow-x-hidden hide-scrollbar',
                     !fullplayer_is_expanded ? 'opacity-0 -z-1 select-none pointer-events-none' : 'z-10'                    
@@ -79,10 +71,11 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                     
                     <div 
                         className={classNames(
-                            "mt-12 relative z-1 duration-300", 
+                            "mt-12 relative z-1 duration-300 flex flex-col", 
                             !fullplayer_is_expanded && 'translate-y-full'
                         )}>
-                        <FullPlayer ref={internalRef}/> 
+
+                        <FullPlayer {...{audioRef}}/> 
                     </div>
                 </div>
                 : <></> 
@@ -147,8 +140,8 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(function ({
                 </div>
             </div>
         </div>
-    )
-});
+    );
+}
 
 MobilePlayer.displayName = 'MobilePlayer';
 
