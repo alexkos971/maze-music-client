@@ -20,8 +20,7 @@ interface DesktopPlayerProps {
     saveTrack: any,
 
     previousMusicClickHandler: any, 
-    nextMusicClickHandler: any, 
-    playClickHandler: any,
+    nextMusicClickHandler: any,
     repeatClickHandler: any,
     shuffleRepeatClickHandler: any
 }
@@ -120,7 +119,8 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
 
                 <div className="flex flex-col items-center w-full max-w-[min(40vw,520px)] absolute left-1/2 -translate-x-1/2">
                     {/* Prev - Play - Next */}        
-                    <NavBar ref={internalRef}/>
+                    <NavBar 
+                        ref={internalRef} />
 
                     <ProgressBar ref={internalRef}/>
                 </div>

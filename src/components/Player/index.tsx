@@ -50,7 +50,10 @@ const Player = () => {
 
     // Trigger Audio instance - Change track or start, when src is not empty or changed
     useEffect(() => {
-        if ( track && track.src && ref.current) {
+        console.log('TRACK SRC - ', track.src);
+        console.log('REF - ', ref);
+
+        if ( track?.src && ref?.current) {
             ref.current.src = track.src;
             ref.current.currentTime = currentTime;
             ref.current.volume = volume;
@@ -74,7 +77,7 @@ const Player = () => {
 
     const onAudioUpdate = () => {
         if (!ref.current) {
-            return false
+            return false;
         }
         
         if ( ref.current.currentTime == duration && ref.current.duration) {
@@ -175,7 +178,7 @@ const Player = () => {
                 <source src={track.src} type="audio/mpeg" />
                 Your browser does not support the audio element.
             </audio>
-        
+    
         {
             IsGreaterSm ?
                 <DesktopPlayer 
@@ -183,8 +186,11 @@ const Player = () => {
                         ref, 
                         duration,
                         isSaved,
-                        saveTrack,
-                        repeatClickHandler, previousMusicClickHandler, nextMusicClickHandler, playClickHandler, shuffleRepeatClickHandler
+                        saveTrack, 
+                        repeatClickHandler, 
+                        previousMusicClickHandler, 
+                        nextMusicClickHandler, 
+                        shuffleRepeatClickHandler
                     }}
                 />
                 :
@@ -202,4 +208,5 @@ const Player = () => {
     );
 }
 
+Player.displayName = 'Player';
 export default Player;
