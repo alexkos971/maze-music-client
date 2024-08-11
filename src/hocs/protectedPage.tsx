@@ -32,11 +32,6 @@ export default function ProtectedPage (Component: any) {
 
         useEffect(() => { 
             let isAuthPage = router.pathname == '/sign-in' || router.pathname == '/sign-up'; 
-
-            // if ( typeof window !== "undefined" && !cookieGetItem('token') ) {
-            //     router.replace(authPage.path);
-            // } else {
-            // }
             checkSession(isAuthPage);
         }, []);
 
