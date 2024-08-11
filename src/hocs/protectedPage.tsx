@@ -12,8 +12,8 @@ export default function ProtectedPage (Component: any) {
         let [trigger] = useLazyGetSessionInfoQuery();
         const router = useRouter();
         const [isLoaded, setIsLoaded] = useState(true);
-
-        const checkSession = async (isAuthPage: boolean) => {               
+        
+        const checkSession = async (isAuthPage: boolean) => {
             let {isError} = await trigger('');
 
             
@@ -31,8 +31,13 @@ export default function ProtectedPage (Component: any) {
         }
 
         useEffect(() => { 
-            let isAuthPage = router.pathname == '/sign-in' || router.pathname == '/sign-up';     
-            checkSession(isAuthPage);
+            let isAuthPage = router.pathname == '/sign-in' || router.pathname == '/sign-up'; 
+
+            if ( typeof window !== "undefined" && !cookieGetItem('token') ) {
+                router.replace(authPage.path);
+            } else {
+                checkSession(isAuthPage);
+            }
         }, []);
 
         if (!isLoaded) {

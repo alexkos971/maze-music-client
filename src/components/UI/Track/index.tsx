@@ -34,6 +34,10 @@ const Track = ({
         }
     }
 
+    if (!track) {
+        return <></>
+    }
+
     return (
         <div className={`${styles.track} ${ is_current_track ? styles.track__current : ''}`}>
             
