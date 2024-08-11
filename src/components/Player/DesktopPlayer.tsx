@@ -33,7 +33,7 @@ const DesktopPlayer = forwardRef<HTMLAudioElement, DesktopPlayerProps>(function 
 }, ref) {
     const dispatch = useAppDispatch();
 
-    const internalRef = useRef<HTMLAudioElement>(null)
+    const internalRef = useRef<HTMLAudioElement>(null);
     useImperativeHandle<HTMLAudioElement | null, HTMLAudioElement | null>(
         ref,
         () => internalRef.current
